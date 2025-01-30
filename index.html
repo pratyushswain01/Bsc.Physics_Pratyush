@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+        }
+
+        header .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .video-player {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-player h2 {
+            margin-top: 10px;
+        }
+
+        .video-player p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .video-player p span {
+            font-weight: bold;
+        }
+
+        .related-videos {
+            margin-top: 40px;
+        }
+
+        .related-videos h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .video-thumbnail {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .thumb {
+            width: 320px;
+            text-align: center;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .thumb p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">UPSChub</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Trending</a></li>
+                    <li><a href="#">Subscriptions</a></li>
+                    <li><a href="#">Library</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="video-player">
+                <div class="video">
+                    <video controls width="100%">
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <h2>Sample Video Title</h2>
+                    <p>Posted by <span>Username</span> | 1M views | 1 day ago</p>
+                </div>
+            </section>
+
+            <section class="related-videos">
+                <h3>Related Videos</h3>
+                <div class="video-thumbnail">
+                    <div class="thumb">
+                        <img src="https://via.placeholder.com/320x180" alt="Video 1">
+                        <p>Video Title 1</p>
+                    </div>
+                    <div class="thumb">
+                        <img src="https://via.placeholder.com/320x180" alt="Video 2">
+                        <p>Video Title 2</p>
+                    </div>
+                    <div class="thumb">
+                        <img src="https://via.placeholder.com/320x180" alt="Video 3">
+                        <p>Video Title 3</p>
+                    </div>
+                    <div class="thumb">
+                        <img src="https://via.placeholder.com/320x180" alt="Video 4">
+                        <p>Video Title 4</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 UPSChub. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
 
