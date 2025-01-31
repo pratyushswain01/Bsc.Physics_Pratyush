@@ -163,18 +163,17 @@
             Playlist
         </button>
       
-
-        <!-- The "Shorts" Button -->
-<button onclick="loadShorts()">
-    <img src="images/shorts.jpg" alt="Saved Files">
-    Shorts
-</button>
-
-<!-- The Container Where Shorts Content Will Be Loaded -->
-<div id="shorts-container"></div>
-    
-
-
+        <button onclick="openShorts()">
+            <img src="images/shorts.jpg" alt="Saved Files">
+            Shorts
+        </button>
+        
+        <script>
+            function openShorts() {
+                window.location.href = 'shorts.html'; // Redirects to shorts.html
+            }
+        </script>
+        
         <button onclick="showPage('settings')">
             <img src="images/settings.jpg" alt="Settings">
             Settings
