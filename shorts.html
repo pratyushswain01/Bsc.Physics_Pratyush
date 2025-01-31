@@ -13,10 +13,10 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
             height: 100%;
             overflow: hidden; /* Prevent scrolling of the whole page */
+            display: flex;
+            flex-direction: column;
         }
         header {
             background: #333;
@@ -56,7 +56,7 @@
             }
         }
 
-        /* Updated CSS for page scrolling behavior */
+        /* Video container setup */
         body, html {
             margin: 0;
             padding: 0;
@@ -71,7 +71,6 @@
             overflow-y: scroll; /* Enable vertical scrolling */
             scroll-snap-type: y mandatory; /* Enable page scrolling */
             scroll-behavior: smooth; /* Smooth scrolling between videos */
-            width: 100%;
         }
 
         .video {
@@ -82,6 +81,7 @@
             align-items: center;
             scroll-snap-align: start; /* Ensure each video snaps into place */
             position: relative;
+            background-color: black; /* Ensures background is black for videos */
         }
 
         iframe {
@@ -179,4 +179,3 @@
     </footer>
 </body>
 </html>
-
