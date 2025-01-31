@@ -55,26 +55,27 @@
                 transform: translateX(-100%);
             }
         }
-        .container {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
+        .video-container {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 100px 20px 80px;
-            flex-grow: 1;
-            height: calc(100vh - 140px);
+            padding: 100px 0;
             overflow-y: auto;
+            height: calc(100vh - 140px);
+            scroll-snap-type: y mandatory;
         }
-        .video-card {
+        .video {
+            width: 90%;
+            max-width: 400px;
+            margin-bottom: 10px;
+            scroll-snap-align: start;
             background: white;
-            margin: 15px;
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 300px;
         }
-        .video-card video {
+        .video img {
             width: 100%;
             border-radius: 8px;
         }
@@ -84,9 +85,9 @@
             align-items: center;
             background: #444;
             color: white;
-            padding: 5px;
+            padding: 10px 0;
             position: fixed;
-            bottom: 20px;
+            bottom: 50px;
             width: 100%;
             z-index: 1000;
         }
@@ -109,172 +110,42 @@
             background: #222;
             color: white;
             text-align: center;
-            padding: 5px;
+            padding: 10px 0;
             font-size: 12px;
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 1000;
         }
-   
-        /* Reset some default styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Header Styling */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            z-index: 100;
-        }
-
-        .header-container h1 {
-            font-size: 24px;
-        }
-
-        /* Main Content Styling */
-        main {
-            margin-top: 60px; /* Space for the fixed header */
-        }
-
-        .video-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .video img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .video p {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-
-        /* Footer Styling */
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .footer-container p {
-            font-size: 14px;
-        }
     </style>
-<script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
-            document.getElementById(pageId).style.display = 'flex';
+    <script>
+        function openPage(page) {
+            window.location.href = page + '.html';
         }
     </script>
 </head>
 <body>
     <header>UPSC Hub - Video Platform</header>
     <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
-
     
-    <div class="menu-bar">
-        
-        <button onclick="showPage('home')">
-            <img src="images/home.jpg" alt="Home">
-            Home
-        </button>
-        <button onclick="showPage('playlist')">
-            <img src="images/Playlist.jpg" alt="Video Playlist">
-            Playlist
-        </button>
-      
-        <button onclick="openShorts()">
-            <img src="images/shorts.jpg" alt="Saved Files">
-            Shorts
-        </button>
-        
-        <script>
-            function openShorts() {
-                window.location.href = 'shorts.html'; // Redirects to shorts.html
-            }
-        </script>
-        
-        <button onclick="showPage('settings')">
-            <img src="images/settings.jpg" alt="Settings">
-            Settings
-        </button>
-    </div>
-   
-
-
     <main>
         <section class="video-container">
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 1">
-                <p>Video Title 1</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 2">
-                <p>Video Title 2</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 3">
-                <p>Video Title 3</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 4">
-                <p>Video Title 4</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 5">
-                <p>Video Title 5</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 6">
-                <p>Video Title 6</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 7">
-                <p>Video Title 7</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 8">
-                <p>Video Title 8</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 9">
-                <p>Video Title 9</p>
-            </div>
-            <div class="video">
-                <img src="https://via.placeholder.com/300x200" alt="Video 10">
-                <p>Video Title 10</p>
-            </div>
+            <div class="video"><img src="https://via.placeholder.com/400x600" alt="Video 1"><p>Video Title 1</p></div>
+            <div class="video"><img src="https://via.placeholder.com/400x600" alt="Video 2"><p>Video Title 2</p></div>
+            <div class="video"><img src="https://via.placeholder.com/400x600" alt="Video 3"><p>Video Title 3</p></div>
+            <div class="video"><img src="https://via.placeholder.com/400x600" alt="Video 4"><p>Video Title 4</p></div>
         </section>
     </main>
 
+    <div class="menu-bar">
+        <button onclick="openPage('home')"><img src="images/home.jpg" alt="Home">Home</button>
+        <button onclick="openPage('playlist')"><img src="images/playlist.jpg" alt="Playlist">Playlist</button>
+        <button onclick="openPage('shorts')"><img src="images/shorts.jpg" alt="Shorts">Shorts</button>
+        <button onclick="openPage('settings')"><img src="images/settings.jpg" alt="Settings">Settings</button>
+    </div>
     
     <footer>
         <p>&copy; 2025 UPSC Hub</p>
     </footer>
-
-    
 </body>
 </html>
