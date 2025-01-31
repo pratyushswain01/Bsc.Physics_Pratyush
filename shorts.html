@@ -55,26 +55,23 @@
                 transform: translateX(-100%);
             }
         }
-        .container {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 100px 20px 80px;
-            flex-grow: 1;
-            height: calc(100vh - 140px);
-            overflow-y: auto;
-        }
-        .video-card {
-            background: white;
-            margin: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        .video-card video {
+       .video-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    overflow-y: scroll;
+}
+.video {
+    width: 100%;
+    height: 100vh; /* Full height for each video */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: black;
+}
+        
+        .video img {
             width: 100%;
             border-radius: 8px;
         }
@@ -84,9 +81,9 @@
             align-items: center;
             background: #444;
             color: white;
-            padding: 5px;
+            padding: 10px 0;
             position: fixed;
-            bottom: 20px;
+            bottom: 50px;
             width: 100%;
             z-index: 1000;
         }
@@ -109,160 +106,35 @@
             background: #222;
             color: white;
             text-align: center;
-            padding: 5px;
+            padding: 10px 0;
             font-size: 12px;
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 1000;
         }
-   
-        /* Reset some default styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Header Styling */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            z-index: 100;
-        }
-
-        .header-container h1 {
-            font-size: 24px;
-        }
-
-        /* Main Content Styling */
-        main {
-            margin-top: 60px; /* Space for the fixed header */
-        }
-
-        .video-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
-    overflow-y: scroll;
-}
-
-.video {
-    width: 100%;
-    height: 100vh; /* Full height for each video */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background-color: black;
-}
-        .video img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .video p {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-
-        /* Footer Styling */
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        iframe {
+       iframe {
     width: 100%;
     height: 100%;
 }
-
-        .footer-container p {
-            font-size: 14px;
-        }
+        
+        @media (min-width: 768px) {
+    iframe {
+        height: 400px; /* Adjust for larger screens */
+    }
     </style>
-<script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
-            document.getElementById(pageId).style.display = 'flex';
+    <script>
+        function openPage(page) {
+            window.location.href = page + '.html';
         }
     </script>
 </head>
 <body>
     <header>UPSC Hub - Video Platform</header>
     <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
-    <div id="home" class="container" style="display: flex;">
-        <p>Welcome to UPSC Hub!</p>
-    </div>
-    <div id="playlist" class="container">
-        <div class="video-card">
-            <video controls>
-                <source src="video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>UPSC Preparation Strategy</p>
-        </div>
-        <div class="video-card">
-            <video controls>
-                <source src="video2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>Important Current Affairs</p>
-        </div>
-    </div>
-    <div id="shorts" class="container">
-        <p> Shorts will appear here.</p>
-    </div>
-    <div id="settings" class="container">
-        <p>Settings Page</p>
-    </div>
-    <div class="menu-bar">
-        
-        <button onclick="showPage('home')">
-            <img src="images/home.jpg" alt="Home">
-            Home
-        </button>
-        <button onclick="showPage('playlist')">
-            <img src="images/Playlist.jpg" alt="Video Playlist">
-            Playlist
-        </button>
-      
-        <button onclick="openShorts()">
-            <img src="images/shorts.jpg" alt="Saved Files">
-            Shorts
-        </button>
-        
-        <script>
-            function openShorts() {
-                window.location.href = 'shorts.html'; // Redirects to shorts.html
-            }
-        </script>
-        
-        <button onclick="showPage('settings')">
-            <img src="images/settings.jpg" alt="Settings">
-            Settings
-        </button>
-    </div>
-   
-
-
-    <main>
+    
+<main>
     <section class="video-container">
         <div class="video">
             <iframe width="100%" height="100%" src="https://www.youtube.com/embed/l4e9TOV95AI?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -304,11 +176,11 @@
 </main>
 
 
+
+
     
     <footer>
         <p>&copy; 2025 UPSC Hub</p>
     </footer>
-
-    
 </body>
 </html>
