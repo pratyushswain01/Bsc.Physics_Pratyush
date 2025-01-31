@@ -14,7 +14,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             height: 100%;
-            overflow: hidden; /* Prevent scrolling of the whole page */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -86,7 +86,7 @@
 
         iframe {
             width: 100%;
-            height: 100%;
+            height: 100%; /* Full height for the iframe to cover the screen */
             border: none;
         }
 
@@ -111,13 +111,6 @@
             width: 100%;
             z-index: 1000;
         }
-
-        /* Optional: Adjust the iframe height for larger screens */
-        @media (min-width: 768px) {
-            iframe {
-                height: 400px; /* Adjust for larger screens */
-            }
-        }
     </style>
 </head>
 <body>
@@ -126,47 +119,38 @@
     
     <main>
         <section class="video-container">
-            <!-- Video 1 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/l4e9TOV95AI?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Motivation Video 1</p>
             </div>
-            <!-- Video 2 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/hyPADUTOOog?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Motivation Video 2</p>
             </div>
-            <!-- Video 3 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/LXQ8ubi3ufs?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Motivation Video 3</p>
             </div>
-            <!-- Video 4 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/akcn0MCbC3s?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Motivation Video 4</p>
             </div>
-            <!-- Video 5 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/UPxMZ7WBofY?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Study Tips Video 1</p>
             </div>
-            <!-- Video 6 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/dhvURoR14kk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Study Tips Video 2</p>
             </div>
-            <!-- Video 7 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/N3wZuMj_sYc?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Study Tips Video 3</p>
             </div>
-            <!-- Video 8 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/Ekt_5F7zUrk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Study Tips Video 4</p>
             </div>
-            <!-- Video 9 -->
             <div class="video">
                 <iframe src="https://www.youtube.com/embed/Py1RaDD97NM?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <p>UPSC Motivation Video 5</p>
