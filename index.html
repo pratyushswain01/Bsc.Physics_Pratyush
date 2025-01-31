@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPSC Hub - Video Platform</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
         header {
             background: #333;
@@ -20,6 +24,33 @@
             padding: 15px;
             text-align: center;
             font-size: 24px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .container {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 80px;
+            flex-grow: 1;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+        .video-card {
+            background: white;
+            margin: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .video-card video {
+            width: 100%;
+            border-radius: 8px;
         }
         .menu-bar {
             display: flex;
@@ -28,6 +59,10 @@
             background: #444;
             color: white;
             padding: 10px;
+            position: fixed;
+            bottom: 30px;
+            width: 100%;
+            z-index: 1000;
         }
         .menu-bar button {
             background: none;
@@ -44,34 +79,16 @@
             height: 30px;
             margin-bottom: 5px;
         }
-        .container {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-            flex-grow: 1;
-        }
-        .video-card {
-            background: white;
-            margin: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        .video-card video {
-            width: 100%;
-            border-radius: 8px;
-        }
         footer {
             background: #222;
             color: white;
             text-align: center;
             padding: 8px;
             font-size: 12px;
-            position: relative;
+            position: fixed;
+            bottom: 0;
             width: 100%;
+            z-index: 1000;
         }
     </style>
     <script>
