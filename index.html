@@ -186,14 +186,4 @@
 </body>
 </html>
 
-<!--java script connect for the shorts page -->
-<script>
-    function loadShorts() {
-        fetch('shorts.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('shorts-container').innerHTML = data;
-        })
-        .catch(error => console.log("Error loading Shorts page:", error));
-    }
-</script>
+
