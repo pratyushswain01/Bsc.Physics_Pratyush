@@ -15,8 +15,8 @@
             background-color: #f4f4f4;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling of the whole page */
         }
         header {
             background: #333;
@@ -55,47 +55,49 @@
                 transform: translateX(-100%);
             }
         }
-       body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden; /* Prevent scrolling of the whole page */
-}
 
-.video-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Ensure the container spans the full viewport */
-    overflow-y: scroll; /* Enable vertical scrolling */
-    scroll-snap-type: y mandatory; /* Enable page scrolling */
-    scroll-behavior: smooth; /* Smooth scrolling between videos */
-}
+        /* Updated CSS for page scrolling behavior */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling of the whole page */
+        }
 
-.video {
-    width: 100%;
-    height: 100vh; /* Each video takes full viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    scroll-snap-align: start; /* Ensure each video snaps into place */
-    position: relative;
-}
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Ensure the container spans the full viewport */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            scroll-snap-type: y mandatory; /* Enable page scrolling */
+            scroll-behavior: smooth; /* Smooth scrolling between videos */
+        }
 
-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+        .video {
+            width: 100%;
+            height: 100vh; /* Each video takes full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start; /* Ensure each video snaps into place */
+            position: relative;
+        }
 
-p {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-}
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        p {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+        }
 
         .menu-bar {
             display: flex;
@@ -136,65 +138,67 @@ p {
             z-index: 1000;
         }
 
-      
+        /* Optional: Adjust the iframe height for larger screens */
         @media (min-width: 768px) {
-    iframe {
-        height: 400px; /* Adjust for larger screens */
-    }
-    </style>
-    <script>
-        function openPage(page) {
-            window.location.href = page + '.html';
+            iframe {
+                height: 400px; /* Adjust for larger screens */
+            }
         }
-    </script>
+    </style>
 </head>
 <body>
     <header>UPSC Hub - Video Platform</header>
     <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
     
-<main>
-    <section class="video-container">
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/l4e9TOV95AI?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Motivation Video 1</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/hyPADUTOOog?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Motivation Video 2</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/LXQ8ubi3ufs?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Motivation Video 3</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/akcn0MCbC3s?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Motivation Video 4</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/UPxMZ7WBofY?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Study Tips Video 1</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/dhvURoR14kk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Study Tips Video 2</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/N3wZuMj_sYc?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Study Tips Video 3</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/Ekt_5F7zUrk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Study Tips Video 4</p>
-        </div>
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/Py1RaDD97NM?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>UPSC Motivation Video 5</p>
-        </div>
-    </section>
-</main>
-
-
-
+    <main>
+        <section class="video-container">
+            <!-- Video 1 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/l4e9TOV95AI?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Motivation Video 1</p>
+            </div>
+            <!-- Video 2 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/hyPADUTOOog?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Motivation Video 2</p>
+            </div>
+            <!-- Video 3 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/LXQ8ubi3ufs?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Motivation Video 3</p>
+            </div>
+            <!-- Video 4 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/akcn0MCbC3s?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Motivation Video 4</p>
+            </div>
+            <!-- Video 5 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/UPxMZ7WBofY?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Study Tips Video 1</p>
+            </div>
+            <!-- Video 6 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/dhvURoR14kk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Study Tips Video 2</p>
+            </div>
+            <!-- Video 7 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/N3wZuMj_sYc?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Study Tips Video 3</p>
+            </div>
+            <!-- Video 8 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/Ekt_5F7zUrk?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Study Tips Video 4</p>
+            </div>
+            <!-- Video 9 -->
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/Py1RaDD97NM?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>UPSC Motivation Video 5</p>
+            </div>
+        </section>
+    </main>
     
     <footer>
         <p>&copy; 2025 UPSC Hub</p>
