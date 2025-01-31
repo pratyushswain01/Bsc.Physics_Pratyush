@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC Hub - Video Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .runner-banner {
+            background: #ffcc00;
+            color: black;
+            padding: 5px;
+            font-size: 14px;
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            z-index: 999;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .runner-banner div {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+        .container {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px 80px;
+            flex-grow: 1;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+        .video-card {
+            background: white;
+            margin: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .video-card video {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .menu-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #444;
+            color: white;
+            padding: 5px;
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            z-index: 1000;
+        }
+        .menu-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .menu-bar img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 3px;
+        }
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
+            document.getElementById(pageId).style.display = 'flex';
+        }
+    </script>
+</head>
+<body>
+    <header>UPSC Hub - Video Platform</header>
+    <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
+    <div id="home" class="container" style="display: flex;">
+        <p>Welcome to UPSC Hub!</p>
+    </div>
+    <div id="videos" class="container">
+        <div class="video-card">
+            <video controls>
+                <source src="video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>UPSC Preparation Strategy</p>
+        </div>
+        <div class="video-card">
+            <video controls>
+                <source src="video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>Important Current Affairs</p>
+        </div>
+    </div>
+    <div id="saved" class="container">
+        <p>Saved Files will appear here.</p>
+    </div>
+    <div id="settings" class="container">
+        <p>Settings Page</p>
+    </div>
+<style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo h1 {
+            margin: 0;
+        }
+
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav .nav-links li {
+            display: inline;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        nav .search-bar input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        nav .search-bar button {
+            padding: 0.5rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            background-color: #4CAF50;
+            color: white;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        #hero h2 {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        #get-started {
+            padding: 0.8rem 2rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Video Cards */
+        .video-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+
+        .video-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 1rem;
+            width: 250px;
+        }
+
+        .video-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .video-card h3 {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Categories Section */
+        #categories {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .categories-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .category-card {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .category-card p {
+            font-size: 1rem;
+        }
+
+        /* Notifications Section */
+        #notifications {
+            padding: 2rem;
+            background-color: #f1f1f1;
+        }
+
+        .notification-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .video-container, .categories-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            nav .search-bar {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <h1>UPSC Video Hub</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#trending">Trending</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#profile">Profile</a></li>
+        </ul>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search videos...">
+            <button id="search-btn">Search</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <h2>Welcome to the UPSC Video Hub</h2>
+        <p>Your one-stop destination for UPSC exam preparation videos.</p>
+        <button id="get-started">Get Started</button>
+    </section>
+
+    <!-- Trending Videos Section -->
+    <section id="trending">
+        <h2>Trending Videos</h2>
+        <div class="video-container">
+            <!-- Video Thumbnails (This can be dynamically generated) -->
+            <div class="video-card">
+                <img src="thumbnail1.jpg" alt="Video 1">
+                <h3>Video Title 1</h3>
+            </div>
+            <div class="video-card">
+                <img src="thumbnail2.jpg" alt="Video 2">
+                <h3>Video Title 2</h3>
+            </div>
+            <div class="video-card">
+                <img src="thumbnail3.jpg" alt="Video 3">
+                <h3>Video Title 3</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories">
+        <h2>Categories</h2>
+        <div class="categories-container">
+            <div class="category-card">
+                <h3>General Studies</h3>
+                <p>View videos on General Studies topics.</p>
+            </div>
+            <div class="category-card">
+                <h3>Current Affairs</h3>
+                <p>Stay updated with the latest current affairs.</p>
+            </div>
+            <div class="category-card">
+                <h3>Optional Subjects</h3>
+                <p>Browse videos on various optional subjects.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notifications Section -->
+    <section id="notifications">
+        <h2>Latest Notifications</h2>
+        <div class="notification-card">
+            <p><strong>Exam Date Announced!</strong> The UPSC Civil Services Exam will be held on June 12, 2025.</p>
+        </div>
+        <div class="notification-card">
+            <p><strong>New Video Available!</strong> A new lecture on Indian Economy has been uploaded.</p>
+        </div>
+    </section>
+
+  <div class="menu-bar">
+        
+        <button onclick="showPage('home.html')">
+            <img src="images/home.jpg" alt="Home">
+            Home
+        </button>
+        <button onclick="showPage('playlist.html')">
+            <img src="images/Playlist.jpg" alt="Video Playlist">
+            Playlist
+        </button>
+        <button onclick="showPage('shorts.html')">
+            
+            <img src="images/shorts.jpg" alt="Saved Files">
+            Shorts
+        </button>
+        <button onclick="showPage('settings.html')">
+            
+            <img src="images/settings.jpg" alt="Settings">
+            Settings
+        </button>
+    </div>
+    <footer>
+        <p>&copy; 2025 UPSC Hub</p>
+    </footer>
+</body>
+</html>
