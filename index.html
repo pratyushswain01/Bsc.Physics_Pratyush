@@ -29,14 +29,40 @@
             width: 100%;
             z-index: 1000;
         }
+        .runner-banner {
+            background: #ffcc00;
+            color: black;
+            padding: 5px;
+            font-size: 14px;
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            z-index: 999;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .runner-banner div {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
         .container {
             display: none;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            padding: 80px 20px 80px;
+            padding: 100px 20px 80px;
             flex-grow: 1;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 140px);
             overflow-y: auto;
         }
         .video-card {
@@ -100,6 +126,7 @@
 </head>
 <body>
     <header>UPSC Hub - Video Platform</header>
+    <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
     <div id="home" class="container" style="display: flex;">
         <p>Welcome to UPSC Hub!</p>
     </div>
