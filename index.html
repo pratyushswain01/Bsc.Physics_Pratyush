@@ -3,185 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPSC Hub - Video Platform</title>
+    <title>YouTube UI Clone</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
+
         header {
-            background: #333;
+            display: flex;
+            align-items: center;
+            background-color: #ff0000;
             color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 10px 20px;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .logo {
             font-size: 24px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        .runner-banner {
-            background: #ffcc00;
-            color: black;
-            padding: 5px;
-            font-size: 14px;
-            position: fixed;
-            top: 60px;
-            width: 100%;
-            z-index: 999;
             font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
+            margin-right: 20px;
         }
-        .runner-banner div {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 10s linear infinite;
-        }
-        @keyframes marquee {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(-100%);
-            }
-        }
-        .container {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 100px 20px 80px;
-            flex-grow: 1;
-            height: calc(100vh - 140px);
-            overflow-y: auto;
-        }
-        .video-card {
-            background: white;
-            margin: 15px;
+
+        .search-bar {
+            flex: 1;
             padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        .video-card video {
-            width: 100%;
-            border-radius: 8px;
-        }
-        .menu-bar {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: #444;
-            color: white;
-            padding: 5px;
-            position: fixed;
-            bottom: 20px;
-            width: 100%;
-            z-index: 1000;
-        }
-        .menu-bar button {
-            background: none;
             border: none;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .user-icon {
+            margin-left: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            color: #333;
+        }
+
+        .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-        .menu-bar img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 3px;
+
+        .sidebar {
+            width: 200px;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-right: 2px solid #ccc;
         }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 0;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar li:hover {
+            background-color: #ddd;
+        }
+
+        .video-feed {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .video-card {
+            width: 300px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-card img {
+            width: 100%;
+        }
+
+        .video-card h3 {
+            font-size: 18px;
+            margin: 10px;
+            color: #333;
+        }
+
+        .video-card p {
+            margin: 0 10px 10px;
+            color: #555;
+        }
+
         footer {
-            background: #222;
+            background-color: #ff0000;
             color: white;
             text-align: center;
-            padding: 5px;
-            font-size: 12px;
-            position: fixed;
+            padding: 10px 0;
+            position: relative;
             bottom: 0;
             width: 100%;
-            z-index: 1000;
+        }
+
+        .footer-links {
+            margin: 10px 0;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
     </style>
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
-            document.getElementById(pageId).style.display = 'flex';
-        }
-    </script>
 </head>
 <body>
-    <header>UPSC Hub - Video Platform</header>
-    <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
-    <div id="home" class="container" style="display: flex;">
-        <p>Welcome to UPSC Hub!</p>
-    </div>
-    <div id="playlist" class="container">
-        <div class="video-card">
-            <video controls>
-                <source src="video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>UPSC Preparation Strategy</p>
-        </div>
-        <div class="video-card">
-            <video controls>
-                <source src="video2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>Important Current Affairs</p>
-        </div>
-    </div>
-    <div id="shorts" class="container">
-        <p> Shorts will appear here.</p>
-    </div>
-    <div id="settings" class="container">
-        <p>Settings Page</p>
-    </div>
-    <div class="menu-bar">
-        
-        <button onclick="window.location.href='home.html'">
-    <img src="images/home.jpg" alt="Home">
-    Home
-        </button>
-
-        <button onclick="showPage('playlist')">
-            <img src="images/Playlist.jpg" alt="Video Playlist">
-            Playlist
-        </button>
-      
-        <button onclick="openShorts()">
-            <img src="images/shorts.jpg" alt="Saved Files">
-            Shorts
-        </button>
-        
-        <script>
-            function openShorts() {
-                window.location.href = 'shorts.html'; // Redirects to shorts.html
-            }
-        </script>
-        
-        <button onclick="showPage('settings')">
-            <img src="images/settings.jpg" alt="Settings">
-            Settings
-        </button>
+    <header>
+        <div class="logo">YouTube</div>
+        <input type="text" class="search-bar" placeholder="Search">
+        <div class="user-icon">User </div>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li>Home</li>
+                <li>Trending</li>
+                <li>Subscriptions</li>
+                <li>Library</li>
+            </ul>
+        </aside>
+        <main class="video-feed">
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 1</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 2</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 3</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                               <h3>Video Title 4</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 5</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 6</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 7</h3>
+                <p>Channel Name</p>
+            </div>
+            <div class="video-card">
+                <img src="https://via.placeholder.com/300x200" alt="Video Thumbnail">
+                <h3>Video Title 8</h3>
+                <p>Channel Name</p>
+            </div>
+        </main>
     </div>
     <footer>
-        <p>&copy; 2025 UPSC Hub</p>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <p>&copy; 2023 YouTube Clone. All rights reserved.</p>
     </footer>
 </body>
 </html>
