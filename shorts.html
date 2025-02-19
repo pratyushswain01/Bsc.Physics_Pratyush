@@ -16,8 +16,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+            overflow-y: hidden;
         }
         header, footer {
             padding: 10px;
@@ -33,6 +32,11 @@
         }
         footer {
             bottom: 0;
+        }
+        .video-wrapper {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
         }
         .video-container {
             width: 100%;
@@ -87,11 +91,13 @@
 </head>
 <body>
     <header>UPSChub Video</header>
-    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/pQjIpkzNTEY" allowfullscreen></iframe></div>
-    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/eU13jvC8_sI" allowfullscreen></iframe></div>
-    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID3" allowfullscreen></iframe></div>
-    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID4" allowfullscreen></iframe></div>
-    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID5" allowfullscreen></iframe></div>
+    <div class="video-wrapper">
+        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/pQjIpkzNTEY" allowfullscreen></iframe></div>
+        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/eU13jvC8_sI" allowfullscreen></iframe></div>
+        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID3" allowfullscreen></iframe></div>
+        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID4" allowfullscreen></iframe></div>
+        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID5" allowfullscreen></iframe></div>
+    </div>
     <div class="menu-bar">
         <button onclick="window.location.href='home.html'">
             <img src="images/home.jpg" alt="Home">
