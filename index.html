@@ -62,17 +62,17 @@
             align-items: center;
             padding: 100px 20px 80px;
             flex-grow: 1;
-            height: calc(100vh - 140px);
+            height: calc(100vh - 120px);
             overflow-y: auto;
         }
         .video-card {
             background: white;
-            margin: 15px;
+            margin: 10px;
             padding: 10px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 300px;
+            width: 280px;
         }
         .video-card video {
             width: 100%;
@@ -84,26 +84,29 @@
             align-items: center;
             background: #444;
             color: white;
-            padding: 5px;
+            padding: 3px;
             position: fixed;
-            bottom: 20px;
-            width: 100%;
+            bottom: 10px;
+            width: 90%;
+            left: 5%;
+            border-radius: 10px;
             z-index: 1000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
         .menu-bar button {
             background: none;
             border: none;
             color: white;
-            font-size: 14px;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .menu-bar img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 3px;
+            width: 20px;
+            height: 20px;
+            margin-bottom: 2px;
         }
         footer {
             background: #222;
@@ -153,28 +156,23 @@
         <p>Settings Page</p>
     </div>
     <div class="menu-bar">
-        
         <button onclick="window.location.href='home.html'">
-    <img src="images/home.jpg" alt="Home">
-    Home
+            <img src="images/home.jpg" alt="Home">
+            Home
         </button>
-
         <button onclick="showPage('playlist')">
             <img src="images/Playlist.jpg" alt="Video Playlist">
             Playlist
         </button>
-      
         <button onclick="openShorts()">
             <img src="images/shorts.jpg" alt="Saved Files">
             Shorts
         </button>
-        
         <script>
             function openShorts() {
-                window.location.href = 'shorts.html'; // Redirects to shorts.html
+                window.location.href = 'shorts.html';
             }
         </script>
-        
         <button onclick="showPage('settings')">
             <img src="images/settings.jpg" alt="Settings">
             Settings
