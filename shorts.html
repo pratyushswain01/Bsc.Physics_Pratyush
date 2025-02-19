@@ -12,41 +12,25 @@
         }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #000;
             display: flex;
             flex-direction: column;
             height: 100vh;
-            overflow: hidden;
-        }
-        header {
-            background: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 100px 20px 80px;
-            flex-grow: 1;
-            height: calc(100vh - 140px);
-            overflow-y: auto;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
         }
         .video-container {
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
         }
         iframe {
             width: 100%;
-            height: 300px;
-            border-radius: 8px;
+            height: 100%;
+            border: none;
         }
         .menu-bar {
             display: flex;
@@ -56,7 +40,7 @@
             color: white;
             padding: 5px;
             position: fixed;
-            bottom: 20px;
+            bottom: 0;
             width: 100%;
             z-index: 1000;
         }
@@ -69,34 +53,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: all 0.3s ease-in-out;
+        }
+        .menu-bar button:active img, .menu-bar button:focus img {
+            animation: blink 0.5s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
         .menu-bar img {
             width: 24px;
             height: 24px;
             margin-bottom: 3px;
         }
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 5px;
-            font-size: 12px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1000;
-        }
     </style>
 </head>
 <body>
-    <header>UPSC Hub - Shorts</header>
-    <div class="container">
-        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/pQjIpkzNTEY" frameborder="0" allowfullscreen></iframe></div>
-        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/eU13jvC8_sI" frameborder="0" allowfullscreen></iframe></div>
-        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID3" frameborder="0" allowfullscreen></iframe></div>
-        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID4" frameborder="0" allowfullscreen></iframe></div>
-        <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID5" frameborder="0" allowfullscreen></iframe></div>
-    </div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/pQjIpkzNTEY" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/eU13jvC8_sI" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID3" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID4" allowfullscreen></iframe></div>
+    <div class="video-container"><iframe src="https://www.youtube.com/embed/shorts/VIDEO_ID5" allowfullscreen></iframe></div>
     <div class="menu-bar">
         <button onclick="window.location.href='home.html'">
             <img src="images/home.jpg" alt="Home">
@@ -115,8 +93,5 @@
             Settings
         </button>
     </div>
-    <footer>
-        <p>&copy; 2025 UPSC Hub</p>
-    </footer>
 </body>
 </html>
