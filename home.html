@@ -34,17 +34,20 @@
             margin-bottom: 3px;
         }
         footer {
-            position: fixed;
-            bottom: 0;
             width: 100%;
             font-size: 12px;
             padding: 3px 0;
             background: #222;
             color: white;
             text-align: center;
+            position: relative;
         }
         body {
-            padding-bottom: 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 80px;
         }
     </style>
 </head>
