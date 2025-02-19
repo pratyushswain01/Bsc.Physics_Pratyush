@@ -6,12 +6,45 @@
     <title>UPSChub.video - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        .menu-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #444;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .menu-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .menu-bar img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 3px;
+        }
         footer {
             position: fixed;
             bottom: 0;
             width: 100%;
             font-size: 12px;
-            padding: 5px 0;
+            padding: 3px 0;
+            background: #222;
+            color: white;
+            text-align: center;
+        }
+        body {
+            padding-bottom: 60px;
         }
     </style>
 </head>
@@ -46,7 +79,27 @@
             </div>
         </div>
     </div>
-    <footer class="bg-gray-800 text-white text-center py-2 text-sm">
+    
+    <div class="menu-bar">
+        <button onclick="window.location.href='home.html'">
+            <img src="images/home.jpg" alt="Home">
+            Home
+        </button>
+        <button onclick="window.location.href='playlist.html'">
+            <img src="images/Playlist.jpg" alt="Video Playlist">
+            Playlist
+        </button>
+        <button onclick="window.location.href='shorts.html'">
+            <img src="images/shorts.jpg" alt="Saved Files">
+            Shorts
+        </button>
+        <button onclick="window.location.href='settings.html'">
+            <img src="images/settings.jpg" alt="Settings">
+            Settings
+        </button>
+    </div>
+
+    <footer>
         <p>&copy; 2025 UPSChub.video. All Rights Reserved.</p>
     </footer>
 </body>
