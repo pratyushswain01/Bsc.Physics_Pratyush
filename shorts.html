@@ -7,8 +7,10 @@
     <style>
         body { margin: 0; padding: 0; background: black; text-align: center; color: white; overflow: hidden; height: 100vh; }
         header, footer { padding: 10px; background: #222; position: fixed; width: 100%; z-index: 100; }
-        header { top: 0; }
+        header { top: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
         footer { bottom: 0; }
+        .menu { display: flex; gap: 15px; }
+        .menu a { color: white; text-decoration: none; padding: 5px 10px; background: #444; border-radius: 5px; }
         .video-container { width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; scroll-snap-align: start; }
         iframe { width: 100%; height: 100%; }
         .wrapper { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; -ms-overflow-style: none; }
@@ -16,7 +18,15 @@
     </style>
 </head>
 <body>
-    <header><h1>UPSChub Video</h1></header>
+    <header>
+        <h1>UPSChub Video</h1>
+        <nav class="menu">
+            <a href="#">Home</a>
+            <a href="#">Trending</a>
+            <a href="#">Categories</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
     <div class="wrapper">
         <div class="video-container"><iframe data-src="https://www.youtube.com/embed/shorts/VIDEO_ID1" frameborder="0" allowfullscreen></iframe></div>
         <div class="video-container"><iframe data-src="https://www.youtube.com/embed/shorts/VIDEO_ID2" frameborder="0" allowfullscreen></iframe></div>
@@ -67,4 +77,3 @@
     </script>
 </body>
 </html>
-
