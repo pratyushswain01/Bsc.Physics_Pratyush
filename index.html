@@ -17,6 +17,8 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            justify-content: center;
+            align-items: center;
         }
         header {
             background: #333;
@@ -55,131 +57,96 @@
                 transform: translateX(-100%);
             }
         }
-        .container {
+        .spinner-container {
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            z-index: 1001;
+        }
+        .spinner {
+            width: 1.5em;
+            height: 1.5em;
+            cursor: not-allowed;
+            border-radius: 50%;
+            border: 2px solid #444;
+            box-shadow: -5px -5px 5px #6359f8, 0px -5px 5px 0px #9c32e2, 5px -5px 5px #f36896, 5px 0 5px #ff0b0b, 5px 5px 5px 0px #ff5500, 0 5px 5px 0px #ff9500, -5px 5px 5px 0px #ffb700;
+            animation: rot55 0.7s linear infinite;
+            position: relative;
+        }
+        .spinnerin {
+            border: 2px solid #444;
+            width: 0.75em;
+            height: 0.75em;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes rot55 {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loader {
+            display: flex;
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+        }
+        .hidden {
             display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 100px 20px 80px;
-            flex-grow: 1;
-            height: calc(100vh - 160px);
-            overflow-y: auto;
         }
-        .video-card {
-            background: white;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 280px;
+        @keyframes pass {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
-        .video-card video {
-            width: 100%;
-            border-radius: 8px;
+        .l, .o, .a, .d, .i, .n, .g, .d1, .d2 {
+            color: black;
+            opacity: 0;
+            animation: pass 2s ease-in-out infinite;
+            letter-spacing: 0.5em;
+            text-shadow: 2px 2px 3px #919191;
         }
-        .menu-bar {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: #444;
-            color: white;
-            padding: 5px;
-            position: fixed;
-            bottom: 50px;
-            width: 90%;
-            left: 5%;
-            border-radius: 10px;
-            z-index: 1000;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-        .menu-bar button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 12px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .menu-bar img {
-            width: 20px;
-            height: 20px;
-            margin-bottom: 2px;
-        }
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 5px;
-            font-size: 12px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1000;
-        }
+        .o { animation-delay: 0.2s; }
+        .a { animation-delay: 0.4s; }
+        .d { animation-delay: 0.6s; }
+        .i { animation-delay: 0.8s; }
+        .n { animation-delay: 1s; }
+        .g { animation-delay: 1.2s; }
+        .d1 { animation-delay: 1.4s; }
+        .d2 { animation-delay: 1.6s; }
     </style>
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(container => container.style.display = 'none');
-            document.getElementById(pageId).style.display = 'flex';
+        function showWelcome() {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('welcome').classList.remove('hidden');
         }
+        setTimeout(showWelcome, 5000);
     </script>
 </head>
 <body>
     <header>UPSC Hub - Video Platform</header>
     <div class="runner-banner"><div>"Stay focused and keep learning! UPSC Hub is with you on this journey."</div></div>
-    <div id="home" class="container" style="display: flex;">
+    <div class="spinner-container">
+        <div class="spinner">
+            <div class="spinnerin"></div>
+        </div>
+    </div>
+    <div id="loader" class="loader">
+        <span class="l">L</span>
+        <span class="o">o</span>
+        <span class="a">a</span>
+        <span class="d">d</span>
+        <span class="i">i</span>
+        <span class="n">n</span>
+        <span class="g">g</span>
+        <span class="d1">.</span>
+        <span class="d2">.</span>
+    </div>
+    <div id="welcome" class="hidden">
         <p>Welcome to UPSC Hub!</p>
     </div>
-    <div id="playlist" class="container">
-        <div class="video-card">
-            <video controls>
-                <source src="video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>UPSC Preparation Strategy</p>
-        </div>
-        <div class="video-card">
-            <video controls>
-                <source src="video2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>Important Current Affairs</p>
-        </div>
-    </div>
-    <div id="shorts" class="container">
-        <p> Shorts will appear here.</p>
-    </div>
-    <div id="settings" class="container">
-        <p>Settings Page</p>
-    </div>
-    <div class="menu-bar">
-        <button onclick="window.location.href='home.html'">
-            <img src="images/home.jpg" alt="Home">
-            Home
-        </button>
-        <button onclick="showPage('playlist')">
-            <img src="images/Playlist.jpg" alt="Video Playlist">
-            Playlist
-        </button>
-        <button onclick="openShorts()">
-            <img src="images/shorts.jpg" alt="Saved Files">
-            Shorts
-        </button>
-        <script>
-            function openShorts() {
-                window.location.href = 'shorts.html';
-            }
-        </script>
-        <button onclick="showPage('settings')">
-            <img src="images/settings.jpg" alt="Settings">
-            Settings
-        </button>
-    </div>
-    <footer>
-        <p>&copy; 2025 UPSC Hub</p>
-    </footer>
 </body>
 </html>
