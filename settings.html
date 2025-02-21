@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSChub.Video Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #333;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 3px solid #ddd;
+            flex-wrap: wrap;
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            background: #f8f9fa;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+        .tab:hover {
+            background: #e0e0e0;
+        }
+        input[name="tab"] {
+            display: none;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        input:checked + label {
+            background: #007bff;
+            color: white;
+            border-bottom: 3px solid #0056b3;
+        }
+        input:checked + label + .tab-content {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <input type="radio" id="tab1" name="tab" checked>
+            <label class="tab" for="tab1">Account</label>
+            <div class="tab-content">
+                <h2>Account Settings</h2>
+                <p>Manage your account details and preferences with ease.</p>
+            </div>
+
+            <input type="radio" id="tab2" name="tab">
+            <label class="tab" for="tab2">Notifications</label>
+            <div class="tab-content">
+                <h2>Notification Settings</h2>
+                <p>Customize your notification preferences to stay updated.</p>
+            </div>
+
+            <input type="radio" id="tab3" name="tab">
+            <label class="tab" for="tab3">Privacy</label>
+            <div class="tab-content">
+                <h2>Privacy Settings</h2>
+                <p>Control your privacy settings to enhance security.</p>
+            </div>
+
+            <input type="radio" id="tab4" name="tab">
+            <label class="tab" for="tab4">About</label>
+            <div class="tab-content">
+                <h2>About UPSChub.Video</h2>
+                <p>Learn more about UPSChub.Video and our mission.</p>
+            </div>
+
+            <input type="radio" id="tab5" name="tab">
+            <label class="tab" for="tab5">Security</label>
+            <div class="tab-content">
+                <h2>Security Settings</h2>
+                <p>Enhance your account security by managing your passwords and authentication methods.</p>
+            </div>
+
+            <input type="radio" id="tab6" name="tab">
+            <label class="tab" for="tab6">Appearance</label>
+            <div class="tab-content">
+                <h2>Appearance Settings</h2>
+                <p>Customize the look and feel of the UPSChub.Video app.</p>
+            </div>
+
+            <input type="radio" id="tab7" name="tab">
+            <label class="tab" for="tab7">Support</label>
+            <div class="tab-content">
+                <h2>Support</h2>
+                <p>Contact support for any issues or inquiries related to UPSChub.Video.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
