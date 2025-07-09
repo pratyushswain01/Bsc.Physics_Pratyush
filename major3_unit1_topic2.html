@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The <title> has been changed for the new topic -->
+    <title>Major III: Electrostatic Potential & Dipole | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- KaTeX for beautiful math rendering (added for this topic) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <style>
+        /* --- THEME, GENERAL, HEADER, ETC. STYLES (Identical for consistency) --- */
+        :root { --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --code-bg: #e9ecef; }
+        body.dark-mode { --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --code-bg: #2b303b;}
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
+        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        /* --- Styles for the content on this page --- */
+        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
+        .content-card h4 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .content-card p { margin-bottom: 1rem; }
+        .content-card ul { padding-left: 20px; }
+        .content-card li { margin-bottom: 0.5rem; }
+        .katex-display { margin: 1em 0; text-align: center; }
+
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+             <!-- The h1 is now updated -->
+            <h1>Major III: Electrostatics</h1>
+            <div class="header-controls">
+                <div id="datetime" class="datetime"></div>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   
+
+    <main class="container">
+        
+        <a href="major3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Major III Topics</a>
+        
+        <div class="content-card">
+            <!--
+                V V V V V V V V V V V V V V V V V V V V V
+                
+                NEW CONTENT FOR "ELECTROSTATIC POTENTIAL & DIPOLE"
+                
+                V V V V V V V V V V V V V V V V V V V V V
+            -->
+
+            <h2>Electrostatic Potential & Electric Dipole</h2>
+
+            <p>While the electric field describes the force on a charge, electrostatic potential describes the energy associated with its position. This section introduces the concept of potential, its relationship to the electric field, and its application to a fundamental charge configuration: the electric dipole.</p>
+
+            <h3>1. Electrostatic Potential (V)</h3>
+            <p>Electrostatic potential at a point in an electric field is defined as the work done by an external agent in moving a unit positive charge from a reference point (usually infinity) to that point, without acceleration.</p>
+            $$ V(\vec{r}) = \frac{W_{\infty \to r}}{q_0} $$
+            <p>Since the electrostatic force is conservative, the work done is path-independent. This allows us to define a scalar potential field. The relationship between potential and potential energy ($U$) is simply $U = qV$. The SI unit of potential is the Volt (V), where 1 Volt = 1 Joule/Coulomb.</p>
+            
+            <h4>Relationship with Electric Field</h4>
+            <p>The potential difference between two points A and B is the negative line integral of the electric field:</p>
+            $$ \Delta V = V_B - V_A = -\int_A^B \vec{E} \cdot d\vec{l} $$
+            <p>Conversely, the electric field is the negative gradient of the potential. This is a crucial relationship that allows calculating one from the other.</p>
+            $$ \vec{E} = -\nabla V $$
+            <p>This means the electric field points in the direction of the steepest decrease in potential.</p>
+
+            <h4>Potential due to a Point Charge</h4>
+            <p>By integrating the electric field of a point charge from infinity, we find the potential at a distance $r$ from a charge $q$ is:</p>
+            $$ V = \frac{1}{4\pi\epsilon_0} \frac{q}{r} $$
+            <p>Note that potential is a scalar quantity, which makes calculations involving multiple charges much simpler than for the vector electric field. For a system of charges, the total potential is the algebraic sum of the individual potentials:</p>
+            $$ V_{\text{total}} = \sum_i V_i = \frac{1}{4\pi\epsilon_0} \sum_i \frac{q_i}{r_i} $$
+            
+            <h3>2. The Electric Dipole</h3>
+            <p>An electric dipole consists of two equal and opposite point charges, $+q$ and $-q$, separated by a small vector distance $\vec{d}$.</p>
+            <h4>Dipole Moment</h4>
+            <p>The strength and orientation of a dipole are characterized by its electric dipole moment, $\vec{p}$, a vector quantity defined as:</p>
+            $$ \vec{p} = q\vec{d} $$
+            <p>The vector $\vec{d}$ points from the negative charge to the positive charge.</p>
+
+            <h4>Potential due to a Dipole</h4>
+            <p>The potential at a point P, located by a position vector $\vec{r}$ far from the dipole ($r \gg d$), can be found by summing the potentials of the two charges. Using geometric approximations, this simplifies to:</p>
+            $$ V(\vec{r}) = \frac{1}{4\pi\epsilon_0} \frac{p \cos\theta}{r^2} = \frac{1}{4\pi\epsilon_0} \frac{\vec{p} \cdot \hat{r}}{r^2} $$
+            <p>Here, $\theta$ is the angle between the dipole moment vector $\vec{p}$ and the position vector $\vec{r}$.</p>
+            
+            <h4>Electric Field of a Dipole</h4>
+            <p>The electric field of a dipole can be calculated by taking the negative gradient of its potential ($E = -\nabla V$) in spherical coordinates. The components are:</p>
+            <ul>
+                <li>Radial component: $E_r = -\frac{\partial V}{\partial r} = \frac{2p \cos\theta}{4\pi\epsilon_0 r^3}$</li>
+                <li>Tangential component: $E_\theta = -\frac{1}{r}\frac{\partial V}{\partial \theta} = \frac{p \sin\theta}{4\pi\epsilon_0 r^3}$</li>
+            </ul>
+            <p>Notice that the field of a dipole falls off as $1/r^3$, which is faster than the $1/r^2$ decay of a single point charge.</p>
+
+            <h3>3. Dipole in an External Electric Field</h3>
+            <h4>Torque on a Dipole</h4>
+            <p>When a dipole is placed in a uniform external electric field $\vec{E}$, the forces on the two charges form a couple, resulting in a torque that tends to align the dipole with the field. The torque is given by:</p>
+            $$ \vec{\tau} = \vec{p} \times \vec{E} $$
+            
+            <h4>Potential Energy of a Dipole</h4>
+            <p>The potential energy $U$ of a dipole in an external field is the work done to rotate it from a position of zero energy (usually $\theta = 90^\circ$) to its current orientation. It is given by the dot product:</p>
+            $$ U = - \vec{p} \cdot \vec{E} $$
+            <ul>
+                <li>The energy is minimum ($U = -pE$) when the dipole is aligned with the field ($\theta = 0^\circ$), which is a position of stable equilibrium.</li>
+                <li>The energy is maximum ($U = +pE$) when the dipole is anti-aligned with the field ($\theta = 180^\circ$), which is a position of unstable equilibrium.</li>
+            </ul>
+
+            <!-- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ -->
+        </div>
+    </main>
+
+    <footer>
+        <p>Created and Designed by Pratyush Swain</p>
+    </footer>
+
+    <script>
+        // SCRIPT IS IDENTICAL TO THE PROVIDED VERSION, NO CHANGES NEEDED
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); if (runnerText) { const runnerContent = runnerText.innerHTML; runnerText.innerHTML += runnerContent; }
+            const applyTheme = (theme) => { if (theme === 'dark') { document.body.classList.add('dark-mode'); themeToggle.checked = true; } else { document.body.classList.remove('dark-mode'); themeToggle.checked = false; } };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            
+            // This line enables KaTeX rendering for the math formulas
+            renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        });
+    </script>
+</body>
+</html>
