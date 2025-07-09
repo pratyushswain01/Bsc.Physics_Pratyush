@@ -10,57 +10,91 @@
     <style>
         /* --- THEME DEFINITIONS --- */
         :root {
-            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --accordion-active-bg: #f1f3f5;
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --accordion-active-bg: #f1f3f5;
         }
         body.dark-mode {
-            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --accordion-active-bg: #2c2c2c;
+            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --accordion-active-bg: #2c2c2c;
         }
-        /* --- GENERAL, HEADER, THEME SWITCHER, RUNNER STYLES --- */
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
-        .container { width: 90%; max-width: 900px; margin: 2rem auto; flex: 1; }
-        header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+
+        /* --- GENERAL & LAYOUT STYLES --- */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-color); 
+            color: var(--text-primary); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+        .container { 
+            /* MODIFIED: Increased width for a fuller look */
+            width: 95%; 
+            max-width: 1100px; 
+            margin: 2.5rem auto; 
+            flex: 1; 
+        }
+
+        /* --- HEADER & THEME SWITCHER --- */
+        header { 
+            background-color: var(--header-bg); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            padding: 1rem 5%; 
+            border-bottom: 1px solid var(--border-color); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        header h1 { 
+            margin: 0; 
+            font-size: 1.7em; /* Adjusted for better hierarchy */
+            color: var(--primary-accent); 
+        }
         .header-controls { display: flex; align-items: center; gap: 1.5rem; }
         .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
-        @media (max-width: 768px) { header h1 { font-size: 1.2em; } .datetime { display: none; } }
-        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        @media (max-width: 768px) { 
+            header h1 { font-size: 1.3em; } 
+            .datetime { display: none; } 
+        }
+        .theme-switcher { position: relative; } 
+        #theme-toggle { display: none; }
         .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
-        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
-        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
-        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- REMOVED QUOTE RUNNER STYLES --- */
+        
         /* --- ACCORDION & LIST STYLES --- */
         .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
         .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
         .unit-accordion { display: flex; flex-direction: column; gap: 1rem; }
         .unit-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; transition: all 0.3s ease; box-shadow: 0 2px 8px var(--shadow-color); width: 100%; text-align: left; }
         .unit-header:hover, .unit-header.active { border-color: var(--primary-accent); background-color: var(--accordion-active-bg); }
-        .unit-header h2 { margin: 0; font-size: 1.25rem; color: var(--text-primary); }
+        .unit-header h2 { margin: 0; font-size: 1.2rem; color: var(--text-primary); }
         .unit-header .icon { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.3s ease; }
         .unit-header.active .icon { transform: rotate(180deg); color: var(--primary-accent); }
         .unit-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background-color: var(--card-bg); border-radius: 0 0 10px 10px; margin-top: -8px; }
         .unit-content-inner { padding: 0.5rem 1.5rem 1.5rem 1.5rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 10px 10px; }
-        .unit-content-inner ul { list-style: none; padding-left: 0; margin: 0; }
+        .unit-content-inner ul { list-style: none; padding-left: 0; margin: 0; font-size: 0.95rem; /* MODIFIED: Slightly smaller font size */ }
         .unit-content-inner li { margin-bottom: 0.75rem; }
         .unit-content-inner li a { color: var(--primary-accent); text-decoration: none; font-weight: 400; display: flex; align-items: center; gap: 0.75rem; transition: color 0.2s ease; }
         .unit-content-inner li a:hover { color: var(--text-primary); text-decoration: underline; }
         .unit-content-inner li a::before { content: "\f061"; font-family: "Font Awesome 6 Free"; font-weight: 900; opacity: 0.6; color: var(--primary-accent); }
         
-        /* --- UPDATED: COURSE ASSESSMENT SECTION --- */
+        /* --- COURSE ASSESSMENT SECTION --- */
         .assessment-card {
             margin-top: 3rem; padding: 1.5rem 2rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 2px 8px var(--shadow-color);
         }
-        .assessment-card h3 { margin-top: 0; margin-bottom: 1rem; color: var(--text-primary); font-size: 1.5em; text-align: center; }
-        .assessment-content { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 2rem; }
-        .assessment-info { flex: 1; min-width: 280px; }
-        .assessment-info p { color: var(--text-secondary); margin-top:0; margin-bottom: 1rem; text-align: center;}
+        .assessment-card h3 { margin-top: 0; margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.5em; text-align: center; }
+        .assessment-content { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
+        .assessment-info { flex: 1; min-width: 280px; max-width: 600px; }
+        .assessment-info p { color: var(--text-secondary); margin: 0 0 1.5rem 0; text-align: center; }
         .assessment-breakdown { text-align: left; background-color: var(--bg-color); padding: 1rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); }
         .assessment-breakdown h4 { margin-top: 0; margin-bottom: 0.75rem; color: var(--text-primary); }
-        .assessment-breakdown ul { list-style-position: inside; padding-left: 0; margin: 0; }
+        .assessment-breakdown ul { list-style-position: inside; padding-left: 0; margin: 0; font-size: 0.95rem; /* MODIFIED: Slightly smaller font size */ }
         .assessment-breakdown li { padding: 0.25rem 0; }
         .button-primary { display: inline-block; text-decoration: none; background: var(--primary-accent); color: white; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1.5rem; }
         .button-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); filter: brightness(1.1); }
@@ -73,6 +107,7 @@
 
     <header>
         <div class="header-content">
+            <!-- MODIFIED: Title changed for consistency -->
             <h1>Major III: Electricity & Magnetism</h1>
             <div class="header-controls">
                 <div id="datetime" class="datetime"></div>
@@ -84,16 +119,13 @@
         </div>
     </header>
 
-    <div class="quote-runner">
-        <p class="runner-text"> "The search for truth is more precious than its possession." - <em>Albert Einstein</em><span class="separator">||</span>"I am among those who think that science has great beauty." - <em>Marie Curie</em><span class="separator">||</span>"A theory is the more impressive the greater the simplicity of its premises." - <em>Albert Einstein</em><span class="separator">||</span></p>
-    </div>
+    <!-- REMOVED: Quote Runner section -->
 
     <main class="container">
         
         <a href="sem2.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</a>
         
         <div class="unit-accordion">
-            <!-- *** UPDATED Unit 1 *** -->
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 1: Electric Field and Electric Potential</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
@@ -104,7 +136,6 @@
                     <li><a href="core3_unit1_topic5.html">Electrostatic Energy & Conductors</a></li>
                 </ul></div></div>
             </div>
-            <!-- *** UPDATED Unit 2 *** -->
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 2: Magnetic Field</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
@@ -114,7 +145,6 @@
                     <li><a href="core3_unit2_topic4.html">Ballistic Galvanometer</a></li>
                 </ul></div></div>
             </div>
-            <!-- *** UPDATED Unit 3 *** -->
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 3: Matter & Electromagnetic Induction</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
@@ -124,7 +154,6 @@
                     <li><a href="core3_unit3_topic4.html">Introduction to Maxwell’s Equations</a></li>
                 </ul></div></div>
             </div>
-            <!-- *** UPDATED Unit 4 *** -->
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 4: Electrical Circuits & Network Theorems</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
@@ -136,7 +165,6 @@
             </div>
         </div>
 
-        <!-- *** UPDATED COURSE ASSESSMENT SECTION *** -->
         <div class="assessment-card">
             <h3>Course & Assessment Structure</h3>
             <div class="assessment-content">
@@ -165,24 +193,63 @@
     </footer>
 
     <script>
-        // JAVASCRIPT IS IDENTICAL, NO CHANGES NEEDED
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('theme-toggle');
             const datetimeElement = document.getElementById('datetime');
-            const runnerText = document.querySelector('.runner-text');
-            if (runnerText) { const runnerContent = runnerText.innerHTML; runnerText.innerHTML += runnerContent; }
-            const applyTheme = (theme) => { if (theme === 'dark') { document.body.classList.add('dark-mode'); themeToggle.checked = true; } else { document.body.classList.remove('dark-mode'); themeToggle.checked = false; } };
-            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
-            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
-            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
-            setInterval(updateDateTime, 1000); updateDateTime();
+            
+            // REMOVED: Runner text logic is no longer needed
+
+            // Theme switcher logic
+            const applyTheme = (theme) => { 
+                if (theme === 'dark') { 
+                    document.body.classList.add('dark-mode'); 
+                    themeToggle.checked = true; 
+                } else { 
+                    document.body.classList.remove('dark-mode'); 
+                    themeToggle.checked = false; 
+                } 
+            };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
+            applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { 
+                const newTheme = themeToggle.checked ? 'dark' : 'light'; 
+                document.body.classList.toggle('dark-mode', themeToggle.checked); 
+                localStorage.setItem('theme', newTheme); 
+            });
+
+            // Datetime updater
+            const updateDateTime = () => { 
+                const now = new Date(); 
+                const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; 
+                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; 
+                datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; 
+            };
+            setInterval(updateDateTime, 1000); 
+            updateDateTime();
+
+            // Accordion logic
             const accordionHeaders = document.querySelectorAll('.unit-header');
             accordionHeaders.forEach(header => {
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
                     const isOpen = header.classList.contains('active');
-                    accordionHeaders.forEach(otherHeader => { if (otherHeader !== header) { otherHeader.classList.remove('active'); otherHeader.nextElementSibling.style.maxHeight = null; } });
-                    if (isOpen) { header.classList.remove('active'); content.style.maxHeight = null; } else { header.classList.add('active'); content.style.maxHeight = content.scrollHeight + "px"; }
+                    
+                    // Close other accordions
+                    accordionHeaders.forEach(otherHeader => { 
+                        if (otherHeader !== header) { 
+                            otherHeader.classList.remove('active'); 
+                            otherHeader.nextElementSibling.style.maxHeight = null; 
+                        } 
+                    });
+                    
+                    // Open or close the clicked accordion
+                    if (isOpen) { 
+                        header.classList.remove('active'); 
+                        content.style.maxHeight = null; 
+                    } else { 
+                        header.classList.add('active'); 
+                        content.style.maxHeight = content.scrollHeight + "px"; 
+                    }
                 });
             });
         });
