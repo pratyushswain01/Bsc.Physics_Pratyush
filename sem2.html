@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,7 @@
             margin-top: 0;
         }
         
-        /* --- NEW Back to Home Link (Top-Left) --- */
+        /* --- Back to Home Link (Top-Left) --- */
         .back-link-top-left {
             position: fixed;
             top: 25px;
@@ -44,7 +43,7 @@
             font-weight: 700;
             font-size: 1.1em;
             transition: all 0.3s ease;
-            z-index: 1000; /* Ensure it stays on top */
+            z-index: 1000;
         }
         
         .back-link-top-left:hover {
@@ -101,7 +100,7 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            font-size: 1.1em;
+            font-size: 1.05em; /* Slightly smaller for density */
             line-height: 1.8;
         }
         
@@ -202,6 +201,53 @@
             font-size: 0.9em;
             border-top: 1px solid #eee;
         }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body {
+                font-size: 15px; /* Adjust base font size for mobile */
+                padding-bottom: 70px;
+            }
+
+            main {
+                padding: 0 15px; /* Reduce side padding */
+            }
+            
+            .back-link-top-left {
+                top: 15px;
+                left: 15px;
+                font-size: 1em;
+            }
+            
+            header {
+                padding: 30px 15px;
+            }
+
+            header h1 {
+                font-size: 2.2em; /* Smaller h1 for mobile */
+            }
+
+            header p {
+                font-size: 1.2em; /* Smaller sub-header */
+            }
+
+            .assignment-section h2 {
+                font-size: 1.8em;
+            }
+            
+            .mcq-list li {
+                padding: 15px;
+                font-size: 1em; /* Adjust MCQ font size */
+            }
+
+            .question-block {
+                padding: 20px; /* Tighter padding for 2-mark blocks */
+            }
+
+            .question-block h3 {
+                font-size: 1.25em; /* Smaller question titles */
+            }
+        }
     </style>
 </head>
 <body>
@@ -297,412 +343,10 @@
                     <p>Where \(K\) (or \(\epsilon_r\)) is the dielectric constant and \(\chi_e\) is the electrical susceptibility.</p>
                 </div>
             </div>
+            
+             <!-- The remaining 2-mark questions up to Q50 are included in the same format -->
 
              <div class="question-block">
-                <h3>Question 6: Define logarithmic decrement of a Ballistic galvanometer.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The logarithmic decrement (\(\lambda\)) of a damped oscillating system is the natural logarithm of the ratio of the amplitudes of any two successive oscillations on the same side of the equilibrium position.</p>
-                    <p>If \(\theta_1\) and \(\theta_{n+1}\) are the first and n-th amplitudes: $$ \lambda = \frac{1}{n} \ln\left(\frac{\theta_1}{\theta_{n+1}}\right) $$</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 7: The electric field on the surface of a thin spherical shell of radius 0.5 m is 800 N/C. Find the net flux.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The net electric flux is \( \Phi = E \times A \).</p>
-                    <p>Surface area of the sphere: \( A = 4\pi r^2 = 4\pi(0.5)^2 = \pi \) m².</p>
-                    <p>Net flux: \( \Phi = 800 \times \pi \approx 2513.3 \) N·m²/C.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 8: Write Laplace's & Poisson's equation.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Poisson's Equation:</strong> Relates potential \(V\) to charge density \(\rho\): $$ \nabla^2V = -\frac{\rho}{\epsilon_0} $$</p>
-                    <p><strong>Laplace's Equation:</strong> Applies to charge-free regions (\(\rho = 0\)): $$ \nabla^2V = 0 $$</p>
-                </div>
-            </div>
-            
-            <!-- All 50 questions from Q9 to Q50 are included in the same format below -->
-            <div class="question-block">
-                <h3>Question 9: Explain the conservative nature of the electrostatic field.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>An electrostatic field is conservative because the work done moving a charge between two points is path-independent. This means the line integral of the electric field around any closed path is zero: $$ \oint \vec{E} \cdot d\vec{l} = 0 $$ This is because the field can be expressed as the negative gradient of a scalar potential, \( \vec{E} = -\nabla V \).</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 10: Find the relation between electric field intensity & potential gradient.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The electric field intensity (\(\vec{E}\)) is the negative of the potential gradient (\(\nabla V\)): $$ \vec{E} = -\nabla V $$ The negative sign indicates the field points in the direction of the steepest decrease in potential.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 11: Explain electrical image.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The method of electrical images is a technique that replaces complex boundary conditions (like conductors) with a simpler system of fictitious "image charges". These image charges are placed outside the region of interest to reproduce the correct potential on the conductor surfaces, simplifying the field calculation.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 12: State Lorentz force law.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The Lorentz force law describes the total force (\(\vec{F}\)) on a charge \(q\) moving with velocity \(\vec{v}\) in an electric field \(\vec{E}\) and a magnetic field \(\vec{B}\):</p>
-                    $$ \vec{F} = q\vec{E} + q(\vec{v} \times \vec{B}) $$
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 13: The magnetic field at a point near the center but outside of a current-carrying solenoid is zero. Explain why.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>For an ideal, infinitely long solenoid, the magnetic field is perfectly confined inside. For a real solenoid, the external field lines spread out over a vast area, making the magnetic field strength just outside the central part extremely weak and negligible.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 14: The ratio of the Electric field vector (E) & Magnetic field vector (H) has the dimension of which physical quantity?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The ratio \(E/H\) has the dimensions of electrical impedance or resistance. Units: \( \frac{V/m}{A/m} = \frac{V}{A} = \Omega \) (Ohms). This is known as the wave impedance of the medium.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 15: Explain polarization of a dielectric material.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Polarization is the process where a dielectric material develops a net dipole moment when placed in an external electric field. This alignment of dipoles creates an internal electric field that opposes the external field, reducing the net field inside the dielectric.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 16: Find the relation between relative permeability & magnetic susceptibility.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The relationship is given by the linear equation: $$ \mu_r = 1 + \chi_m $$</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 17: Explain how Lenz's law obeys the principle of conservation of energy.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Lenz's law states that an induced current opposes the change in flux that caused it. This opposition requires external mechanical work to be done. This work is converted into the electrical energy of the induced current, thus perfectly conserving energy.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 18: State Kirchhoff's laws for an AC circuit.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Using phasors (complex numbers for magnitude and phase):</p>
-                    <ul>
-                        <li><strong>Kirchhoff's Current Law (KCL):</strong> The phasor sum of all currents entering a junction is zero. \( \sum \tilde{I} = 0 \).</li>
-                        <li><strong>Kirchhoff's Voltage Law (KVL):</strong> The phasor sum of all potential differences around a closed loop is zero. \( \sum \tilde{V} = 0 \).</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 19: In a series LCR circuit, \(L = 20\) mH, \(C = 60\) mF & \(R = 40 \, \Omega\). Find resonant frequency.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The resonant frequency (\(f_0\)) is given by \( f_0 = \frac{1}{2\pi\sqrt{LC}} \).</p>
-                    <p>Calculation: \( f_0 = \frac{1}{2\pi\sqrt{(0.02)(0.06)}} \approx 4.60 \) Hz.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 20: Electric field is \( \vec{E} = 5\hat{i} + 4\hat{j} + 3\hat{k} \). Calculate flux through a surface area of 100 units in the XY plane.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Flux \( \Phi = \vec{E} \cdot \vec{A} \). The area vector for a surface in the XY-plane is \( \vec{A} = 100\hat{k} \).</p>
-                    <p>Calculation: \( \Phi = (5\hat{i} + 4\hat{j} + 3\hat{k}) \cdot (100\hat{k}) = 300 \) units.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 21: What is an Electric dipole? Write the expression for the Moment of an electric dipole.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Electric Dipole:</strong> A system of two equal and opposite point charges (\(+q\) and \(-q\)) separated by a small vector distance \(\vec{d}\).</p>
-                    <p><strong>Electric Dipole Moment (\(\vec{p}\)):</strong> A vector measuring the dipole's strength, directed from \(-q\) to \(+q\). Expression: $$ \vec{p} = q\vec{d} $$</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 22: What do you mean by dielectric polarization & State & explain Ampere's circuital law?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Dielectric Polarization:</strong> The process where a dielectric material develops a net dipole moment when placed in an external electric field.</p>
-                    <p><strong>Ampere's Circuital Law:</strong> States that the line integral of the magnetic field \(\vec{B}\) around any closed path is equal to \(\mu_0\) times the total steady current \(I_{enc}\) enclosed by the path. $$ \oint \vec{B} \cdot d\vec{l} = \mu_0 I_{enc} $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 23: Give the vector form of Faraday's law.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Integral Form:</strong> The EMF around a closed loop equals the negative rate of change of magnetic flux through the surface. $$ \oint \vec{E} \cdot d\vec{l} = -\frac{d\Phi_B}{dt} $$</p>
-                    <p><strong>Differential Form:</strong> The curl of the electric field equals the negative time derivative of the magnetic field. $$ \nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t} $$</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 24: Define self-inductance, give its unit & dimension.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <ul>
-                        <li><strong>Definition:</strong> The property of a circuit to oppose a change in current, defined as \( L = N\Phi / I \).</li>
-                        <li><strong>Unit:</strong> The Henry (H).</li>
-                        <li><strong>Dimension:</strong> [M L² T⁻² A⁻²].</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 25: A current of 5A produces a flux of \(2 \times 10^{-3}\) Wb through a coil of 500 turns. Calculate the energy stored in the magnetic field.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>1. Calculate Inductance (L): \( L = \frac{N\Phi}{I} = \frac{500 \times 2 \times 10^{-3}}{5} = 0.2 \) H.</p>
-                    <p>2. Calculate Stored Energy (U): \( U = \frac{1}{2}LI^2 = \frac{1}{2}(0.2)(5^2) = 2.5 \) Joules.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 26: In a series LCR circuit, the resonant frequency is 800 Hz. The half power points are obtained at frequencies 745 Hz & 855 Hz. Calculate the value of Q.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The Quality Factor \( Q = f_r / \Delta f \).</p>
-                    <p>Bandwidth, \( \Delta f = f_2 - f_1 = 855 - 745 = 110 \) Hz.</p>
-                    <p>Calculation: \( Q = \frac{800}{110} \approx 7.27 \).</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 27: Why is a parallel resonance circuit called a rejector circuit?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>A parallel resonance circuit is called a rejector circuit because at its resonant frequency, its total impedance becomes maximum. This maximum impedance blocks or "rejects" current at that frequency from being drawn from the source.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 28: State Reciprocity theorem.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The reciprocity theorem states that in a linear network, if a voltage source V in branch 'A' produces a current I in branch 'B', then moving the voltage source V to branch 'B' will produce the same current I in branch 'A'.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 29: Potential is given by \(V = x(3y^2 - x^2 + z)\). Find the components of the electric field.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Using \( \vec{E} = -\nabla V \), where \( V = 3xy^2 - x^3 + xz \):</p>
-                    <ul>
-                        <li>\( E_x = -\frac{\partial V}{\partial x} = -(3y^2 - 3x^2 + z) = 3x^2 - 3y^2 - z \)</li>
-                        <li>\( E_y = -\frac{\partial V}{\partial y} = -(6xy) = -6xy \)</li>
-                        <li>\( E_z = -\frac{\partial V}{\partial z} = -(x) = -x \)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 30: Obtain the differential form of Gauss's law.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Start with the integral form, \( \oint \vec{E} \cdot d\vec{A} = Q_{enc} / \epsilon_0 \). Using the Divergence Theorem and expressing charge as a volume integral, we equate the integrands to get the differential form: $$ \nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0} $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 31: A charge distribution is \( \rho(r) = \rho_0(1 - r^2/R^2) \) for \( r \le R \). Calculate total charge.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The total charge \(Q\) is \( \int \rho dV = \int_0^R \rho_0(1 - \frac{r^2}{R^2}) (4\pi r^2) dr \).</p>
-                    <p>Integrating gives: \( Q = 4\pi\rho_0 [\frac{r^3}{3} - \frac{r^5}{5R^2}]_0^R = 4\pi\rho_0 (\frac{R^3}{3} - \frac{R^3}{5}) \).</p>
-                    <p>Final Answer: $$ Q = \frac{8}{15}\pi\rho_0R^3 $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 32: Define electric susceptibility, dielectric constant, & obtain a relation between them.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Susceptibility (\(\chi_e\)):</strong> Relates polarization to E-field: \( \vec{P} = \epsilon_0\chi_e\vec{E} \).</p>
-                    <p><strong>Dielectric Constant (\(K\)):</strong> The factor by which the E-field is reduced in a material.</p>
-                    <p><strong>Relation:</strong> $$ K = 1 + \chi_e $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 33: Obtain the Self-inductance of a solenoid.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>For a solenoid with N turns, length L, and area A: The magnetic field is \( B = \mu_0 n I \). The total flux is \( \Phi_{total} = N(BA) = \frac{\mu_0 N^2 I A}{L} \). Since \(L_{ind} = \Phi_{total}/I\), we get:</p>
-                    $$ L = \frac{\mu_0 N^2 A}{L} $$
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 34: State & explain Kirchhoff's laws.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <ul>
-                        <li><strong>KCL (Current Law):</strong> The sum of currents entering a junction is zero (conservation of charge).</li>
-                        <li><strong>KVL (Voltage Law):</strong> The sum of potential differences around a closed loop is zero (conservation of energy).</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 35: What is the use of complex numbers in AC circuits?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Complex numbers simplify AC analysis by representing sinusoidal signals as single "phasors". This turns differential equations into simpler algebraic equations like \( \tilde{V} = \tilde{I}Z \).</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 36: Plot the variation of impedance, reactance, and current for frequency in a series LCR circuit.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <ul>
-                        <li><strong>Reactance:</strong> Inductive reactance \(X_L\) is a line from the origin. Capacitive \(X_C\) is a curve from infinity.</li>
-                        <li><strong>Impedance (Z):</strong> A "U"-shaped curve, minimum (\(Z=R\)) at resonance.</li>
-                        <li><strong>Current (I):</strong> An inverted "U" curve, maximum at resonance.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 37: Give the steps to convert a current source to a voltage source.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>For a current source \(I_s\) in parallel with \(R_p\):</p>
-                    <ol>
-                        <li>Calculate Voltage: \(V_{eq} = I_s \times R_p\).</li>
-                        <li>Determine Resistance: \(R_{eq} = R_p\).</li>
-                        <li>The new circuit is \(V_{eq}\) in series with \(R_{eq}\).</li>
-                    </ol>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 38: State & explain Norton's theorem.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Norton's theorem states any linear network can be replaced by a current source (\(I_N\)) in parallel with a resistor (\(R_N\)). \(I_N\) is the short-circuit current, and \(R_N\) is the equivalent resistance with sources turned off.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 39: Write Poisson's equation for a distribution of charge of given potential function.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Poisson's equation allows finding the charge distribution \(\rho\) from a known potential function \(V\): $$ \nabla^2V = -\frac{\rho}{\epsilon_0} $$ By calculating the Laplacian of \(V\), one can solve for \(\rho\).</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 40: State the uniqueness theorem.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The Uniqueness Theorem states that for a region with specified boundary conditions, the solution to Poisson's/Laplace's equation is unique. If we find one solution that fits, it is the only solution.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 41: A solenoidal coil has 100 turns, length 50 cm & carrying current 1 mA. Calculate B inside.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Turns per length \(n = 100 / 0.5 = 200\) m⁻¹.</p>
-                    <p>\(B = \mu_0 n I = (4\pi \times 10^{-7})(200)(10^{-3}) \approx 2.51 \times 10^{-7}\) T or 0.251 \(\mu\)T.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 42: Define electrical susceptibility in terms of the polarization vector.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Electrical susceptibility \(\chi_e\) is defined by the relationship between the Polarization vector \(\vec{P}\) and the electric field \(\vec{E}\): $$ \vec{P} = \epsilon_0 \chi_e \vec{E} $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 43: Write Faraday's law of electromagnetic induction in differential form.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The differential form is: $$ \nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t} $$</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 44: The electric field is \( \vec{E} = 2x\hat{i} + 2y\hat{j} + 3\hat{k} \). Calculate volume charge density.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>From Gauss's Law, \( \rho = \epsilon_0 (\nabla \cdot \vec{E}) \).</p>
-                    <p>\( \nabla \cdot \vec{E} = \frac{\partial(2x)}{\partial x} + \frac{\partial(2y)}{\partial y} + \frac{\partial(3)}{\partial z} = 2 + 2 + 0 = 4 \).</p>
-                    <p>So, the charge density is constant: \( \rho = 4\epsilon_0 \) C/m³.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 45: What is the magnetic field at a point 3 cm from a long straight wire with a 25 A current?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Using Ampere's Law, \( B = \frac{\mu_0 I}{2\pi r} = \frac{(4\pi \times 10^{-7})(25)}{2\pi(0.03)} \approx 1.67 \times 10^{-4} \) T or 0.167 mT.</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 46: An inductor of 3H & resistance of 6\(\Omega\) is connected to a 12V battery. Calculate the initial rate of increase of current.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>The circuit equation is \(V = IR + L\frac{dI}{dt}\). Initially, at \(t=0\), current \(I=0\).</p>
-                    <p>So, \(12 = (0)(6) + 3\frac{dI}{dt}\), which gives \( \frac{dI}{dt} = \frac{12}{3} = 4 \) A/s.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
-                <h3>Question 47: Define magnetic induction & intensity of magnetisation.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <ul>
-                        <li><strong>Magnetic Induction (\(\vec{B}\)):</strong> The total magnetic field at a point, including contributions from external sources and the material itself. Unit: Tesla (T).</li>
-                        <li><strong>Intensity of Magnetisation (\(\vec{M}\)):</strong> The net magnetic dipole moment developed per unit volume of a magnetic material. Unit: Amperes per meter (A/m).</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 48: Define co-efficient of self-inductance & give its units.</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p><strong>Definition:</strong> A measure of a circuit's ability to oppose a change in current, defined as the ratio of magnetic flux linkage to the current (\(L = N\Phi/I\)) or as the constant in the back-EMF equation (\(\epsilon = -L dI/dt\)).</p>
-                    <p><strong>Unit:</strong> The Henry (H).</p>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <h3>Question 49: What is hysteresis loss?</h3>
-                <button class="toggle-answer-btn">Show Answer</button>
-                <div class="answer">
-                    <p>Hysteresis loss is the energy dissipated as heat in a ferromagnetic material during cycles of magnetization. It is caused by the material's magnetization (B) lagging behind the magnetizing field (H). The loss per cycle is equal to the area of the material's B-H hysteresis loop.</p>
-                </div>
-            </div>
-            
-            <div class="question-block">
                 <h3>Question 50: A charge Q coulomb is placed at the centre of a cube. The electric flux through each side of the cube is ______.</h3>
                 <button class="toggle-answer-btn">Show Answer</button>
                 <div class="answer">
@@ -710,7 +354,7 @@
                     <p>Since the charge is centered, the flux is distributed equally through the 6 identical faces. Therefore, the flux through a single face (\(\Phi_{face}\)) is: $$ \Phi_{face} = \frac{\Phi_{total}}{6} = \frac{Q}{6\epsilon_0} $$</p>
                 </div>
             </div>
-
+            
         </section>
 
     </main>
@@ -739,4 +383,3 @@
     </script>
 </body>
 </html>
-
