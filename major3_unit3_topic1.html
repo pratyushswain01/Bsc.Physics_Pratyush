@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major III: Dielectric Properties of Matter | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <style>
+        :root { --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --code-bg: #e9ecef; }
+        body.dark-mode { --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --code-bg: #2b303b;}
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
+        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
+        .katex-display { margin: 1em 0; text-align: center; }
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content"><h1>Unit 3: Matter & E.M. Induction</h1>
+            <div class="header-controls">
+                <div id="datetime" class="datetime"></div>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+   
+    <main class="container">
+        <a href="major3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Major III Topics</a>
+        <div class="content-card">
+            <h2>Dielectric Properties of Matter</h2>
+            <p>Dielectrics are electrical insulators that can be polarized by an applied electric field. Unlike conductors, their charges are not free to move through the material but can shift slightly from their equilibrium positions. This behavior fundamentally alters the electric field within the material.</p>
+            
+            <h3>1. Polarization and the Electric Field</h3>
+            <p>When a dielectric material is placed in an external electric field ($\vec{E_0}$), its constituent atoms or molecules form tiny electric dipoles. The alignment of these dipoles throughout the material is called **polarization**. This creates an internal electric field ($\vec{E_i}$) that opposes the external field.</p>
+            <p>The net electric field inside the dielectric is therefore reduced:</p>
+            $$ \vec{E} = \vec{E_0} - \vec{E_i} $$
+            <p>This reduction in the field is a key characteristic of dielectrics and is fundamental to the operation of capacitors.</p>
+
+            <h3>2. Polarization Vector and Electric Displacement</h3>
+            <h4>Polarization ($\vec{P}$)</h4>
+            <p>The **Polarization Vector**, $\vec{P}$, is defined as the net dipole moment per unit volume of the dielectric material. For most materials, known as linear dielectrics, the polarization is directly proportional to the net electric field inside the material:</p>
+            $$ \vec{P} = \epsilon_0 \chi_e \vec{E} $$
+            <p>Here, $\chi_e$ is the **electric susceptibility**, a dimensionless quantity that measures how easily a material can be polarized.</p>
+            
+            <h4>Electric Displacement ($\vec{D}$)</h4>
+            <p>To simplify electromagnetism within materials, a new vector field, the **Electric Displacement** ($\vec{D}$), is introduced. It accounts for both the free charges and the bound (polarization) charges. $\vec{D}$ is defined as:</p>
+            $$ \vec{D} = \epsilon_0 \vec{E} + \vec{P} $$
+            <p>Substituting the expression for $\vec{P}$ into this definition gives:</p>
+            $$ \vec{D} = \epsilon_0 \vec{E} + \epsilon_0 \chi_e \vec{E} = \epsilon_0 (1 + \chi_e) \vec{E} $$
+            <p>The term $(1 + \chi_e)$ is called the **dielectric constant**, $K$ (or relative permittivity, $\epsilon_r$). The quantity $\epsilon = \epsilon_0 K$ is the **permittivity of the material**. This leads to the simple relationship:</p>
+            $$ \vec{D} = \epsilon \vec{E} $$
+
+            <h3>3. Gauss's Law in Dielectrics</h3>
+            <p>The presence of polarization charges complicates Gauss's Law. However, the law can be reformulated elegantly in terms of the electric displacement vector $\vec{D}$. The modified law, sometimes called Gauss's Law for Dielectrics, states that the flux of $\vec{D}$ through a closed surface is equal to the total **free charge** ($Q_{\text{f, enc}}$) enclosed by that surface.</p>
+            $$ \oint_S \vec{D} \cdot d\vec{A} = Q_{\text{f, enc}} $$
+            <p>The advantage of this form is that we only need to consider the free charges we place on conductors, not the complicated induced polarization charges within the dielectric itself. The effect of the material is entirely contained within the definition of $\vec{D}$.</p>
+        </div>
+    </main>
+    <footer><p>Created and Designed by Pratyush Swain</p></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); if (runnerText) { runnerText.innerHTML += runnerText.innerHTML; }
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = theme === 'dark'; };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        });
+    </script>
+</body>
+</html> 
