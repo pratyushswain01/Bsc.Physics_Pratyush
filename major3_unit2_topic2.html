@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major III: Ampere's Law & Applications | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <style>
+        :root { --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --code-bg: #e9ecef; }
+        body.dark-mode { --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --code-bg: #2b303b;}
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
+        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
+        .katex-display { margin: 1em 0; text-align: center; }
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Unit 2: Magnetic Field</h1>
+            <div class="header-controls">
+                <div id="datetime" class="datetime"></div>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+ 
+    <main class="container">
+        <a href="major3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Major III Topics</a>
+        <div class="content-card">
+            <h2>Ampere's Law & Applications</h2>
+            <p>While the Biot-Savart law is universal, it can be difficult to compute. Ampere's Law provides a simpler method for calculating the magnetic field in situations with a high degree of symmetry. It is the magnetostatic equivalent of Gauss's Law in electrostatics.</p>
+            
+            <h3>1. Ampere's Circuital Law</h3>
+            <p>Ampere's Law relates the line integral of the magnetic field around a closed loop (called an Amperian loop) to the total steady current passing through the surface enclosed by that loop.</p>
+            <h4>Integral Form</h4>
+            <p>The law is stated mathematically as:</p>
+            $$ \oint \vec{B} \cdot d\vec{l} = \mu_0 I_{\text{enc}} $$
+            <p>Where $\oint \vec{B} \cdot d\vec{l}$ is the line integral of the magnetic field around a closed path, and $I_{\text{enc}}$ is the net current piercing the surface bounded by the path. The power of this law lies in choosing an Amperian loop that matches the symmetry of the problem, making the integral easy to evaluate.</p>
+            
+            <h4>Differential Form</h4>
+            <p>Using Stokes' Theorem from vector calculus, which states $\oint \vec{F} \cdot d\vec{l} = \int_S (\nabla \times \vec{F}) \cdot d\vec{A}$, we can express Ampere's law in a local, differential form. The enclosed current can also be written as an integral of the current density $\vec{J}$.</p>
+            $$ \int_S (\nabla \times \vec{B}) \cdot d\vec{A} = \mu_0 \int_S \vec{J} \cdot d\vec{A} $$
+            <p>Since this must hold for any surface, the integrands must be equal. This gives the differential form of Ampere's Law:</p>
+            $$ \nabla \times \vec{B} = \mu_0 \vec{J} $$
+            <p>This equation states that steady currents are the source of curl in the magnetic field. A non-zero curl at a point signifies a circulation of the field, which is what magnetic field lines do around a current.</p>
+
+            <h3>2. Applications of Ampere's Law</h3>
+            <h4>Field of a Long, Straight Wire</h4>
+            <p>For an infinitely long wire with current $I$, we choose a circular Amperian loop of radius $r$ centered on the wire. By symmetry, $B$ is constant in magnitude on this loop and parallel to $d\vec{l}$.</p>
+            $$ \oint \vec{B} \cdot d\vec{l} = B \oint dl = B(2\pi r) $$
+            <p>Applying Ampere's law: $B(2\pi r) = \mu_0 I$. This gives the familiar result:</p>
+            $$ B = \frac{\mu_0 I}{2\pi r} $$
+            
+            <h4>Field of a Long Solenoid</h4>
+            <p>A solenoid is a coil of wire wound into a long helix. For an ideal, infinitely long solenoid with $n$ turns per unit length carrying current $I$, the magnetic field inside is uniform and strong, while the field outside is negligible.</p>
+            <p>We choose a rectangular Amperian loop with one side of length $L$ inside the solenoid and the parallel side outside. The only contribution to the integral comes from the side inside the solenoid.</p>
+            $$ \oint \vec{B} \cdot d\vec{l} = BL $$
+            <p>The enclosed current is $I_{\text{enc}} = nLI$. Applying Ampere's Law: $BL = \mu_0(nLI)$. This yields the uniform field inside:</p>
+            $$ B = \mu_0 n I $$
+            
+            <h4>Field of a Toroid</h4>
+            <p>A toroid is a solenoid bent into a donut shape. For a toroid with $N$ total turns carrying current $I$, we use a circular Amperian loop of radius $r$ inside the windings.</p>
+            $$ \oint \vec{B} \cdot d\vec{l} = B(2\pi r) = \mu_0 N I $$
+            <p>The magnetic field inside the toroid is confined within its core and is given by:</p>
+            $$ B = \frac{\mu_0 N I}{2\pi r} $$
+        </div>
+    </main>
+    <footer><p>Created and Designed by Pratyush Swain</p></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); if (runnerText) { const runnerContent = runnerText.innerHTML; runnerText.innerHTML += runnerContent; }
+            const applyTheme = (theme) => { if (theme === 'dark') { document.body.classList.add('dark-mode'); themeToggle.checked = true; } else { document.body.classList.remove('dark-mode'); themeToggle.checked = false; } };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        });
+    </script>
+</body>
+</html>
