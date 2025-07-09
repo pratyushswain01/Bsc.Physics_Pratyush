@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major III: Ballistic Galvanometer | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <style>
+        :root { --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --code-bg: #e9ecef; }
+        body.dark-mode { --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --code-bg: #2b303b;}
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
+        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
+        .katex-display { margin: 1em 0; text-align: center; }
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Unit 2: Magnetic Field</h1>
+            <div class="header-controls">
+                <div id="datetime" class="datetime"></div>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="quote-runner">
+        <p class="runner-text">"The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom." - <em>Isaac Asimov</em><span class="separator">||</span>"Nothing in life is to be feared, it is only to be understood." - <em>Marie Curie</em></p>
+    </div>
+    <main class="container">
+        <a href="major3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Major III Topics</a>
+        <div class="content-card">
+            <h2>Ballistic Galvanometer</h2>
+            <p>A ballistic galvanometer is a type of sensitive galvanometer used for measuring the total charge that passes through it in a short time interval, such as the discharge of a capacitor. Unlike a standard galvanometer which measures steady current, a ballistic galvanometer is designed to measure an impulsive current.</p>
+            
+            <h3>1. Principle and Construction</h3>
+            <p>The core of a ballistic galvanometer is a moving coil suspended in a magnetic field. Key design features include:</p>
+            <ul>
+                <li><strong>Large Moment of Inertia ($I_m$):</strong> The coil is designed to have a large moment of inertia so that the passage of a brief current pulse gives it an angular impulse without the coil moving significantly during the pulse.</li>
+                <li><strong>Weak Damping:</strong> The damping forces (like air resistance) are minimized so that the coil can swing freely after the impulse.</li>
+                <li><strong>Long Time Period of Oscillation ($T$):</strong> A long period ensures that the current pulse is over long before the coil completes any significant part of its swing.</li>
+            </ul>
+            <p>The instrument works by converting the initial angular impulse from the charge pulse into the kinetic energy of a torsional pendulum. This kinetic energy is then converted into potential energy at the peak of its swing, and the maximum deflection (the "throw," $\theta_0$) is measured.</p>
+
+            <h3>2. Theory of Operation</h3>
+            <p>The derivation relates the total charge $Q$ to the first maximum throw $\theta_0$ of the coil.</p>
+            <h4>Impulsive Torque</h4>
+            <p>If a transient current $i(t)$ flows through the coil for a short time, it produces a torque $\tau = N A B i(t)$, where $N$ is the number of turns, $A$ is the coil area, and $B$ is the magnetic field. The total angular impulse given to the coil is:</p>
+            $$ \text{Angular Impulse} = \int \tau dt = \int (N A B i) dt = N A B \int i dt $$
+            <p>Since the total charge is $Q = \int i dt$, the impulse is $NABQ$. This impulse imparts an initial angular velocity $\omega_0$ to the coil:</p>
+            $$ N A B Q = I_m \omega_0 $$
+            <h4>Torsional Oscillation</h4>
+            <p>After receiving the impulse, the coil swings. Its initial kinetic energy is converted into potential energy stored in the suspension fiber. The restoring torque of the fiber is $\tau_{res} = -C\theta$, where $C$ is the torsional constant.</p>
+            <p>By conservation of energy, the initial kinetic energy equals the maximum potential energy:</p>
+            $$ \frac{1}{2} I_m \omega_0^2 = \frac{1}{2} C \theta_0^2 $$
+            <h4>Relating Charge to Throw</h4>
+            <p>From the two equations above, we can express $\omega_0$ in two ways. Rearranging them gives $\omega_0 = \frac{NABQ}{I_m}$ and $\omega_0 = \theta_0 \sqrt{\frac{C}{I_m}}$. Equating these gives:</p>
+            $$ \frac{NABQ}{I_m} = \theta_0 \sqrt{\frac{C}{I_m}} $$
+            <p>Solving for the charge $Q$ gives:</p>
+            $$ Q = \frac{I_m}{NAB} \theta_0 \sqrt{\frac{C}{I_m}} = \frac{\theta_0}{NAB} \sqrt{I_m C} $$
+            <p>We know the time period of a torsional pendulum is given by $T = 2\pi\sqrt{\frac{I_m}{C}}$. From this, we can write $\sqrt{I_m C} = \frac{TC}{2\pi}$. Substituting this into our equation for charge:</p>
+            $$ Q = \frac{\theta_0}{NAB} \left( \frac{TC}{2\pi} \right) = \left(\frac{C}{NAB}\right) \left(\frac{T}{2\pi}\right) \theta_0 $$
+            <p>This is the fundamental equation for an undamped ballistic galvanometer. It shows that the charge is directly proportional to the first throw: $Q = k \theta_0$, where $k = \frac{C T}{2\pi N A B}$ is the ballistic constant or charge sensitivity of the galvanometer.</p>
+            
+            <h3>3. Damping and Correction</h3>
+            <p>In a real galvanometer, damping is always present. The amplitude of oscillations decreases exponentially. For accurate measurements, a correction factor is applied. The corrected relationship is:</p>
+            $$ Q = k \theta_0 \left(1 + \frac{\lambda}{2}\right) $$
+            <p>Where $\lambda$ is the logarithmic decrement, a measure of the damping, determined by observing the ratio of successive swings.</p>
+        </div>
+    </main>
+    <footer><p>Created and Designed by Pratyush Swain</p></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); if (runnerText) { const runnerContent = runnerText.innerHTML; runnerText.innerHTML += runnerContent; }
+            const applyTheme = (theme) => { if (theme === 'dark') { document.body.classList.add('dark-mode'); themeToggle.checked = true; } else { document.body.classList.remove('dark-mode'); themeToggle.checked = false; } };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        });
+    </script>
+</body>
+</html>
