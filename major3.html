@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Core III: Electricity & Magnetism | BSc. Physics</title>
+    <title>Major III: Electricity & Magnetism | BSc. Physics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -17,6 +17,10 @@
         }
 
         /* --- GENERAL & LAYOUT STYLES --- */
+        /* MODIFIED: Added box-sizing for a more predictable layout model */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
         body { 
             font-family: 'Poppins', sans-serif; 
             margin: 0; 
@@ -27,42 +31,27 @@
             min-height: 100vh; 
             transition: background-color 0.3s ease, color 0.3s ease; 
         }
-        /* MODIFIED: This class now defines the centered content width and is used by header, main, and footer content */
-        .container { 
-            width: 95%; 
-            max-width: 1100px; 
-            margin-left: auto;
-            margin-right: auto;
-        }
-        main.container {
-             /* Add vertical spacing only to the main content area */
-            margin-top: 2.5rem;
-            margin-bottom: 2.5rem;
-            flex: 1; 
-        }
-
-
+        
         /* --- HEADER & THEME SWITCHER --- */
         header { 
             background-color: var(--header-bg); 
             backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px); 
-            /* MODIFIED: Horizontal padding removed to make the background full-width */
+            /* MODIFIED: Padding is only vertical now, background is full-width */
             padding: 1rem 0; 
             border-bottom: 1px solid var(--border-color); 
             position: sticky; 
             top: 0; 
             z-index: 1000; 
         }
-        /* MODIFIED: The inner header content is now a centered container */
+        /* MODIFIED: The header-content is now the container for the header */
         .header-content { 
             display: flex; 
             justify-content: space-between; 
-            align-items: center; 
-            /* Added container properties */
-            width: 95%;
+            align-items: center;
             max-width: 1100px;
             margin: 0 auto;
+            padding: 0 1rem; /* This creates the space on the sides */
         }
         header h1 { 
             margin: 0; 
@@ -81,6 +70,14 @@
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        /* MODIFIED: Main element is now the container for the page content */
+        main {
+            max-width: 1100px;
+            margin: 2.5rem auto; /* Centers the content and adds vertical space */
+            padding: 0 1rem; /* This creates the space on the sides */
+            flex: 1;
+        }
         
         /* --- ACCORDION & LIST STYLES --- */
         .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
@@ -116,17 +113,23 @@
         
         /* --- FOOTER --- */
         footer { 
-            /* MODIFIED: Horizontal padding removed, margin-top removed (spacing handled by main) */
             padding: 1.5rem 0; 
-            font-size: 0.9em; 
-            color: var(--text-secondary); 
-            background-color: transparent; 
-            border-top: 1px solid var(--border-color); 
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
         }
-        /* MODIFIED: The text inside the footer container is centered */
-        footer .container {
+        /* MODIFIED: The footer content is now in its own container */
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
             text-align: center;
+            font-size: 0.9em;
+            color: var(--text-secondary);
         }
+        .footer-content p {
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -144,7 +147,8 @@
         </div>
     </header>
 
-    <main class="container">
+    <!-- MODIFIED: The .container class is removed from main -->
+    <main>
         
         <a href="sem2.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</a>
         
@@ -190,7 +194,6 @@
 
         <div class="assessment-card">
             <h3>Course & Assessment Structure</h3>
-            <h4>Pre-Sem (semester 2 ))</h4>
             <div class="assessment-content">
                 <div class="assessment-info">
                     <p>This course covers the fundamental principles of Electricity and Magnetism. All units from the syllabus above are included in the final assessment.</p>
@@ -212,10 +215,10 @@
 
     </main>
 
-    <!-- MODIFIED: Footer content is wrapped in a container div for proper alignment -->
+    <!-- MODIFIED: Footer content is wrapped in a dedicated div for proper alignment -->
     <footer>
-        <div class="container">
-            <p style="margin: 0;">Created and Designed by Pratyush Swain</p>
+        <div class="footer-content">
+            <p>Created and Designed by Pratyush Swain</p>
         </div>
     </footer>
 
@@ -224,7 +227,6 @@
             const themeToggle = document.getElementById('theme-toggle');
             const datetimeElement = document.getElementById('datetime');
             
-            // Theme switcher logic
             const applyTheme = (theme) => { 
                 if (theme === 'dark') { 
                     document.body.classList.add('dark-mode'); 
@@ -242,7 +244,6 @@
                 localStorage.setItem('theme', newTheme); 
             });
 
-            // Datetime updater
             const updateDateTime = () => { 
                 const now = new Date(); 
                 const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; 
@@ -252,7 +253,6 @@
             setInterval(updateDateTime, 1000); 
             updateDateTime();
 
-            // Accordion logic
             const accordionHeaders = document.querySelectorAll('.unit-header');
             accordionHeaders.forEach(header => {
                 header.addEventListener('click', () => {
