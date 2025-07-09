@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major III: AC Circuits & LCR Circuits | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <style>
+        :root { --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --code-bg: #e9ecef; }
+        body.dark-mode { --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --code-bg: #2b303b;}
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; }
+        .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
+        .katex-display { margin: 1em 0; text-align: center; }
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content"><h1>Unit 4: Circuits & Network Theorems</h1>
+            <div class="header-controls">
+                <div id="datetime" class="datetime"></div>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <a href="major3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Major III Topics</a>
+        <div class="content-card">
+            <h2>AC Circuits & LCR Circuits</h2>
+            <p>This topic explores the behavior of circuits driven by an alternating current (AC) source. Unlike direct current (DC), AC voltage and current vary sinusoidally with time, leading to complex behaviors in circuits containing inductors and capacitors.</p>
+
+            <h3>1. AC and Phasors</h3>
+            <p>An AC voltage source is typically described by:</p>
+            $$ V(t) = V_0 \sin(\omega t) $$
+            <p>where $V_0$ is the peak voltage (amplitude) and $\omega$ is the angular frequency. To analyze AC circuits, we use **phasors**, which are vectors that rotate in a complex plane with angular frequency $\omega$. The projection of the phasor onto the imaginary axis represents the instantaneous value of the voltage or current. This technique converts differential equations into algebraic ones.</p>
+
+            <h3>2. Reactance and Impedance</h3>
+            <p>In AC circuits, inductors and capacitors exhibit a form of opposition to current flow called **reactance**.</p>
+            <ul>
+                <li><strong>Inductive Reactance ($X_L$):</strong> The opposition from an inductor. The voltage across an inductor leads the current by $90^\circ$ (or $\pi/2$ radians). Its reactance is: $X_L = \omega L$.</li>
+                <li><strong>Capacitive Reactance ($X_C$):</strong> The opposition from a capacitor. The voltage across a capacitor lags the current by $90^\circ$. Its reactance is: $X_C = \frac{1}{\omega C}$.</li>
+            </ul>
+            <p>The total opposition to current flow in an AC circuit, including both resistance and reactance, is called **impedance ($Z$)**. It is the AC equivalent of resistance. The peak voltage, peak current ($I_0$), and impedance are related by Ohm's Law for AC circuits: $V_0 = I_0 Z$.</p>
+
+            <h3>3. The Series LCR Circuit</h3>
+            <p>A series LCR circuit contains a resistor ($R$), an inductor ($L$), and a capacitor ($C$) connected in series with an AC source. The total impedance is the vector sum of the resistance and the total reactance.</p>
+            <h4>Impedance of a Series LCR Circuit</h4>
+            <p>Since the inductive and capacitive reactances are $180^\circ$ out of phase, they subtract. The total impedance $Z$ is found using the Pythagorean theorem on the impedance phasor diagram:</p>
+            $$ Z = \sqrt{R^2 + (X_L - X_C)^2} = \sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2} $$
+            <h4>Phase Angle</h4>
+            <p>The total voltage across the circuit is out of phase with the current by an angle $\phi$, given by:</p>
+            $$ \tan\phi = \frac{X_L - X_C}{R} = \frac{\omega L - \frac{1}{\omega C}}{R} $$
+            <ul>
+                <li>If $X_L > X_C$, the circuit is inductive, and the voltage leads the current ($\phi > 0$).</li>
+                <li>If $X_C > X_L$, the circuit is capacitive, and the voltage lags the current ($\phi < 0$).</li>
+            </ul>
+
+            <h3>4. Resonance in LCR Circuits</h3>
+            <p>A special condition called **resonance** occurs when the inductive reactance equals the capacitive reactance ($X_L = X_C$). At this point, the impedance is at its minimum value ($Z=R$), and the current is maximum. The phase angle $\phi$ is zero, meaning the voltage and current are in phase.</p>
+            <p>The resonant angular frequency, $\omega_0$, is found by setting $X_L=X_C$:</p>
+            $$ \omega_0 L = \frac{1}{\omega_0 C} \implies \omega_0 = \frac{1}{\sqrt{LC}} $$
+            <p>Resonance is a key principle in tuning circuits, used in radio receivers and many other applications to select a specific frequency.</p>
+        </div>
+    </main>
+    <footer><p>Created and Designed by Pratyush Swain</p></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); if (runnerText) { runnerText.innerHTML += runnerText.innerHTML; }
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = theme === 'dark'; };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+        });
+    </script>
+</body>
+</html>
