@@ -28,7 +28,11 @@
         /* --- HEADER & CONTROLS --- */
         header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.75em; color: var(--primary-accent); }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em; /* Reduced font size for a more compact header */
+            color: var(--primary-accent);
+        }
         .header-controls { display: flex; align-items: center; gap: 1rem; }
         .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); display: none; }
         @media (min-width: 768px) { .datetime { display: block; } .header-controls { gap: 1.5rem; } }
@@ -50,21 +54,14 @@
         .runner-text .separator { display: inline-block; vertical-align: middle; margin: 0 1.5em; color: #FFD700; font-size: 1.2em; font-weight: 600; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* --- NEW TIMER DISCLAIMER --- */
+        /* --- TIMER DISCLAIMER --- */
         .timer-disclaimer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; }
         .timer-disclaimer h3 { font-size: 1.3em; margin: 0 0 0.5rem 0; color: var(--primary-accent); }
         .timer-disclaimer h3 .fa-exclamation-triangle { margin-right: 0.5rem; color: var(--warning-color); }
         .timer-disclaimer p { margin: 0.2rem 0 1.5rem 0; font-size: 0.95em; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;}
         #countdown-display { display: flex; justify-content: center; align-items: baseline; gap: 0.5rem; }
         .timer-unit { text-align: center; }
-        .timer-number {
-            font-size: 1.8em; /* Reduced size */
-            font-weight: 600;
-            color: var(--text-primary);
-            display: block;
-            line-height: 1.1;
-            font-family: 'Poppins', sans-serif; /* Changed to a simpler font */
-        }
+        .timer-number { font-size: 1.8em; font-weight: 600; color: var(--text-primary); display: block; line-height: 1.1; font-family: 'Poppins', sans-serif; }
         .timer-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
         @media (min-width: 768px) { #countdown-display { gap: 1rem; } }
 
@@ -138,7 +135,6 @@
                 <div class="timer-unit"><span id="seconds" class="timer-number">--</span><span class="timer-label">Seconds</span></div>
             </div>
         </div>
-
 
         <main class="container" id="main-content">
             <button id="back-button" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</button>
