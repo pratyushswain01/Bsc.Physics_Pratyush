@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Module 1 - Question Bank</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS STYLES EMBEDDED -->
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --header-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e8590c;
+            --accent-border-color: #ffa94d;
+            --answer-bg-color: #fff9f2;
+            --answer-text-color-strong: #bf360c;
+            --success-text-color: #2b9348;
+            --success-bg-color: #f1fcf5;
+            --success-border-color: #d4ede2;
+        }
+
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --header-bg-color: #1e1e1e;
+            --border-color: #444;
+            --accent-color: #fd7e14;
+            --accent-border-color: #e8590c;
+            --answer-bg-color: #2c241d;
+            --answer-text-color-strong: #ff922b;
+            --success-text-color: #96f2c3;
+            --success-bg-color: #143d2c;
+            --success-border-color: #205c43;
+        }
+
+        /* --- General Body & Typography --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+            margin-top: 0;
+            transition: color 0.3s;
+        }
+        
+        /* --- Header --- */
+        header {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fd7e14;
+            margin-bottom: 0.2em;
+        }
+        
+        .shloka-bar {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            margin: 20px -20px -20px -20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shloka-sanskrit { font-size: 1.2em; margin-bottom: 4px; }
+        .shloka-translation { font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        .shloka-item { text-align: center; padding: 5px 15px; }
+
+        /* --- DARK/LIGHT MODE TOGGLE --- */
+        #theme-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
+        #theme-toggle { display: none; }
+        #theme-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #777;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        #theme-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        #theme-toggle:checked + #theme-label { background-color: #fd7e14; }
+        #theme-toggle:checked + #theme-label::after { transform: translateX(24px); }
+        #theme-icon {
+            position: absolute;
+            left: 5px;
+            z-index: 10;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .dark-mode #theme-icon {
+            transform: translateX(25px);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .assignment-section h2 {
+            font-size: 2em;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 1 Mark Questions Styling --- */
+        .mcq-list { list-style-type: none; padding: 0; counter-reset: mcq-counter; }
+        .mcq-list li {
+            background-color: var(--card-bg-color);
+            border-left: 5px solid var(--accent-border-color);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.05em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .mcq-list li::before {
+            counter-increment: mcq-counter;
+            content: counter(mcq-counter) ". ";
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            color: var(--accent-color);
+            margin-right: 8px;
+            transition: color 0.3s;
+        }
+        .mcq-direct-answer {
+            font-weight: 700;
+            color: var(--success-text-color);
+            background-color: var(--success-bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--success-border-color);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 2, 5, 8 Mark Question & Answer Blocks --- */
+        .question-block {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease;
+        }
+        .question-block:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+        .question-block h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .toggle-answer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-answer-btn:hover { background-color: #e8590c; transform: translateY(-2px); }
+        .answer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--answer-bg-color);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer p, .answer ul, .answer ol { margin-bottom: 1em; }
+        .answer strong {
+            color: var(--answer-text-color-strong);
+            transition: color 0.3s;
+        }
+        .answer li { margin-bottom: 0.7em; }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            main { padding: 0 15px 40px 15px; }
+            header h1 { font-size: 2em; }
+            .assignment-section h2 { font-size: 1.7em; }
+            .mcq-list li, .question-block { padding: 15px; }
+            #theme-switcher { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Dark Mode Toggle Switch -->
+        <div id="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <label for="theme-toggle" id="theme-label">
+                <span id="theme-icon"></span>
+            </label>
+        </div>
+
+        <h1>Indian Knowledge System</h1>
+        <div class="shloka-bar">
+            <div class="shloka-item">
+                <div class="shloka-sanskrit">ॐ सर्वे भवन्तु सुखिनः।</div>
+                <div class="shloka-translation">May all beings be happy</div>
+            </div>
+            <div class="shloka-item">
+                <div class="shloka-sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</div>
+                <div class="shloka-translation">Lead me from the unreal to the real. Lead me from darkness to light.</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 1: 1 Mark Questions</h2>
+            <ol class="mcq-list">
+                <!-- All 33 one-mark questions from the previous response are included here -->
+                <li>The literal meaning of the word 'Veda' is <span class="mcq-direct-answer">Knowledge</span>.</li>
+                <li>Indian philosophical schools that accept the authority of the Vedas are called <span class="mcq-direct-answer">Astika</span> schools.</li>
+                <li>Which of the following is NOT one of the six Vedangas? a) Shiksha b) Vyakarana c) Upanishad d) Kalpa. Ans: <span class="mcq-direct-answer">c) Upanishad</span></li>
+                <li>The Ramayana and Mahabharata are classic examples of <span class="mcq-direct-answer">Itihasa</span>.</li>
+                <li>The Carvaka school of philosophy is also known as <span class="mcq-direct-answer">Lokayata</span>.</li>
+                <li>The number of traditional arts or 'Kalas' is <span class="mcq-direct-answer">64</span>.</li>
+                <li>The Shad Darshanas refer to the six <span class="mcq-direct-answer">orthodox (Astika)</span> schools of philosophy.</li>
+                <li>The Puranas that narrate the history and greatness of a specific temple are called <span class="mcq-direct-answer">Sthala Puranas</span>.</li>
+                <li>The philosophical school of **Nyaya** is primarily concerned with logic and epistemology.</li>
+                <li>The Veda of melodies and chants is the <span class="mcq-direct-answer">Samaveda</span>.</li>
+                <li><span class="mcq-direct-answer">Subhasitas</span> are collections of wise sayings, proverbs, and epigrammatic poems.</li>
+                <li>The Upanishads are also known as <span class="mcq-direct-answer">Vedanta</span>.</li>
+                <li>The philosophical school of <span class="mcq-direct-answer">Sankhya</span> posits a dualism between Purusha and Prakriti.</li>
+                <li>Buddhism and Jainism are considered <span class="mcq-direct-answer">Nastika (heterodox)</span> schools of philosophy.</li>
+                <li>The 'Caturdasa Vidyasthanam' refers to the <span class="mcq-direct-answer">14</span> principal sources of knowledge.</li>
+                <li>The Vedanga dealing with correct pronunciation and phonetics is <span class="mcq-direct-answer">Shiksha</span>.</li>
+                <li>The core theme of the Purva-Mimamsa school is the interpretation of Vedic <span class="mcq-direct-answer">rituals (Karma-kanda)</span>.</li>
+                <li>The number of Maha-Puranas (Great Puranas) is <span class="mcq-direct-answer">18</span>.</li>
+                <li>Texts dealing with statecraft, wise policy, and ethics are known as <span class="mcq-direct-answer">Niti Sastras</span>.</li>
+                <li>The oldest of the four Vedas is the <span class="mcq-direct-answer">Rigveda</span>.</li>
+                <li>The Vedanga dealing with poetic meter is <span class="mcq-direct-answer">Chandas</span>.</li>
+                <li>The practical application of Sankhya philosophy is found in the <span class="mcq-direct-answer">Yoga</span> school.</li>
+                <li>Texts containing detailed rules for architecture and sculpture are called <span class="mcq-direct-answer">Shilpa Sastras</span>.</li>
+                <li>The Vaisheshika school proposes a theory of <span class="mcq-direct-answer">atomism</span>.</li>
+                <li>The layer of the Vedas consisting of prose commentaries on rituals is the <span class="mcq-direct-answer">Brahmanas</span>.</li>
+                <li>The 'forest texts' that form a bridge between ritual and philosophy are the <span class="mcq-direct-answer">Aranyakas</span>.</li>
+                <li>The Vedanga that deals with grammar is <span class="mcq-direct-answer">Vyakarana</span>.</li>
+                <li>The founder of the Nyaya school was sage <span class="mcq-direct-answer">Gautama</span>.</li>
+                <li>'Shruti' refers to literature that is 'heard' or revealed, primarily the <span class="mcq-direct-answer">Vedas</span>.</li>
+                <li>The Yoga school was systematized by the sage <span class="mcq-direct-answer">Patanjali</span>.</li>
+                <li>The total number of schools in the Shad Darshanas is <span class="mcq-direct-answer">six</span>.</li>
+                <li>The Vedanga concerned with etymology is <span class="mcq-direct-answer">Nirukta</span>.</li>
+                <li>Literature that is 'remembered' and composed by sages, like the Puranas, is called <span class="mcq-direct-answer">Smriti</span>.</li>
+            </ol>
+        </section>
+
+        <!-- 2 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 1: 2 Mark Questions</h2>
+            <!-- All 15 two-mark question blocks are included here -->
+            <div class="question-block">
+                <h3>Question 1: What are the four main Vedas? Name them.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The four main Vedas are the foundational scriptures of the Indian Knowledge System. They are:</p><ol><li><strong>Rigveda:</strong> The oldest Veda, a collection of hymns of praise.</li><li><strong>Samaveda:</strong> The Veda of melodies, containing hymns set to music.</li><li><strong>Yajurveda:</strong> The Veda of sacrificial formulas, a guidebook for priests.</li><li><strong>Atharvaveda:</strong> A collection of spells, charms, and hymns related to daily life.</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 2: Define 'Itihasa' and name its two main examples.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>'Itihasa'</strong> literally means "thus it was" and refers to the traditional historical-epic narratives of ancient India. These texts are not just histories but also contain teachings on dharma, philosophy, and governance. The two primary examples are the <strong>Ramayana</strong> and the <strong>Mahabharata</strong>.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 3: Differentiate between 'Shruti' and 'Smriti'.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>'Shruti'</strong> (that which is heard) refers to the most sacred literature of divine origin, considered eternal and unauthored, which includes the four Vedas.</p> <p><strong>'Smriti'</strong> (that which is remembered) refers to literature composed by human sages which derives its authority from Shruti. It includes texts like the Dharmasastras, Puranas, and Itihasas.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 4: What is the central idea of the Carvaka (Lokayata) school?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Carvaka school is a materialist and atheistic school of thought. Its central idea is that <strong>perception is the only valid source of knowledge</strong>, and it rejects inference and testimony. It denies the existence of an afterlife, a soul, God, and karma, promoting a life of enjoying worldly pleasures.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 5: What is the purpose of 'Niti Sastras'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>'Niti Sastras' are treatises on ethics, wise policy, and practical wisdom for life and governance. Their purpose is to provide guidance on righteous conduct, diplomacy, administration, and how to achieve success and prosperity in the world in an ethical manner, with the <em>Panchatantra</em> being a famous example.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 6: Name the six Vedangas.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The six Vedangas, or limbs of the Veda, are ancillary disciplines for Vedic study:</p><ol><li><strong>Shiksha</strong> (Phonetics)</li><li><strong>Kalpa</strong> (Ritual)</li><li><strong>Vyakarana</strong> (Grammar)</li><li><strong>Nirukta</strong> (Etymology)</li><li><strong>Chandas</strong> (Meter)</li><li><strong>Jyotisha</strong> (Astronomy)</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 7: What are 'Shilpa Sastras'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Shilpa Sastras are a category of ancient Indian texts that serve as manuals for arts, crafts, and architecture. They codify the rules, principles, iconography, and techniques for creating everything from sculptures and paintings to temples and city plans, thus preserving technical knowledge.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 8: Briefly explain the philosophy of the Sankhya school.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Sankhya is a dualistic school of philosophy that explains reality through two eternal and independent principles: <strong>Purusha</strong> (the multitude of pure, unbound consciousnesses) and <strong>Prakriti</strong> (the single, primordial matter or nature). Liberation is achieved through knowledge that discriminates one's true self (Purusha) from matter (Prakriti).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 9: What are the three main classifications of Puranas?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Puranas are primarily classified into three types:</p><ol><li><strong>Maha-Puranas:</strong> The 18 great, principal Puranas considered most authoritative.</li><li><strong>Upa-Puranas:</strong> 18 secondary or minor Puranas.</li><li><strong>Sthala-Puranas:</strong> Texts narrating the origin stories and glories of a specific holy place or temple.</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 10: Define 'Subhasitas' and their importance.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>'Subhasitas'</strong> are short, memorable verses or epigrams in Sanskrit that convey a piece of wisdom, a moral, or an observation about life. Their importance lies in their ability to teach complex ethical and practical truths in a simple, poetic, and easily remembered format, making them an effective tool for popular education.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 11: What is the key difference between the Nyaya and Vaisheshika schools?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The key difference lies in their focus. The <strong>Nyaya</strong> school is primarily concerned with logic and epistemology, outlining the valid means of acquiring knowledge (pramanas). The <strong>Vaisheshika</strong> school is concerned with metaphysics and ontology, categorizing all of reality into distinct substances or *padarthas* in an atomic framework.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 12: What are the four layers of text found within each Veda?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Each Veda is internally structured into four chronological and thematic layers:</p><ol><li><strong>Samhitas:</strong> The core collection of hymns and mantras.</li><li><strong>Brahmanas:</strong> Prose commentaries explaining the rituals.</li><li><strong>Aranyakas:</strong> "Forest texts" with mystical interpretations of rituals.</li><li><strong>Upanishads:</strong> Philosophical texts on the nature of reality (Brahman) and the self (Atman).</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 13: Why is the Purva-Mimamsa school considered orthodox (Astika)?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Purva-Mimamsa school is considered orthodox because its entire philosophy is dedicated to upholding and justifying the supreme authority of the Vedas. It provides systematic rules of interpretation to prove that the ritualistic duties (yajnas) prescribed in the Vedas are the highest dharma, thus reinforcing the Vedic worldview.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 14: What does the term 'Upanishad' signify?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The term 'Upanishad' literally means "sitting down near," referring to the student sitting devotedly near the teacher to receive esoteric spiritual instruction. It signifies a body of texts containing the philosophical essence of the Vedas, focused on self-realization and knowledge of the ultimate reality, and marking the end of the Vedic textual evolution (Vedanta).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 15: What is the goal of the Yoga school of philosophy?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The goal of the Yoga school is the cessation of the fluctuations of the mind (*chitta vritti nirodha*). It provides a practical, eight-limbed path (Ashtanga Yoga) to discipline the body and mind, ultimately leading to the state of *Kaivalya* (liberation), where the individual consciousness (Purusha) is realized as distinct from and independent of nature (Prakriti).</p></div>
+            </div>
+        </section>
+
+        <!-- 5 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 1: 5 Mark Questions</h2>
+             <!-- All 5-mark question blocks are included here -->
+            <div class="question-block">
+                <h3>Question 16: Explain the concept of 'Caturdasa Vidyasthanam' and its importance.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The 'Caturdasa Vidyasthanam' is a classical framework outlining the fourteen principal sources of knowledge considered fundamental for a comprehensive education in ancient India. Its importance lies in providing a holistic curriculum integrating spiritual knowledge with practical and logical sciences.</p><p>The fourteen sources are:</p><ul><li><strong>The Four Vedas:</strong> The core spiritual texts (Rig, Yajur, Sama, Atharva).</li><li><strong>The Six Vedangas (Limbs of Veda):</strong><ol><li><em>Shiksha</em> (Phonetics)</li><li><em>Kalpa</em> (Ritual)</li><li><em>Vyakarana</em> (Grammar)</li><li><em>Nirukta</em> (Etymology)</li><li><em>Chandas</em> (Meter)</li><li><em>Jyotisha</em> (Astronomy)</li></ol></li><li><strong>The Four Upa-angas (Auxiliary Branches):</strong><ol><li><em>Puranas</em> (Historical narratives)</li><li><em>Nyaya</em> (Logic)</li><li><em>Mimamsa</em> (Interpretation)</li><li><em>Dharmasastras</em> (Law/Ethics)</li></ol></li></ul></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 17: Discuss the role and significance of Puranas and Itihasa in the Indian Knowledge System.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>While the Vedas (Shruti) were complex and accessible mainly to scholars, the Puranas and Itihasa (Smriti) played a crucial role in disseminating knowledge and values to the masses.</p><ul><li><strong>Accessibility:</strong> They presented profound philosophical concepts through engaging stories, making them understandable for everyone.</li><li><strong>Cultural Cohesion:</strong> Narratives like the Ramayana and Mahabharata provided a common cultural and moral reference point for people, fostering a shared heritage.</li><li><strong>Transmission of Dharma:</strong> They illustrate principles of *dharma* (righteous conduct) through the lives of characters.</li><li><strong>Historical Memory:</strong> They contain genealogies of kings and descriptions of geography, acting as popular encyclopedias and repositories of cultural memory.</li></ul></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 18: Compare the fundamental tenets of the three main 'Nastika' schools.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Nastika schools reject Vedic authority but differ significantly:</p><ul><li><strong>Carvaka (Lokayata):</strong> A purely materialist school that accepts only direct perception as knowledge. It denies a soul, God, karma, and rebirth, aiming only to maximize pleasure in this life.</li><li><strong>Buddhism:</strong> A pragmatic philosophy that accepts karma and rebirth but rejects an eternal soul (advocating *Anatta* or no-self). The core is the Four Noble Truths and the Eightfold Path to attain Nirvana.</li><li><strong>Jainism:</strong> Posits an eternal soul (*Jiva*) in every living being and views karma as subtle matter that clings to it. Its central tenet is extreme *Ahimsa* (non-violence) to purify the soul and achieve liberation (*Moksha*).</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 8 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 1: 8 Mark Questions</h2>
+             <!-- All 8-mark question blocks are included here -->
+            <div class="question-block">
+                <h3>Question 19: Provide a detailed analysis of the Vedic corpus, its divisions, and the evolutionary significance of its layers.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The Vedic corpus is the vast body of sacred literature that forms the bedrock of the Indian Knowledge System. Its organization into four Vedas, each with four distinct layers, reflects a profound evolution in thought from external ritualism to internal philosophical inquiry.</p><p><strong>The Four Vedas (Samhitas):</strong><br>The corpus is divided into four primary Vedas:</p><ul><li><strong>Rigveda:</strong> The oldest, a collection of hymns of praise to deities.</li><li><strong>Samaveda:</strong> The Veda of melodies, containing hymns set to music.</li><li><strong>Yajurveda:</strong> The guidebook for priests with sacrificial formulas.</li><li><strong>Atharvaveda:</strong> Contains hymns and spells for practical aspects of life.</li></ul><p><strong>The Evolutionary Significance of Textual Layers:</strong></p><ol><li><strong>Samhitas:</strong> The core layer of original hymns. Focus on prayer and invocation.</li><li><strong>Brahmanas:</strong> Prose texts explaining the symbolism and procedures of rituals (Karma-kanda).</li><li><strong>Aranyakas:</strong> "Forest texts," offering esoteric and meditative interpretations of rituals.</li><li><strong>Upanishads (Vedanta):</strong> Philosophical dialogues focusing on internal knowledge (Jnana-kanda), exploring the nature of Reality (Brahman) and the Self (Atman).</li></ol><p><strong>Conclusion:</strong><br>The Vedic structure maps a journey from prayer (Samhitas), to ritual (Brahmanas), to meditation (Aranyakas), and finally, to the pinnacle of metaphysical inquiry and liberation through knowledge (Upanishads).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 20: Elaborate on the six orthodox schools of Indian Philosophy (Shad Darshanas).</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The Shad Darshanas are the six orthodox (Astika) schools of Indian philosophy that accept Vedic authority and provide a comprehensive framework for understanding reality and achieving liberation. They are often studied in complementary pairs.</p><p><strong>The Six Schools in Pairs:</strong></p><ol><li><strong>Nyaya & Vaisheshika (Logic and Atomism):</strong><ul><li><strong>Nyaya:</strong> The school of logic and epistemology, establishing the valid means of knowledge (*pramanas*).</li><li><strong>Vaisheshika:</strong> A realist school of atomistic metaphysics, categorizing all reality into fundamental categories (*padarthas*).</li></ul></li><li><strong>Sankhya & Yoga (Dualism and Practice):</strong><ul><li><strong>Sankhya:</strong> A dualistic philosophy explaining reality as an interaction between **Purusha** (consciousness) and **Prakriti** (matter).</li><li><strong>Yoga:</strong> Provides the practical, eight-limbed path (Ashtanga Yoga) to discipline the mind and achieve liberation.</li></ul></li><li><strong>Mimamsa & Vedanta (Ritual and Metaphysics):</strong><ul><li><strong>Purva-Mimamsa:</strong> Focuses on the ritualistic portion (Karma-kanda) of the Vedas.</li><li><strong>Uttara-Mimamsa (Vedanta):</strong> Focuses on the philosophical portion (the Upanishads), exploring Brahman and Atman.</li></ul></li></ol><p><strong>Conclusion:</strong><br>Together, the Shad Darshanas create a complete intellectual and spiritual ecosystem for answering life's biggest questions.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 21: Discuss the contributions of 'Nastika' traditions like Buddhism and Jainism to ancient India.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The 'Nastika' (heterodox) schools, principally Buddhism and Jainism, arose as powerful reform movements that, while rejecting Vedic authority, made immense and lasting contributions to the intellectual and ethical fabric of ancient India.</p><p><strong>Key Contributions:</strong></p><ul><li><strong>Emphasis on Reason and Experience:</strong> Both traditions encouraged individuals to seek truth not through blind faith but through personal experience, reason, and meditation.</li><li><strong>Ethical Centrality of Ahimsa:</strong> They elevated non-violence to the central pillar of their ethics, deeply influencing the broader Indian ethos.</li><li><strong>Challenge to the Caste System:</strong> They offered spiritual paths open to all, regardless of caste, creating inclusive monastic orders (Sanghas).</li><li><strong>Development of Logic:</strong> To defend their doctrines, their scholars developed highly sophisticated systems of logic and epistemology, enriching all philosophical traditions.</li><li><strong>Promotion of Vernacular Languages:</strong> They used common languages like Pali and Ardhamagadhi, creating vast canons of literature and democratizing access to spiritual knowledge.</li></ul><p><strong>Conclusion:</strong><br>The Nastika schools were powerful forces that questioned norms, promoted ethics over ritual, and created a more diverse, dynamic, and ethically-conscious intellectual landscape in ancient India.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 22: Critically analyze the role of 'Dharmasastras' and 'Niti Sastras'.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>Dharmasastras and Niti Sastras translate philosophy into a framework for social order, law, and governance. Dharmasastras provide a code for a righteous society, while Niti Sastras offer pragmatic advice on statecraft.</p><p><strong>Role of Dharmasastras (e.g., Manusmriti):</strong></p><ul><li><strong>Social Structure:</strong> Codified the Varnashrama Dharma (four classes, four stages of life) to create a stable society.</li><li><strong>Legal Code:</strong> Served as the source of ancient Indian law for civil and criminal matters.</li><li><strong>Critical View:</strong> Criticized for institutionalizing social inequality and discrimination, particularly through the rigid caste system.</li></ul><p><strong>Role of Niti Sastras (e.g., Arthasastra):</strong></p><ul><li><strong>Statecraft:</strong> Detailed blueprints for running a state, covering administration, economy, and military strategy.</li><li><strong>Political Realism:</strong> Highly pragmatic, often prioritizing the security and prosperity of the state.</li><li><strong>Practical Wisdom:</strong> Taught diplomacy, psychology, and worldly wisdom through fables and treatises.</li></ul><p><strong>Conclusion:</strong><br>Together, Dharmasastras (idealistic, dharma-based) and Niti Sastras (pragmatic, power-based) provided a complementary framework for ancient Indian society and governance, though they also cemented social hierarchies.</p></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic for regular question toggles
+            const answerButtons = document.querySelectorAll('.toggle-answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerDiv = button.nextElementSibling;
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = 'Show Answer';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = 'Hide Answer';
+                    }
+                });
+            });
+
+            // Logic for Dark/Light Mode Theme Switcher
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                    themeIcon.textContent = '🌙';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggle.checked = false;
+                    themeIcon.textContent = '☀️';
+                }
+            };
+            
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Check for saved theme in localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+}
+        });
+    </script>
+</body>
+</html>
