@@ -26,6 +26,7 @@
             --success-text-color: #2b9348;
             --success-bg-color: #f1fcf5;
             --success-border-color: #d4ede2;
+            --footer-text-color: #6c757d;
         }
 
         /* --- Dark Mode Variables --- */
@@ -42,6 +43,7 @@
             --success-text-color: #96f2c3;
             --success-bg-color: #143d2c;
             --success-border-color: #205c43;
+            --footer-text-color: #adb5bd;
         }
 
         /* --- General Body & Typography --- */
@@ -52,6 +54,9 @@
             line-height: 1.7;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -143,6 +148,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 0 20px 60px 20px;
+            flex-grow: 1; /* Makes main content area expand */
         }
 
         .assignment-section h2 {
@@ -230,6 +236,22 @@
         }
         .answer li { margin-bottom: 0.7em; }
 
+        /* --- Footer --- */
+        footer {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--footer-text-color);
+            font-size: 0.9em;
+            width: 100%;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+        
         /* --- RESPONSIVE DESIGN FOR MOBILE --- */
         @media (max-width: 768px) {
             body { font-size: 15px; }
@@ -377,6 +399,11 @@
         </section>
 
     </main>
+
+    <footer>
+        <p>© 2024 IKS Question Bank | All the Best for Your Exams!</p>
+        <p>Created by Pratyush Swain</p>
+    </footer>
 
     <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
     <script>
