@@ -61,30 +61,25 @@
         @media (min-width: 768px) { #countdown-display { gap: 1rem; } }
 
         /* --- TAB NAVIGATION --- */
-        .tab-navigation { display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem; }
-        .tab-button { background-color: transparent; border: none; padding: 1rem 1.5rem; font-size: 1.1em; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; position: relative; /* Added for badge positioning */ }
+        .tab-navigation { display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem; }
+        .tab-button { background-color: transparent; border: none; padding: 1rem 1.5rem; font-size: 1.1em; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; position: relative; }
         .tab-button.active { color: var(--primary-accent); border-bottom-color: var(--primary-accent); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        /* Badge for the tab button */
-        .tab-badge {
-            position: absolute;
-            top: 6px;
-            right: 8px;
-            background-color: var(--protected-badge-bg);
-            color: white;
-            padding: 2px 6px;
-            font-size: 0.6em;
-            border-radius: 5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.2;
-        }
+        .tab-badge { position: absolute; top: 6px; right: 8px; background-color: var(--protected-badge-bg); color: white; padding: 2px 6px; font-size: 0.6em; border-radius: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+        
+        /* --- STUDY FOCUS BOX & DIVIDER --- */
+        .study-focus-box { background-color: var(--back-btn-bg); border-left: 5px solid var(--primary-accent); border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 2rem; }
+        .study-focus-box h3 { margin-top: 0; color: var(--primary-accent); font-size: 1.3em; display: flex; align-items: center; }
+        .study-focus-box h3 .fas { margin-right: 0.75rem; font-size: 1.2em; }
+        .study-focus-box ul { padding-left: 20px; margin: 1rem 0 0 0; list-style-type: '✔ '; }
+        .study-focus-box li { margin-bottom: 0.8rem; padding-left: 0.5rem; line-height: 1.5; }
+        .study-focus-box strong { color: var(--text-primary); font-weight: 600; }
+        .section-divider { border: none; height: 1px; background: linear-gradient(to right, transparent, var(--border-color), transparent); margin: 2.5rem 0; }
         
         /* --- SUBJECT GRID & PROTECTED BOX --- */
         .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .single-item-grid { display: flex; justify-content: center; align-items: center; } /* For Phase 2 centering */
+        .single-item-grid { display: flex; justify-content: center; align-items: center; }
         .subject-box { text-decoration: none; display: block; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .subject-box:hover { transform: translateY(-8px); border-color: var(--primary-accent); }
         .subject-box:hover .icon { color: var(--primary-accent); transform: scale(1.1) translateY(-50%); }
@@ -112,6 +107,63 @@
         #password-submit-btn { width: 100%; background-color: var(--primary-accent); color: white; border: none; padding: 0.8rem; font-size: 1.1em; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; margin-top: 1rem; font-weight: 600; }
         #password-submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         .error-message { color: var(--warning-color); font-size: 0.9em; margin-top: 0.5rem; display: none; }
+        
+        /* --- NEW: STYLES FOR 'KEY POINTS' TAB --- */
+        #key-points .content-container {
+            background-color: var(--card-bg);
+            padding: 25px 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        #key-points h1 {
+            color: var(--primary-accent);
+            text-align: center;
+            border-bottom: 2px solid var(--primary-accent);
+            padding-bottom: 10px;
+        }
+        #key-points h2 {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.5rem;
+        }
+        #key-points h3 {
+            color: var(--primary-accent);
+            margin-top: 25px;
+            font-size: 1.2rem;
+        }
+        #key-points ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #key-points li {
+            margin-bottom: 10px;
+        }
+        #key-points strong {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        body.dark-mode #key-points strong {
+            color: #ff6347; /* Brighter red for dark mode */
+        }
+        #key-points ol {
+            padding-left: 30px;
+        }
+        #key-points .final-tip {
+            background-color: #eafaf1;
+            border-left: 5px solid #2ecc71;
+            padding: 15px;
+            margin-top: 40px;
+            font-style: italic;
+            color: #333;
+            border-radius: 6px;
+        }
+        body.dark-mode #key-points .final-tip {
+            background-color: #1e3626;
+            color: #c1f0d0;
+        }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
@@ -137,7 +189,7 @@
 
     <div class="quote-runner">
         <div class="runner-text">
-             <span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span>
+            <span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span>
         </div>
     </div>
     
@@ -162,10 +214,14 @@
                     Phase 2: Comprehensive
                     <span class="tab-badge">Protected</span>
                 </button>
+                <button class="tab-button" data-tab="key-points">Key Points</button>
             </div>
             
             <!-- Phase 1 Content -->
             <div id="phase1" class="tab-content active">
+            
+              
+                <hr class="section-divider">
                 <div class="subject-grid">
                     <a href="module1.html" class="subject-box"><div><h2>Module 1: Introduction to IKS</h2><p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p></div><i class="fas fa-book-open icon"></i></a>
                     <a href="module2.html" class="subject-box"><div><h2>Module 2: Foundation for Science & Technology</h2><p>Linguistics, number systems, concept of Zero, and unique measurement systems.</p></div><i class="fas fa-cogs icon"></i></a>
@@ -189,6 +245,126 @@
                     </div>
                 </div>
             </div>
+
+            <!-- **NEW** Key Points Content Panel -->
+            <div id="key-points" class="tab-content">
+                <div class="content-container">
+                    <h1>Key Concepts for IKS Exam</h1>
+            
+                    <!-- MODULE 1 -->
+                    <h2>Module 1: Introduction to IKS</h2>
+                    <h3>Classification of Knowledge</h3>
+                    <ul>
+                        <li><strong>Caturdasa Vidyasthanam:</strong> The 14 branches of knowledge (4 Vedas, 6 Vedangas, Puranas, Nyaya, Mimamsa, Dharmashastras).</li>
+                        <li><strong>64 Kalas (Arts):</strong> The 64 traditional arts, showing a holistic approach to skills beyond academics.</li>
+                    </ul>
+                    <h3>Core Texts & Literature</h3>
+                    <ul>
+                        <li><strong>The Four Vedas:</strong> Foundational scriptures (<strong>Rigveda, Yajurveda, Samaveda, Atharvaveda</strong>).</li>
+                        <li><strong>Vedangas:</strong> Six auxiliary disciplines to understand Vedas. Note the <strong>Sulbasutras</strong> for early geometry.</li>
+                        <li><strong>Itihasa:</strong> The two great epics - <strong>Ramayana</strong> and <strong>Mahabharata</strong>, as sources of history and dharma.</li>
+                        <li><strong>Puranas:</strong> Texts with myths, genealogies, and cosmology.</li>
+                    </ul>
+                    <h3>Schools of Philosophy (Darshanas) - VERY IMPORTANT</h3>
+                    <ul>
+                        <li><strong>Vedic/Orthodox (Astika):</strong> Accept Vedas. Know the six schools:
+                            <ol>
+                                <li><strong>Sankhya:</strong> Duality of consciousness (Purusha) and matter (Prakriti).</li>
+                                <li><strong>Yoga:</strong> Practical path to liberation based on controlling the mind.</li>
+                                <li><strong>Nyaya:</strong> School of logic and reasoning.</li>
+                                <li><strong>Vaisesika:</strong> School of atomism.</li>
+                                <li><strong>Purva-Mimamsa:</strong> Focus on Vedic rituals.</li>
+                                <li><strong>Vedanta:</strong> Philosophy of the Upanishads.</li>
+                            </ol>
+                        </li>
+                        <li><strong>Non-Vedic/Heterodox (Nastika):</strong> Reject Vedas.
+                            <ul>
+                                <li><strong>Carvaka:</strong> Materialism.</li>
+                                <li><strong>Buddhist Philosophy:</strong> Four Noble Truths, Eightfold Path.</li>
+                                <li><strong>Jain Philosophy:</strong> Non-violence (Ahimsa), non-absolutism (Anekantavada).</li>
+                            </ul>
+                        </li>
+                    </ul>
+            
+                    <!-- MODULE 2 -->
+                    <h2>Module 2: Foundation for Science & Technology</h2>
+                    <h3>Sanskrit & Linguistics</h3>
+                    <ul>
+                        <li><strong>Panini's Astadhyayi:</strong> A highly systematic Sanskrit grammar, foundational for modern <strong>Natural Language Processing (NLP)</strong>.</li>
+                    </ul>
+                    <h3>Number System & Mathematics</h3>
+                    <ul>
+                        <li><strong>Concept of Zero (Shunya):</strong> India's key contribution. A dual role as a <strong>placeholder</strong> and a <strong>number</strong>.</li>
+                        <li><strong>Decimal System:</strong> The base-10 place-value system we use today.</li>
+                        <li><strong>Alternative Number Representations:</strong> <strong>Katapayadi System</strong> (mapping letters to numbers in verses) and <strong>Bhuta Samkhya System</strong> (using words with number associations).</li>
+                    </ul>
+                    <h3>Logic and Epistemology</h3>
+                    <ul>
+                        <li><strong>Pramana:</strong> Means of valid knowledge. Focus on: <strong>Pratyaksha</strong> (Perception), <strong>Anumana</strong> (Inference), and <strong>Shabda</strong> (Testimony/Word of experts).</li>
+                        <li><strong>Pingala and the Binary System:</strong> Acharya Pingala's work on meters (Chandahshastra) used long/short syllables in a way that is equivalent to the <strong>binary system</strong>.</li>
+                    </ul>
+            
+                    <!-- MODULE 3 -->
+                    <h2>Module 3: Indian Mathematics & Astronomy</h2>
+                    <h3>Great Mathematicians & Contributions</h3>
+                    <ul>
+                        <li><strong>Aryabhata:</strong> Gave accurate value of <strong>Pi (π)</strong>, developed trigonometry (sine tables), and proposed Earth's rotation.</li>
+                        <li><strong>Brahmagupta:</strong> Rules for operating with <strong>zero and negative numbers</strong>.</li>
+                        <li><strong>Bhaskara II:</strong> Precursor concepts to <strong>differential calculus</strong>.</li>
+                        <li><strong>Madhava:</strong> Founder of Kerala School; developed infinite series for sine/cosine, laying groundwork for calculus.</li>
+                    </ul>
+                    <h3>Key Concepts</h3>
+                    <ul>
+                        <li><strong>Sulbasutras:</strong> Earliest source of geometry, contains the <strong>Pythagorean theorem</strong>.</li>
+                        <li><strong>Trigonometry:</strong> Development of <strong>Jya</strong> (Sine) and <strong>Kojya</strong> (Cosine) functions.</li>
+                        <li><strong>Pancanga:</strong> The 5-part traditional Indian calendar.</li>
+                        <li><strong>Jantar Mantar:</strong> Massive astronomical observatories (Yantras) for naked-eye observation.</li>
+                    </ul>
+            
+                    <!-- MODULE 4 -->
+                    <h2>Module 4: Indian Science & Technology Heritage</h2>
+                    <h3>Metallurgy and Materials Science</h3>
+                    <ul>
+                        <li><strong>Iron & Steel:</strong> The <strong>rust-proof Iron Pillar of Delhi</strong> and legendary <strong>Wootz Steel</strong> (used for Damascus blades).</li>
+                        <li><strong>Zinc Distillation:</strong> India was the first to master the industrial-scale distillation of Zinc.</li>
+                        <li><strong>Dyes & Painting:</strong> Long-lasting murals at the <strong>Ajanta Caves</strong> show advanced chemistry.</li>
+                    </ul>
+                    <h3>Architecture & Town Planning</h3>
+                    <ul>
+                        <li><strong>Town Planning:</strong> Sophisticated grid layouts and drainage systems in the <strong>Harappan Civilization</strong>.</li>
+                        <li><strong>Vastu Sastra:</strong> Traditional science of architecture for aligning buildings with nature.</li>
+                        <li><strong>Temple Architecture:</strong> Know the two styles: <strong>Nagara</strong> (North, with Shikhara) and <strong>Dravida</strong> (South, with Vimana).</li>
+                    </ul>
+            
+                    <!-- MODULE 5 -->
+                    <h2>Module 5: Humanities & Social Sciences</h2>
+                    <h3>Health and Wellness</h3>
+                    <ul>
+                        <li><strong>Ayurveda:</strong> Traditional medicine based on balancing the three <strong>Doshas: Vata, Pitta, and Kapha</strong>.</li>
+                        <li><strong>Yoga:</strong> A holistic system for uniting the <strong>body, mind, and consciousness</strong>.</li>
+                    </ul>
+                    <h3>Psychology</h3>
+                    <ul>
+                        <li><strong>The Triguna System:</strong> A model for personality and mental states based on three qualities:
+                            <ol>
+                                <li><strong>Sattva:</strong> Purity, balance, harmony.</li>
+                                <li><strong>Rajas:</strong> Action, passion, restlessness.</li>
+                                <li><strong>Tamas:</strong> Inertia, ignorance, laziness.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <h3>Governance and Management</h3>
+                    <ul>
+                        <li><strong>Kautilya's Arthashastra:</strong> The definitive text on <strong>statecraft, economic policy, and military strategy</strong>.</li>
+                        <li><strong>Concept of "Rama Rajya":</strong> An ideal of a just state where the ruler is dedicated to the people's welfare.</li>
+                    </ul>
+            
+                    <p class="final-tip">
+                        <strong>Final Tip:</strong> Try to understand the connections! For example, how Panini's grammar (Module 2) enabled scientific precision, and how the Triguna system (Module 5) is applied in Ayurveda (Module 5). Good luck!
+                    </p>
+                </div>
+            </div>
+
         </main>
     </div>
 
