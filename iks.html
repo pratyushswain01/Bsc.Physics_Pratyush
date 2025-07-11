@@ -60,9 +60,35 @@
         .timer-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
         @media (min-width: 768px) { #countdown-display { gap: 1rem; } }
 
-        /* --- TAB NAVIGATION --- */
-        .tab-navigation { display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem; }
-        .tab-button { background-color: transparent; border: none; padding: 1rem 1.5rem; font-size: 1.1em; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; position: relative; }
+        /* --- **UPDATED** TAB NAVIGATION --- */
+        .tab-navigation { 
+            display: flex; 
+            flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
+            overflow-x: auto; /* Enable horizontal scrolling if needed */
+            -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            gap: 0.5rem; 
+            border-bottom: 2px solid var(--border-color); 
+            margin-bottom: 2rem; 
+        }
+        .tab-navigation::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+        }
+        
+        .tab-button { 
+            background-color: transparent; 
+            border: none; 
+            padding: 1rem 1.5rem; 
+            font-size: 1.1em; 
+            font-weight: 600; 
+            color: var(--text-secondary); 
+            cursor: pointer; 
+            border-bottom: 3px solid transparent; 
+            transition: all 0.3s ease; 
+            position: relative;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+            white-space: nowrap; /* Keep text on one line */
+        }
         .tab-button.active { color: var(--primary-accent); border-bottom-color: var(--primary-accent); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -108,66 +134,33 @@
         #password-submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
         .error-message { color: var(--warning-color); font-size: 0.9em; margin-top: 0.5rem; display: none; }
         
-        /* --- NEW: STYLES FOR 'KEY POINTS' TAB --- */
-        #key-points .content-container {
-            background-color: var(--card-bg);
-            padding: 25px 40px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px var(--shadow-color);
-        }
-        #key-points h1 {
-            color: var(--primary-accent);
-            text-align: center;
-            border-bottom: 2px solid var(--primary-accent);
-            padding-bottom: 10px;
-        }
-        #key-points h2 {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            margin-top: 40px;
-            font-size: 1.5rem;
-        }
-        #key-points h3 {
-            color: var(--primary-accent);
-            margin-top: 25px;
-            font-size: 1.2rem;
-        }
-        #key-points ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-        #key-points li {
-            margin-bottom: 10px;
-        }
-        #key-points strong {
-            color: #c0392b;
-            font-weight: 600;
-        }
-        body.dark-mode #key-points strong {
-            color: #ff6347; /* Brighter red for dark mode */
-        }
-        #key-points ol {
-            padding-left: 30px;
-        }
-        #key-points .final-tip {
-            background-color: #eafaf1;
-            border-left: 5px solid #2ecc71;
-            padding: 15px;
-            margin-top: 40px;
-            font-style: italic;
-            color: #333;
-            border-radius: 6px;
-        }
-        body.dark-mode #key-points .final-tip {
-            background-color: #1e3626;
-            color: #c1f0d0;
-        }
+        /* --- STYLES FOR 'KEY POINTS' TAB --- */
+        #key-points .content-container { background-color: var(--card-bg); padding: 25px 40px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px var(--shadow-color); }
+        #key-points h1 { color: var(--primary-accent); text-align: center; border-bottom: 2px solid var(--primary-accent); padding-bottom: 10px; }
+        #key-points h2 { color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 40px; font-size: 1.5rem; }
+        #key-points h3 { color: var(--primary-accent); margin-top: 25px; font-size: 1.2rem; }
+        #key-points ul { list-style-type: disc; padding-left: 20px; }
+        #key-points li { margin-bottom: 10px; }
+        #key-points strong { color: #c0392b; font-weight: 600; }
+        body.dark-mode #key-points strong { color: #ff6347; }
+        #key-points ol { padding-left: 30px; }
+        #key-points .final-tip { background-color: #eafaf1; border-left: 5px solid #2ecc71; padding: 15px; margin-top: 40px; font-style: italic; color: #333; border-radius: 6px; }
+        body.dark-mode #key-points .final-tip { background-color: #1e3626; color: #c1f0d0; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
 
+        /* --- **NEW** MEDIA QUERY FOR MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .tab-button {
+                padding: 0.8rem 1rem; /* Make padding smaller */
+                font-size: 0.9em;    /* Make font smaller */
+            }
+            #key-points .content-container {
+                padding: 20px; /* Reduce padding on mobile */
+            }
+        }
+        
         /* --- FOOTER --- */
         footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
     </style>
@@ -219,8 +212,9 @@
             
             <!-- Phase 1 Content -->
             <div id="phase1" class="tab-content active">
-            
-              
+             
+                    
+                </div>
                 <hr class="section-divider">
                 <div class="subject-grid">
                     <a href="module1.html" class="subject-box"><div><h2>Module 1: Introduction to IKS</h2><p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p></div><i class="fas fa-book-open icon"></i></a>
@@ -246,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- **NEW** Key Points Content Panel -->
+            <!-- Key Points Content Panel -->
             <div id="key-points" class="tab-content">
                 <div class="content-container">
                     <h1>Key Concepts for IKS Exam</h1>
