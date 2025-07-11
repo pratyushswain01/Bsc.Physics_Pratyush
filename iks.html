@@ -50,12 +50,24 @@
         .runner-text .separator { display: inline-block; vertical-align: middle; margin: 0 1.5em; color: #FFD700; font-size: 1.2em; font-weight: 600; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* --- TIMER DISCLAIMER --- */
-        .timer-disclaimer { text-align: center; padding: 2rem 1rem; background-color: var(--card-bg); margin-bottom: 2rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px var(--shadow-color); transition: border-color 0.3s ease; }
+        /* --- NEW TIMER DISCLAIMER --- */
+        .timer-disclaimer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; }
         .timer-disclaimer h3 { font-size: 1.3em; margin: 0 0 0.5rem 0; color: var(--primary-accent); }
         .timer-disclaimer h3 .fa-exclamation-triangle { margin-right: 0.5rem; color: var(--warning-color); }
-        .timer-disclaimer p { margin: 0.2rem 0 1rem 0; font-size: 0.95em; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;}
-        #countdown-display { font-size: 2em; font-weight: 600; color: var(--text-primary); letter-spacing: 0.1em; font-family: 'Courier New', Courier, monospace; }
+        .timer-disclaimer p { margin: 0.2rem 0 1.5rem 0; font-size: 0.95em; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;}
+        #countdown-display { display: flex; justify-content: center; align-items: baseline; gap: 0.5rem; }
+        .timer-unit { text-align: center; }
+        .timer-number {
+            font-size: 1.8em; /* Reduced size */
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            line-height: 1.1;
+            font-family: 'Poppins', sans-serif; /* Changed to a simpler font */
+        }
+        .timer-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
+        @media (min-width: 768px) { #countdown-display { gap: 1rem; } }
+
 
         /* --- SUBJECT GRID --- */
         .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
@@ -115,57 +127,31 @@
         </div>
     </div>
     
-    <main class="container" id="main-content">
+    <div id="content-wrapper">
         <div class="timer-disclaimer">
             <h3><i class="fas fa-exclamation-triangle"></i>Important Access Notice</h3>
             <p>In accordance with privacy and content terms, this page has a limited access period. This resource will be permanently disabled after the countdown ends.</p>
-            <div id="countdown-display">Loading...</div>
+            <div id="countdown-display">
+                <div class="timer-unit"><span id="days" class="timer-number">--</span><span class="timer-label">Days</span></div>
+                <div class="timer-unit"><span id="hours" class="timer-number">--</span><span class="timer-label">Hours</span></div>
+                <div class="timer-unit"><span id="minutes" class="timer-number">--</span><span class="timer-label">Minutes</span></div>
+                <div class="timer-unit"><span id="seconds" class="timer-number">--</span><span class="timer-label">Seconds</span></div>
+            </div>
         </div>
 
-        <button id="back-button" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</button>
-        
-        <div class="subject-grid">
-            <a href="module1.html" class="subject-box">
-                <div>
-                    <h2>Module 1: Introduction to IKS</h2>
-                    <p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p>
-                </div>
-                <i class="fas fa-book-open icon"></i>
-            </a>
 
-            <a href="module2.html" class="subject-box">
-                <div>
-                    <h2>Module 2: Foundation for Science & Technology</h2>
-                    <p>Linguistics, number systems, concept of Zero, and unique measurement systems.</p>
-                </div>
-                <i class="fas fa-cogs icon"></i>
-            </a>
-
-            <a href="module3.html" class="subject-box">
-                <div>
-                    <h2>Module 3: Indian Mathematics & Astronomy</h2>
-                    <p>Great mathematicians, arithmetic operations, geometry, and astronomy.</p>
-                </div>
-                <i class="fas fa-star icon"></i>
-            </a>
-
-            <a href="module4.html" class="subject-box">
-                <div>
-                    <h2>Module 4: Indian Science & Technology in IKS</h2>
-                    <p>Metallurgy, dyes, painting, town planning, and temple architecture.</p>
-                </div>
-                <i class="fas fa-gopuram icon"></i>
-            </a>
-
-            <a href="module5.html" class="subject-box">
-                <div>
-                    <h2>Module 5: Humanities & Social Sciences in IKS</h2>
-                    <p>Ayurveda, yoga, psychology, governance, and public administration.</p>
-                </div>
-                <i class="fas fa-brain icon"></i>
-            </a>
-        </div>
-    </main>
+        <main class="container" id="main-content">
+            <button id="back-button" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</button>
+            
+            <div class="subject-grid">
+                <a href="module1.html" class="subject-box"><div><h2>Module 1: Introduction to IKS</h2><p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p></div><i class="fas fa-book-open icon"></i></a>
+                <a href="module2.html" class="subject-box"><div><h2>Module 2: Foundation for Science & Technology</h2><p>Linguistics, number systems, concept of Zero, and unique measurement systems.</p></div><i class="fas fa-cogs icon"></i></a>
+                <a href="module3.html" class="subject-box"><div><h2>Module 3: Indian Mathematics & Astronomy</h2><p>Great mathematicians, arithmetic operations, geometry, and astronomy.</p></div><i class="fas fa-star icon"></i></a>
+                <a href="module4.html" class="subject-box"><div><h2>Module 4: Indian Science & Technology in IKS</h2><p>Metallurgy, dyes, painting, town planning, and temple architecture.</p></div><i class="fas fa-gopuram icon"></i></a>
+                <a href="module5.html" class="subject-box"><div><h2>Module 5: Humanities & Social Sciences in IKS</h2><p>Ayurveda, yoga, psychology, governance, and public administration.</p></div><i class="fas fa-brain icon"></i></a>
+            </div>
+        </main>
+    </div>
 
     <!-- The Modal -->
     <div id="access-modal" class="modal-overlay">
@@ -190,8 +176,7 @@
         const backButton = document.getElementById('back-button');
         const accessModal = document.getElementById('access-modal');
         const modalCloseBtn = document.getElementById('modal-close-btn');
-        const countdownDisplayElement = document.getElementById('countdown-display');
-        const mainContent = document.getElementById('main-content');
+        const contentWrapper = document.getElementById('content-wrapper');
         
         // --- THEME SWITCHER ---
         const applyTheme = (theme) => {
@@ -217,7 +202,7 @@
             }
         };
         const clockInterval = setInterval(updateDateTime, 1000);
-        updateDateTime(); // Initial call
+        updateDateTime();
 
         // --- ACCESS MODAL LOGIC ---
         backButton.addEventListener('click', (e) => {
@@ -243,28 +228,25 @@
             const distance = expirationTime - now;
 
             if (distance > 0) {
-                // Time calculations for days, hours, minutes and seconds
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 
-                // Add leading zeros
-                const formattedDays = days.toString().padStart(2, '0');
-                const formattedHours = hours.toString().padStart(2, '0');
-                const formattedMinutes = minutes.toString().padStart(2, '0');
-                const formattedSeconds = seconds.toString().padStart(2, '0');
-
-                // Display the result
-                countdownDisplayElement.innerHTML = `${formattedDays}d : ${formattedHours}h : ${formattedMinutes}m : ${formattedSeconds}s`;
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
             } else {
-                // If the count down is finished, disable the page
                 clearInterval(countdownInterval);
-                mainContent.innerHTML = `<div style="text-align:center; padding: 4rem 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                                            <i class="fas fa-lock" style="font-size: 5rem; color: var(--warning-color); margin-bottom: 2rem;"></i>
-                                            <h1 style="color:var(--primary-accent); font-size:2.5em;">Access Expired</h1>
-                                            <p style="font-size:1.2em; color:var(--text-secondary);">This temporary resource link is now permanently disabled.</p>
-                                        </div>`;
+                if (contentWrapper) {
+                     contentWrapper.innerHTML = `<div style="text-align:center; padding: 4rem 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                                <i class="fas fa-lock" style="font-size: 5rem; color: var(--warning-color); margin-bottom: 2rem;"></i>
+                                                <h1 style="color:var(--primary-accent); font-size:2.5em;">Access Expired</h1>
+                                                <p style="font-size:1.2em; color:var(--text-secondary);">This temporary resource link is now permanently disabled.</p>
+                                            </div>`;
+                }
             }
         }, 1000);
     });
