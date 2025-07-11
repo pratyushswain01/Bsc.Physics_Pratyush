@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Definitive IKS Study Guide (Responsive Edition)</title>
+    <title>The Definitive IKS Study Guide (Ultra-Wide Edition)</title>
     <style>
-        /* --- Default Styles for Desktop & Larger Screens --- */
+        /* --- KEY CHANGES FOR MAXIMUM WIDTH --- */
+        html, body {
+            margin: 0;
+            padding: 0; /* No padding on the main page elements */
+        }
+        
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            line-height: 2.0;
+            line-height: 1.8; /* Slightly reduced for text density */
             color: #1c1c1c;
             background-color: #fdfdfd;
-            margin: 0;
-            padding: 25px;
         }
+
         .study-guide-container {
-            max-width: 1100px; /* Comfortable width on desktop */
-            margin: 20px auto;
+            width: 100%; /* Use the entire screen width */
+            max-width: 100%;
+            box-sizing: border-box; /* Ensures padding is inside the width */
             background: #ffffff;
-            padding: 30px 50px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+            padding: 30px 20px; /* Greatly reduced horizontal padding */
             border-top: 8px solid #FFA500;
         }
+        
         .main-title {
             color: #FFA500;
             text-align: center;
-            font-size: 3em;
+            font-size: 2.8em;
             font-weight: 700;
             padding-bottom: 20px;
             margin-bottom: 35px;
         }
         .module-title {
             color: #FFA500;
-            font-size: 2.4em;
+            font-size: 2.2em;
             font-weight: 600;
-            margin-top: 60px;
+            margin-top: 50px;
             margin-bottom: 25px;
             border-left: 7px solid #FFA500;
-            padding-left: 25px;
+            padding-left: 20px;
         }
         .module-content {
             background-color: #fafafa;
             border: 1px solid #eee;
-            padding: 35px;
+            padding: 30px;
             border-radius: 8px;
             margin-top: 25px;
             margin-bottom: 40px;
         }
         .module-content h4 {
-            font-size: 1.8em;
+            font-size: 1.7em;
             color: #34495e;
             border-bottom: 2px solid #e7d8b5;
             padding-bottom: 12px;
@@ -57,17 +61,17 @@
             margin-bottom: 30px;
         }
         .module-content h5 {
-            font-size: 1.4em;
+            font-size: 1.3em;
             color: #C0392B;
             font-weight: 600;
             margin-top: 25px;
             margin-bottom: 15px;
         }
         .module-content ul, .module-content ol {
-            padding-left: 35px;
+            padding-left: 30px;
         }
         .module-content li {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             padding-left: 15px;
         }
         .key-term {
@@ -82,7 +86,7 @@
         }
         .definition-box {
             display: block;
-            margin-left: 25px;
+            margin-left: 20px;
             font-size: 1.0em;
             color: #333;
             border-left: 4px solid #f1c40f;
@@ -100,7 +104,7 @@
         footer {
             text-align: center;
             margin-top: 60px;
-            padding-top: 30px;
+            padding: 30px 20px;
             border-top: 1px solid #ddd;
             color: #888;
             font-size: 0.9em;
@@ -110,41 +114,19 @@
             margin: 5px 0;
         }
 
-        /* --- KEY CHANGE: RESPONSIVE STYLES FOR MOBILE DEVICES --- */
-        /* These rules apply only when the screen width is 768px or less */
-        @media (max-width: 768px) {
-            body {
-                padding: 0; /* Remove padding from the body on mobile */
-            }
+        /* Minor adjustment for very small screens to prevent text from touching the absolute edge */
+        @media (max-width: 480px) {
             .study-guide-container {
-                max-width: 100%; /* Use the full width */
-                padding: 20px 15px; /* Reduce padding significantly for mobile */
-                border-radius: 0; /* Optional: Remove border-radius for edge-to-edge feel */
-                box-shadow: none; /* Optional: Remove shadow on mobile */
-                border-top-width: 6px;
+                padding: 20px 10px;
             }
             .main-title {
-                font-size: 2.2em; /* Smaller title for mobile */
+                font-size: 2em;
             }
             .module-title {
-                font-size: 1.8em; /* Smaller module titles */
-                padding-left: 15px;
-            }
-            .module-content {
-                padding: 20px;
+                font-size: 1.6em;
             }
             .module-content h4 {
-                font-size: 1.5em;
-            }
-            .module-content h5 {
-                font-size: 1.2em;
-            }
-            .module-content ul, .module-content ol {
-                padding-left: 20px; /* Reduce list indentation */
-            }
-            .definition-box {
-                margin-left: 0; /* Remove extra margin for definition boxes */
-                padding: 15px;
+                font-size: 1.4em;
             }
         }
     </style>
@@ -152,7 +134,7 @@
 <body>
 
 <div class="study-guide-container">
-    <h1 class="main-title">The Definitive IKS Study Guide</h1>
+    <h1 class="main-title">The Definitive IKS Study Guide (Ultra-Wide Edition)</h1>
     <p style="text-align:center; font-style:italic; color:#555;">An exhaustive, detailed breakdown of all concepts for comprehensive understanding and exam mastery.</p>
 
     <!-- MODULE 1 -->
