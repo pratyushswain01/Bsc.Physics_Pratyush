@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Module 3 - Question Bank</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS STYLES EMBEDDED -->
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --header-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e8590c;
+            --accent-border-color: #ffa94d;
+            --answer-bg-color: #fff9f2;
+            --answer-text-color-strong: #bf360c;
+            --success-text-color: #2b9348;
+            --success-bg-color: #f1fcf5;
+            --success-border-color: #d4ede2;
+        }
+
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --header-bg-color: #1e1e1e;
+            --border-color: #444;
+            --accent-color: #fd7e14;
+            --accent-border-color: #e8590c;
+            --answer-bg-color: #2c241d;
+            --answer-text-color-strong: #ff922b;
+            --success-text-color: #96f2c3;
+            --success-bg-color: #143d2c;
+            --success-border-color: #205c43;
+        }
+
+        /* --- General Body & Typography --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+            margin-top: 0;
+            transition: color 0.3s;
+        }
+        
+        /* --- Header --- */
+        header {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fd7e14; /* Orange color */
+            margin-bottom: 0.2em;
+        }
+        
+        .shloka-bar {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            margin: 20px -20px -20px -20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shloka-sanskrit { font-size: 1.2em; margin-bottom: 4px; }
+        .shloka-translation { font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        .shloka-item { text-align: center; padding: 5px 15px; }
+
+        /* --- DARK/LIGHT MODE TOGGLE --- */
+        #theme-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
+        #theme-toggle { display: none; }
+        #theme-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #777;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        #theme-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        #theme-toggle:checked + #theme-label { background-color: #fd7e14; }
+        #theme-toggle:checked + #theme-label::after { transform: translateX(24px); }
+        #theme-icon {
+            position: absolute;
+            left: 5px;
+            z-index: 10;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .dark-mode #theme-icon {
+            transform: translateX(25px);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .assignment-section h2 {
+            font-size: 2em;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 1 Mark Questions Styling --- */
+        .mcq-list { list-style-type: none; padding: 0; counter-reset: mcq-counter; }
+        .mcq-list li {
+            background-color: var(--card-bg-color);
+            border-left: 5px solid var(--accent-border-color);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.05em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .mcq-list li::before {
+            counter-increment: mcq-counter;
+            content: counter(mcq-counter) ". ";
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            color: var(--accent-color);
+            margin-right: 8px;
+            transition: color 0.3s;
+        }
+        .mcq-direct-answer {
+            font-weight: 700;
+            color: var(--success-text-color);
+            background-color: var(--success-bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--success-border-color);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 2, 5, 8 Mark Question & Answer Blocks --- */
+        .question-block {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease;
+        }
+        .question-block:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+        .question-block h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .toggle-answer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-answer-btn:hover { background-color: #e8590c; transform: translateY(-2px); }
+        .answer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--answer-bg-color);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer p, .answer ul, .answer ol { margin-bottom: 1em; }
+        .answer strong {
+            color: var(--answer-text-color-strong);
+            transition: color 0.3s;
+        }
+        .answer li { margin-bottom: 0.7em; }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            main { padding: 0 15px 40px 15px; }
+            header h1 { font-size: 2em; }
+            .assignment-section h2 { font-size: 1.7em; }
+            .mcq-list li, .question-block { padding: 15px; }
+            #theme-switcher { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Dark Mode Toggle Switch -->
+        <div id="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <label for="theme-toggle" id="theme-label">
+                <span id="theme-icon"></span>
+            </label>
+        </div>
+
+        <h1>IKS Module 3 - Mathematics & Astronomy</h1>
+        
+        
+    </header>
+
+    <main>
+        <!-- 1 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 3: 1 Mark Questions</h2>
+            <ol class="mcq-list">
+                <li>The ancient Indian texts dealing with geometry for constructing fire altars are the <span class="mcq-direct-answer">Sulba Sutras</span>.</li>
+                <li>The great mathematician-astronomer who authored the 'Aryabhatiya' is <span class="mcq-direct-answer">Aryabhata</span>.</li>
+                <li>Aryabhata calculated the value of Pi (π) to four decimal places as approximately <span class="mcq-direct-answer">3.1416</span>.</li>
+                <li>The traditional Indian astronomical almanac or calendar is called the <span class="mcq-direct-answer">Pancanga</span>.</li>
+                <li>The monumental astronomical observatories known as Jantar Mantar were built by Maharaja <span class="mcq-direct-answer">Sawai Jai Singh II</span>.</li>
+                <li>The Sanskrit term for the trigonometric sine function is <span class="mcq-direct-answer">Jya</span>.</li>
+                <li>The corpus of refined astronomical texts in ancient India is known as the <span class="mcq-direct-answer">Siddhantic Tradition</span>.</li>
+                <li>Ancient Indian astronomical instruments were generally known as <span class="mcq-direct-answer">Yantras</span>.</li>
+                <li>Long before Copernicus, <span class="mcq-direct-answer">Aryabhata</span> proposed a heliocentric model where the Earth spins on its axis.</li>
+                <li>The subject of Pingala's 'Chandah Sastra' was poetic <span class="mcq-direct-answer">meters</span>, which led to binary concepts.</li>
+                <li>Indian algebra was known by the name <span class="mcq-direct-answer">Bija-ganita</span>.</li>
+                <li>Who wrote the famous mathematical text 'Lilavati'? a) Aryabhata b) Brahmagupta c) Bhaskara II -> <span class="mcq-direct-answer">c) Bhaskara II</span></li>
+                <li>A famous commentary on the Aryabhatiya, called the 'Aryabhatiya-bhasya', was written by <span class="mcq-direct-answer">Bhaskara I</span>.</li>
+                <li>The Samrat Yantra at Jantar Mantar is essentially a massive <span class="mcq-direct-answer">sundial</span>.</li>
+                <li>The Sulba Sutras contain clear statements of what is now known as the <span class="mcq-direct-answer">Pythagorean theorem</span>.</li>
+                <li>The five elements ('angas') of a Pancanga include Tithi, Vaara, Nakshatra, Yoga, and <span class="mcq-direct-answer">Karana</span>.</li>
+                <li>The term 'kojya' in Indian trigonometry refers to the <span class="mcq-direct-answer">cosine</span> function.</li>
+                <li><span class="mcq-direct-answer">Brahmagupta</span> was a 7th-century mathematician who gave rules for operating with zero and negative numbers.</li>
+                <li>The 'Siddhanta Siromani' is a major work on mathematics and astronomy composed by <span class="mcq-direct-answer">Bhaskara II</span>.</li>
+                <li>A solar eclipse is caused by the shadow of the <span class="mcq-direct-answer">Moon</span> falling on the Earth.</li>
+                <li>Arithmetic operations were a well-developed part of ancient Indian mathematics. (True/False) -> <span class="mcq-direct-answer">True</span></li>
+                <li>Which component of Jantar Mantar was used to measure the altitude and azimuth of celestial bodies? <span class="mcq-direct-answer">Jai Prakash Yantra</span></li>
+                <li>The term for a day of the week in the Pancanga is <span class="mcq-direct-answer">Vaara</span>.</li>
+                <li>Solving indeterminate equations was a significant achievement of Indian <span class="mcq-direct-answer">algebra</span>.</li>
+                <li>The base of the Indian trigonometry tables was the <span class="mcq-direct-answer">half-chord</span> of a circle, not the full chord.</li>
+                <li>The main purpose of the Sulba Sutras was religious, for constructing Vedic <span class="mcq-direct-answer">altars (Yajnavedi)</span>.</li>
+                <li>Indian astronomy utilized a sophisticated <span class="mcq-direct-answer">celestial coordinate system</span> to map the stars.</li>
+                <li>The Pancanga calendar is a <span class="mcq-direct-answer">luni-solar</span> calendar.</li>
+                <li>Jantar Mantar at <span class="mcq-direct-answer">Jaipur</span> is the largest and best-preserved of the five observatories.</li>
+                <li>Aryabhata correctly explained that the apparent motion of stars is due to the <span class="mcq-direct-answer">rotation of the Earth</span>.</li>
+                <li>A 'tithi' in the Pancanga is a <span class="mcq-direct-answer">lunar day</span>.</li>
+                <li>The development of the sine function was crucial for advancements in astronomy and <span class="mcq-direct-answer">navigation</span>.</li>
+            </ol>
+        </section>
+
+        <!-- 2 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 3: 2 Mark Questions</h2>
+            
+            <div class="question-block">
+                <h3>Question 1: What are Sulba Sutras and what is their main contribution to mathematics?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Sulba Sutras are appendices to the Vedas that contain rules for constructing geometrically complex fire altars (yajnavedis). Their main contribution to mathematics is in the field of <strong>geometry</strong>. They provide the earliest known textual expressions of the Pythagorean theorem, procedures for "circling the square," and calculations of irrational numbers like √2.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 2: What is a Pancanga? List its five elements ('angas').</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>A Pancanga is the traditional Indian luni-solar calendar or almanac, essential for social and religious life.</p><p>Its five elements ('Pancha-angas') are:</p><ol><li><strong>Tithi:</strong> A lunar day (30 tithis make a lunar month).</li><li><strong>Vaara:</strong> The day of the week.</li><li><strong>Nakshatra:</strong> The lunar mansion in which the moon is located.</li><li><strong>Yoga:</strong> A period calculated from the sum of the sun's and moon's longitudes.</li><li><strong>Karana:</strong> Half of a tithi.</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 3: Briefly describe the purpose of the Jantar Mantar observatories.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Jantar Mantar observatories, built by Maharaja Sawai Jai Singh II, were monumental astronomical instruments. Their primary purpose was to conduct precise, naked-eye observations of celestial phenomena to revise and correct the existing astronomical tables and to create a more accurate calendar (Pancanga) for both civil and religious use.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 4: Name two great Indian mathematicians and one specific contribution of each.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>1. <strong>Aryabhata:</strong> His major work is the 'Aryabhatiya'. His key contribution was calculating the value of π to 3.1416 and introducing the first sine tables (jya tables) in trigonometry.</p><p>2. <strong>Bhaskara II:</strong> His major work is 'Siddhanta Siromani'. His key contribution was in algebra, where he worked on solving indeterminate equations and conceived of concepts related to differential calculus.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 5: What is the Siddhantic Tradition in Indian astronomy?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Siddhantic Tradition refers to the body of Sanskrit astronomical treatises (Siddhantas) that developed from around the 5th century CE onwards. These texts, such as the Surya Siddhanta and Aryabhata's Aryabhatiya, represented a shift to a more sophisticated, mathematical astronomy, providing algorithms to calculate planetary positions, eclipses, and other celestial events.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 6: How did Aryabhata correctly explain solar and lunar eclipses?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Aryabhata provided a scientific explanation for eclipses, moving away from earlier mythological accounts. He correctly explained that a <strong>lunar eclipse</strong> occurs when the Earth's shadow falls on the Moon, and a <strong>solar eclipse</strong> occurs when the Moon's shadow falls on the Earth. This demonstrated a sophisticated understanding of celestial mechanics.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 7: Explain the origin of the trigonometric terms 'sine' and 'cosine' from Sanskrit.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Indian term for half-a-chord (sine) was 'ardha-jya', which was shortened to 'jya'. When Arab scholars adopted this, they transliterated it as 'jiba', which was later confused with the Arabic word 'jaib' (bay or inlet). This was then translated into Latin as 'sinus', which became the English 'sine'. 'Kojya' (complementary sine) became 'cosine'.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 8: What is Bija-ganita?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Bija-ganita is the traditional Indian name for algebra. 'Bija' means 'seed' or 'source', and 'ganita' means mathematics. This branch of mathematics deals with solving equations, often involving unknown quantities, using symbolic notation. The works of Brahmagupta and Bhaskara II are seminal texts in Bija-ganita.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 9: What was the main innovation in trigonometry introduced by Indian mathematicians?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The main innovation was the direct calculation of the <strong>sine function (jya)</strong>, based on the half-chord of a circular arc, rather than the full chord used by the Greeks. This shift made trigonometric calculations more versatile and efficient, forming the basis of modern trigonometry and its application in astronomy.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 10: Name two 'Yantras' (instruments) found at a Jantar Mantar and their function.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>1. <strong>Samrat Yantra:</strong> This is a massive equinoctial sundial. It was used to measure local time with high precision (up to 2 seconds) and the declination of celestial objects.</p><p>2. <strong>Rama Yantra:</strong> This is a pair of cylindrical structures used for measuring the altitude and azimuth (horizontal position) of stars and other celestial bodies.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 11: What is the significance of the 'Aryabhatiya-bhasya'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The 'Aryabhatiya-bhasya' is a detailed commentary on Aryabhata's highly concise 'Aryabhatiya'. Written by Bhaskara I in the 7th century, its significance lies in explaining and elaborating upon Aryabhata's sutras, which were otherwise very difficult to understand. It preserved and transmitted Aryabhata's knowledge to later generations.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 12: Why was an accurate calendar (Pancanga) so important in ancient India?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>An accurate calendar was crucial for both religious and civil purposes. It was essential for determining the auspicious times (muhurta) for Vedic sacrifices, festivals, weddings, and other important lifecycle events. For civil administration, it was necessary for agriculture (sowing and harvesting times) and for levying taxes.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 13: What were Brahmagupta's contributions to mathematics concerning zero?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Brahmagupta, in his text 'Brahmasphutasiddhanta' (628 CE), was one of the first to formalize rules for arithmetic operations involving zero. He clearly stated that a number plus zero is the number itself, a number minus zero is the number, and a number multiplied by zero is zero. However, he struggled with division by zero.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 14: How is geometry in the Sulba Sutras different from Euclidean geometry?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The main difference is in purpose and method. Geometry in the Sulba Sutras is <strong>prescriptive and ritualistic</strong>, providing procedures to construct altars of specific shapes and areas. Euclidean geometry is <strong>axiomatic and demonstrative</strong>, building a system of logical proofs based on fundamental axioms and definitions to explore the properties of space itself.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 15: What is a celestial coordinate system?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>A celestial coordinate system is a framework used to specify the positions of celestial objects (like stars, planets, and galaxies) on the celestial sphere. Ancient Indian astronomers developed their own system, using concepts like the ecliptic (the sun's path) as a reference plane to map the cosmos, which was essential for creating planetary models.</p></div>
+            </div>
+        </section>
+
+        <!-- 5 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 3: 5 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 16: Discuss the major contributions of Aryabhata to both mathematics and astronomy.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Aryabhata (5th century CE) was a monumental figure in Indian science. His contributions, encapsulated in the 'Aryabhatiya', revolutionized both mathematics and astronomy.</p><p><strong>Contributions to Mathematics:</strong></p><ul><li><strong>Value of Pi (π):</strong> He gave an incredibly accurate approximation of π as 3.1416, stating it was 'approximate' (āsanna), indicating an awareness that it was irrational.</li><li><strong>Trigonometry:</strong> He pioneered modern trigonometry by creating the first tables of sine values (jya), calculated at intervals of 3.75 degrees. This was a crucial tool for astronomy.</li><li><strong>Algebra:</strong> He provided solutions for linear indeterminate equations of the form ax + by = c, using a method called 'kuttaka'.</li></ul><p><strong>Contributions to Astronomy:</strong></p><ul><li><strong>Heliocentric Model:</strong> He proposed a model where the Sun is central and the Earth rotates on its own axis, which explained the apparent daily motion of the stars.</li><li><strong>Scientific Explanation of Eclipses:</strong> He correctly identified that solar and lunar eclipses are caused by the shadows of the Moon and Earth, respectively, debunking older mythological theories.</li><li><strong>Sidereal Period:</strong> He calculated the length of the sidereal year (the time for the Earth to orbit the sun relative to the stars) with remarkable accuracy.</li></ul></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 17: Describe the geometric knowledge contained within the Sulba Sutras.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Sulba Sutras, though primarily religious texts, contain a wealth of sophisticated geometric knowledge used for the precise construction of Vedic fire altars (yajnavedis).</p><ul><li><strong>Pythagorean Theorem:</strong> They contain the earliest known verbal statements of the Pythagorean theorem. For example, the Baudhayana Sulba Sutra states: "The rope which is stretched across the diagonal of a square produces an area double the size of the original square."</li><li><strong>Pythagorean Triplets:</strong> They provide lists of Pythagorean triplets (like 3-4-5, 5-12-13) for constructing right angles.</li><li><strong>Geometric Constructions:</strong> They include detailed procedures for various constructions, such as building a square with the same area as a circle ("squaring the circle") and vice-versa, and constructing squares with areas equal to the sum or difference of two other squares.</li><li><strong>Value of √2:</strong> They give a highly accurate approximation for the value of the square root of 2, calculated to five decimal places (1.41421).</li></ul><p>This shows that ancient Indians had a deep, practical understanding of advanced geometric principles long before they were formalized in the West.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 18: Explain the Jantar Mantar as a pinnacle of naked-eye observational astronomy.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Jantar Mantar refers to the five astronomical observatories built by Maharaja Sawai Jai Singh II in the early 18th century. They represent the peak of pre-telescopic, naked-eye observational astronomy.</p><ul><li><strong>Purpose:</strong> Their goal was to make highly accurate astronomical observations to correct the existing Zij (astronomical tables) and to create a more precise calendar for both religious and administrative use.</li><li><strong>Architectural Instruments (Yantras):</strong> Instead of small metal instruments, Jai Singh built massive masonry structures. This scale reduced observational errors (like parallax) and allowed for more precise readings.</li><li><strong>Key Instruments:</strong>
+    <ul><li><strong>Samrat Yantra:</strong> A giant sundial capable of measuring time to an accuracy of two seconds.</li><li><strong>Jai Prakash Yantra:</strong> Hemispherical bowls with markings that map the celestial sphere, used for determining the positions of celestial objects.</li><li><strong>Rama Yantra:</strong> Cylindrical structures for measuring altitude and azimuth.</li></ul></li><li><strong>Scientific Approach:</strong> The construction of Jantar Mantar was a major scientific project. Jai Singh studied Indian, Persian, and European astronomical texts and built these instruments to resolve discrepancies through direct, repeatable observation. They are a testament to a scientific methodology based on empirical data collection.</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 8 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 3: 8 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 19: Provide a detailed account of the major achievements of Indian mathematicians in the fields of algebra, geometry, and trigonometry.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>Ancient and medieval Indian mathematicians made foundational and revolutionary contributions across several fields, most notably geometry, algebra, and trigonometry. Their work was not only theoretically advanced but also practically driven by the needs of astronomy and ritual. These achievements were transmitted to the rest of the world, forming the bedrock of modern mathematics.</p><p><strong>1. Geometry (Primarily Sulba Sutras):</strong><br>The earliest formal mathematical knowledge from India comes from the Sulba Sutras (c. 800-200 BCE). These texts prescribed geometric rules for constructing complex Vedic fire altars.</p><ul><li><strong>Pythagorean Theorem:</strong> They contain the earliest explicit statements of the theorem relating the sides of a right-angled triangle, predating Pythagoras.</li><li><strong>Geometric Algebra:</strong> They included procedures for constructing squares with areas equal to the sum, difference, or product of other areas, demonstrating a deep understanding of geometric algebra.</li><li><strong>Irrational Numbers:</strong> They provided a highly accurate approximation of √2, crucial for constructing certain altars.</li></ul><p><strong>2. Algebra (Bija-ganita):</strong><br>Indian algebra reached great heights with mathematicians like Brahmagupta and Bhaskara II. They moved beyond simple equations to solve complex problems.</p><ul><li><strong>Negative Numbers and Zero:</strong> Brahmagupta (7th century) systematically established rules for arithmetic operations with negative numbers and zero, treating them as valid numerical concepts.</li><li><strong>Quadratic Equations:</strong> They developed methods for solving quadratic equations (ax² + bx + c = 0) and gave the general formula.</li><li><strong>Indeterminate Equations:</strong> A major achievement was the development of methods like 'Kuttaka' (by Aryabhata and others) to find integer solutions for linear indeterminate equations, and the 'Chakravala' (cyclic) method (by Bhaskara II) for solving second-degree indeterminate equations like Pell's equation (Nx² + 1 = y²), a problem that challenged European mathematicians for centuries.</li></ul><p><strong>3. Trigonometry (Jya and Kojya):</strong><br>Indian trigonometry was developed primarily as a computational tool for astronomy. The key innovation was a shift from the Greek focus on chords to the sine function.</p><ul><li><strong>The Sine Function:</strong> Indian mathematicians defined the sine (jya) as the half-chord of a circle's arc. This was a more versatile function that formed the basis of modern trigonometry. Aryabhata produced the first sine tables with remarkable accuracy.</li><li><strong>Other Functions:</strong> They also defined the cosine (kojya), versine (utkrama-jya), and inverse sine (otkram jya), creating a full-fledged trigonometric system.</li><li><strong>Spherical Trigonometry:</strong> This system was applied to solve problems in spherical astronomy, such as calculating planetary positions on the celestial sphere.</li></ul><p><strong>Conclusion:</strong><br>From the practical geometry of the Sulba Sutras to the sophisticated abstract algebra of Bhaskara II and the powerful astronomical tool of trigonometry, Indian mathematics demonstrated originality, depth, and practical utility. These contributions, particularly the number system, algebra, and trigonometry, were fundamental to the scientific revolution in Europe and remain central to mathematics today.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 20: Trace the evolution of Indian astronomy from the early concepts to the sophisticated models of the Siddhantic tradition and the observational advancements of Jantar Mantar.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>Indian astronomy has a long and continuous history, evolving from early calendar-making in the Vedic period to highly sophisticated mathematical models in the Siddhantic era, and culminating in the monumental observational projects of the medieval period. This evolution reflects a growing shift from ritualistic needs to a more scientific quest to understand and predict celestial phenomena.</p><p><strong>1. Early Vedic Astronomy (Pre-1000 BCE):</strong><br>The earliest astronomical references are found in texts like the Rigveda. The primary motivation was religious and ritualistic: to create a calendar for determining the correct times for sacrifices and festivals. The focus was on tracking the movements of the Sun and Moon to reconcile the lunar and solar years, leading to the development of concepts like the 'nakshatras' (lunar mansions) and luni-solar calendar principles.</p><p><strong>2. The Vedanga Jyotisha (c. 700-600 BCE):</strong><br>This text represents the first systematic treatment of astronomy in India. While still primarily for calendrical purposes, it provided rudimentary mathematical rules for calculating the positions of the sun and moon. It established a 5-year cycle (Yuga) to synchronize lunar and solar years, but its models were still relatively simple.</p><p><strong>3. The Siddhantic Tradition (c. 400 CE onwards):</strong><br>This marks the golden age of Indian astronomy. The 'Siddhantas' (doctrines) were comprehensive treatises that introduced sophisticated mathematical models. This era was likely influenced by Greco-Roman astronomical knowledge but developed its own unique character.</p><ul><li><strong>Key Figures:</strong> Aryabhata, Varahamihira, Brahmagupta, and Bhaskara II were the luminaries of this age.</li><li><strong>Key Advancements:</strong>
+    <ul><li><strong>Mathematical Models:</strong> They used trigonometry (jya/kojya) to create powerful epicyclic and eccentric models to predict planetary positions with high accuracy.</li><li><strong>Heliocentrism and Earth's Rotation:</strong> Aryabhata proposed that the Earth rotates on its axis and hinted at a heliocentric model.</li><li><strong>Scientific Explanations:</strong> They provided correct scientific reasons for phenomena like eclipses and the phases of the moon.</li></ul>
+</li></ul><p><strong>4. Jantar Mantar (Early 18th Century):</strong><br>After a period of reliance on established texts, Maharaja Sawai Jai Singh II initiated a major observational reform. He recognized that existing tables had become inaccurate. Instead of relying solely on texts, he embarked on an ambitious project to build massive masonry instruments (Yantras) for naked-eye observation. This represented a renewed emphasis on empirical data. The Jantar Mantars in Jaipur, Delhi, and elsewhere were designed to make precise measurements of time, celestial coordinates, and planetary motions to create a new, more accurate set of astronomical tables.</p><p><strong>Conclusion:</strong><br>The evolution of Indian astronomy is a journey from ritual to reason, and from text to observation. It began with the calendar, matured into a highly sophisticated mathematical science during the Siddhantic period, and was later revitalized by a commitment to empirical verification through the monumental Jantar Mantar observatories.</p></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic for regular question toggles
+            const answerButtons = document.querySelectorAll('.toggle-answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerDiv = button.nextElementSibling;
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = 'Show Answer';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = 'Hide Answer';
+                    }
+                });
+            });
+
+            // Logic for Dark/Light Mode Theme Switcher
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                    themeIcon.textContent = '🌙';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggle.checked = false;
+                    themeIcon.textContent = '☀️';
+                }
+            };
+            
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Check for saved theme in localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+    </script>
+</body>
+</html>
