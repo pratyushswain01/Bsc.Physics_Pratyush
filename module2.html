@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Module 2 - Question Bank</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS STYLES EMBEDDED -->
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --header-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e8590c;
+            --accent-border-color: #ffa94d;
+            --answer-bg-color: #fff9f2;
+            --answer-text-color-strong: #bf360c;
+            --success-text-color: #2b9348;
+            --success-bg-color: #f1fcf5;
+            --success-border-color: #d4ede2;
+        }
+
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --header-bg-color: #1e1e1e;
+            --border-color: #444;
+            --accent-color: #fd7e14;
+            --accent-border-color: #e8590c;
+            --answer-bg-color: #2c241d;
+            --answer-text-color-strong: #ff922b;
+            --success-text-color: #96f2c3;
+            --success-bg-color: #143d2c;
+            --success-border-color: #205c43;
+        }
+
+        /* --- General Body & Typography --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+            margin-top: 0;
+            transition: color 0.3s;
+        }
+        
+        /* --- Header --- */
+        header {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fd7e14; /* Orange color */
+            margin-bottom: 0.2em;
+        }
+        
+        .shloka-bar {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            margin: 20px -20px -20px -20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shloka-sanskrit { font-size: 1.2em; margin-bottom: 4px; }
+        .shloka-translation { font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        .shloka-item { text-align: center; padding: 5px 15px; }
+
+        /* --- DARK/LIGHT MODE TOGGLE --- */
+        #theme-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
+        #theme-toggle { display: none; }
+        #theme-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #777;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        #theme-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        #theme-toggle:checked + #theme-label { background-color: #fd7e14; }
+        #theme-toggle:checked + #theme-label::after { transform: translateX(24px); }
+        #theme-icon {
+            position: absolute;
+            left: 5px;
+            z-index: 10;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .dark-mode #theme-icon {
+            transform: translateX(25px);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .assignment-section h2 {
+            font-size: 2em;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 1 Mark Questions Styling --- */
+        .mcq-list { list-style-type: none; padding: 0; counter-reset: mcq-counter; }
+        .mcq-list li {
+            background-color: var(--card-bg-color);
+            border-left: 5px solid var(--accent-border-color);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.05em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .mcq-list li::before {
+            counter-increment: mcq-counter;
+            content: counter(mcq-counter) ". ";
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            color: var(--accent-color);
+            margin-right: 8px;
+            transition: color 0.3s;
+        }
+        .mcq-direct-answer {
+            font-weight: 700;
+            color: var(--success-text-color);
+            background-color: var(--success-bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--success-border-color);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 2, 5, 8 Mark Question & Answer Blocks --- */
+        .question-block {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease;
+        }
+        .question-block:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+        .question-block h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .toggle-answer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-answer-btn:hover { background-color: #e8590c; transform: translateY(-2px); }
+        .answer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--answer-bg-color);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer p, .answer ul, .answer ol { margin-bottom: 1em; }
+        .answer strong {
+            color: var(--answer-text-color-strong);
+            transition: color 0.3s;
+        }
+        .answer li { margin-bottom: 0.7em; }
+
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            main { padding: 0 15px 40px 15px; }
+            header h1 { font-size: 2em; }
+            .assignment-section h2 { font-size: 1.7em; }
+            .mcq-list li, .question-block { padding: 15px; }
+            #theme-switcher { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Dark Mode Toggle Switch -->
+        <div id="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <label for="theme-toggle" id="theme-label">
+                <span id="theme-icon"></span>
+            </label>
+        </div>
+
+        <h1>Indian Knowledge System - Module 2</h1>
+        
+    </header>
+
+    <main>
+        <!-- 1 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 2: 1 Mark Questions</h2>
+            <ol class="mcq-list">
+                <li>The author of the seminal work on Sanskrit grammar, 'Astadhyayi', is <span class="mcq-direct-answer">Panini</span>.</li>
+                <li>The concept of 'Shunya' or <span class="mcq-direct-answer">Zero</span> as a number with its own properties is a fundamental contribution of India.</li>
+                <li>The system of representing numbers using words that have specific numerical values is known as the <span class="mcq-direct-answer">Bhuta Samkhya</span> system.</li>
+                <li>The first known description of a binary number system is credited to Acharya <span class="mcq-direct-answer">Pingala</span>.</li>
+                <li>In the Vaisesikan "Knowledge Pyramid," the object of valid knowledge is called <span class="mcq-direct-answer">Prameya</span>.</li>
+                <li>The <span class="mcq-direct-answer">Katapayadi</span> system is a cryptographic method for encoding numbers as letters in Sanskrit.</li>
+                <li>Sanskrit's unambiguous, rule-based grammar makes it highly suitable for modern applications like <span class="mcq-direct-answer">Natural Language Processing (NLP)</span>.</li>
+                <li>The means by which one acquires valid knowledge (e.g., perception, inference) is called <span class="mcq-direct-answer">Pramana</span>.</li>
+                <li>The decimal system that the world uses today is also known as the <span class="mcq-direct-answer">Hindu-Arabic numeral system</span>.</li>
+                <li>The state of doubt or uncertainty which initiates the process of inquiry is called <span class="mcq-direct-answer">Samsaya</span>.</li>
+                <li>Pingala's treatise in which he discusses binary numbers is named <span class="mcq-direct-answer">Chandah Sastra</span>.</li>
+                <li>Astadhyayi is often described as a <span class="mcq-direct-answer">generative</span> grammar because its rules can produce all possible valid Sanskrit sentences.</li>
+                <li>The invention of the <span class="mcq-direct-answer">place value system</span> was a revolutionary step that made arithmetic operations vastly simpler.</li>
+                <li>Which of these is NOT considered a 'Pramana' in most schools? a) Perception (Pratyakṣa) b) Inference (Anumāna) c) Doubt (Samsaya) d) Testimony (Śabda). Ans: <span class="mcq-direct-answer">c) Doubt (Samsaya)</span></li>
+                <li>The Bhuta Samkhya system uses the names of things in the world to represent numbers. (True/False) -> <span class="mcq-direct-answer">True</span></li>
+                <li>The unit of time measurement roughly equivalent to 24 minutes is a <span class="mcq-direct-answer">Ghati</span>.</li>
+                <li>The word "Chandra" (moon) in the Bhuta Samkhya system represents the number <span class="mcq-direct-answer">1</span>.</li>
+                <li>The 'Knowledge Pyramid' model is derived from the <span class="mcq-direct-answer">Vaisesika</span> school of philosophy.</li>
+                <li>The rules in Panini's grammar are called <span class="mcq-direct-answer">Sutras</span>.</li>
+                <li>The word 'Veda' representing the number 4 is an example of the <span class="mcq-direct-answer">Bhuta Samkhya</span> system.</li>
+                <li>Astadhyayi contains approximately <span class="mcq-direct-answer">4000</span> sutras.</li>
+                <li>The concept of 'large numbers' up to 10^53 was discussed in early <span class="mcq-direct-answer">Jaina and Buddhist</span> texts.</li>
+                <li>The logical and phonetic structure of Sanskrit is based on the physiology of human <span class="mcq-direct-answer">speech production</span>.</li>
+                <li>In the Katapayadi system, consonants have numerical values while vowels do not. (True/False) -> <span class="mcq-direct-answer">True</span></li>
+                <li>The subject of Pingala's Chandah Sastra was originally poetic <span class="mcq-direct-answer">meters</span>.</li>
+                <li>In Vaisesika philosophy, reality is composed of fundamental categories called <span class="mcq-direct-answer">Padarthas</span>.</li>
+                <li>The first component in the Vaisesikan Knowledge Pyramid that starts an inquiry is <span class="mcq-direct-answer">Samsaya (Doubt)</span>.</li>
+                <li>Which number system made calculation with large numbers feasible and efficient? <span class="mcq-direct-answer">Decimal Place Value System</span></li>
+                <li>Astadhyayi's rules operate in a specific sequence, making its logic similar to a <span class="mcq-direct-answer">computer algorithm</span>.</li>
+                <li>The Indian unit of distance 'Yojana' is roughly equal to <span class="mcq-direct-answer">8-9 miles</span>.</li>
+                <li>Panini's grammar is considered a 'linguistic machine' for its ability to generate and validate sentences. (True/False) -> <span class="mcq-direct-answer">True</span></li>
+            </ol>
+        </section>
+
+        <!-- 2 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 2: 2 Mark Questions</h2>
+            <div class="question-block">
+                <h3>Question 1: Explain the global significance of the Indian invention of 'Zero'.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Indian invention of 'Zero' (Shunya) was revolutionary. It was not just a placeholder, but a number with its own mathematical properties. This concept was the essential missing piece that enabled the development of the <strong>decimal place value system</strong>, which dramatically simplified arithmetic and algebra, laying the foundation for advanced mathematics and modern computing.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 2: Define the Katapayadi system with a simple example.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Katapayadi system is an alphanumeric code from ancient India used to encode numbers as words. In this system, Sanskrit consonants are assigned numbers from 1 to 9 and 0. For example, the word "Deva" (देव) would be decoded as: 'da' (द) = 8, 'va' (व) = 4. Reading the numbers in reverse gives the value <strong>48</strong>.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 3: What is the Bhuta Samkhya system? Give an example.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Bhuta Samkhya system is a method of representing numbers using common words or concepts that have a natural numerical association. It is a form of verbal numeration. For example, the word "Netra" (eyes) would represent the number 2, "Veda" (the four Vedas) would represent 4, and "Bhu" (Earth) would represent 1.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 4: Why is Panini's 'Astadhyayi' considered a 'computational' grammar?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Astadhyayi is considered computational because its structure resembles a modern computer program. Its ~4000 highly concise rules (sutras) are organized with meta-rules, functions, and a specific order of application to generate or validate any valid Sanskrit sentence from its root elements. This generative and logical structure makes it a 'linguistic machine'.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 5: Differentiate between Pramana and Prameya in the Vaisesikan context.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>In the Vaisesikan framework, <strong>Pramana</strong> refers to the valid means or instrument of acquiring knowledge (e.g., perception, inference). <strong>Prameya</strong> refers to the object of that valid knowledge—the thing that is to be known or proven. In simple terms, Pramana is the 'how' of knowing, and Prameya is the 'what' that is known.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 6: What was Acharya Pingala's contribution to mathematics?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>In his treatise on poetics, the 'Chandah Sastra', Acharya Pingala gave the first known description of a <strong>binary number system</strong>. He used short (laghu) and long (guru) syllables to represent the numbers 0 and 1, respectively, and explored combinatorics (prastāra) to calculate the number of possible poetic meters.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 7: How did the decimal place value system revolutionize mathematics?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The decimal place value system revolutionized mathematics by assigning value to a digit based on its position. This, combined with a symbol for zero, made arithmetic operations (addition, multiplication, etc.) on very large numbers incredibly efficient and simple, replacing cumbersome systems like Roman numerals and paving the way for complex calculations.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 8: Briefly explain the "Knowledge Pyramid" of the Vaisesika school.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Vaisesikan Knowledge Pyramid describes the process of acquiring knowledge. It starts at the base with <strong>Samsaya</strong> (doubt), which triggers an inquiry. The inquiry is conducted using <strong>Pramana</strong> (the valid means of knowing). The goal is to gain certain knowledge about the <strong>Prameya</strong> (the object of knowledge), which sits at the apex of the pyramid.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 9: Why is Sanskrit considered highly suitable for Natural Language Processing (NLP)?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Sanskrit is suitable for NLP due to the highly structured and rule-based grammar defined by Panini in the Astadhyayi. This grammar is largely free from the ambiguity found in many natural languages, making it easier for a computer to parse, analyze, and process sentences correctly. Its logical structure is akin to a formal programming language.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 10: What is a 'generative grammar'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>A generative grammar is a system of rules that can produce (generate) all possible grammatical sentences in a language and reject all ungrammatical ones. Panini's Astadhyayi is a prime example, as its rules can build up correct Sanskrit words and sentences from their root components (dhatus and pratyayas).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 11: Name two ancient Indian units for measuring time and distance.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Time:</strong> A 'Ghati' (or 'Nadika') was a common unit, approximately equal to 24 minutes. Another is 'Pala', which is about 24 seconds.</p><p><strong>Distance:</strong> A 'Yojana' was a unit for long distances, varying in definition but often estimated to be around 8-9 miles or 13-15 kilometers.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 12: How are verbs (dhatus) central to Panini's grammar?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>In Panini's grammar, verbs, or verbal roots (dhatus), are the core generative elements of the language. Almost all nouns, adjectives, and other words in Sanskrit can be systematically derived from a list of about 2000 fundamental verb roots by applying specific rules and affixes (pratyayas), making the verb the primary seed of the vocabulary.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 13: What does 'Samsaya' mean and what is its role in gaining knowledge?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>'Samsaya' means doubt, uncertainty, or a state of questioning. In the Indian theory of knowledge (particularly Vaisesika), it plays a crucial positive role. Doubt is not seen as a flaw, but as the essential starting point that motivates the entire process of inquiry (using 'pramana') to reach certain knowledge ('prameya').</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 14: How does the Bhuta Samkhya system help in remembering large numbers?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Bhuta Samkhya system aids memory by associating numbers with concrete, poetic, or mythological concepts instead of abstract digits. A long number could be encoded into a meaningful or poetic phrase (a 'sloka'). This makes it much easier to memorize and transmit accurately compared to a long string of digits.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 15: What is the main difference between the decimal system and the Roman numeral system?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The main difference is the concept of <strong>place value</strong>. In the decimal system, the value of a digit (e.g., '5') changes based on its position (5, 50, 500). The Roman numeral system is largely additive and lacks a place value concept and a zero, making arithmetic calculations like multiplication (e.g., CXXIII * LII) extremely complex and cumbersome.</p></div>
+            </div>
+        </section>
+
+        <!-- 5 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 2: 5 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 16: Explain the Vaisesikan approach to physical reality and knowledge through its "Knowledge Pyramid."</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Vaisesika school offers a systematic approach to understanding physical reality based on acquiring certain knowledge. This process can be visualized as a "Knowledge Pyramid."</p><ol><li><strong>Samsaya (Doubt) - The Base:</strong> The pyramid's foundation is 'Samsaya' or doubt. It is the intellectual curiosity or uncertainty that initiates the quest for knowledge. For example, "Is that object in the distance a post or a man?"</li><li><strong>Pramana (Means of Knowledge) - The Body:</strong> This is the method used to resolve the doubt. The Vaisesika school accepts two primary pramanas:
+    <ul>
+        <li><strong>Pratyakṣa (Perception):</strong> Gaining knowledge directly through the senses. (e.g., walking closer to see the object).</li>
+        <li><strong>Anumāna (Inference):</strong> Gaining knowledge through logical reasoning based on previous observations. (e.g., "There is smoke on the hill, therefore there must be fire.").</li>
+    </ul></li><li><strong>Prameya (Object of Knowledge) - The Apex:</strong> This is the certain knowledge obtained at the end of the process. It is the resolution of the initial doubt. (e.g., "It is definitively a post.").</li></ol><p>This structured approach shows that for the Vaisesikas, knowledge is not passive reception but an active process of inquiry, moving from uncertainty to certainty through logical means.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 17: Write a note on the unique Indian approaches to representing numbers, like the Bhuta Samkhya and Katapayadi systems.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Ancient India developed several unique and creative methods for representing numbers beyond simple digits, primarily to aid memorization and embed data within texts.</p><ul><li><strong>Bhuta Samkhya System:</strong> This was a 'word-numeral' system. Numbers were represented by common objects or concepts that were naturally associated with that quantity. This allowed numbers to be expressed poetically.
+    <ul><li>Examples: 1 = Chandra (moon), Bhu (Earth); 2 = Netra (eyes), Ashvin (the twin gods); 4 = Veda; 7 = Rishi (the seven sages). A number like 147 would be written as "Rishi-Veda-Chandra."</li></ul></li><li><strong>Katapayadi System:</strong> This was a more sophisticated 'alpha-numeric' system. It assigned numerical values to Sanskrit consonants, allowing numbers to be encoded into meaningful words or verses. Vowels and unassigned consonants had no value. To decode, the numerical values of the consonants are read and then the number is reversed.
+    <ul><li>Example: The word 'Gaṇapati' (गणपति) would be decoded as: Ga (ग)=3, ṇa (ण)=5, Pa (प)=1, Ta (त)=6. The resulting sequence is 3516. Reversing this gives the number <strong>6153</strong>.</li></ul></li></ul><p>These systems were invaluable for transmitting astronomical data, mathematical rules, and other technical information accurately in an oral tradition by embedding them within easily memorizable slokas.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 18: Discuss the contributions of Acharya Pingala's 'Chandah Sastra' to binary mathematics and combinatorics.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Acharya Pingala, in his treatise on Sanskrit poetics called the 'Chandah Sastra' (c. 3rd/2nd century BCE), made foundational contributions to mathematics long before they were discovered in the West.</p><ol><li><strong>Binary System:</strong> While analyzing poetic meters, Pingala used two types of syllables: 'laghu' (short) and 'guru' (long). He developed a system to enumerate all possible patterns of meters. This system is mathematically identical to the modern binary number system, where 'laghu' corresponds to 0 and 'guru' corresponds to 1. This is the first known exposition of a binary representation.</li><li><strong>Combinatorics:</strong> To calculate the number of patterns of a given length, Pingala developed a method called 'prastāra'. This method effectively generated combinations and permutations. He also gave a rule that is equivalent to the binomial expansion formula (a+b)², which forms the basis of Pascal's Triangle, a key tool in combinatorics.</li><li><strong>Concept of Shunya:</strong> The use of a short syllable to represent a positional value, which implicitly functioned as zero in his system, is also a significant conceptual step towards the formal idea of 'Shunya'.</li></ol><p>Thus, a work on poetry unexpectedly laid the groundwork for binary mathematics, combinatorics, and information theory.</p></div>
+            </div>
+        </section>
+
+        <!-- 8 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 2: 8 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 19: "Panini's Astadhyayi is not merely a book of grammar but a masterpiece of computational logic." Justify this statement with a detailed analysis of its structure and relevance to modern computer science.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The statement that Panini's Astadhyayi is a masterpiece of computational logic is profoundly accurate. Composed around the 5th century BCE, its structure and methodology are so rigorous and precise that modern computer scientists and linguists have likened it to a computer program or a formal language theory. It goes far beyond a simple list of grammatical rules; it is a complete, self-contained generative system.</p><p><strong>Structural and Logical Features:</strong></p><ol><li><strong>Highly Condensed Rules (Sutras):</strong> The entire grammar is expressed in approximately 4,000 'sutras' or aphorisms. These rules are extremely concise, using a technical meta-language to achieve maximum brevity and efficiency, much like functions or macros in programming.</li><li><strong>Generative Nature:</strong> The grammar is not descriptive (listing what is correct) but generative (providing rules to create what is correct). It starts with a base of ~2000 verbal roots ('dhatus') and a set of affixes ('pratyayas'). By applying the sutras in a specific order, one can generate every valid word and sentence in Sanskrit.</li><li><strong>Ordered Rules and Meta-rules:</strong> The sutras are not applied randomly; they have a strict order of precedence. Panini established powerful meta-rules (<em>paribhasa sutras</em>) to resolve conflicts between other rules. For example, a more specific rule overrides a general one. This concept of rule ordering and exception handling is a cornerstone of modern programming and artificial intelligence systems.</li><li><strong>Recursion and Abstraction:</strong> The system uses concepts that are functionally equivalent to modern recursion, where a rule can call upon itself or other rules in a loop-like fashion. It uses abstract markers (called 'IT' markers) that control grammatical processes but are deleted in the final word, similar to temporary variables or flags in software development.</li></ol><p><strong>Relevance to Modern Computer Science (NLP):</strong></p><ul><li><strong>Formal Language Theory:</strong> The structure of Astadhyayi anticipates the work of modern linguists like Noam Chomsky. Its formal, mathematical structure is very similar to the Backus-Naur Form (BNF) used to define the syntax of most modern programming languages.</li><li><strong>Natural Language Processing (NLP):</strong> The unambiguous and logical nature of Panini's grammar makes it an ideal model for teaching computers to understand human language. Researchers have used Paninian principles to build parsers and processors for Sanskrit, and its concepts inspire solutions for handling ambiguity in other languages like English.</li></ul><p><strong>Conclusion:</strong><br>The Astadhyayi is a self-contained, logical machine for language. Its formal architecture, rule-based operation, handling of exceptions, and generative power make it an astonishingly early example of computational thinking. It is not just a description of a language but an algorithm for it, justifying its status as a timeless masterpiece of both linguistics and computational logic.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 20: Elaborate on India's foundational contributions to the global number system, focusing on the concepts of Zero, the Decimal Place Value, and the representation of large numbers.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>Ancient India's contributions to mathematics, particularly its number system, were not merely incremental improvements but revolutionary leaps that formed the bedrock of modern science, technology, and commerce worldwide. The development of the concepts of zero, the decimal place value, and a system for handling large numbers fundamentally transformed human calculation and abstract thought.</p><p><strong>1. The Concept of Zero (Shunya):</strong><br>While other civilizations like the Babylonians used placeholders to signify an empty position, India's contribution was unique and profound. Indian mathematicians, notably Brahmagupta in the 7th century CE, were the first to formalize 'zero' not just as a placeholder but as a number in its own right.</p><ul><li><strong>Properties of Zero:</strong> They defined its mathematical properties: x + 0 = x; x - 0 = x; x * 0 = 0. This conceptual leap from an empty space to a numerical entity was crucial.</li><li><strong>Enabler of the Place Value System:</strong> Zero as a symbol (a dot, later a circle) was the linchpin that made the decimal place value system fully functional and unambiguous.</li></ul><p><strong>2. The Decimal Place Value System:</strong><br>This is arguably India's most significant contribution to global mathematics. This system combined three key ideas:</p><ul><li><strong>Base-10 System:</strong> Using ten unique symbols (1-9 and 0) for numbers.</li><li><strong>Positional Value:</strong> The idea that the value of a digit depends on its position within a number (e.g., in '555', each '5' has a different value: 500, 50, and 5).</li><li><strong>Use of Zero as a Placeholder:</strong> The symbol '0' was used to signify an empty position, distinguishing between numbers like 5, 50, and 505.</li></ul><p>The synergy of these ideas created a system of unparalleled efficiency. It made arithmetic calculations simple and systematic, replacing cumbersome methods like the Roman numeral system and enabling the development of algebra and higher mathematics.</p><p><strong>3. Representation of Large Numbers:</strong><br>Driven by cosmological and philosophical needs, ancient Indian texts, particularly from Jaina and Buddhist traditions, show a fascination with very large numbers. While the Greeks struggled with numbers beyond 10,000 (a myriad), Indian texts provided specific names for powers of 10 up to and beyond 10^53. This comfort and facility with large-scale enumeration created a numerical environment where concepts like astronomical distances and long time cycles could be handled with ease, fostering advanced thinking in these fields.</p><p><strong>Conclusion:</strong><br>The journey of this number system from India through the Arab world to Europe (where it became known as the "Hindu-Arabic" system) triggered a mathematical revolution. The Indian innovations of a true numerical zero and a robust decimal place value system were not just new techniques; they were a new language for science, engineering, and finance, and they remain the universal foundation of numeracy today.</p></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic for regular question toggles
+            const answerButtons = document.querySelectorAll('.toggle-answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerDiv = button.nextElementSibling;
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = 'Show Answer';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = 'Hide Answer';
+                    }
+                });
+            });
+
+            // Logic for Dark/Light Mode Theme Switcher
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                    themeIcon.textContent = '🌙';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggle.checked = false;
+                    themeIcon.textContent = '☀️';
+                }
+            };
+            
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Check for saved theme in localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+    </script>
+</body>
+</html>
