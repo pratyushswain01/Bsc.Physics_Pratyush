@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Module 5 - Question Bank</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS STYLES EMBEDDED -->
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --header-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e8590c;
+            --accent-border-color: #ffa94d;
+            --answer-bg-color: #fff9f2;
+            --answer-text-color-strong: #bf360c;
+            --success-text-color: #2b9348;
+            --success-bg-color: #f1fcf5;
+            --success-border-color: #d4ede2;
+            --footer-text-color: #6c757d;
+        }
+
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --header-bg-color: #1e1e1e;
+            --border-color: #444;
+            --accent-color: #fd7e14;
+            --accent-border-color: #e8590c;
+            --answer-bg-color: #2c241d;
+            --answer-text-color-strong: #ff922b;
+            --success-text-color: #96f2c3;
+            --success-bg-color: #143d2c;
+            --success-border-color: #205c43;
+            --footer-text-color: #adb5bd;
+        }
+
+        /* --- General Body & Typography --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+            margin-top: 0;
+            transition: color 0.3s;
+        }
+        
+        /* --- Header --- */
+        header {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fd7e14; /* Orange color */
+            margin-bottom: 0.2em;
+        }
+        
+        .shloka-bar {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            margin: 20px -20px -20px -20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shloka-sanskrit { font-size: 1.2em; margin-bottom: 4px; }
+        .shloka-translation { font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        .shloka-item { text-align: center; padding: 5px 15px; }
+
+        /* --- DARK/LIGHT MODE TOGGLE --- */
+        #theme-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
+        #theme-toggle { display: none; }
+        #theme-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #777;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        #theme-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        #theme-toggle:checked + #theme-label { background-color: #fd7e14; }
+        #theme-toggle:checked + #theme-label::after { transform: translateX(24px); }
+        #theme-icon {
+            position: absolute;
+            left: 5px;
+            z-index: 10;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .dark-mode #theme-icon {
+            transform: translateX(25px);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+            flex-grow: 1; /* Makes main content area expand */
+        }
+
+        .assignment-section h2 {
+            font-size: 2em;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 1 Mark Questions Styling --- */
+        .mcq-list { list-style-type: none; padding: 0; counter-reset: mcq-counter; }
+        .mcq-list li {
+            background-color: var(--card-bg-color);
+            border-left: 5px solid var(--accent-border-color);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.05em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .mcq-list li::before {
+            counter-increment: mcq-counter;
+            content: counter(mcq-counter) ". ";
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            color: var(--accent-color);
+            margin-right: 8px;
+            transition: color 0.3s;
+        }
+        .mcq-direct-answer {
+            font-weight: 700;
+            color: var(--success-text-color);
+            background-color: var(--success-bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--success-border-color);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 2, 5, 8 Mark Question & Answer Blocks --- */
+        .question-block {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease;
+        }
+        .question-block:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+        .question-block h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .toggle-answer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-answer-btn:hover { background-color: #e8590c; transform: translateY(-2px); }
+        .answer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--answer-bg-color);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer p, .answer ul, .answer ol { margin-bottom: 1em; }
+        .answer strong {
+            color: var(--answer-text-color-strong);
+            transition: color 0.3s;
+        }
+        .answer li { margin-bottom: 0.7em; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--footer-text-color);
+            font-size: 0.9em;
+            width: 100%;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+        
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            main { padding: 0 15px 40px 15px; }
+            header h1 { font-size: 2em; }
+            .assignment-section h2 { font-size: 1.7em; }
+            .mcq-list li, .question-block { padding: 15px; }
+            #theme-switcher { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Dark Mode Toggle Switch -->
+        <div id="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <label for="theme-toggle" id="theme-label">
+                <span id="theme-icon"></span>
+            </label>
+        </div>
+
+        <h1>IKS Module 5 - Humanities & Social Sciences</h1>
+        
+    </header>
+
+    <main>
+        <!-- 1 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 5: 1 Mark Questions</h2>
+            <ol class="mcq-list">
+                <li>The traditional Indian system of medicine that emphasizes balance for health and wellness is called <span class="mcq-direct-answer">Ayurveda</span>.</li>
+                <li>The three fundamental qualities or 'Gunas' in Indian psychology are Sattva, Rajas, and <span class="mcq-direct-answer">Tamas</span>.</li>
+                <li>The 'Yoga-way of life' is systemized in Patanjali's Yoga Sutras, which describes an <span class="mcq-direct-answer">eight-limbed</span> path (Ashtanga).</li>
+                <li>Kautilya's famous treatise on statecraft, economic policy, and military strategy is the <span class="mcq-direct-answer">Arthasastra</span>.</li>
+                <li>The concept that views a human as composed of distinct layers of Body-Mind-Intellect is central to <span class="mcq-direct-answer">Vedantic</span> psychology.</li>
+                <li>In Ayurveda, the three 'pillars' of health are Ahar (food), Nidra (sleep), and <span class="mcq-direct-answer">Brahmacharya (right use of energy)</span>.</li>
+                <li>The concept of an ideal, righteous state, known as 'Rama Rajya', is derived from the epic <span class="mcq-direct-answer">Ramayana</span>.</li>
+                <li>Which 'Guna' is associated with qualities of passion, activity, and ambition? a) Sattva b) Rajas c) Tamas -> <span class="mcq-direct-answer">b) Rajas</span></li>
+                <li>In the Triguna system, Tamas represents qualities of <span class="mcq-direct-answer">inertia, darkness, and delusion</span>.</li>
+                <li>The ultimate reality that underlies the Body-Mind-Intellect complex is called <span class="mcq-direct-answer">Consciousness (Atman)</span>.</li>
+                <li>The primary goal of governance in the 'Rama Rajya' model is <span class="mcq-direct-answer">Dharma (righteousness)</span> and the welfare of all subjects.</li>
+                <li>The role of water in Indian tradition is significant for physical health and <span class="mcq-direct-answer">ritual purity</span>.</li>
+                <li>According to Ayurveda, health is a state of <span class="mcq-direct-answer">balance (sama)</span> between the body's doshas, dhatus, and malas.</li>
+                <li>The Kautilyan state model is primarily based on <span class="mcq-direct-answer">pragmatism and political realism</span>.</li>
+                <li>Proper diet according to Ayurveda should be in harmony with one's <span class="mcq-direct-answer">Prakriti (constitution)</span>.</li>
+                <li>Yoga as a way of life goes beyond physical postures to include <span class="mcq-direct-answer">ethical principles (Yamas and Niyamas)</span> and meditation.</li>
+                <li>Sattva guna is associated with qualities of harmony, balance, and <span class="mcq-direct-answer">wisdom</span>.</li>
+                <li>The Arthasastra provides a detailed framework for a highly centralized <span class="mcq-direct-answer">bureaucracy and espionage system</span>.</li>
+                <li>Which of these is the first limb of Ashtanga Yoga? a) Asana b) Yama c) Dhyana -> <span class="mcq-direct-answer">b) Yama</span></li>
+                <li>According to Vedantic psychology, the Intellect is considered superior to the <span class="mcq-direct-answer">Mind</span>.</li>
+                <li>The term 'Arthasastra' literally means "The Science of <span class="mcq-direct-answer">Wealth/Material Prosperity</span>".</li>
+                <li>Sleep in Ayurveda is considered crucial for rejuvenation of the <span class="mcq-direct-answer">body and mind</span>.</li>
+                <li>The Triguna theory is applicable to both human psychology and <span class="mcq-direct-answer">the entire material universe (Prakriti)</span>.</li>
+                <li>Unlike Rama Rajya, the Kautilyan state advocates for the use of <span class="mcq-direct-answer">force and deception</span> when necessary for state security.</li>
+                <li>The 'Intellect' in the Indian psychological model is responsible for <span class="mcq-direct-answer">discrimination and decision-making</span>.</li>
+            </ol>
+        </section>
+
+        <!-- 2 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 5: 2 Mark Questions</h2>
+            <div class="question-block">
+                <h3>Question 1: What are the 'Trigunas' in Indian psychology? Name them.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The 'Trigunas' are the three fundamental qualities or tendencies of nature (Prakriti) that constitute everything in the universe, including the human mind. They are:</p><ol><li><strong>Sattva:</strong> The quality of balance, harmony, purity, and wisdom.</li><li><strong>Rajas:</strong> The quality of activity, passion, ambition, and restlessness.</li><li><strong>Tamas:</strong> The quality of inertia, darkness, delusion, and inactivity.</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 2: Define the 'Body-Mind-Intellect-Consciousness Complex'.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>This is a Vedantic model of a human being. It views a person as a composite of four distinct layers: the physical <strong>Body</strong>; the emotional and sensory <strong>Mind</strong> (Manas); the discriminating <strong>Intellect</strong> (Buddhi); and the pure, witnessing <strong>Consciousness</strong> (Atman) which is the true Self that illumines the other layers.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 3: According to Ayurveda, what is the role of food and sleep in wellness?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>In Ayurveda, food (Ahar) and sleep (Nidra) are two of the three main pillars of health. <strong>Food</strong> is not just for sustenance but is considered medicine that should be appropriate for one's individual constitution (prakriti) and the season. <strong>Sleep</strong> is considered essential for the physical and mental rejuvenation, allowing the body to repair itself and the mind to process experiences.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 4: What is the central theme of Kautilya's 'Arthasastra'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The central theme of the Arthasastra is <strong>pragmatic statecraft</strong> and political realism. It is a comprehensive manual for a ruler on how to acquire and maintain power, manage a thriving economy, conduct foreign policy and espionage, and ensure the security and prosperity of the state, often using whatever means necessary.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 5: Define the ideal of 'Rama Rajya' as a model of governance.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>'Rama Rajya', as described in the Ramayana, is an ideal model of governance rooted in <strong>Dharma</strong> (righteousness and moral duty). It signifies a kingdom where the ruler prioritizes the welfare of all subjects above personal interest, there is no poverty or suffering, and perfect justice and harmony prevail.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 6: What is the significance of water in the context of Indian wellbeing?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Water holds a central role in Indian wellbeing, both physically and spiritually. Physically, Ayurveda emphasizes proper hydration for maintaining health and balancing bodily doshas. Spiritually and culturally, water (especially from sacred rivers) is considered a powerful purifying agent, used in daily rituals and temple ceremonies to cleanse the body and mind of impurities.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 7: How does the 'Yoga-way of life' go beyond physical postures?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Yoga way of life extends far beyond physical postures (asanas). As defined in Patanjali's Ashtanga Yoga, asanas are only the third of eight limbs. The system begins with ethical precepts (<strong>Yamas</strong> - restraints, and <strong>Niyamas</strong> - observances) and progresses through breath control (<strong>Pranayama</strong>) to deep states of meditation (<strong>Dhyana</strong>) and ultimately, liberation (<strong>Samadhi</strong>).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 8: Briefly compare the goals of governance in Ramayana and Arthasastra.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The goal of governance in the <strong>Ramayana (Rama Rajya)</strong> is primarily ethical: to uphold Dharma at any cost and ensure the moral and material welfare of all citizens. The goal of governance in the <strong>Arthasastra</strong> is primarily pragmatic: to ensure the power, security, and material prosperity (Artha) of the state, even if it requires ethically ambiguous actions.</p></div>
+            </div>
+        </section>
+
+        <!-- 5 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 5: 5 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 9: Explain the Triguna system (Sattva, Rajas, Tamas) and its application in understanding human psychology.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Triguna system is a foundational concept in Indian philosophy, particularly the Sankhya school. It posits that Prakriti (material nature) is composed of three fundamental qualities or forces (Gunas):</p><ul><li><strong>Sattva:</strong> The principle of harmony, balance, purity, wisdom, and light. It leads to happiness and knowledge.</li><li><strong>Rajas:</strong> The principle of activity, passion, ambition, desire, and restlessness. It binds a person through attachment to action.</li><li><strong>Tamas:</strong> The principle of inertia, darkness, delusion, lethargy, and ignorance. It binds a person through carelessness and sleep.</li></ul><p><strong>Application in Psychology:</strong><br>In human psychology, these three Gunas are always present in the mind in varying proportions, determining an individual's personality, mood, and behavior. A person with a predominance of <strong>Sattva</strong> is calm, compassionate, and wise. A person dominated by <strong>Rajas</strong> is hyperactive, ambitious, and driven by desire. A person dominated by <strong>Tamas</strong> is lazy, prone to depression, and confused. The goal of spiritual practices like Yoga is to reduce Rajas and Tamas and increase Sattva, leading to mental clarity and peace.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 10: Describe the holistic approach to health and wellness in IKS, focusing on Ayurveda and Yoga.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Indian Knowledge System approaches health holistically, viewing a person as an integrated being of body, mind, and spirit. It focuses on maintaining balance and preventing disease rather than just treating symptoms.</p><ul><li><strong>Ayurveda:</strong> It defines health as a state of equilibrium between the body's three humors (<strong>Doshas</strong>: Vata, Pitta, Kapha), tissues (Dhatus), and waste products (Malas). It emphasizes that diet and lifestyle are primary medicines. The "three pillars" of health are:
+    <ol><li><strong>Ahar (Food):</strong> Eating a balanced diet appropriate for one's unique constitution (Prakriti).</li><li><strong>Nidra (Sleep):</strong> Getting adequate and quality sleep for physical and mental repair.</li><li><strong>Brahmacharya (Right use of Energy):</strong> Moderation in all activities, especially sensory indulgence.</li></ol></li><li><strong>Yoga:</strong> Yoga provides the practical methodology for uniting the mind and body. It is not just exercise but a complete way of life that includes ethical principles (Yamas and Niyamas), physical postures (Asanas) to keep the body healthy, breathing techniques (Pranayama) to calm the nervous system, and meditation (Dhyana) to achieve mental clarity and reduce stress.</li></ul><p>Together, Ayurveda provides the framework for bodily balance, while Yoga provides the tools for mental and spiritual harmony, creating a complete and holistic system for wellness.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 11: Explain the Indian philosophical view of a person through the 'Body-Mind-Intellect-Consciousness Complex'.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Vedantic model describes a human being as a complex of four distinct but interconnected layers, with the subtler layers controlling the grosser ones. The goal is to understand and master these layers to realize one's true nature.</p><ol><li><strong>The Body (Annamaya Kosha):</strong> This is the outermost, physical sheath made of food. It is the grossest layer and the instrument for action in the world.</li><li><strong>The Mind (Manomaya Kosha):</strong> This is the emotional and sensory layer, subtler than the body. It is the seat of feelings, emotions, desires, and the five senses. It is characterized by its restless and fluctuating nature.</li><li><strong>The Intellect (Vijnanamaya Kosha):</strong> Subtler than the mind, this is the faculty of discrimination, reason, and decision-making. It has the power to analyze and judge the inputs from the mind. A disciplined intellect can control the wayward mind.</li><li><strong>Consciousness (Atman):</strong> This is the innermost and most fundamental reality, the pure, unchanging witness. It is not a part of the complex but the very 'light' or awareness that illumines the Body, Mind, and Intellect, allowing them to function. Realization of this Consciousness as one's true Self is the ultimate goal of life.</li></ol></div>
+            </div>
+        </section>
+
+        <!-- 8 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 5: 8 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 12: Discuss the principles of governance and public administration as derived from Kautilya's Arthasastra and the epic Ramayana. Compare and contrast these two models of the state.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>Ancient Indian political thought offers two powerful, yet starkly different, models of governance: the idealistic, dharma-centric 'Rama Rajya' from the Ramayana and the pragmatic, power-centric 'Kautilyan State' from the Arthasastra. Comparing them reveals a deep and ongoing debate in Indian tradition about the relationship between ethics and politics.</p><p><strong>Principles of 'Rama Rajya' (from Ramayana):</strong><br>This model represents an ideal state, a 'Dharma Rajya' where righteousness is the supreme principle.</p><ul><li><strong>Dharma-Centric Rule:</strong> The ruler (Rama) is an embodiment of Dharma. His every action is governed by moral duty, and he prioritizes upholding righteousness above his personal happiness or even family.</li><li><strong>Welfare of Subjects (Praja-ranjan):</strong> The primary goal of the king is the happiness and welfare of his subjects. The popular saying, "the happiness of the subjects is the happiness of the king," encapsulates this ideal.</li><li><strong>Rule of Law and Justice:</strong> Justice is impartial and accessible to all. The king himself is subject to the law and public opinion. Rama's decision to exile Sita based on a citizen's gossip, while tragic, is shown as an extreme act of placing public perception of dharma above personal feelings.</li><li><strong>Moral Foundation:</strong> The state is built on truth, compassion, and justice. There is no poverty, disease, or fear, and prosperity is a natural outcome of the righteous rule.</li></ul><p><strong>Principles of the Kautilyan State (from Arthasastra):</strong><br>This model, attributed to Kautilya (Chanakya), is a highly pragmatic and systematic manual for statecraft.</p><ul><li><strong>Artha-Centric Rule:</strong> The primary goal is the acquisition and preservation of Artha (wealth, power, material well-being) for the state. Dharma is important, but it is often subordinate to the security and prosperity of the kingdom.</li><li><strong>Centralized Bureaucracy:</strong> It prescribes a complex, highly organized administration with specific departments for finance, law, defense, etc., run by salaried officials.</li><li><strong>Pragmatism and Realpolitik:</strong> Kautilya advocates for practical policies. He details an extensive espionage system, the use of spies and secret agents, and justifies the use of force, deception ('upaya'), and political assassinations when the state's security is at stake.</li><li><strong>Economic Management:</strong> It has detailed sections on managing agriculture, trade, mining, and taxation to maximize state revenue and ensure economic stability.</li></ul><p><strong>Comparison and Contrast:</strong></p><ul><li><strong>Goal:</strong> Rama Rajya's goal is Dharma and a morally perfect society. The Kautilyan State's goal is Artha and a secure, powerful, and prosperous state.</li><li><strong>Means vs. Ends:</strong> For Rama Rajya, the means must be as pure as the end. For the Kautilyan state, the ends (security of the state) can sometimes justify morally ambiguous means.</li><li><strong>Ruler's Role:</strong> Rama is a 'Rajarshi' (a sage-king), an ideal moral exemplar. The Kautilyan king is a 'Vijigishu' (one who desires to conquer), a shrewd and practical administrator.</li></ul><p><strong>Conclusion:</strong><br>Rama Rajya and the Kautilyan State represent the two poles of Indian political thought: the ideal and the practical. While Rama Rajya serves as the inspirational, ethical benchmark for what a perfect state should be, the Arthasastra provides the practical, and at times ruthless, playbook for how to run and protect a state in a complex and dangerous world.</p></div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>© 2024 IKS Question Bank | All the Best for Your Exams!</p>
+        <p>Created by Pratyush Swain</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic for regular question toggles
+            const answerButtons = document.querySelectorAll('.toggle-answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerDiv = button.nextElementSibling;
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = 'Show Answer';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = 'Hide Answer';
+                    }
+                });
+            });
+
+            // Logic for Dark/Light Mode Theme Switcher
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                    themeIcon.textContent = '🌙';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggle.checked = false;
+                    themeIcon.textContent = '☀️';
+                }
+            };
+            
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Check for saved theme in localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+    </script>
+</body>
+</html>
