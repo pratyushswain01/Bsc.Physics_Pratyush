@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IKS | Indian Knowledge System</title>
     
-    <!-- Google Fonts: Poppins for the main body, and Tiro Devanagari Sanskrit for the runner -->
+    <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         /* --- THEME DEFINITIONS (CSS Variables) --- */
         :root {
             --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #ff9933; /* Saffron Accent */ --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --back-btn-bg: #e9ecef; --back-btn-color: #495057;
-            --modal-bg: #ffffff; --modal-overlay-bg: rgba(0, 0, 0, 0.6); --warning-color: #d90429;
+            --modal-bg: #ffffff; --modal-overlay-bg: rgba(0, 0, 0, 0.6); --warning-color: #d90429; --protected-badge-bg: var(--warning-color);
         }
         body.dark-mode {
             --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #ffb366; /* Lighter Saffron */ --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --back-btn-bg: #374151; --back-btn-color: #e5e7eb;
@@ -28,11 +27,7 @@
         /* --- HEADER & CONTROLS --- */
         header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 {
-            margin: 0;
-            font-size: 1.5em; /* Reduced font size for a more compact header */
-            color: var(--primary-accent);
-        }
+        header h1 { margin: 0; font-size: 1.5em; color: var(--primary-accent); }
         .header-controls { display: flex; align-items: center; gap: 1rem; }
         .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); display: none; }
         @media (min-width: 768px) { .datetime { display: block; } .header-controls { gap: 1.5rem; } }
@@ -55,7 +50,7 @@
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
         /* --- TIMER DISCLAIMER --- */
-        .timer-disclaimer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; }
+        .timer-disclaimer { text-align: center; padding: 2rem 1rem; }
         .timer-disclaimer h3 { font-size: 1.3em; margin: 0 0 0.5rem 0; color: var(--primary-accent); }
         .timer-disclaimer h3 .fa-exclamation-triangle { margin-right: 0.5rem; color: var(--warning-color); }
         .timer-disclaimer p { margin: 0.2rem 0 1.5rem 0; font-size: 0.95em; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;}
@@ -65,16 +60,41 @@
         .timer-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
         @media (min-width: 768px) { #countdown-display { gap: 1rem; } }
 
-
-        /* --- SUBJECT GRID --- */
+        /* --- TAB NAVIGATION --- */
+        .tab-navigation { display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem; }
+        .tab-button { background-color: transparent; border: none; padding: 1rem 1.5rem; font-size: 1.1em; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; position: relative; /* Added for badge positioning */ }
+        .tab-button.active { color: var(--primary-accent); border-bottom-color: var(--primary-accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Badge for the tab button */
+        .tab-badge {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background-color: var(--protected-badge-bg);
+            color: white;
+            padding: 2px 6px;
+            font-size: 0.6em;
+            border-radius: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        
+        /* --- SUBJECT GRID & PROTECTED BOX --- */
         .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .subject-box { display: block; text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .single-item-grid { display: flex; justify-content: center; align-items: center; } /* For Phase 2 centering */
+        .subject-box { text-decoration: none; display: block; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .subject-box:hover { transform: translateY(-8px); border-color: var(--primary-accent); }
         .subject-box:hover .icon { color: var(--primary-accent); transform: scale(1.1) translateY(-50%); }
         .subject-box h2 { margin-top: 0; color: var(--text-primary); font-size: 1.3em; }
         .subject-box p { color: var(--text-secondary); margin-bottom: 0; font-size: 0.9em; }
         .icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: var(--border-color); transition: all 0.3s ease; opacity: 0.7; }
-
+        #protected-box { cursor: pointer; border: 2px dashed var(--border-color); max-width: 400px; width: 100%; }
+        .protected-badge { position: absolute; top: 1rem; right: 1rem; background-color: var(--protected-badge-bg); color: white; padding: 0.2rem 0.6rem; font-size: 0.75em; border-radius: 6px; font-weight: 600; }
+        #protected-box:hover { border-color: var(--primary-accent); border-style: solid; }
+        
         /* --- BACK BUTTON --- */
         .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; border: none; cursor: pointer;}
         .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
@@ -82,11 +102,19 @@
         /* --- MODAL STYLES --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--modal-overlay-bg); display: none; justify-content: center; align-items: center; z-index: 2000; animation: fadeIn 0.3s ease; }
         .modal-content { background-color: var(--modal-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px var(--shadow-color); width: 90%; max-width: 450px; text-align: center; }
+        .modal-content.shake { animation: shake 0.5s ease-in-out; }
         .modal-content h2 { margin-top: 0; font-size: 1.5em; color: var(--primary-accent); }
-        .modal-content p { font-size: 1.1em; color: var(--text-primary); margin: 1rem 0 2rem 0; }
-        .modal-close-btn { background: none; border: none; color: var(--primary-accent); font-size: 1em; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 0; }
+        .modal-content p { font-size: 1.1em; color: var(--text-primary); margin: 1rem 0; }
+        .modal-close-btn { background: none; border: none; color: var(--primary-accent); font-size: 1em; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 0; margin-top: 1rem; }
         .modal-footer { margin-top: 1.5rem; font-size: 0.8em; color: var(--text-secondary); }
+        #password-input { width: 90%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1em; background-color: var(--bg-color); color: var(--text-primary); margin-top: 1rem; transition: border-color 0.2s; }
+        #password-input:focus { border-color: var(--primary-accent); outline: none; }
+        #password-submit-btn { width: 100%; background-color: var(--primary-accent); color: white; border: none; padding: 0.8rem; font-size: 1.1em; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; margin-top: 1rem; font-weight: 600; }
+        #password-submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .error-message { color: var(--warning-color); font-size: 0.9em; margin-top: 0.5rem; display: none; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
 
         /* --- FOOTER --- */
         footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
@@ -109,18 +137,7 @@
 
     <div class="quote-runner">
         <div class="runner-text">
-            <span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span>
-            <span class="separator">• ॐ •</span>
-            <span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span>
-            <span class="separator">• ॐ •</span>
-            <span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span>
-            <span class="separator">• ॐ •</span>
-            <span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span>
-            <span class="separator">• ॐ •</span>
-            <span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span>
-            <span class="separator">• ॐ •</span>
-            <span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span>
-            <span class="separator">• ॐ •</span>
+             <span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</span><span class="english">You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">ॐ सर्वे भवन्तु सुखिनः।</span><span class="english">May all beings be happy.</span></span><span class="separator">• ॐ •</span><span class="quote-item"><span class="sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</span><span class="english">Lead me from the unreal to the real. Lead me from darkness to light.</span></span><span class="separator">• ॐ •</span>
         </div>
     </div>
     
@@ -139,25 +156,53 @@
         <main class="container" id="main-content">
             <button id="back-button" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</button>
             
-            <div class="subject-grid">
-                <a href="module1.html" class="subject-box"><div><h2>Module 1: Introduction to IKS</h2><p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p></div><i class="fas fa-book-open icon"></i></a>
-                <a href="module2.html" class="subject-box"><div><h2>Module 2: Foundation for Science & Technology</h2><p>Linguistics, number systems, concept of Zero, and unique measurement systems.</p></div><i class="fas fa-cogs icon"></i></a>
-                <a href="module3.html" class="subject-box"><div><h2>Module 3: Indian Mathematics & Astronomy</h2><p>Great mathematicians, arithmetic operations, geometry, and astronomy.</p></div><i class="fas fa-star icon"></i></a>
-                <a href="module4.html" class="subject-box"><div><h2>Module 4: Indian Science & Technology in IKS</h2><p>Metallurgy, dyes, painting, town planning, and temple architecture.</p></div><i class="fas fa-gopuram icon"></i></a>
-                <a href="module5.html" class="subject-box"><div><h2>Module 5: Humanities & Social Sciences in IKS</h2><p>Ayurveda, yoga, psychology, governance, and public administration.</p></div><i class="fas fa-brain icon"></i></a>
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="phase1">Phase 1: Sem/Pre-Sem QB</button>
+                <button class="tab-button" data-tab="phase2">
+                    Phase 2: Comprehensive
+                    <span class="tab-badge">Protected</span>
+                </button>
+            </div>
+            
+            <!-- Phase 1 Content -->
+            <div id="phase1" class="tab-content active">
+                <div class="subject-grid">
+                    <a href="module1.html" class="subject-box"><div><h2>Module 1: Introduction to IKS</h2><p>Vedas, Vedangas, Sastras, Puranas, and various schools of philosophy.</p></div><i class="fas fa-book-open icon"></i></a>
+                    <a href="module2.html" class="subject-box"><div><h2>Module 2: Foundation for Science & Technology</h2><p>Linguistics, number systems, concept of Zero, and unique measurement systems.</p></div><i class="fas fa-cogs icon"></i></a>
+                    <a href="module3.html" class="subject-box"><div><h2>Module 3: Indian Mathematics & Astronomy</h2><p>Great mathematicians, arithmetic operations, geometry, and astronomy.</p></div><i class="fas fa-star icon"></i></a>
+                    <a href="module4.html" class="subject-box"><div><h2>Module 4: Indian Science & Technology</h2><p>Metallurgy, dyes, painting, town planning, and temple architecture.</p></div><i class="fas fa-gopuram icon"></i></a>
+                    <a href="module5.html" class="subject-box"><div><h2>Module 5: Humanities & Social Sciences</h2><p>Ayurveda, yoga, psychology, governance, and public administration.</p></div><i class="fas fa-brain icon"></i></a>
+                </div>
+            </div>
+
+            <!-- Phase 2 Content -->
+            <div id="phase2" class="tab-content">
+                <h2 style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">Protected Resources</h2>
+                <div class="subject-grid single-item-grid">
+                    <div id="protected-box" class="subject-box">
+                        <span class="protected-badge">Admin Content</span>
+                        <div>
+                            <h2>Comprehensive IKS Summary</h2>
+                            <p>An integrated overview of all modules. Protected resource.</p>
+                        </div>
+                        <i class="fas fa-shield-alt icon"></i>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- The Modal -->
+    <!-- The 'Contact Admin' Modal -->
     <div id="access-modal" class="modal-overlay">
         <div class="modal-content">
-            <h2>Access Restricted</h2>
-            <p>Content is prohibited for unauthorized distribution or further use.</p>
-            <button id="modal-close-btn" class="modal-close-btn">I Understand</button>
-            <div class="modal-footer">
-                Terms and Conditions applied. © Pratyush Swain
-            </div>
+            <h2>Access Restricted</h2><p>Content is prohibited for unauthorized distribution or further use.</p><button id="modal-close-btn" class="modal-close-btn">I Understand</button><div class="modal-footer">Terms and Conditions applied. © Pratyush Swain</div>
+        </div>
+    </div>
+
+    <!-- The Password Modal -->
+    <div id="password-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Admin Access Required</h2><p>Please enter the password to access this protected resource.</p><input type="password" id="password-input" placeholder="Enter Password" autocomplete="off"><p id="password-error" class="error-message"></p><button id="password-submit-btn">Unlock</button><button id="password-modal-close" class="modal-close-btn">Cancel</button><div class="modal-footer">© Pratyush Swain</div>
         </div>
     </div>
 
@@ -169,56 +214,91 @@
     document.addEventListener('DOMContentLoaded', () => {
         const themeToggle = document.getElementById('theme-toggle');
         const datetimeElement = document.getElementById('datetime');
-        const backButton = document.getElementById('back-button');
-        const accessModal = document.getElementById('access-modal');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
         const contentWrapper = document.getElementById('content-wrapper');
-        
+
         // --- THEME SWITCHER ---
         const applyTheme = (theme) => {
             document.body.classList.toggle('dark-mode', theme === 'dark');
             themeToggle.checked = (theme === 'dark');
         };
-
         const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         applyTheme(savedTheme);
-
         themeToggle.addEventListener('change', () => {
             document.body.classList.toggle('dark-mode', themeToggle.checked);
             localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
         });
 
         // --- DYNAMIC CLOCK ---
-        const updateDateTime = () => {
+        const clockInterval = setInterval(() => {
             const now = new Date();
             const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
             if(datetimeElement) {
                 datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`;
             }
-        };
-        const clockInterval = setInterval(updateDateTime, 1000);
-        updateDateTime();
+        }, 1000);
+
+        // --- TAB NAVIGATION ---
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
 
         // --- ACCESS MODAL LOGIC ---
+        const backButton = document.getElementById('back-button');
+        const accessModal = document.getElementById('access-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
         backButton.addEventListener('click', (e) => {
             e.preventDefault(); 
             accessModal.style.display = 'flex';
         });
+        modalCloseBtn.addEventListener('click', () => { accessModal.style.display = 'none'; });
+        accessModal.addEventListener('click', (e) => { if (e.target === accessModal) accessModal.style.display = 'none'; });
+        
+        // --- PASSWORD MODAL LOGIC ---
+        const passwordModal = document.getElementById('password-modal');
+        const passwordModalCloseBtn = document.getElementById('password-modal-close');
+        const passwordSubmitBtn = document.getElementById('password-submit-btn');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        const protectedBox = document.getElementById('protected-box');
+        
+        protectedBox.addEventListener('click', () => {
+            passwordError.style.display = 'none';
+            passwordInput.value = '';
+            passwordModal.style.display = 'flex';
+            passwordInput.focus();
+        });
 
-        modalCloseBtn.addEventListener('click', () => {
-            accessModal.style.display = 'none';
-        });
-        accessModal.addEventListener('click', (e) => {
-            if (e.target === accessModal) {
-                accessModal.style.display = 'none';
+        const closePasswordModal = () => passwordModal.style.display = 'none';
+        
+        const checkPassword = () => {
+            if (passwordInput.value === 'IKS2025') {
+                window.location.href = 'IKS_main.html';
+            } else {
+                passwordError.textContent = 'Incorrect Password. Please try again.';
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                const modalContent = passwordModal.querySelector('.modal-content');
+                modalContent.classList.add('shake');
+                setTimeout(() => modalContent.classList.remove('shake'), 500);
             }
-        });
+        };
+
+        passwordSubmitBtn.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
+        passwordModalCloseBtn.addEventListener('click', closePasswordModal);
+        passwordModal.addEventListener('click', (e) => { if (e.target === passwordModal) closePasswordModal(); });
 
         // --- FIXED EXPIRATION COUNTDOWN TIMER LOGIC ---
-        // Set the final expiration date: July 12, 2025, 00:00:00
         const expirationTime = new Date('2025-07-12T00:00:00').getTime();
-
         const countdownInterval = setInterval(() => {
             const now = new Date().getTime();
             const distance = expirationTime - now;
@@ -237,7 +317,7 @@
             } else {
                 clearInterval(countdownInterval);
                 if (contentWrapper) {
-                     contentWrapper.innerHTML = `<div style="text-align:center; padding: 4rem 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                     contentWrapper.innerHTML = `<div style="text-align:center; padding: 4rem 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 50vh;">
                                                 <i class="fas fa-lock" style="font-size: 5rem; color: var(--warning-color); margin-bottom: 2rem;"></i>
                                                 <h1 style="color:var(--primary-accent); font-size:2.5em;">Access Expired</h1>
                                                 <p style="font-size:1.2em; color:var(--text-secondary);">This temporary resource link is now permanently disabled.</p>
