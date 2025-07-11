@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKS Module 4 - Question Bank</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS STYLES EMBEDDED -->
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --header-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e8590c;
+            --accent-border-color: #ffa94d;
+            --answer-bg-color: #fff9f2;
+            --answer-text-color-strong: #bf360c;
+            --success-text-color: #2b9348;
+            --success-bg-color: #f1fcf5;
+            --success-border-color: #d4ede2;
+            --footer-text-color: #6c757d;
+        }
+
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1e1e1e;
+            --header-bg-color: #1e1e1e;
+            --border-color: #444;
+            --accent-color: #fd7e14;
+            --accent-border-color: #e8590c;
+            --answer-bg-color: #2c241d;
+            --answer-text-color-strong: #ff922b;
+            --success-text-color: #96f2c3;
+            --success-bg-color: #143d2c;
+            --success-border-color: #205c43;
+            --footer-text-color: #adb5bd;
+        }
+
+        /* --- General Body & Typography --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--text-color);
+            margin-top: 0;
+            transition: color 0.3s;
+        }
+        
+        /* --- Header --- */
+        header {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fd7e14; /* Orange color */
+            margin-bottom: 0.2em;
+        }
+        
+        .shloka-bar {
+            background-color: #fd7e14;
+            color: white;
+            padding: 15px;
+            margin: 20px -20px -20px -20px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .shloka-sanskrit { font-size: 1.2em; margin-bottom: 4px; }
+        .shloka-translation { font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        .shloka-item { text-align: center; padding: 5px 15px; }
+
+        /* --- DARK/LIGHT MODE TOGGLE --- */
+        #theme-switcher {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
+        #theme-toggle { display: none; }
+        #theme-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #777;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        #theme-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        #theme-toggle:checked + #theme-label { background-color: #fd7e14; }
+        #theme-toggle:checked + #theme-label::after { transform: translateX(24px); }
+        #theme-icon {
+            position: absolute;
+            left: 5px;
+            z-index: 10;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .dark-mode #theme-icon {
+            transform: translateX(25px);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+            flex-grow: 1; /* Makes main content area expand */
+        }
+
+        .assignment-section h2 {
+            font-size: 2em;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 1 Mark Questions Styling --- */
+        .mcq-list { list-style-type: none; padding: 0; counter-reset: mcq-counter; }
+        .mcq-list li {
+            background-color: var(--card-bg-color);
+            border-left: 5px solid var(--accent-border-color);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.05em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .mcq-list li::before {
+            counter-increment: mcq-counter;
+            content: counter(mcq-counter) ". ";
+            font-weight: 700;
+            font-family: 'Roboto Slab', serif;
+            color: var(--accent-color);
+            margin-right: 8px;
+            transition: color 0.3s;
+        }
+        .mcq-direct-answer {
+            font-weight: 700;
+            color: var(--success-text-color);
+            background-color: var(--success-bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--success-border-color);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+        
+        /* --- 2, 5, 8 Mark Question & Answer Blocks --- */
+        .question-block {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s ease;
+        }
+        .question-block:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+        .question-block h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .toggle-answer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .toggle-answer-btn:hover { background-color: #e8590c; transform: translateY(-2px); }
+        .answer {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--answer-bg-color);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer p, .answer ul, .answer ol { margin-bottom: 1em; }
+        .answer strong {
+            color: var(--answer-text-color-strong);
+            transition: color 0.3s;
+        }
+        .answer li { margin-bottom: 0.7em; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--header-bg-color);
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--footer-text-color);
+            font-size: 0.9em;
+            width: 100%;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+        
+        /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+        @media (max-width: 768px) {
+            body { font-size: 15px; }
+            main { padding: 0 15px 40px 15px; }
+            header h1 { font-size: 2em; }
+            .assignment-section h2 { font-size: 1.7em; }
+            .mcq-list li, .question-block { padding: 15px; }
+            #theme-switcher { top: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Dark Mode Toggle Switch -->
+        <div id="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <label for="theme-toggle" id="theme-label">
+                <span id="theme-icon"></span>
+            </label>
+        </div>
+
+        <h1>IKS Module 4 - Science & Technology</h1>
+        <div class="shloka-bar">
+            <div class="shloka-item">
+                <div class="shloka-sanskrit">ॐ सर्वे भवन्तु सुखिनः।</div>
+                <div class="shloka-translation">May all beings be happy</div>
+            </div>
+            <div class="shloka-item">
+                <div class="shloka-sanskrit">असतो मा सद्गमय। तमसो मा ज्योतिर्गमय।</div>
+                <div class="shloka-translation">Lead me from the unreal to the real. Lead me from darkness to light.</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 4: 1 Mark Questions</h2>
+            <ol class="mcq-list">
+                <li>The famous rust-free Iron Pillar from the Gupta period is located in <span class="mcq-direct-answer">Delhi</span>.</li>
+                <li>The traditional Indian system of architecture and design is called <span class="mcq-direct-answer">Vastu Sastra</span>.</li>
+                <li>The high-carbon, legendary steel from South India famous for its sharp edge was known as <span class="mcq-direct-answer">Wootz Steel</span>.</li>
+                <li>The Indus Valley (Harappan) Civilization is renowned for its advanced system of <span class="mcq-direct-answer">urban planning and drainage</span>.</li>
+                <li>The traditional Indian framework of 'Sixty-Four Art Forms and Occupational Skills' is known as the <span class="mcq-direct-answer">64 Kalas</span>.</li>
+                <li>Which of the following is a key feature of the Dravidian style of temple architecture? a) Shikhara tower b) Vimana tower c) Amalaka -> <span class="mcq-direct-answer">b) Vimana tower</span></li>
+                <li>The advanced distillation process for <span class="mcq-direct-answer">Zinc</span> was mastered in India long before the West.</li>
+                <li>The ancient Indian alchemical tradition focused on mercury was known as <span class="mcq-direct-answer">Rasashastra</span>.</li>
+                <li>In temple architecture, the inner sanctum housing the main deity is called the <span class="mcq-direct-answer">Garbhagriha</span>.</li>
+                <li>The Nagara style of temple architecture is predominantly found in <span class="mcq-direct-answer">North India</span>.</li>
+                <li>The paintings at Ajanta and Ellora are a testament to advanced ancient Indian <span class="mcq-direct-answer">dye and painting technology</span>.</li>
+                <li>The concept of 'Kala' refers to a/an <span class="mcq-direct-answer">art or occupational skill</span>.</li>
+                <li>A key component of Harappan town planning was houses built with <span class="mcq-direct-answer">baked bricks</span>.</li>
+                <li>The curvilinear spire on top of a Nagara style temple is called a <span class="mcq-direct-answer">Shikhara</span>.</li>
+                <li>The high phosphorus content in the Delhi Iron Pillar contributes to its <span class="mcq-direct-answer">corrosion resistance</span>.</li>
+                <li>Lost-wax casting was a sophisticated technique used in Indian <span class="mcq-direct-answer">metalworking (e.g., bronze sculptures)</span>.</li>
+                <li>The pyramidal tower of a Dravidian temple is called a <span class="mcq-direct-answer">Vimana</span>.</li>
+                <li>Which metal was crucial for making brass? <span class="mcq-direct-answer">Zinc</span></li>
+                <li>The rock-cut temples at Ellora are examples of <span class="mcq-direct-answer">monolithic architecture</span>.</li>
+                <li>Indian cities in the Harappan civilization were often laid out in a <span class="mcq-direct-answer">grid pattern</span>.</li>
+                <li>Temples in India served not only as places of worship but also as centers for <span class="mcq-direct-answer">community life and education</span>.</li>
+                <li>The '64 Kalas' indicate a holistic approach to life that values both <span class="mcq-direct-answer">fine arts and practical crafts</span>.</li>
+                <li>Natural minerals like Lapis Lazuli were used to create <span class="mcq-direct-answer">blue</span> pigment in paintings.</li>
+                <li>The Dravida style is characterized by a walled enclosure and a large gateway tower called a <span class="mcq-direct-answer">Gopuram</span>.</li>
+                <li>Vastu Sastra provides guidelines for the orientation of buildings with respect to the <span class="mcq-direct-answer">cardinal directions</span>.</li>
+                <li>Gold and Silver have been used for coinage and ornamentation in India since ancient times. (True/False) -> <span class="mcq-direct-answer">True</span></li>
+                <li>Which city is a prime example of Harappan town planning? a) Mohenjo-Daro b) Varanasi c) Ayodhya -> <span class="mcq-direct-answer">a) Mohenjo-Daro</span></li>
+                <li>The science of color-making used natural sources like <span class="mcq-direct-answer">plants, minerals, and insects</span>.</li>
+                <li>A key difference between Nagara and Dravida styles is the shape of the main <span class="mcq-direct-answer">tower (Shikhara vs. Vimana)</span>.</li>
+                <li>The term for Copper in Sanskrit is <span class="mcq-direct-answer">Tamra</span>.</li>
+            </ol>
+        </section>
+
+        <!-- 2 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 4: 2 Mark Questions</h2>
+            
+            <div class="question-block">
+                <h3>Question 1: What are the '64 Kalas'? Give two examples.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The '64 Kalas' refer to the sixty-four traditional art forms and occupational skills listed in ancient Indian texts. They represent a holistic vision of a well-rounded education, covering fine arts, crafts, and practical life skills. Examples include <strong>Chitra-Kala</strong> (the art of painting) and <strong>Takshana</strong> (carpentry).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 2: What is Wootz steel and why was it famous?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Wootz steel was a high-carbon crucible steel that originated in South India. It was famous worldwide for its exceptional hardness and sharp, durable cutting edge. It was exported to the Middle East and Europe to be forged into high-quality weapons, such as the legendary "Damascus" swords.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 3: Mention two defining features of town planning in the Harappan civilization.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Two defining features of Harappan town planning are:</p><ol><li><strong>Grid-Pattern Layout:</strong> The cities were meticulously planned with streets laid out in a grid pattern, intersecting at right angles.</li><li><strong>Advanced Drainage System:</strong> They had a sophisticated network of covered drains running alongside the streets, connected to houses, demonstrating a strong emphasis on public sanitation.</li></ol></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 4: Differentiate between the 'Nagara' and 'Dravida' styles of temple architecture.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The primary difference lies in the shape of the main tower over the sanctum. The <strong>Nagara</strong> (North Indian) style features a curvilinear tower called a 'Shikhara' that culminates in a disc-like 'Amalaka'. The <strong>Dravida</strong> (South Indian) style features a terraced, pyramidal tower called a 'Vimana' that rises in receding stories.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 5: What is 'Vastu Sastra'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Vastu Sastra is the traditional Indian science of architecture and design. It provides a comprehensive set of principles and guidelines for site selection, layout, orientation, and construction of buildings (from homes to temples and cities) to create a harmonious alignment with natural and cosmic forces.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 6: What is scientifically remarkable about the Iron Pillar of Delhi?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The Iron Pillar of Delhi, over 1600 years old, is scientifically remarkable for its extraordinary resistance to rust and corrosion. This is attributed to its unique composition, including a high phosphorus content and the absence of sulfur and magnesium, which led to the formation of a thin, passive protective film on its surface.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 7: Briefly explain the ancient Indian zinc distillation process.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Ancient India was the first to master the difficult process of zinc distillation. They developed a downward distillation technique using a special retort (a clay vessel). Zinc ore was heated from above, and the zinc vapor, which has a low boiling point, would travel downwards into a cooler condensation chamber, where it solidified into pure metal.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 8: What were the sources of colors in ancient Indian painting technology?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Ancient Indian painters used natural, locally sourced materials to create their long-lasting pigments. Common sources included <strong>minerals</strong> (like red and yellow ochre, lapis lazuli for blue, and lampblack for black), <strong>plants</strong> (like indigo for blue), and even insects (like lac for a reddish dye).</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 9: What is a 'Garbhagriha' in temple architecture?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The 'Garbhagriha' (literally "womb-house") is the innermost sanctum sanctorum of an Indian temple. It is a small, dark, cube-like chamber where the principal murti (icon) of the deity is housed. It represents the nucleus of the temple and the focal point of worship.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 10: How does the concept of '64 Kalas' reflect a holistic vision of life?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The '64 Kalas' reflect a holistic vision by encompassing a vast range of skills, from fine arts like painting and music to practical crafts like carpentry and even social skills like entertaining guests. This shows that the Indian tradition valued and recognized a wide spectrum of human talent, promoting a well-rounded and skillful individual rather than just an academic one.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 11: Name two key metals in Indian metallurgy and their primary use.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>1. <strong>Iron/Steel:</strong> Its primary use was for making agricultural tools (like ploughshares) which boosted food production, and for producing high-quality weapons and structural components like beams and pillars.</p><p>2. <strong>Copper:</strong> As one of the first metals to be worked, it was primarily used for making utensils, coins, statues (using lost-wax casting), and wiring.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 12: What is the significance of the 'Shikhara' and 'Vimana'?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The 'Shikhara' (in Nagara style) and 'Vimana' (in Dravida style) are the superstructures or towers built directly above the Garbhagriha (sanctum). Their significance is symbolic, representing the sacred mountain (like Meru or Kailasa), the axis mundi connecting the earthly and divine realms, and drawing the eye of the devotee upwards towards heaven.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 13: What is monolithic architecture? Give an Indian example.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Monolithic architecture is a building practice where a structure is carved, cast, or excavated from a single piece of material, typically a rock. Instead of constructing a building by assembling parts, the structure is revealed by removing material. A prime Indian example is the magnificent <strong>Kailasa Temple at Ellora</strong>, which was carved top-down from a single massive rock.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 14: How was mercury used in ancient Indian science?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Mercury (called 'Parada' or 'Rasa') was the central element in the Indian alchemical tradition of <strong>Rasashastra</strong>. It was believed to have mystical and medicinal properties. Alchemists developed complex purification processes (samskaras) to detoxify mercury, preparing it for use in medicinal formulations aimed at healing and achieving longevity.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 15: What role did a temple tank play in Dravidian architecture?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>The temple tank, or 'Teppakulam', was a large, sacred water body, usually rectangular, found within the temple complex in the Dravidian style. It served both a practical purpose (for ritual ablutions and as a water source) and a symbolic purpose, representing cosmic waters and purity, and was often the site of important temple festivals.</p></div>
+            </div>
+        </section>
+
+        <!-- 5 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 4: 5 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 16: Write a note on the advancements in metallurgy in ancient India.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Ancient India possessed a remarkably advanced tradition of metallurgy, showcasing mastery over extraction, purification, and alloying of various metals.</p><ul><li><strong>Iron and Steel:</strong> India was a pioneer in steel-making. The legendary <strong>Wootz steel</strong>, made using a crucible method, was a high-carbon steel prized for its hardness and used to make famous Damascus swords. The <strong>Iron Pillar of Delhi</strong> stands as a testament to their skill in producing large, forge-welded iron structures with exceptional corrosion resistance due to its unique chemical composition.</li><li><strong>Zinc Distillation:</strong> India was the first civilization to master the difficult process of zinc distillation. The downward distillation process developed at Zawar in Rajasthan from the 12th century onwards was a major technological breakthrough, as zinc boils before it melts, requiring a sophisticated retort system.</li><li><strong>Copper and Bronze:</strong> Copper and its alloy, bronze, were widely used. The 'lost-wax' (cire perdue) technique was perfected for casting intricate bronze sculptures, such as the famous Dancing Girl from Mohenjo-Daro and the later Chola bronzes.</li><li><strong>Precious Metals:</strong> Gold and silver were skillfully worked for coinage, jewelry, and ornamentation from very early times, indicating expertise in refining and crafting.</li></ul></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 17: Describe the key principles of ancient Indian town planning with special reference to temple architecture.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Ancient Indian town planning, often guided by texts like Vastu Sastra, was based on principles of order, hygiene, and cosmic alignment. These principles were often centered around the temple.</p><ul><li><strong>Grid Layout:</strong> As seen in the Harappan civilization, cities were often laid out on a cardinal grid pattern, with main streets running north-south and east-west, promoting airflow and organization.</li><li><strong>Zoning:</strong> Towns were typically divided into zones for different social classes and functions—residential areas, commercial centers, and administrative quarters.</li><li><strong>Centrality of the Temple:</strong> In later planned towns (like Madurai or Jaipur), the temple complex often formed the nucleus of the city. The main streets would radiate outwards from the temple, and the entire urban layout was seen as a reflection of a divine cosmic diagram (mandala), with the temple as its sacred center.</li><li><strong>Public Works:</strong> A strong emphasis was placed on public works, especially water management. This included sophisticated drainage systems (as in Harappa), large water tanks, wells, and reservoirs, which were often associated with temple complexes.</li></ul></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 18: Explain the key components and compare the main features of the Nagara and Dravida styles of Temple Architecture.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p>Nagara (North Indian) and Dravida (South Indian) are the two principal styles of temple architecture. While they share core components, they differ significantly in their superstructure.</p><p><strong>Common Components:</strong></p><ul><li><strong>Garbhagriha:</strong> The inner sanctum or "womb-house" where the main deity is placed.</li><li><strong>Mandapa:</strong> A pillared assembly hall in front of the Garbhagriha for devotees.</li></ul><p><strong>Comparison of Features:</strong></p><ul><li><strong>Main Tower:</strong> This is the most distinct difference.
+    <ul><li><strong>Nagara:</strong> Features a tall, curvilinear tower called a <strong>Shikhara</strong>. It appears like a single, upwardly curving spire.</li><li><strong>Dravida:</strong> Features a terraced, pyramidal tower called a <strong>Vimana</strong>, which consists of multiple, progressively smaller stories.</li></ul></li><li><strong>Top of the Tower:</strong>
+    <ul><li><strong>Nagara:</strong> The Shikhara is crowned by a grooved, disc-shaped stone called an <strong>Amalaka</strong>, with a finial (Kalasha) on top.</li><li><strong>Dravida:</strong> The Vimana is topped by a small, dome-like or octagonal cupola known as the <strong>Shikhara</strong> or Stupika.</li></ul></li><li><strong>Temple Complex:</strong>
+    <ul><li><strong>Nagara:</strong> Generally built on a raised stone platform (Jagati). Temple tanks are less common or may be outside the main complex.</li><li><strong>Dravida:</strong> The main temple is usually situated within a large, walled enclosure with a massive gateway tower called a <strong>Gopuram</strong>. A large temple tank is an integral part of the complex.</li></ul></li></ul></div>
+            </div>
+        </section>
+
+        <!-- 8 MARK QUESTIONS SECTION -->
+        <section class="assignment-section">
+            <h2>Module 4: 8 Mark Questions</h2>
+             <div class="question-block">
+                <h3>Question 19: "Ancient India was a crucible of material science and civil engineering." Substantiate this statement with a detailed discussion of its achievements in both metallurgy and architecture.</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The statement that ancient India was a crucible of material science and civil engineering is strongly supported by a wealth of archaeological and textual evidence. From producing the world's finest steel to planning and building some of the world's most sophisticated cities and structures, Indian contributions in these fields were foundational and, in many cases, unsurpassed for centuries.</p><p><strong>Achievements in Metallurgy (Material Science):</strong></p><ul><li><strong>Mastery of Iron and Steel:</strong> The most spectacular achievement is the creation of the <strong>Delhi Iron Pillar</strong> in the 4th century CE. This massive, 7-meter-tall pillar is renowned for its astonishing resistance to rust. Modern analysis reveals a high-purity iron with significant phosphorus content, which helped form a passive, protective film, a testament to the advanced understanding of material composition. Furthermore, India was the world leader in producing <strong>Wootz steel</strong>, a high-carbon crucible steel that was sought after globally to create the sharpest, strongest swords (including Damascus blades). This indicates a deep knowledge of carbon's role in hardening iron.</li><li><strong>Pioneering Zinc Distillation:</strong> India was the first civilization to master the difficult process of isolating zinc metal through distillation. Because zinc boils at a lower temperature than it melts, it requires a complex downward distillation technique. Archaeological evidence from Zawar, Rajasthan, shows industrial-scale production using sophisticated terracotta retorts from the 12th century, centuries before the process was known in Europe.</li><li><strong>Bronze and Copper Work:</strong> The expertise in casting bronze using the 'lost-wax' technique is evident from the Indus Valley's 'Dancing Girl' to the exquisite Chola bronzes of the medieval period, showcasing exceptional artistic and metallurgical skill.</li></ul><p><strong>Achievements in Architecture (Civil Engineering):</strong></p><ul><li><strong>Urban Planning of the Indus Valley:</strong> The cities of Harappa and Mohenjo-Daro (c. 2500 BCE) are masterpieces of early civil engineering. They featured meticulously planned grid layouts, multi-storied houses made of standardized baked bricks, and, most impressively, a highly advanced city-wide network of covered drains and sanitation systems that were unparalleled in the ancient world.</li><li><strong>Monumental Temple Architecture:</strong> The construction of massive temples required incredible engineering skill. This includes the rock-cut <strong>Kailasa Temple at Ellora</strong>, a monolithic structure carved from a single cliff face from the top down, a feat of reverse engineering. The construction of soaring Vimanas and Shikharas in stone also required sophisticated knowledge of structural mechanics, load distribution, and masonry.</li><li><strong>Vastu Sastra:</strong> The textual tradition of Vastu Sastra codified the principles of architecture, covering site selection, material science, and geometric planning. It systematized the engineering knowledge required for durable and harmonious construction.</li></ul><p><strong>Conclusion:</strong><br>From creating rust-proof iron and legendary steel to designing hygienic, well-planned cities and carving temples from mountains, ancient India's heritage in material science and civil engineering is undeniable. These achievements were not accidental but were the result of a deep, systematic understanding of materials and structural principles, rightfully placing India as a leader in ancient technology.</p></div>
+            </div>
+            <div class="question-block">
+                <h3>Question 20: Discuss the concept of the '64 Kalas' as a framework for art forms and occupational skills. How does this reflect a holistic approach to skill development in ancient India?</h3><button class="toggle-answer-btn">Show Answer</button><div class="answer"><p><strong>Introduction:</strong><br>The concept of the 'Catuḥṣaṣṭi Kalā' or '64 Kalas', as described in texts like the Vatsyayana's Kamasutra, is a comprehensive framework outlining a wide array of art forms, skills, and occupational talents. It represents a sophisticated and holistic philosophy of education and personal development.</p><p><strong>The Spectrum of Skills within the 64 Kalas:</strong><br>The 64 Kalas cover an incredibly broad spectrum, demonstrating that all forms of skillful activity have value. They can be categorized as:</p><ol><li><strong>Fine Arts (Lalita Kala):</strong> Examples include singing (Gita), dancing (Nritya), and painting (Alekhya), aimed at developing aesthetic sensibility.</li><li><strong>Practical Crafts and Sciences (Upyogi Kala):</strong> This includes skills like carpentry (Takshana), architecture (Vastu Vidya), and perfumery (Gandhayukti).</li><li><strong>Intellectual and Literary Arts:</strong> This category covers logic (Tarka-karma) and solving poetic riddles (Kavya-samasya-purti).</li><li><strong>Recreational and Social Skills:</strong> This includes skills like magic (Indrajala) and the art of hairdressing and flower arranging.</li></ol><p><strong>Reflection of a Holistic Approach:</strong></p><ul><li><strong>Integration of Art and Life:</strong> It blurs the modern distinction between 'art' and 'craft'. The ability to make a good perfume was a 'Kala' just as painting was, showing that beauty, skill, and utility were seen as integrated.</li><li><strong>Value of a Well-Rounded Personality:</strong> The ideal educated person ('nagaraka') was proficient in a variety of these skills, promoting versatility and social grace.</li><li><strong>Dignity of Labor:</strong> By including skills like carpentry and metallurgy in this esteemed list, the framework bestows dignity upon manual and technical labor.</li><li><strong>Body-Mind-Intellect Balance:</strong> The Kalas require a balance of physical dexterity (dancing), intellectual sharpness (logic), and emotional sensitivity (music), thus promoting the development of the whole person.</li></ul><p><strong>Conclusion:</strong><br>The 64 Kalas framework is a remarkable testament to a sophisticated vision of human potential. It goes beyond vocational training or academics to advocate for a life enriched by a multitude of skills—artistic, practical, social, and intellectual—representing a timeless educational philosophy focused on creating complete, capable, and culturally refined human beings.</p></div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>© Pre-sem IKS | All the Best for Your Exams!</p>
+        <p>Created by Pratyush Swain</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR TOGGLE BUTTONS & DARK MODE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic for regular question toggles
+            const answerButtons = document.querySelectorAll('.toggle-answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerDiv = button.nextElementSibling;
+                    if (answerDiv.style.display === 'block') {
+                        answerDiv.style.display = 'none';
+                        button.textContent = 'Show Answer';
+                    } else {
+                        answerDiv.style.display = 'block';
+                        button.textContent = 'Hide Answer';
+                    }
+                });
+            });
+
+            // Logic for Dark/Light Mode Theme Switcher
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    themeToggle.checked = true;
+                    themeIcon.textContent = '🌙';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggle.checked = false;
+                    themeIcon.textContent = '☀️';
+                }
+            };
+            
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // Check for saved theme in localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+    </script>
+</body>
+</html>
