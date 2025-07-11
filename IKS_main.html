@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Definitive IKS Study Guide (Full-Screen)</title>
+    <title>The Definitive IKS Study Guide (Responsive Edition)</title>
     <style>
+        /* --- Default Styles for Desktop & Larger Screens --- */
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
             line-height: 2.0;
             color: #1c1c1c;
             background-color: #fdfdfd;
             margin: 0;
-            padding: 20px; /* Reduced padding for a fuller feel */
+            padding: 25px;
         }
         .study-guide-container {
-            /* --- KEY CHANGE FOR FULL SCREEN --- */
-            max-width: 98%; /* Uses almost the full screen width */
-            margin: 10px auto; /* Centered with minimal top/bottom margin */
+            max-width: 1100px; /* Comfortable width on desktop */
+            margin: 20px auto;
             background: #ffffff;
-            padding: 30px 40px;
+            padding: 30px 50px;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
             border-top: 8px solid #FFA500;
@@ -109,12 +109,50 @@
         footer p {
             margin: 5px 0;
         }
+
+        /* --- KEY CHANGE: RESPONSIVE STYLES FOR MOBILE DEVICES --- */
+        /* These rules apply only when the screen width is 768px or less */
+        @media (max-width: 768px) {
+            body {
+                padding: 0; /* Remove padding from the body on mobile */
+            }
+            .study-guide-container {
+                max-width: 100%; /* Use the full width */
+                padding: 20px 15px; /* Reduce padding significantly for mobile */
+                border-radius: 0; /* Optional: Remove border-radius for edge-to-edge feel */
+                box-shadow: none; /* Optional: Remove shadow on mobile */
+                border-top-width: 6px;
+            }
+            .main-title {
+                font-size: 2.2em; /* Smaller title for mobile */
+            }
+            .module-title {
+                font-size: 1.8em; /* Smaller module titles */
+                padding-left: 15px;
+            }
+            .module-content {
+                padding: 20px;
+            }
+            .module-content h4 {
+                font-size: 1.5em;
+            }
+            .module-content h5 {
+                font-size: 1.2em;
+            }
+            .module-content ul, .module-content ol {
+                padding-left: 20px; /* Reduce list indentation */
+            }
+            .definition-box {
+                margin-left: 0; /* Remove extra margin for definition boxes */
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="study-guide-container">
-    <h1 class="main-title">The Definitive IKS Study Guide (Full-Screen Edition)</h1>
+    <h1 class="main-title">The Definitive IKS Study Guide</h1>
     <p style="text-align:center; font-style:italic; color:#555;">An exhaustive, detailed breakdown of all concepts for comprehensive understanding and exam mastery.</p>
 
     <!-- MODULE 1 -->
