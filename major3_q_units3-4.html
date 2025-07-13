@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics (CORE-3) Assignment - Full Answers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f5f7; 
+            --card-bg: #ffffff; 
+            --primary-accent: #3b82f6; 
+            --text-primary: #1f2937; 
+            --text-secondary: #4b5563; 
+            --border-color: #e5e7eb; 
+            --shadow-color: rgba(0, 0, 0, 0.05); 
+            --header-bg: rgba(255, 255, 255, 0.85); 
+            --code-bg: #eef2ff; 
+            --answer-color: #1e40af;
+        }
+        body.dark-mode {
+            --bg-color: #111827; 
+            --card-bg: #1f2937; 
+            --primary-accent: #60a5fa; 
+            --text-primary: #d1d5db; 
+            --text-secondary: #9ca3af; 
+            --border-color: #374151; 
+            --shadow-color: rgba(0, 0, 0, 0.2); 
+            --header-bg: rgba(31, 41, 55, 0.85); 
+            --code-bg: #1e293b; 
+            --answer-color: #93c5fd;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-color); 
+            color: var(--text-primary); 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+            line-height: 1.8; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header { 
+            background-color: var(--header-bg); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            padding: 1rem 0; 
+            border-bottom: 1px solid var(--border-color); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
+        .theme-switcher { position: relative; } 
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { 
+            content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); 
+            background-size: 14px; background-repeat: no-repeat; background-position: center; 
+        }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { 
+            transform: translateX(24px); 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); 
+        }
+        main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; flex: 1; width: 100%;}
+        .document-container { background: var(--card-bg); border-radius: 12px; padding: 2rem 2.5rem; box-shadow: 0 10px 25px -5px var(--shadow-color); border: 1px solid var(--border-color); }
+        @media (max-width: 768px) { .document-container { padding: 1.5rem; } header h1 { font-size: 1.2rem; } }
+        .assignment-header h2 { font-size: 1.8rem; margin-top: 0; color: var(--text-primary); font-family: 'Roboto Slab', serif;}
+        .assignment-header p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; }
+        .question-group-title { font-size: 1.5rem; font-family: 'Roboto Slab', serif; color: var(--primary-accent); margin-top: 3rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; }
+        .question-block { margin-bottom: 2rem; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid var(--border-color); transition: border-color 0.3s; }
+        .question-block:hover { border-left-color: var(--primary-accent); }
+        .question-text { font-weight: 600; margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.1em; }
+        .answer { color: var(--text-secondary); }
+        .math { font-family: 'Cambria', 'Times New Roman', serif; background-color: var(--code-bg); color: var(--answer-color); padding: 0.1em 0.4em; border-radius: 4px; font-size: 1.1em; }
+        .math-eq { margin: 1.5em auto; padding: 1em; background-color: var(--code-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--answer-color); text-align: center; overflow-x: auto; max-width: 95%; font-family: 'Cambria', 'Times New Roman', serif; font-size: 1.1em;}
+        .frac { display: inline-block; position: relative; vertical-align: middle; text-align: center; margin: 0 0.2em;}
+        .frac > span { display: block; padding: 0.1em 0.2em; }
+        .frac span.bottom { border-top: 1px solid var(--text-secondary); }
+        .detailed-answer { margin-top: 1rem; }
+        .detailed-answer strong { color: var(--text-primary); font-weight: 600; }
+        .detailed-answer h4 { color: var(--primary-accent); font-size: 1.2em; margin-top: 1.5rem; margin-bottom: 0.5rem; font-weight: 600; font-family: 'Roboto Slab', serif;}
+        .detailed-answer ol, .detailed-answer ul { padding-left: 1.5rem; list-style-position: outside; }
+        figure { margin: 1.5rem auto; text-align: center; background-color: var(--bg-color); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); max-width: 550px; }
+        figure svg { max-width: 100%; height: auto; }
+        figcaption { margin-top: 0.75rem; font-size: 0.9em; font-style: italic; color: var(--text-secondary); }
+        .footer-credits { text-align: center; margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-style: italic;}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content"><h1>Physics (CORE-3) Assignment</h1><div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div></div>
+    </header>
+    <main>
+        <div class="document-container">
+            <div class="assignment-header"><h2>Fully Solved Assignment</h2><p>Date: 15.05.2025</p></div>
+            
+            <h3 class="question-group-title">Q1. Carrying 01 Mark</h3>
+            <div class="question-block"><p class="question-text">a) Due to the presence of the dielectric medium, the resultant electric field and potential difference between the plates of a capacitor is ___ .</p><div class="answer">Answer: <span class="math">decreased</span></div></div>
+            <div class="question-block"><p class="question-text">b) After dielectric strength a dielectric behaves like a ___ .</p><div class="answer">Answer: <span class="math">conductor</span></div></div>
+            <div class="question-block"><p class="question-text">c) Breaking potential difference = ___ × thickness.</p><div class="answer">Answer: <span class="math">Dielectric strength</span></div></div>
+            <div class="question-block"><p class="question-text">d) The total induced dipole moment per unit volume of a dielectric is known as the ___ .</p><div class="answer">Answer: <span class="math">Polarization (P)</span></div></div>
+            <div class="question-block"><p class="question-text">e) Curie constant C<sub>m</sub> = (___ × T)</p><div class="answer">Answer: <span class="math">χ<sub>m</sub> (Magnetic Susceptibility)</span></div></div>
+            <div class="question-block"><p class="question-text">f) The absolute permeability of vacuum is ___ .</p><div class="answer">Answer: <span class="math">μ<sub>0</sub></span> (4π × 10⁻⁷ H/m)</div></div>
+            <div class="question-block"><p class="question-text">g) According gauss law, the electric flux is equal to ___ .</p><div class="answer">Answer: <span class="math">q<sub>enclosed</sub> / ε<sub>0</sub></span></div></div>
+            <div class="question-block"><p class="question-text">h) Write down the relationship between P, E & D electrical vectors.</p><div class="answer">Answer: <span class="math"><b>D</b> = ε<sub>0</sub><b>E</b> + <b>P</b></span></div></div>
+            <div class="question-block"><p class="question-text">i) What is the relationship between electrical susceptibility and dielectric constant?</p><div class="answer">Answer: <span class="math">K = 1 + χ<sub>e</sub></span></div></div>
+            <div class="question-block"><p class="question-text">j) What is the relationship between B,H & M, magnetic vectors?</p><div class="answer">Answer: <span class="math"><b>B</b> = μ<sub>0</sub>(<b>H</b> + <b>M</b>)</span></div></div>
+
+            <h3 class="question-group-title">Q2. Carrying 02 Marks</h3>
+            <div class="question-block"><p class="question-text">a) Define dielectric strength of a dielectric.</p><div class="answer"><p>Dielectric strength is the maximum electric field an insulating material can withstand without suffering electrical breakdown and losing its insulating properties. If the applied field exceeds this intrinsic value, the material becomes conductive. It is typically measured in units of Volts per meter (V/m) or Kilovolts per millimeter (kV/mm).</p></div></div>
+            <div class="question-block"><p class="question-text">b) How is breaking potential difference related to dielectric strength?</p><div class="answer"><p>The breaking potential difference (<span class="math">V<sub>b</sub></span>), also known as breakdown voltage, is the maximum voltage that can be applied across a specific thickness of a dielectric material before it breaks down. It is directly proportional to the material's dielectric strength (<span class="math">E<sub>max</sub></span>) and its thickness (<span class="math">d</span>). The relationship is given by the formula: <span class="math">V<sub>b</sub> = E<sub>max</sub> × d</span>.</p></div></div>
+            <div class="question-block"><p class="question-text">c) Define polarization of dielectric materials.</p><div class="answer"><p>Polarization (<b>P</b>) is the net electric dipole moment induced per unit volume within a dielectric material when subjected to an external electric field. This occurs as the field causes a slight separation of positive and negative charges within the atoms. For linear isotropic dielectrics, polarization is proportional to the electric field: <span class="math"><b>P</b> = χ<sub>e</sub> ε<sub>0</sub> <b>E</b></span>.</p></div></div>
+            <div class="question-block"><p class="question-text">d) What is an electrical displacement vector?</p><div class="answer"><p>The electrical displacement vector (<b>D</b>) is a field used in electromagnetism that accounts for the effect of free charges in a dielectric medium. It is defined as <span class="math"><b>D</b> = ε<sub>0</sub><b>E</b> + <b>P</b></span>, combining the electric field (<b>E</b>) and the material's polarization (<b>P</b>). Its advantage is that its flux depends only on the free charges enclosed in a surface (Gauss's Law: ∮<b>D</b>·d<b>A</b> = Q<sub>free</sub>).</p></div></div>
+            <div class="question-block"><p class="question-text">e) Write differential and integral forms of Gauss theorem for a dielectric.</p><div class="answer"><p>Gauss's theorem for a dielectric relates the electric displacement vector <b>D</b> to the distribution of free electric charge (ρ<sub>free</sub>).<br>• <strong>Integral Form:</strong> The total flux of <b>D</b> out of a closed surface S is equal to the total free charge Q<sub>free</sub> enclosed within that surface: <span class="math">∮<b>D</b> ⋅ d<b>S</b> = Q<sub>free</sub></span>.<br>• <strong>Differential Form:</strong> The divergence of <b>D</b> at any point is equal to the volume density of free charge at that point: <span class="math">∇ ⋅ <b>D</b> = ρ<sub>free</sub></span>.</p></div></div>
+            <div class="question-block"><p class="question-text">f) Find the energy density of an electric field in a dielectric.</p><div class="answer"><p>The energy density (<span class="math">u</span>) represents the amount of energy stored in an electric field per unit volume. In a dielectric medium with permittivity <span class="math">ε</span>, the energy density is given by the expression: <span class="math">u = ½ εE<sup>2</sup></span>. It can also be written in terms of the displacement vector <b>D</b> and electric field <b>E</b> as <span class="math">u = ½ <b>D</b> ⋅ <b>E</b></span>.</p></div></div>
+            <div class="question-block"><p class="question-text">g) State Lenz's law.</p><div class="answer"><p>Lenz's law states that the direction of the electromotive force (EMF) and the resulting induced current in a conductor is such that it creates a magnetic field that opposes the change in magnetic flux which produced it. This law, responsible for the negative sign in Faraday's law of induction, upholds the principle of conservation of energy.</p></div></div>
+            <div class="question-block"><p class="question-text">h) State the 2nd law of Maxwell's equation.</p><div class="answer"><p>Maxwell's 2nd law is Gauss's law for magnetism. It states that the net magnetic flux through any closed surface is always zero. Its mathematical forms are <span class="math">∮<b>B</b> ⋅ d<b>S</b> = 0</span> (integral) and <span class="math">∇ ⋅ <b>B</b> = 0</span> (differential). This law signifies that isolated magnetic poles (monopoles) do not exist.</p></div></div>
+            <div class="question-block"><p class="question-text">i) What is the 'Curie's point'?</p><div class="answer"><p>The Curie point, or Curie temperature (T<sub>c</sub>), is the critical temperature above which a ferromagnetic material loses its permanent magnetic properties and becomes paramagnetic. At this temperature, thermal agitation becomes strong enough to overcome the long-range ordering of magnetic domains, destroying spontaneous magnetization.</p></div></div>
+            <div class="question-block"><p class="question-text">j) Which is better for permanent magnets: steel or soft iron? Why?</p><div class="answer"><p><strong>Steel</strong> is better for permanent magnets. This is because its B-H hysteresis loop is wide, indicating it has high <strong>retentivity</strong> (retains strong magnetism) and high <strong>coercivity</strong> (resists demagnetization). Soft iron has a narrow loop, making it easy to magnetize and demagnetize, which is ideal for temporary magnets like electromagnets.</p></div></div>
+            <div class="question-block"><p class="question-text">k) What is hysteresis? What does its area represent?</p><div class="answer"><p>Hysteresis, in magnetism, is the lagging of the magnetic flux density (B) behind the magnetizing field (H) as a ferromagnetic material is taken through a cycle of magnetization. The area enclosed by the B-H hysteresis loop represents the **energy lost as heat per unit volume** of the material during one complete magnetization cycle.</p></div></div>
+            <div class="question-block"><p class="question-text">l) Define reciprocity theorem of mutual inductances.</p><div class="answer"><p>The reciprocity theorem for mutual inductance states that for any two stationary coils, the mutual inductance of the first coil with respect to the second coil (<span class="math">M<sub>12</sub></span>) is equal to the mutual inductance of the second coil with respect to the first (<span class="math">M<sub>21</sub></span>). This symmetric relationship is expressed as: <span class="math">M = M<sub>12</sub> = M<sub>21</sub></span>.</p></div></div>
+            <div class="question-block"><p class="question-text">m) Define Lorentz force.</p><div class="answer"><p>The Lorentz force is the total electromagnetic force (<strong>F</strong>) on a charged particle <span class="math">q</span> moving with velocity <strong>v</strong> in an electric field <strong>E</strong> and a magnetic field <strong>B</strong>. It is the vector sum of the electric force and the magnetic force, given by the equation: <span class="math"><b>F</b> = q(<b>E</b> + <b>v</b> × <b>B</b>)</span>.</p></div></div>
+            <div class="question-block"><p class="question-text">n) Define resonance for an electrical network.</p><div class="answer"><p>Electrical resonance is a condition in an AC circuit with both inductance (L) and capacitance (C) where the inductive reactance (<span class="math">X<sub>L</sub> = ωL</span>) becomes equal to the capacitive reactance (<span class="math">X<sub>C</sub> = 1/ωC</span>). At the resonant frequency, the circuit's impedance is minimal (in series) or maximal (in parallel) and becomes purely resistive.</p></div></div>
+            <div class="question-block"><p class="question-text">o) Define half power points.</p><div class="answer"><p>The half-power points are the two frequencies (<span class="math">ω<sub>1</sub></span> and <span class="math">ω<sub>2</sub></span>), on either side of the resonant frequency, at which the power dissipated in a resonant circuit is exactly half of the maximum power dissipated at resonance. At these frequencies, the current drops to <span class="math">I<sub>max</sub> / √2</span> of its peak value.</p></div></div>
+            <div class="question-block"><p class="question-text">p) What is a rejector electric circuit?</p><div class="answer"><p>A <strong>parallel resonant LCR circuit</strong> is called a rejector circuit. At its resonant frequency, the circuit offers maximum impedance to the current flow. Because it heavily impedes or "rejects" the current at this specific frequency while allowing other frequencies to pass more easily, it functions as a band-stop filter.</p></div></div>
+            <div class="question-block"><p class="question-text">q) What is sharpness of resonance.</p><div class="answer"><p>Sharpness of resonance describes the selectivity of a resonant circuit. A sharp resonance indicates that the resonance curve is narrow and steep, meaning the circuit responds strongly only to a very limited range of frequencies near the resonant frequency. This selectivity is quantitatively measured by the circuit's **Quality Factor (Q-factor)**.</p></div></div>
+            <div class="question-block"><p class="question-text">r) Explain Q-factor as an amplification factor.</p><div class="answer"><p>In a series LCR circuit at resonance, the voltage across the inductor (<span class="math">V<sub>L</sub></span>) and the capacitor (<span class="math">V<sub>C</sub></span>) can be significantly larger than the applied source voltage (<span class="math">V<sub>in</sub></span>). The Q-factor serves as the voltage amplification factor in this context, where the relationship is <span class="math">V<sub>L</sub> = V<sub>C</sub> = Q × V<sub>in</sub></span>.</p></div></div>
+            <div class="question-block"><p class="question-text">s) Distinguish between ideal voltage and current source.</p><div class="answer"><p>An **ideal voltage source** maintains a constant voltage across its terminals regardless of the current it delivers, and it has zero internal resistance. In contrast, an **ideal current source** supplies a constant current regardless of the voltage across its terminals, and it has infinite internal resistance.</p></div></div>
+            <div class="question-block"><p class="question-text">t) Define Thevenin's voltage (VTh).</p><div class="answer"><p>Thevenin's voltage (<span class="math">V<sub>Th</sub></span>) is the open-circuit potential difference measured across two output terminals of a linear network after the load has been removed. It represents the effective voltage of the entire source network as seen by the load and is a key component of the Thevenin equivalent circuit.</p></div></div>
+
+            <h3 class="question-group-title">Q5. Carrying Five Marks</h3>
+            <div class="question-block"><p class="question-text">a) State and explain superposition theorem with analytical explanation.</p><div class="answer detailed-answer">
+                <h4>Superposition Theorem</h4>
+                <p><strong>Statement:</strong> In any linear, bilateral network containing two or more independent sources, the response (current or voltage) in any element is the algebraic sum of the responses caused by each independent source acting alone, while all other independent sources are deactivated (replaced by their internal resistances).</p>
+                <h4>Analytical Explanation & Procedure:</h4>
+                <ol>
+                    <li><strong>Identify Linearity:</strong> The theorem applies only to linear circuits (where Ohm's law holds) and for calculating linear quantities like voltage and current. It cannot be directly used for power (<span class="math">P=I²R</span>).</li>
+                    <li><strong>Select One Source:</strong> Choose one independent source to keep active in the circuit.</li>
+                    <li><strong>Deactivate Other Sources:</strong> All other independent sources must be deactivated. A voltage source is deactivated by replacing it with a short circuit (0V). A current source is deactivated by replacing it with an open circuit (0A). Dependent sources are always kept active.</li>
+                    <li><strong>Calculate Partial Response:</strong> With only one source active, calculate the current or voltage (the "response") in the element of interest. Carefully note its magnitude and direction (or polarity).</li>
+                    <li><strong>Repeat for All Sources:</strong> Repeat steps 2-4 for each independent source in the network, calculating the partial response from each one.</li>
+                    <li><strong>Algebraic Summation:</strong> The final, total response in the element is the algebraic sum of all the partial responses calculated. It is crucial to be consistent with signs (e.g., current flowing down is positive, up is negative).</li>
+                </ol>
+            </div></div>
+            <div class="question-block"><p class="question-text">b) What is the procedure to convert a circuit to its Norton's equivalent?</p><div class="answer detailed-answer"><h4>Procedure for Norton's Equivalent Circuit</h4>
+                <p>Norton's theorem simplifies a complex linear network into an equivalent circuit with a single current source (<span class="math">I<sub>N</sub></span>) in parallel with a single resistor (<span class="math">R<sub>N</sub></span>).</p>
+                <figure><svg viewBox="0 0 450 160" xmlns="http://www.w3.org/2000/svg"><style>.s{stroke:var(--text-primary);stroke-width:1.5;fill:none;}.lb{font-family:Poppins,sans-serif;font-size:14px;fill:var(--text-secondary);}.ar{fill:var(--primary-accent);}</style><rect x="20" y="20" width="120" height="120" rx="5" class="s" style="stroke-dasharray:5,5;"/><text class="lb" x="35" y="85">Linear Network</text><path class="s" d="M140 50h20 M140 110h20"/><circle cx="165" cy="50" r="3" fill="var(--text-primary)"/><circle cx="165" cy="110" r="3" fill="var(--text-primary)"/><text class="lb" x="170" y="45">A</text><text class="lb" x="170" y="115">B</text><path d="M190 80l40 0" class="s" style="stroke:var(--primary-accent);stroke-width:2;marker-start:url(#arr);marker-end:url(#arr);"><defs><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l10 5-10 5" class="ar"/></marker></defs></path><text class="lb" x="290" y="20">Norton Equivalent</text><circle cx="300" cy="80" r="15" class="s"/><path d="M300 70v20" class="s" style="marker-start:url(#arr-up);"><defs><marker id="arr-up" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 10L5 0 10 10" stroke-width="1.5" stroke="var(--primary-accent)" fill="none"/></marker></defs></path><text class="lb" x="305" y="60">I<tspan font-size="10">N</tspan></text><path d="M315 80h35" class="s"/><rect x="350" y="40" width="20" height="80" class="s"/><text class="lb" x="375" y="85">R<tspan font-size="10">N</tspan></text><path d="M370 40v-10h-55 M370 120v10h-55" class="s"/><circle cx="315" cy="30" r="3" fill="var(--text-primary)"/><circle cx="315" cy="130" r="3" fill="var(--text-primary)"/></svg><figcaption>Converting a network to its Norton equivalent.</figcaption></figure>
+                <h4>Steps:</h4>
+                <ol>
+                    <li><strong>Find Norton Resistance (<span class="math">R<sub>N</sub></span>):</strong> First, remove the load resistor. Deactivate all independent sources (short voltage sources, open current sources). Calculate the equivalent resistance looking into the open terminals. This resistance is <span class="math">R<sub>N</sub></span> (Note: <span class="math">R<sub>N</sub></span> is always equal to <span class="math">R<sub>Th</sub></span>).</li>
+                    <li><strong>Find Norton Current (<span class="math">I<sub>N</sub></span>):</strong> Return to the original circuit. Place a short circuit across the output terminals (where the load was). Calculate the current flowing through this short circuit. This short-circuit current is the Norton Current, <span class="math">I<sub>N</sub></span>.</li>
+                    <li><strong>Construct the Equivalent Circuit:</strong> Draw the Norton equivalent circuit by placing the current source <span class="math">I<sub>N</sub></span> in parallel with the resistor <span class="math">R<sub>N</sub></span>. The load can then be reconnected to this simplified circuit for analysis.</li>
+                </ol>
+            </div></div>
+            <div class="question-block"><p class="question-text">c) State and explain B-H curve and hysteresis.</p>
+                <div class="answer detailed-answer">
+                    <h4>B-H Curve and Hysteresis</h4>
+                    <p>The <strong>B-H curve</strong> shows the relationship between magnetic flux density (B) and the applied magnetizing field (H) for a ferromagnetic material. For such materials, this relationship is non-linear and exhibits **hysteresis**, which is the lagging of B behind H.</p>
+                    <figure><svg viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg"><style>.ax{stroke:var(--text-primary);stroke-width:1.5;fill:none;marker-end:url(#b);}.lp{stroke:var(--primary-accent);stroke-width:3;fill:none;}.lb{font-family:Poppins,sans-serif;font-size:16px;fill:var(--text-secondary);}.pnt{fill:var(--text-primary);}.ar{fill:var(--primary-accent);}</style><defs><marker id="b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0l10 5-10 5z" fill="var(--text-primary)"/></marker><marker id="arr-lp" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0l10 5-10 5z" class="ar"/></marker></defs><path class="ax" d="M20 160h410"/><text class="lb" x="430" y="155">H</text><path class="ax" d="M225 310V10"/><text class="lb" x="230" y="25">B</text><path class="lp" d="M225,160 C 270,160 380,140 380,50 C 315,60 250,105 225,110 C 200,115 175,145 175,160 C 150,175 70,190 70,270 C 135,260 200,215 225,210 C 250,205 275,175 275,160 C 270,150 225,160 225,160 Z"/><path d="M225 160 Q 250 160, 380 50" style="stroke:var(--primary-accent); fill:none; stroke-width:1.5; stroke-dasharray:5,5;"/><circle class="pnt" cx="225" cy="110" r="3"/><text class="lb" x="230" y="105">B<sub>r</sub></text><circle class="pnt" cx="175" cy="160" r="3"/><text class="lb" x="155" y="175">-H<sub>c</sub></text><path d="M320 62l7.5 -7.5" marker-end="url(#arr-lp)"/></svg><figcaption>A typical B-H Hysteresis Loop.</figcaption></figure>
+                    <h4>Explanation of the Loop:</h4>
+                    <ol>
+                        <li><strong>Initial Magnetization:</strong> Starting with an unmagnetized sample (H=0, B=0), increasing H causes B to increase along the initial curve until it reaches saturation.</li>
+                        <li><strong>Saturation:</strong> At saturation, nearly all magnetic domains are aligned, and a further increase in H produces very little increase in B.</li>
+                        <li><strong>Retentivity:</strong> When H is reduced to zero, B does not return to zero. The remaining magnetism is called <strong>retentivity</strong> or remanence (B<sub>r</sub>).</li>
+                        <li><strong>Coercivity:</strong> To bring B to zero, a magnetizing field must be applied in the opposite direction. The value of this field is the <strong>coercivity</strong> (H<sub>c</sub>).</li>
+                        <li><strong>Reverse Saturation:</strong> As H is made more negative, the material saturates in the opposite direction.</li>
+                        <li><strong>Completing the Loop:</strong> Reducing the negative H back to zero and then increasing it in the positive direction again will trace the lower part of the curve, completing the loop. The area inside this loop represents the energy lost as heat per unit volume per cycle.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3 class="question-group-title">8). Carrying Eight Marks</h3>
+
+             <div class="question-block">
+                <p class="question-text">d) What do you understand by the quality factor Q of a circuit? Explain the dependence of the sharpness of resonance on Q-factor in a series LCR circuit. Derive the necessary formula.</p>
+                <div class="answer detailed-answer">
+                    <h4>Definition of Quality Factor (Q-factor)</h4>
+                    <p>The <strong>Quality Factor (Q-factor)</strong> of a resonant circuit is a dimensionless parameter that describes the degree of damping in the system. It quantifies how underdamped a resonator is. A higher Q-factor indicates a lower rate of energy loss relative to the energy stored, meaning oscillations die out more slowly. It is a measure of the "quality" or selectivity of a resonant circuit.</p>
+                    <p>Mathematically, it is defined as 2π times the ratio of the maximum energy stored to the energy dissipated per cycle at resonance:</p>
+                    <div class="math-eq">Q = 2π × <div class="frac"><span>Max Energy Stored</span><span class="bottom">Energy Dissipated per Cycle</span></div></div>
+                    <h4>Derivation for a Series LCR Circuit</h4>
+                    <p>In a series LCR circuit at resonance, the maximum energy stored in the inductor is <span class="math">E<sub>stored</sub> = ½LI<sub>0</sub>²</span>, where I<sub>0</sub> is the peak current. The average power dissipated by the resistor is <span class="math">P<sub>avg</sub> = I<sub>rms</sub>²R = ½I<sub>0</sub>²R</span>. The energy dissipated in one period <span class="math">T = 2π/ω<sub>0</sub></span> is <span class="math">E<sub>diss</sub> = P<sub>avg</sub> × T</span>.</p>
+                    <div class="math-eq">Q = 2π × <div class="frac"><span>½LI<sub>0</sub>²</span><span class="bottom">(½I<sub>0</sub>²R) × (2π/ω<sub>0</sub>)</span></div> = <div class="frac"><span>ω<sub>0</sub>L</span><span class="bottom">R</span></div></div>
+                    <p>Using the resonant condition <span class="math">ω<sub>0</sub> = 1/√(LC)</span>, we derive the standard formulas:</p>
+                    <div class="math-eq" style="font-size:1.3em;">Q = <div class="frac"><span>ω<sub>0</sub>L</span><span class="bottom">R</span></div> = <div class="frac"><span>1</span><span class="bottom">ω<sub>0</sub>CR</span></div> = <div class="frac"><span>1</span><span class="bottom">R</span></div>√<div class="frac"><span>L</span><span class="bottom">C</span></div></div>
+                    <h4>Dependence of Sharpness of Resonance on Q-factor</h4>
+                    <p>The sharpness of resonance describes how selective the circuit is. It is inversely related to the bandwidth (Δω), which is the range of frequencies for which the circuit power is at least half of the maximum power. The relationship is:</p>
+                    <div class="math-eq">Δω = <div class="frac"><span>ω<sub>0</sub></span><span class="bottom">Q</span></div></div>
+                    <ul>
+                        <li>A <strong>high Q-factor</strong> (low R) gives a small bandwidth, resulting in a tall, narrow resonance curve (<strong>sharp resonance</strong>).</li>
+                        <li>A <strong>low Q-factor</strong> (high R) gives a large bandwidth, resulting in a short, broad resonance curve (<strong>flat resonance</strong>).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">e) State and explain Thevenin's Theorem. Describe the procedure to find the Thevenin equivalent circuit.</p>
+                <div class="answer detailed-answer">
+                    <h4>Statement of Thevenin's Theorem</h4>
+                    <p><strong>Thevenin's Theorem</strong> states that any two output terminals of a linear network consisting of sources and resistors can be replaced by an equivalent circuit consisting of a single voltage source (V<sub>Th</sub>) in series with a single resistance (R<sub>Th</sub>).</p>
+                    <ul>
+                        <li>Thevenin's theorem is extensively used to determine the current or voltage across any given element in a network without going through the complicated method of solving a set of network equations.</li>
+                        <li>This makes the solution of complicated network circuits quite simple.</li>
+                    </ul>
+                    
+                    <h4>Equations & Procedure with an Example</h4>
+                    <p>Consider the circuit (Figure a) to find the load current (I<sub>L</sub>) using Thevenin's theorem. By removing the load resistance (R<sub>L</sub>), the open circuit voltage (V<sub>oc</sub>) can be calculated. This V<sub>oc</sub> can be calculated as V<sub>Th</sub>.</p>
+                     <div class="math-eq">V<sub>Th</sub> = V<sub>oc</sub> = Current × Resistance = I R<sub>3</sub> = <div class="frac"><span>V<sub>S</sub></span><span>R<sub>1</sub> + R<sub>3</sub></span></div> × R<sub>3</sub></div>
+
+                    <p>The internal resistance of the network, known as Thevenin's resistance (R<sub>Th</sub>), is found by short-circuiting the voltage source.</p>
+
+                    <figure>
+                         <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
+                            <style>.s{stroke:var(--text-primary);stroke-width:1.5;fill:none;}.lb{font-family:Poppins,sans-serif;font-size:14px;fill:var(--text-secondary);}</style>
+                            <text x="170" y="25" class="lb" font-weight="bold">Figure (a): Original Circuit</text>
+                            <circle cx="50" cy="110" r="15" class="s"/><path d="M50 95v-20 M50 125v20" class="s"/><path d="M45 102h10" class="s"/>
+                            <text x="25" y="115" class="lb">V<tspan font-size="10" dy="-5">s</tspan></text>
+                            <path d="M50 75h50 M50 145h200" class="s"/><rect x="100" y="65" width="40" height="20" class="s"/>
+                            <text x="110" y="60" class="lb">R<tspan font-size="10" dy="-5">1</tspan></text>
+                            <path d="M140 75h80" class="s"/><rect x="220" y="65" width="40" height="20" class="s"/>
+                            <text x="230" y="60" class="lb">R<tspan font-size="10" dy="-5">2</tspan></text>
+                            <rect x="290" y="65" width="40" height="20" class="s"/><text x="300" y="60" class="lb">R<tspan font-size="10" dy="-5">L</tspan></text>
+                            <path d="M140 75v30" class="s"/><rect x="130" y="105" width="20" height="40" class="s"/>
+                            <text x="155" y="125" class="lb">R<tspan font-size="10" dy="-5">3</tspan></text>
+                            <path d="M250 145v-70 M260 75h30" class="s"/>
+
+                            <text x="140" y="210" class="lb" font-weight="bold">Figure (c): Finding R<tspan font-size="10">Th</tspan></text>
+                            <path d="M80 270h20" class="s"/><rect x="100" y="260" width="40" height="20" class="s"/>
+                            <text x="110" y="255" class="lb">R<tspan font-size="10" dy="-5">1</tspan></text>
+                            <path d="M140 270h80" class="s"/><rect x="220" y="260" width="40" height="20" class="s"/>
+                            <text x="230" y="255" class="lb">R<tspan font-size="10" dy="-5">2</tspan></text>
+                            <path d="M80 270v70 M250 270v70 M80 340h60" class="s"/><rect x="130" y="300" width="20" height="40" class="s"/>
+                            <text x="155" y="320" class="lb">R<tspan font-size="10" dy="-5">3</tspan></text>
+                            <text x="280" y="305" class="lb">R<tspan font-size="10">Th</tspan></text>
+                            <path d="M265 295l10 10 M265 305l10 -10" style="stroke:var(--primary-accent);stroke-width:2;"/>
+                            
+                            <text x="110" y="380" class="lb" font-weight="bold">Thevenin Equivalent Circuit</text>
+                            <circle cx="100" cy="400" r="15" class="s"/><path d="M100 385v-10 M100 415v10 M95 392h10" class="s"/>
+                            <text x="70" y="405" class="lb">V<tspan font-size="10" dy="-5">Th</tspan></text>
+                            <path d="M115 400h35" class="s"/><rect x="150" y="390" width="40" height="20" class="s"/>
+                            <text x="160" y="385" class="lb">R<tspan font-size="10" dy="-5">Th</tspan></text>
+                            <path d="M190 400h30" class="s"/><rect x="220" y="390" width="40" height="20" class="s"/>
+                            <text x="230" y="385" class="lb">R<tspan font-size="10" dy="-5">L</tspan></text>
+                         </svg>
+                         <figcaption>Steps to Thevenize a circuit.</figcaption>
+                    </figure>
+                    <p>Thevenin's resistance R<sub>Th</sub> is the resistance of the circuit looking back from terminals A and B. For the circuit in Figure (c):</p>
+                    <div class="math-eq">R<sub>Th</sub> = R<sub>2</sub> + (Parallel combination of R<sub>1</sub> and R<sub>3</sub>) = R<sub>2</sub> + <div class="frac"><span>R<sub>1</sub>R<sub>3</sub></span><span class="bottom">R<sub>1</sub> + R<sub>3</sub></span></div></div>
+
+                    <p>The Thevenin's equivalent circuit is shown in the figure above, with the load resistor R<sub>L</sub> connected back to the terminals. The load current I<sub>L</sub> is now easily determined by using Ohm's Law:</p>
+                    <div class="math-eq" style="font-weight: bold; font-size: 1.2em;">I<sub>L</sub> = <div class="frac"><span>V<sub>Th</sub></span><span class="bottom">R<sub>Th</sub> + R<sub>L</sub></span></div></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">f) Define self induction of a coil. What is the self-inductance of a long solenoid?</p>
+                <div class="answer detailed-answer">
+                    <h4>Definition of Self-Induction</h4>
+                    <p><strong>Self-induction</strong> is the property of an electrical circuit where a changing current induces an opposing electromotive force (EMF) within the same circuit. This "back EMF," according to Lenz's Law, opposes the very change in current that produced it. This tendency of a coil to resist changes in current is quantified by its inductance (L).</p>
+                    <figure>
+                        <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                            <style>
+                               .s{stroke:var(--text-primary);stroke-width:1.5;fill:none;}
+                               .lb{font-family:Poppins,sans-serif;font-size:14px;fill:var(--text-secondary);}
+                               .ar{stroke:var(--text-primary);fill:none;stroke-width:2;marker-end:url(#a-arr-f);}
+                               .ar-rev{stroke:var(--text-primary);fill:none;stroke-width:2;marker-start:url(#a-rev-f);}
+                            </style>
+                            <defs>
+                                <marker id="a-arr-f" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l10 5-10 5z" fill="var(--text-primary)"/></marker>
+                                <marker id="a-rev-f" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0l-10 5 10 5z" fill="var(--text-primary)"/></marker>
+                            </defs>
+                            <text x="60" y="30" class="lb" font-weight="600">(a) Increasing Current</text>
+                            <path class="s" d="M50 100 h20 l20-20 l20 40 l20-40 l20 40 l20-40 h20" />
+                            <text x="35" y="105" class="lb" font-weight="600">P</text><text x="215" y="105" class="lb" font-weight="600">Q</text>
+                            <path class="ar-rev" d="M130 60h20"></path><text class="lb" x="155" y="65">e</text>
+                            <path class="ar" d="M120 130h20" style="stroke:var(--primary-accent);"><title>Applied Voltage/Current</title></path><text class="lb" x="145" y="135" style="fill:var(--primary-accent)">V, I</text>
+                            <text x="310" y="30" class="lb" font-weight="600">(b) Decreasing Current</text>
+                            <path class="s" d="M300 100 h20 l20-20 l20 40 l20-40 l20 40 l20-40 h20" />
+                            <text x="285" y="105" class="lb" font-weight="600">P</text><text x="465" y="105" class="lb" font-weight="600">Q</text>
+                            <path class="ar" d="M370 130h20"/><text class="lb" x="395" y="135">e</text>
+                            <path class="ar-rev" d="M370 60h20" style="stroke:var(--primary-accent);"><title>Applied Voltage/Current</title></path><text class="lb" x="395" y="65" style="fill:var(--primary-accent)">V, I</text>
+                         </svg>
+                        <figcaption>Direction of induced back EMF (e) opposing the change in current.</figcaption>
+                    </figure>
+                    <p>The magnetic flux linkage <span class="math">NΦ</span> is proportional to the current `I`: <span class="math">NΦ = LI</span>. This leads to Faraday's law in terms of inductance:</p>
+                    <div class="math-eq">ε = -L <div class="frac"><span>dI</span><span class="bottom">dt</span></div></div>
+                    <h4>Self-Inductance of a Long Solenoid</h4>
+                    <p>For a long solenoid with <span class="math">n</span> turns per unit length, total length <span class="math">l</span>, and cross-sectional area <span class="math">A</span>:</p>
+                    <ol>
+                        <li>The magnetic field inside is uniform: <span class="math">B = μnI</span>.</li>
+                        <li>The flux through one turn is <span class="math">Φ = BA = μnIA</span>.</li>
+                        <li>The total flux linkage for <span class="math">N=nl</span> turns is <span class="math">NΦ = (nl)(μnIA) = μn²IAl</span>.</li>
+                        <li>Since <span class="math">L = NΦ/I</span>, the self-inductance is:</li>
+                    </ol>
+                    <div class="math-eq" style="font-size:1.3em;">L = μn²Al</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">g) State and explain Faraday's laws of electromagnetism. Derive Faraday's law from motional EMF.</p>
+                <div class="answer detailed-answer">
+                    <h4>Statement of Faraday's Laws</h4>
+                    <p><strong>1. First Law (Qualitative):</strong> An electromotive force (EMF) is induced in a closed electrical circuit whenever the magnetic flux passing through the circuit changes.</p>
+                    <p><strong>2. Second Law (Quantitative):</strong> The magnitude of the induced EMF is directly proportional to the time rate of change of the magnetic flux. This is mathematically expressed as:</p>
+                    <div class="math-eq">ε = - <div class="frac"><span>dΦ<sub>B</sub></span><span class="bottom">dt</span></div></div>
+                    <h4>Derivation using Motional EMF</h4>
+                    <p>Consider a conducting rod PQ of length <span class="math">l</span> sliding with constant velocity <span class="math">v</span> on two parallel rails, forming a closed loop in a uniform magnetic field <span class="math">B</span> directed into the page.</p>
+                     <figure>
+                        <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+                            <style>.s{stroke:var(--text-primary);stroke-width:1.5;fill:none;}.lb{font-family:Poppins,sans-serif;font-size:16px;fill:var(--text-primary);}.ls{font-family:Poppins,sans-serif;font-size:12px;fill:var(--text-secondary);}.ar{stroke-width:2; stroke:var(--primary-accent); marker-end:url(#ar-g)}</style>
+                            <defs><marker id="ar-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0l10 5-10 5z" fill="var(--primary-accent)"/></marker></defs>
+                            <path class="s" d="M100,50 h180 v140 h-180 z" /><path d="M100,50 v140" class="s" style="stroke-width:4;" /><path class="ar" d="M100 120 l-40 0" /><text class="lb" x="90" y="45">P</text><text class="lb" x="285" y="45">S</text><text class="lb" x="90" y="200">Q</text><text class="lb" x="285" y="200">R</text>
+                            <text class="lb" style="fill:var(--primary-accent)" x="50" y="115"><b>v</b></text>
+                            <text x="180" y="130" class="lb" style="fill: var(--text-secondary)"><b>B</b> (into page)</text>
+                            <g fill="var(--text-secondary)" font-size="16" font-family="monospace">
+                               <text x="120" y="80">x</text><text x="160" y="80">x</text><text x="200" y="80">x</text><text x="240" y="80">x</text>
+                               <text x="120" y="120">x</text><text x="160" y="120">x</text><text x="200" y="120">x</text><text x="240" y="120">x</text>
+                               <text x="120" y="160">x</text><text x="160" y="160">x</text><text x="200" y="160">x</text><text x="240" y="160">x</text>
+                            </g>
+                        </svg>
+                        <figcaption>A conducting rod PQ moving in a uniform magnetic field.</figcaption>
+                     </figure>
+                    <ol>
+                        <li>A free charge <span class="math">q</span> inside the rod experiences a magnetic Lorentz force <span class="math"><b>F</b><sub>m</sub> = q(<b>v</b> × <b>B</b>)</span>, with a magnitude of <span class="math">F<sub>m</sub> = qvB</span> directed from Q to P.</li>
+                        <li>This force acts like a battery. The work done moving the charge from Q to P is <span class="math">W = F<sub>m</sub>l = qvBl</span>.</li>
+                        <li>The induced EMF (motional EMF) is the work done per unit charge: <span class="math">ε = W/q = Blv</span>.</li>
+                        <li>Now, consider the change in flux. In time <span class="math">dt</span>, the rod moves a distance <span class="math">dx = v dt</span>. The change in the loop's area is <span class="math">dA = l dx = l(v dt)</span>.</li>
+                        <li>The corresponding change in magnetic flux is <span class="math">dΦ<sub>B</sub> = B dA = Blv dt</span>.</li>
+                        <li>The time rate of change of flux is: <div class="math-eq"><div class="frac"><span>dΦ<sub>B</sub></span><span class="bottom">dt</span></div> = Blv</div></li>
+                        <li>Comparing steps 3 and 6, we see <span class="math">|ε| = |dΦ<sub>B</sub>/dt|</span>. Adding the negative sign from Lenz's Law gives the final law.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="footer-credits"><p>SARASWATI DEGREE VIDYA MANDIR, NEELAKANTHA NAGAR, BERHAMPUR -2</p></div>
+             <div class="footer-credits"><p>Created By Pratyush Swain </p></div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const applyTheme = (theme) => { 
+                    document.body.classList.toggle('dark-mode', theme === 'dark'); 
+                    themeToggle.checked = (theme === 'dark');
+                };
+                const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                applyTheme(savedTheme);
+                themeToggle.addEventListener('change', () => { 
+                    const newTheme = themeToggle.checked ? 'dark' : 'light'; 
+                    applyTheme(newTheme); 
+                    localStorage.setItem('theme', newTheme); 
+                });
+            }
+        });
+    </script>
+</body>
+</html>
