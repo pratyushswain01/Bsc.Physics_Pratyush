@@ -17,7 +17,6 @@
         }
 
         /* --- GENERAL & LAYOUT STYLES --- */
-        /* MODIFIED: Added box-sizing for a more predictable layout model */
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -37,21 +36,19 @@
             background-color: var(--header-bg); 
             backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px); 
-            /* MODIFIED: Padding is only vertical now, background is full-width */
             padding: 1rem 0; 
             border-bottom: 1px solid var(--border-color); 
             position: sticky; 
             top: 0; 
             z-index: 1000; 
         }
-        /* MODIFIED: The header-content is now the container for the header */
         .header-content { 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 1rem; /* This creates the space on the sides */
+            padding: 0 1rem; 
         }
         header h1 { 
             margin: 0; 
@@ -71,11 +68,10 @@
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
         
-        /* MODIFIED: Main element is now the container for the page content */
         main {
             max-width: 1100px;
-            margin: 2.5rem auto; /* Centers the content and adds vertical space */
-            padding: 0 1rem; /* This creates the space on the sides */
+            margin: 2.5rem auto; 
+            padding: 0 1rem; 
             flex: 1;
         }
         
@@ -108,8 +104,34 @@
         .assessment-breakdown h4 { margin-top: 0; margin-bottom: 0.75rem; color: var(--text-primary); }
         .assessment-breakdown ul { list-style-position: inside; padding-left: 0; margin: 0; font-size: 0.95rem; }
         .assessment-breakdown li { padding: 0.25rem 0; }
-        .button-primary { display: inline-block; text-decoration: none; background: var(--primary-accent); color: white; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1.5rem; }
-        .button-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); filter: brightness(1.1); }
+        
+        /* --- **UPDATED** BUTTON STYLES --- */
+        .assessment-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allows buttons to stack on smaller screens */
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .button-primary { 
+            display: inline-block; 
+            text-decoration: none; 
+            background: var(--primary-accent); 
+            color: white !important; /* Ensure text is white */
+            padding: 0.8rem 1.5rem; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            border: none;
+        }
+        .button-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15); 
+            filter: brightness(1.1); 
+            text-decoration: none;
+        }
         
         /* --- FOOTER --- */
         footer { 
@@ -117,7 +139,6 @@
             margin-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
-        /* MODIFIED: The footer content is now in its own container */
         .footer-content {
             max-width: 1100px;
             margin: 0 auto;
@@ -147,7 +168,6 @@
         </div>
     </header>
 
-    <!-- MODIFIED: The .container class is removed from main -->
     <main>
         
         <a href="sem2.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</a>
@@ -194,7 +214,7 @@
 
         <div class="assessment-card">
             <h3>Course & Assessment Structure</h3>
-            <h4>Pre-Sem (Sem-2) </h4>
+            <h4>Pre-Sem (Sem-2)</h4>
             <div class="assessment-content">
                 <div class="assessment-info">
                     <p>This course covers the fundamental principles of Electricity and Magnetism. All units from the syllabus above are included in the final assessment.</p>
@@ -209,14 +229,15 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align: center;">
-                 <a href="core_3.sem_2.html" class="button-primary">View Assignments & Resources</a>
+            <!-- **UPDATED** Button Section -->
+            <div class="assessment-buttons">
+                <a href="major3_q_units1-2.html" class="button-primary">Units 1 & 2 Questions</a>
+                <a href="major3_q_units3-4.html" class="button-primary">Units 3 & 4 Questions</a>
             </div>
         </div>
 
     </main>
 
-    <!-- MODIFIED: Footer content is wrapped in a dedicated div for proper alignment -->
     <footer>
         <div class="footer-content">
             <p>Created and Designed by Pratyush Swain</p>
@@ -260,6 +281,7 @@
                     const content = header.nextElementSibling;
                     const isOpen = header.classList.contains('active');
                     
+                    // Close all other accordions
                     accordionHeaders.forEach(otherHeader => { 
                         if (otherHeader !== header) { 
                             otherHeader.classList.remove('active'); 
@@ -267,6 +289,7 @@
                         } 
                     });
                     
+                    // Open or close the clicked one
                     if (isOpen) { 
                         header.classList.remove('active'); 
                         content.style.maxHeight = null; 
