@@ -152,7 +152,6 @@
         .footer-content p {
             margin: 0;
         }
-
     </style>
 </head>
 <body>
@@ -178,29 +177,29 @@
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 1: Fourier Series- I</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
-                    <li><a href="#">Formula Sheet</a></li>
-                    <li><a href="#">Sample Questions</a></li>
+                    <li><a href="mathphys_u1_formula.html">Formula Sheet</a></li>
+                    <li><a href="mathphys_u1_questions.html">Sample Questions</a></li>
                 </ul></div></div>
             </div>
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 2: Frobenius Method & Special Functions</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
-                    <li><a href="#">Formula Sheet</a></li>
-                    <li><a href="#">Sample Questions</a></li>
+                    <li><a href="mathphys_u2_formula.html">Formula Sheet</a></li>
+                    <li><a href="mathphys_u2_questions.html">Sample Questions</a></li>
                 </ul></div></div>
             </div>
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 3: Polynomials & Special Integrals</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
-                    <li><a href="#">Formula Sheet</a></li>
-                    <li><a href="#">Sample Questions</a></li>
+                    <li><a href="mathphys_u3_formula.html">Formula Sheet</a></li>
+                    <li><a href="mathphys_u3_questions.html">Sample Questions</a></li>
                 </ul></div></div>
             </div>
             <div class="unit-box">
                 <div class="unit-header"><h2>Unit 4: Partial Differential Equations</h2><i class="fas fa-chevron-down icon"></i></div>
                 <div class="unit-content"><div class="unit-content-inner"><ul>
-                    <li><a href="#">Formula Sheet</a></li>
-                    <li><a href="#">Sample Questions</a></li>
+                    <li><a href="mathphys_u4_formula.html">Formula Sheet</a></li>
+                    <li><a href="mathphys_u4_questions.html">Sample Questions</a></li>
                 </ul></div></div>
             </div>
         </div>
@@ -223,8 +222,8 @@
                 </div>
             </div>
             <div class="assessment-buttons">
-                <a href="#" class="button-primary">Unit 1 & 4 Questions</a>
-                <a href="#" class="button-primary">Unit 2 & 3 Questions</a>
+                <a href="mathphys_q_u1u4.html" class="button-primary">Unit 1 & 4 Questions</a>
+                <a href="mathphys_q_u2u3.html" class="button-primary">Unit 2 & 3 Questions</a>
             </div>
         </div>
 
@@ -274,7 +273,6 @@
                     const content = header.nextElementSibling;
                     const isOpen = header.classList.contains('active');
                     
-                    // Close all other accordions to have only one open at a time
                     accordionHeaders.forEach(otherHeader => { 
                         if (otherHeader !== header) { 
                             otherHeader.classList.remove('active'); 
@@ -282,7 +280,6 @@
                         } 
                     });
                     
-                    // Open or close the clicked one
                     if (isOpen) { 
                         header.classList.remove('active'); 
                         content.style.maxHeight = null; 
