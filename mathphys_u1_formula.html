@@ -3,376 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourier Series Formulas | Mathematical Physics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Fourier Series Formulas</title>
     
-    <!-- KaTeX for beautiful math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0KOVEMeaMurHnl2GqcYBcDSJQo7i51iZwCIrdxuwiq1jaZ7IWBqxq" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
-
+    <!-- MathJax for rendering LaTeX math -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
-        /* --- THEME, GENERAL, HEADER, ETC. STYLES --- */
-        :root { 
-            --bg-color: #f0f2f5; 
-            --card-bg: #ffffff; 
-            --primary-accent: #0d6efd; 
-            --text-primary: #212529; 
-            --text-secondary: #6c757d; 
-            --border-color: #dee2e6; 
-            --shadow-color: rgba(0, 0, 0, 0.05); 
-            --header-bg: rgba(255, 255, 255, 0.85); 
-            --back-btn-bg: #e9ecef; 
-            --back-btn-color: #495057;
-            --formula-card-bg: #f8f9fa;
+        :root {
+            /* Light Mode Colors */
+            --bg-color: #f8f9fa;
+            --container-bg-color: #ffffff;
+            --text-color: #343a40;
+            --heading-color: #2c3e50;
+            --highlight-color: #3498db;
+            --border-color: #e0e0e0;
+            --formula-bg: #fdfdfd;
+            --formula-border: #eee;
         }
-        body.dark-mode { 
-            --bg-color: #121212; 
-            --card-bg: #1e1e1e; 
-            --primary-accent: #3b82f6; 
-            --text-primary: #e5e7eb; 
-            --text-secondary: #9ca3af; 
-            --border-color: #374151; 
-            --shadow-color: rgba(0, 0, 0, 0.2); 
-            --header-bg: rgba(30, 30, 30, 0.85); 
-            --back-btn-bg: #374151; 
-            --back-btn-color: #e5e7eb;
-            --formula-card-bg: #2c2c2c;
+
+        body.dark-mode {
+            /* Dark Mode Colors */
+            --bg-color: #121212;
+            --container-bg-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --highlight-color: #58a6ff;
+            --border-color: #333;
+            --formula-bg: #222222;
+            --formula-border: #444444;
         }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
-        .container { width: 90%; max-width: 800px; margin: 2rem auto; flex: 1; }
-        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); }
-        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
-        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
-        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
-        .theme-switcher { position: relative; } #theme-toggle { display: none; }
-        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
-        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
-        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
-        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
-        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; }
-        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
-        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
 
-        /* --- STYLES FOR THE COOL FORMULA CARDS --- */
-        .content-card { background-color: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color); }
-        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; }
-        .content-card h3 { color: var(--text-primary); margin-top: 2.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.3rem; }
-        .katex-display { margin: 1em 0; text-align: center; overflow-x: auto; overflow-y: hidden; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-        .formula-item {
-            background-color: var(--formula-card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 2rem;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--container-bg-color);
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        h1 {
+            color: var(--heading-color);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        ol {
+            padding-left: 20px;
+            list-style: none;
+            counter-reset: item;
+        }
+
+        li {
+            margin-bottom: 2.5em;
+            padding-left: 20px;
             position: relative;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            overflow: hidden;
-        }
-
-        .formula-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px var(--shadow-color);
-        }
-
-        .formula-number {
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            width: 45px;
-            height: 45px;
-            background: var(--primary-accent);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 12px 0 12px 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
-        .formula-item h4 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            padding-left: 55px; /* space for the number */
-            font-size: 1.1rem;
-            color: var(--text-primary);
+        li::before {
+            counter-increment: item;
+            content: counter(item) ".";
+            font-weight: bold;
+            color: var(--highlight-color);
+            position: absolute;
+            left: -15px;
+            top: 0;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
         }
 
-        .coefficients {
-            border-top: 1px dashed var(--border-color);
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-        }
-        .coefficients p {
-            margin: 0 0 1rem 0;
-            font-weight: 600;
-            color: var(--text-secondary);
+        .formula {
+            display: block;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: var(--formula-bg);
+            border: 1px solid var(--formula-border);
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
+        /* --- Dark Mode Toggle Switch --- */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 26px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--highlight-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Mobile-friendly adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            li {
+                padding-left: 10px;
+            }
+            li::before {
+                left: -10px;
+            }
+            .theme-switch-wrapper {
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-content">
-            <h1>Fourier Series Formulas</h1>
-            <div class="header-controls">
-                <div id="datetime" class="datetime"></div>
-                <div class="theme-switcher">
-                    <input type="checkbox" id="theme-toggle">
-                    <label for="theme-toggle" class="slider"></label>
-                </div>
-            </div>
-        </div>
-    </header>
+<!-- Dark Mode Toggle -->
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="darkModeToggle">
+        <input type="checkbox" id="darkModeToggle" />
+        <div class="slider"></div>
+    </label>
+</div>
 
-    <main class="container">
+<div class="container">
+    <h1>Fourier Series</h1>
+    <ol>
+        <!-- General Series -->
+        <li>A function \(f(x)\) can be expressed as a Fourier series in \((0, 2\pi)\) as:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(nx) + b_n \sin(nx)] $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \cos(nx) \,dx $$</div>
+            <div class="formula">$$ b_n = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \sin(nx) \,dx $$</div>
+        </li>
+
+        <li>A function \(f(x)\) can be expressed as a Fourier series in \((-\pi, \pi)\) as:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(nx) + b_n \sin(nx)] $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \,dx $$</div>
+            <div class="formula">$$ b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \,dx $$</div>
+        </li>
+
+        <li>A function \(f(x)\) can be expressed as a Fourier series in \((0, 2L)\) as:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right] $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{1}{L} \int_{0}^{2L} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{1}{L} \int_{0}^{2L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+            <div class="formula">$$ b_n = \frac{1}{L} \int_{0}^{2L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
+
+        <li>A function \(f(x)\) can be expressed as a Fourier series in \((-L, L)\) as:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right] $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{1}{L} \int_{-L}^{L} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{1}{L} \int_{-L}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+            <div class="formula">$$ b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
+
+        <!-- Even and Odd Functions -->
+        <li>If \(f(x)\) is an even function in \((-\pi, \pi)\), its Fourier series contains cosine terms only:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{2}{\pi} \int_{0}^{\pi} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \cos(nx) \,dx $$</div>
+        </li>
+
+        <li>If \(f(x)\) is an odd function in \((-\pi, \pi)\), its Fourier series contains sine terms only:
+            <div class="formula">$$ f(x) = \sum_{n=1}^{\infty} b_n \sin(nx) $$</div>
+            Where:
+            <div class="formula">$$ b_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \sin(nx) \,dx $$</div>
+        </li>
+
+        <li>If \(f(x)\) is an even function in \((-L, L)\), its Fourier series contains cosine terms only:
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\left(\frac{n\pi x}{L}\right) $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{2}{L} \int_{0}^{L} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{2}{L} \int_{0}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
+
+        <li>If \(f(x)\) is an odd function in \((-L, L)\), its Fourier series contains sine terms only:
+            <div class="formula">$$ f(x) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right) $$</div>
+            Where:
+            <div class="formula">$$ b_n = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
         
-        <a href="mathematical-physics-topics.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to All Topics</a>
+        <!-- Half-Range Series -->
+        <li>Half-range Fourier cosine series in \((0, \pi)\):
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{2}{\pi} \int_{0}^{\pi} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \cos(nx) \,dx $$</div>
+        </li>
+
+        <li>Half-range Fourier sine series in \((0, \pi)\):
+            <div class="formula">$$ f(x) = \sum_{n=1}^{\infty} b_n \sin(nx) $$</div>
+            Where:
+            <div class="formula">$$ b_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \sin(nx) \,dx $$</div>
+        </li>
+
+        <li>Half-range Fourier cosine series in \((0, L)\):
+            <div class="formula">$$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\left(\frac{n\pi x}{L}\right) $$</div>
+            Where:
+            <div class="formula">$$ a_0 = \frac{2}{L} \int_{0}^{L} f(x) \,dx $$</div>
+            <div class="formula">$$ a_n = \frac{2}{L} \int_{0}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
+
+        <li>Half-range Fourier sine series in \((0, L)\):
+            <div class="formula">$$ f(x) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right) $$</div>
+            Where:
+            <div class="formula">$$ b_n = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$</div>
+        </li>
         
-        <div class="content-card">
-            
-            <h2>Fourier Series & Parseval's Identity</h2>
-            <p>This page presents a collection of essential Fourier series formulas. Each formula is displayed in its own card for clarity and easy reference.</p>
+        <!-- Parseval's Identity -->
+        <li>Parseval's identity in \((0, 2\pi)\):
+            <div class="formula">$$ \int_{0}^{2\pi} |f(x)|^2 \,dx = \pi \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) \right] $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((-\pi, \pi)\):
+            <div class="formula">$$ \int_{-\pi}^{\pi} |f(x)|^2 \,dx = \pi \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) \right] $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((0, 2L)\):
+            <div class="formula">$$ \int_{0}^{2L} |f(x)|^2 \,dx = L \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) \right] $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((-L, L)\):
+            <div class="formula">$$ \int_{-L}^{L} |f(x)|^2 \,dx = L \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) \right] $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((0, \pi)\) for a half-range cosine series:
+            <div class="formula">$$ \int_{0}^{\pi} |f(x)|^2 \,dx = \frac{\pi}{2} \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} a_n^2 \right] $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((0, \pi)\) for a half-range sine series:
+            <div class="formula">$$ \int_{0}^{\pi} |f(x)|^2 \,dx = \frac{\pi}{2} \sum_{n=1}^{\infty} b_n^2 $$</div>
+        </li>
+        
+        <li>Parseval's identity in \((0, L)\) for a half-range cosine series:
+            <div class="formula">$$ \int_{0}^{L} |f(x)|^2 \,dx = \frac{L}{2} \left[ \frac{a_0^2}{2} + \sum_{n=1}^{\infty} a_n^2 \right] $$</div>
+        </li>
 
-            <h3>General Fourier Series</h3>
+        <li>Parseval's identity in \((0, L)\) for a half-range sine series:
+            <div class="formula">$$ \int_{0}^{L} |f(x)|^2 \,dx = \frac{L}{2} \sum_{n=1}^{\infty} b_n^2 $$</div>
+        </li>
 
-            <div class="formula-item">
-                <span class="formula-number">1</span>
-                <h4>Fourier Series in (0, 2π)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(nx) + b_n \sin(nx)] $$
-                <div class="coefficients">
-                    <p>Coefficients:</p>
-                    $$ a_0 = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \,dx $$
-                    $$ a_n = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \cos(nx) \,dx $$
-                    $$ b_n = \frac{1}{\pi} \int_{0}^{2\pi} f(x) \sin(nx) \,dx $$
-                </div>
-            </div>
-            
-            <div class="formula-item">
-                <span class="formula-number">2</span>
-                <h4>Fourier Series in (-π, π)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(nx) + b_n \sin(nx)] $$
-                <div class="coefficients">
-                    <p>Coefficients:</p>
-                    $$ a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \,dx $$
-                    $$ a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \,dx $$
-                    $$ b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \,dx $$
-                </div>
-            </div>
+    </ol>
+</div>
 
-            <div class="formula-item">
-                <span class="formula-number">3</span>
-                <h4>Fourier Series in (0, 2L)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right] $$
-                <div class="coefficients">
-                    <p>Coefficients:</p>
-                    $$ a_0 = \frac{1}{L} \int_{0}^{2L} f(x) \,dx $$
-                    $$ a_n = \frac{1}{L} \int_{0}^{2L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$
-                    $$ b_n = \frac{1}{L} \int_{0}^{2L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
+<script>
+    const themeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const currentTheme = localStorage.getItem('theme');
 
-            <div class="formula-item">
-                <span class="formula-number">4</span>
-                <h4>Fourier Series in (-L, L)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right] $$
-                <div class="coefficients">
-                    <p>Coefficients:</p>
-                    $$ a_0 = \frac{1}{L} \int_{-L}^{L} f(x) \,dx $$
-                    $$ a_n = \frac{1}{L} \int_{-L}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$
-                    $$ b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
+    // Apply the saved theme on page load
+    if (currentTheme) {
+        body.classList.add(currentTheme);
+        if (currentTheme === 'dark-mode') {
+            themeToggle.checked = true;
+        }
+    }
 
-            <h3>Series for Even and Odd Functions</h3>
-            
-            <div class="formula-item">
-                <span class="formula-number">5</span>
-                <h4>Even Function in (-π, π) — Cosine Series</h4>
-                <p>If $f(x)$ is even, all $b_n=0$.</p>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) $$
-                <div class="coefficients">
-                    $$ a_0 = \frac{2}{\pi} \int_{0}^{\pi} f(x) \,dx $$
-                    $$ a_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \cos(nx) \,dx $$
-                </div>
-            </div>
+    // Toggle theme on switch click
+    themeToggle.addEventListener('change', () => {
+        if (themeToggle.checked) {
+            body.classList.remove('light-mode'); // Optional, for clarity
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode'); // Optional, for clarity
+            localStorage.setItem('theme', 'light-mode');
+        }
+    });
+</script>
 
-            <div class="formula-item">
-                <span class="formula-number">6</span>
-                <h4>Odd Function in (-π, π) — Sine Series</h4>
-                <p>If $f(x)$ is odd, all $a_n=0$.</p>
-                $$ f(x) = \sum_{n=1}^{\infty} b_n \sin(nx) $$
-                <div class="coefficients">
-                    $$ b_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \sin(nx) \,dx $$
-                </div>
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">7</span>
-                <h4>Even Function in (-L, L) — Cosine Series</h4>
-                <p>If $f(x)$ is even, all $b_n=0$.</p>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\left(\frac{n\pi x}{L}\right) $$
-                <div class="coefficients">
-                    $$ a_0 = \frac{2}{L} \int_{0}^{L} f(x) \,dx $$
-                    $$ a_n = \frac{2}{L} \int_{0}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">8</span>
-                <h4>Odd Function in (-L, L) — Sine Series</h4>
-                <p>If $f(x)$ is odd, all $a_n=0$.</p>
-                $$ f(x) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right) $$
-                <div class="coefficients">
-                    $$ b_n = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
-
-
-            <h3>Half-Range Series</h3>
-
-            <div class="formula-item">
-                <span class="formula-number">9</span>
-                <h4>Half-Range Cosine Series in (0, π)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) $$
-                <div class="coefficients">
-                    $$ a_0 = \frac{2}{\pi} \int_{0}^{\pi} f(x) \,dx \quad , \quad a_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \cos(nx) \,dx $$
-                </div>
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">10</span>
-                <h4>Half-Range Sine Series in (0, π)</h4>
-                $$ f(x) = \sum_{n=1}^{\infty} b_n \sin(nx) $$
-                <div class="coefficients">
-                    $$ b_n = \frac{2}{\pi} \int_{0}^{\pi} f(x) \sin(nx) \,dx $$
-                </div>
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">11</span>
-                <h4>Half-Range Cosine Series in (0, L)</h4>
-                $$ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos\left(\frac{n\pi x}{L}\right) $$
-                <div class="coefficients">
-                    $$ a_0 = \frac{2}{L} \int_{0}^{L} f(x) \,dx \quad , \quad a_n = \frac{2}{L} \int_{0}^{L} f(x) \cos\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">12</span>
-                <h4>Half-Range Sine Series in (0, L)</h4>
-                $$ f(x) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right) $$
-                <div class="coefficients">
-                    $$ b_n = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) \,dx $$
-                </div>
-            </div>
-            
-            <h3>Parseval's Identity</h3>
-
-            <div class="formula-item">
-                <span class="formula-number">13</span>
-                <h4>Identity in (0, 2π)</h4>
-                $$ \frac{1}{\pi}\int_{0}^{2\pi} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) $$
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">14</span>
-                <h4>Identity in (-π, π)</h4>
-                $$ \frac{1}{\pi}\int_{-\pi}^{\pi} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) $$
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">15</span>
-                <h4>Identity in (0, 2L)</h4>
-                $$ \frac{1}{L} \int_{0}^{2L} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) $$
-            </div>
-            
-            <div class="formula-item">
-                <span class="formula-number">16</span>
-                <h4>Identity in (-L, L)</h4>
-                $$ \frac{1}{L}\int_{-L}^{L} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2) $$
-            </div>
-            
-            <div class="formula-item">
-                <span class="formula-number">17</span>
-                <h4>Identity for Half-Range Cosine Series in (0, π)</h4>
-                $$ \frac{2}{\pi}\int_{0}^{\pi} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} a_n^2 $$
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">18</span>
-                <h4>Identity for Half-Range Sine Series in (0, π)</h4>
-                $$ \frac{2}{\pi}\int_{0}^{\pi} [f(x)]^2 \,dx = \sum_{n=1}^{\infty} b_n^2 $$
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">19</span>
-                <h4>Identity for Half-Range Cosine Series in (0, L)</h4>
-                $$ \frac{2}{L}\int_{0}^{L} [f(x)]^2 \,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} a_n^2 $$
-            </div>
-
-            <div class="formula-item">
-                <span class="formula-number">20</span>
-                <h4>Identity for Half-Range Sine Series in (0, L)</h4>
-                $$ \frac{2}{L}\int_{0}^{L} [f(x)]^2 \,dx = \sum_{n=1}^{\infty} b_n^2 $$
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <p>Created and Designed by Pratyush Swain</p>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('theme-toggle'); 
-            const datetimeElement = document.getElementById('datetime');
-            
-            const applyTheme = (theme) => { 
-                if (theme === 'dark') { 
-                    document.body.classList.add('dark-mode'); 
-                    themeToggle.checked = true; 
-                } else { 
-                    document.body.classList.remove('dark-mode'); 
-                    themeToggle.checked = false; 
-                } 
-            };
-            
-            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
-            applyTheme(savedTheme);
-            
-            themeToggle.addEventListener('change', () => { 
-                const newTheme = themeToggle.checked ? 'dark' : 'light'; 
-                document.body.classList.toggle('dark-mode', themeToggle.checked); 
-                localStorage.setItem('theme', newTheme); 
-            });
-            
-            const updateDateTime = () => { 
-                const now = new Date(); 
-                const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; 
-                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; 
-                datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; 
-            };
-            
-            setInterval(updateDateTime, 1000); 
-            updateDateTime();
-            
-            // This line enables KaTeX rendering for the math formulas
-            renderMathInElement(document.body, { 
-                delimiters: [
-                    {left: '$$', right: '$$', display: true}, 
-                    {left: '$', right: '$', display: false}
-                ] 
-            });
-        });
-    </script>
 </body>
 </html>
