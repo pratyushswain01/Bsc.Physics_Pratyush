@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Minor-1 Command Center</title>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        /* --- THEME & ANIMATIONS --- */
+        :root {
+            --bg-color: #f0f2f5; --card-bg: rgba(255, 255, 255, 0.7); --primary-accent: #0052d4; --gradient-accent: linear-gradient(45deg, #0052d4, #4364f7, #6fb1fc); --text-primary: #1d2a35; --text-secondary: #5c6a79; --border-color: rgba(0, 0, 0, 0.1); --shadow-color: rgba(0, 82, 212, 0.1); --header-bg: rgba(255, 255, 255, 0.5); --code-bg: #e9ecef; --code-color: #d63384; --progress-bg: #e9ecef;
+        }
+        body.dark-mode {
+            --bg-color: #0d1117; --card-bg: rgba(22, 27, 34, 0.7); --primary-accent: #58a6ff; --gradient-accent: linear-gradient(45deg, #58a6ff, #367cde); --text-primary: #c9d1d9; --text-secondary: #8b949e; --border-color: rgba(255, 255, 255, 0.15); --shadow-color: rgba(88, 166, 255, 0.15); --header-bg: rgba(13, 17, 23, 0.5); --code-bg: #161b22; --code-color: #ff7b72; --progress-bg: #21262d;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- PRELOADER --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* --- GENERAL STYLES --- */
+        * { box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 1.7; transition: background-color 0.3s ease, color 0.3s ease; opacity: 0; animation: fadeIn 0.5s ease forwards; }
+        body.loaded { opacity: 1; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .container { width: 90%; max-width: 1200px; margin: 2.5rem auto; position: relative; z-index: 2; }
+        code { font-family: 'Fira Code', monospace; background-color: var(--code-bg); color: var(--code-color); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
+        /* --- HEADER & CONTROLS (THEME SWITCHER) --- */
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; }
+        header h1 .fa-terminal { margin-right: 12px; }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        /* --- TABS --- */
+        .tab-navigation { display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 2px solid var(--border-color); margin: 3rem 0 2rem 0; }
+        .tab-button { background-color: transparent; border: none; padding: 1rem 1.5rem; font-size: 1.1em; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; }
+        .tab-button.active { color: var(--primary-accent); border-bottom-color: var(--primary-accent); }
+        .tab-button i { margin-right: 8px; }
+        .tab-content { display: none; } .tab-content.active { display: block; }
+        /* --- UNIT GRID with 3D TILT --- */
+        .unit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .unit-link { display: block; text-decoration: none; transform-style: preserve-3d; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .unit-box { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 32px 0 var(--shadow-color); height: 100%;}
+        .unit-box-inner { transform: translateZ(20px); }
+        .unit-box h2 { margin-top: 0; background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.4em; }
+        .unit-box p { color: var(--text-secondary); margin-bottom: 0; font-size: 0.9em; }
+        /* --- SYLLABUS SECTION --- */
+        .syllabus-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); }
+        #search-bar { flex-grow: 1; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-primary); font-size: 1em; min-width: 250px;}
+        #search-bar:focus { outline: none; border-color: var(--primary-accent); box-shadow: 0 0 0 3px var(--shadow-color); }
+        .progress-container { width: 100%; max-width: 300px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.9em; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .progress-bar { width: 100%; height: 10px; background: var(--progress-bg); border-radius: 5px; overflow: hidden; }
+        .progress-bar-fill { width: 0; height: 100%; background: var(--gradient-accent); border-radius: 5px; transition: width 0.5s ease-out; }
+        /* --- ACCORDION --- */
+        .accordion-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .accordion-item.hidden-by-search { display: none; }
+        .accordion-header { position: relative; background-color: transparent; width: 100%; border: none; text-align: left; padding: 1rem 1.5rem; font-size: 1.2em; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s ease; color: var(--text-primary); }
+        .accordion-header.active { color: var(--primary-accent); }
+        .accordion-header > i { transition: transform 0.3s ease-out; }
+        .accordion-header.active > i { transform: rotate(180deg); }
+        .unit-redirect-icon { position: absolute; right: 45px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 0.8em; transition: color 0.2s ease, transform 0.2s ease; z-index: 5; }
+        .unit-redirect-icon:hover { color: var(--primary-accent); transform: translateY(-50%) scale(1.1); }
+        .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out; }
+        .accordion-content { padding: 0 1.5rem; }
+        .accordion-content ul { list-style-type: none; padding-left: 0; }
+        .accordion-content li { display: flex; align-items: center; margin-bottom: 0.75rem; }
+        .accordion-content label { cursor: pointer; flex-grow: 1; transition: color 0.2s ease; }
+        .accordion-content input[type="checkbox"] { margin-right: 1rem; accent-color: var(--primary-accent); width: 18px; height: 18px; cursor: pointer; }
+        .accordion-content input[type="checkbox"]:checked + label { text-decoration: line-through; color: var(--text-secondary); }
+        /* --- QUESTION TAB & SCROLL REVEAL --- */
+        .content-box-link { display: block; text-decoration: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; box-shadow: 0 8px 32px 0 var(--shadow-color); text-align: center; transition: all 0.3s ease; }
+        .content-box-link:hover { transform: translateY(-8px); box-shadow: 0 12px 40px 0 var(--shadow-color); border-color: var(--primary-accent); }
+        .content-box-link h2 { margin-top: 0; color: var(--primary-accent); }
+        .content-box-link p { color: var(--text-secondary); }
+        .content-box-link .icon { font-size: 2.5rem; margin-bottom: 1rem; background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div></div>
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="header-content">
+            <h1><i class="fa-solid fa-terminal"></i>CS Command Center</h1>
+            <div class="theme-switcher">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="slider"></label>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section id="overview" class="reveal">
+            <h2 style="font-size: 2em; text-align: center; margin-bottom: 2rem;">Course Modules</h2>
+            <div class="unit-grid">
+                <a href="unit1.html" class="unit-link">
+                    <div class="unit-box"><div class="unit-box-inner">
+                        <h2>Unit 1: Computer Fundamentals</h2>
+                        <p>Hardware, software, and networking basics that form the foundation of computing.</p>
+                    </div></div>
+                </a>
+                <a href="unit2.html" class="unit-link">
+                    <div class="unit-box"><div class="unit-box-inner">
+                        <h2>Unit 2: Program Development</h2>
+                        <p>From algorithms and flowcharts to programming paradigms and debugging.</p>
+                    </div></div>
+                </a>
+                <a href="unit3.html" class="unit-link">
+                    <div class="unit-box"><div class="unit-box-inner">
+                        <h2>Unit 3: Python Core Concepts</h2>
+                        <p>Mastering the syntax, data types, control flow, and core principles of Python.</p>
+                    </div></div>
+                </a>
+                <a href="unit4.html" class="unit-link">
+                    <div class="unit-box"><div class="unit-box-inner">
+                        <h2>Unit 4: Advanced Python</h2>
+                        <p>Deep dive into data structures, functions, recursion, and comprehensions.</p>
+                    </div></div>
+                </a>
+            </div>
+        </section>
+
+        <div class="tab-navigation reveal">
+            <button class="tab-button active" data-tab="syllabus"><i class="fas fa-book-open"></i>Interactive Syllabus</button>
+            <button class="tab-button" data-tab="questions"><i class="fas fa-file-alt"></i>Pre-Sem Questions</button>
+        </div>
+
+        <div id="syllabus" class="tab-content active reveal">
+            <div class="syllabus-controls">
+                <input type="text" id="search-bar" placeholder="🔍 Search syllabus...">
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Study Progress</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
+                </div>
+            </div>
+            <div class="accordion">
+                <!-- Unit 1 -->
+                <div class="accordion-item" data-unit="1">
+                    <button class="accordion-header">Unit 1: Introduction to Computer <a href="unit1.html" class="unit-redirect-icon" title="Go to Unit 1 page"><i class="fas fa-arrow-up-right-from-square"></i></a><i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-panel"><div class="accordion-content"><ul>
+                        <li><input type="checkbox" id="t1-1" data-key="t1-1"><label for="t1-1">Generation & Types of Computers</label></li>
+                        <li><input type="checkbox" id="t1-2" data-key="t1-2"><label for="t1-2">Computer System Hardware: Block Diagram, CPU, Memory Unit, Storage Devices</label></li>
+                        <li><input type="checkbox" id="t1-3" data-key="t1-3"><label for="t1-3">Memory Hierarchy: CPU Registers, Cache Memory</label></li>
+                        <li><input type="checkbox" id="t1-4" data-key="t1-4"><label for="t1-4">Input & Output Unit: Various I/O devices with their functions</label></li>
+                        <li><input type="checkbox" id="t1-5" data-key="t1-5"><label for="t1-5">Computer Software: System, Application, Utility, Firmware</label></li>
+                        <li><input type="checkbox" id="t1-6" data-key="t1-6"><label for="t1-6">Computer Network: Importance of Networking</label></li>
+                        <li><input type="checkbox" id="t1-7" data-key="t1-7"><label for="t1-7">Network Types: LAN, MAN, WAN</label></li>
+                        <li><input type="checkbox" id="t1-8" data-key="t1-8"><label for="t1-8">Internet and its applications</label></li>
+                        <li><input type="checkbox" id="t1-9" data-key="t1-9"><label for="t1-9">Network Devices: Repeater, Bridge, Hub, Switch, Router, Gateway</label></li>
+                    </ul></div></div>
+                </div>
+                <!-- Unit 2 -->
+                <div class="accordion-item" data-unit="2">
+                    <button class="accordion-header">Unit 2: Program Development <a href="unit2.html" class="unit-redirect-icon" title="Go to Unit 2 page"><i class="fas fa-arrow-up-right-from-square"></i></a><i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-panel"><div class="accordion-content"><ul>
+                        <li><input type="checkbox" id="t2-1" data-key="t2-1"><label for="t2-1">Program Development: Problem Analysis, Program Design, Development</label></li>
+                        <li><input type="checkbox" id="t2-2" data-key="t2-2"><label for="t2-2">Algorithm: Introduction, Pseudo code, Control structures</label></li>
+                        <li><input type="checkbox" id="t2-3" data-key="t2-3"><label for="t2-3">Flowchart: Introduction, Symbols, Preparing a flowchart</label></li>
+                        <li><input type="checkbox" id="t2-4" data-key="t2-4"><label for="t2-4">Programming Paradigms & Design: Structured, Object-Oriented</label></li>
+                        <li><input type="checkbox" id="t2-5" data-key="t2-5"><label for="t2-5">Design Approaches: Top-down & Bottom-up</label></li>
+                        <li><input type="checkbox" id="t2-6" data-key="t2-6"><label for="t2-6">Characteristics of a good program</label></li>
+                        <li><input type="checkbox" id="t2-7" data-key="t2-7"><label for="t2-7">Programming Language: Low-level & High-level languages</label></li>
+                        <li><input type="checkbox" id="t2-8" data-key="t2-8"><label for="t2-8">Different Generation of Programming Languages</label></li>
+                        <li><input type="checkbox" id="t2-9" data-key="t2-9"><label for="t2-9">Translator: Assembler, Compiler, Interpreter</label></li>
+                        <li><input type="checkbox" id="t2-10" data-key="t2-10"><label for="t2-10">Development Tools: Linker, Loader, Editor, IDE</label></li>
+                        <li><input type="checkbox" id="t2-11" data-key="t2-11"><label for="t2-11">Programming Errors: Syntax, Logical, Compile-time, Run-time, etc.</label></li>
+                        <li><input type="checkbox" id="t2-12" data-key="t2-12"><label for="t2-12">Testing & Debugging</label></li>
+                    </ul></div></div>
+                </div>
+                <!-- Unit 3 -->
+                <div class="accordion-item" data-unit="3">
+                    <button class="accordion-header">Unit 3: Introduction to Python <a href="unit3.html" class="unit-redirect-icon" title="Go to Unit 3 page"><i class="fas fa-arrow-up-right-from-square"></i></a><i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-panel"><div class="accordion-content"><ul>
+                        <li><input type="checkbox" id="t3-1" data-key="t3-1"><label for="t3-1">Introduction to Python, Getting Started</label></li>
+                        <li><input type="checkbox" id="t3-2" data-key="t3-2"><label for="t3-2">Python Basics: Identifiers, Keywords, Basic Types</label></li>
+                        <li><input type="checkbox" id="t3-3" data-key="t3-3"><label for="t3-3">Mutable and Immutable types</label></li>
+                        <li><input type="checkbox" id="t3-4" data-key="t3-4"><label for="t3-4">Integer & Float ranges, Variable type & assignment</label></li>
+                        <li><input type="checkbox" id="t3-5" data-key="t3-5"><label for="t3-5">Arithmetic operator precedence & associativity, conversions</label></li>
+                        <li><input type="checkbox" id="t3-6" data-key="t3-6"><label for="t3-6">Built-in functions, modules, container types</label></li>
+                        <li><input type="checkbox" id="t3-7" data-key="t3-7"><label for="t3-7">Comments, indentation, multi-lining</label></li>
+                        <li><input type="checkbox" id="t3-8" data-key="t3-8"><label for="t3-8">Classes & objects, multiple objects</label></li>
+                        <li><input type="checkbox" id="t3-9" data-key="t3-9"><label for="t3-9">Strings: Introduction, Accessing elements, properties, methods</label></li>
+                        <li><input type="checkbox" id="t3-10" data-key="t3-10"><label for="t3-10">Console I/O, Formatting Printing</label></li>
+                        <li><input type="checkbox" id="t3-11" data-key="t3-11"><label for="t3-11">Decision Control: Logical operators, conditional expression, all(), any()</label></li>
+                        <li><input type="checkbox" id="t3-12" data-key="t3-12"><label for="t3-12">Receiving input, pass statement</label></li>
+                        <li><input type="checkbox" id="t3-13" data-key="t3-13"><label for="t3-13">Repetition Control: Loops, break, continue, else block of a loop</label></li>
+                    </ul></div></div>
+                </div>
+                <!-- Unit 4 -->
+                <div class="accordion-item" data-unit="4">
+                    <button class="accordion-header">Unit 4: Python Data Structures & Functions <a href="unit4.html" class="unit-redirect-icon" title="Go to Unit 4 page"><i class="fas fa-arrow-up-right-from-square"></i></a><i class="fas fa-chevron-down"></i></button>
+                    <div class="accordion-panel"><div class="accordion-content"><ul>
+                        <li><input type="checkbox" id="t4-1" data-key="t4-1"><label for="t4-1">Lists, Sets, Tuples, Dictionaries: Creating, Accessing, Looping</label></li>
+                        <li><input type="checkbox" id="t4-2" data-key="t4-2"><label for="t4-2">Applying basic operations on each type</label></li>
+                        <li><input type="checkbox" id="t4-3" data-key="t4-3"><label for="t4-3">Using built-in functions & methods on each type</label></li>
+                        <li><input type="checkbox" id="t4-4" data-key="t4-4"><label for="t4-4">Possible data structure/mathematical operation on each type</label></li>
+                        <li><input type="checkbox" id="t4-5" data-key="t4-5"><label for="t4-5">Comprehension on List, Set & Dictionary</label></li>
+                        <li><input type="checkbox" id="t4-6" data-key="t4-6"><label for="t4-6">Functions: Built-in and user-defined function</label></li>
+                        <li><input type="checkbox" id="t4-7" data-key="t4-7"><label for="t4-7">Invoking functions, unpacking arguments</label></li>
+                        <li><input type="checkbox" id="t4-8" data-key="t4-8"><label for="t4-8">Recursive function</label></li>
+                        <li><input type="checkbox" id="t4-9" data-key="t4-9"><label for="t4-9">Iteration vs. Recursion</label></li>
+                    </ul></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="questions" class="tab-content reveal">
+            <a href="presem-questions.html" class="content-box-link">
+                <div class="icon"><i class="fas fa-question-circle"></i></div>
+                <h2>View Pre-Semester Questions</h2>
+                <p>Click here to access a dedicated page with important questions, previous year papers, and practice problems to prepare for your exam.</p>
+            </a>
+        </div>
+    </main>
+
+    <footer><p>Created & Designed By Pratyush Swain </p></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. PRELOADER & THEME LOGIC ---
+        const loader = document.getElementById('loader');
+        window.addEventListener('load', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; document.body.classList.add('loaded'); }, 500);
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            themeToggle.checked = (theme === 'dark');
+            if (window.particlesJS) initParticles(theme === 'dark');
+        };
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // --- 2. PARTICLES.JS INITIALIZATION ---
+        function initParticles(isDark) {
+            const particleColor = isDark ? "#58a6ff" : "#0052d4";
+            const lineColor = isDark ? "#388bfd" : "#4364f7";
+            particlesJS('particles-js', { "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": particleColor }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": false }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": lineColor, "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }, "retina_detect": true });
+        }
+
+        // --- 3. TAB NAVIGATION ---
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
+
+        // --- 4. 3D TILT EFFECT for LINKED CARDS ---
+        document.querySelectorAll('.unit-link').forEach(link => {
+            link.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = link.getBoundingClientRect();
+                const x = e.clientX - left; const y = e.clientY - top;
+                const rotateX = -1 * ((height / 2 - y) / (height / 2)) * 8;
+                const rotateY = ((width / 2 - x) / (width / 2)) * 8;
+                link.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
+            });
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+
+        // --- 5. ACCORDION, PROGRESS & SEARCH ---
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            const redirectIcon = header.querySelector('.unit-redirect-icon');
+            if(redirectIcon) { redirectIcon.addEventListener('click', (e) => e.stopPropagation()); }
+
+            header.addEventListener('click', () => {
+                const panel = header.nextElementSibling;
+                header.classList.toggle('active');
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null; panel.style.padding = '0 1.5rem';
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px"; panel.style.padding = '1.5rem';
+                }
+            });
+        });
+
+        const checkboxes = document.querySelectorAll('.accordion-content input[type="checkbox"]');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressPercent = document.getElementById('progress-percent');
+        const totalTopics = checkboxes.length;
+        let progressData = JSON.parse(localStorage.getItem('csSyllabusProgress')) || {};
+
+        function updateProgress() {
+            const checkedCount = Object.values(progressData).filter(Boolean).length;
+            const percent = totalTopics > 0 ? Math.round((checkedCount / totalTopics) * 100) : 0;
+            progressBarFill.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+        }
+        checkboxes.forEach(checkbox => {
+            const key = checkbox.dataset.key;
+            checkbox.checked = progressData[key] || false;
+            checkbox.addEventListener('change', () => {
+                progressData[key] = checkbox.checked;
+                localStorage.setItem('csSyllabusProgress', JSON.stringify(progressData));
+                updateProgress();
+            });
+        });
+        updateProgress();
+
+        const searchBar = document.getElementById('search-bar');
+        searchBar.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.classList.toggle('hidden-by-search', !text.includes(searchTerm));
+            });
+        });
+
+        // --- 6. SCROLL-REVEAL ANIMATIONS ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+    });
+    </script>
+</body>
+</html>
