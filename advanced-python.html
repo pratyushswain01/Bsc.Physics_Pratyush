@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3 Q&A - Python Data Structures & OOP</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #6d28d9; --secondary-accent: #f59e0b; --text-primary: #1f2937; --text-secondary: #4b5563;
+            --border-color: #e5e7eb; --shadow-color: rgba(109, 40, 217, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f3f4f6; --code-header-bg: #e5e7eb; --tip-bg: #eef2ff; --tip-border: #a5b4fc; --table-header-bg: #f3f4f6;
+            --code-keyword: #7c3aed; --code-string: #16a34a; --code-comment: #9ca3af; --code-function: #be185d; --code-number: #ea580c; --code-operator: #2563eb; --code-brackets: #4b5563;
+        }
+        body.dark-mode {
+            --bg-color: #111827; --card-bg: #1f2937; --primary-accent: #a78bfa; --secondary-accent: #facc15; --text-primary: #f9fafb; --text-secondary: #d1d5db;
+            --border-color: #374151; --shadow-color: rgba(167, 139, 250, 0.05); --header-bg: rgba(31, 41, 55, 0.85);
+            --code-bg: #212b40; --code-header-bg: #374151; --tip-bg: rgba(167, 139, 250, 0.08); --tip-border: var(--primary-accent); --table-header-bg: #374151;
+            --code-keyword: #c792ea; --code-string: #c3e88d; --code-comment: #6b7280; --code-function: #82aaff; --code-number: #ffcb6b; --code-operator: #89ddff; --code-brackets: #d1d5db;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 1.8; font-weight: 300; font-size: 1.1rem; transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards; }
+        .container { width: 95%; max-width: 1000px; margin: 2rem auto; position: relative; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fab { color: var(--secondary-accent); font-size: 1.2em; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.8em; color: var(--text-primary); text-align: center; margin: 0 0 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fab { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.8em; color: var(--primary-accent); margin: 3.5rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.3em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .content-card h5 { font-size: 1.1em; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.5rem; }
+        .content-card p, .content-card li { color: var(--text-secondary); }
+        .content-card ul, ol { padding-left: 2rem; } li { margin-bottom: 0.5rem; }
+        .table-container { overflow-x: auto; margin: 1.8rem 0; border: 1px solid var(--border-color); border-radius: 8px;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); font-size: 1em;}
+        tbody tr:last-child td { border-bottom: none; }
+
+        .code-container { margin: 2rem 0; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .code-header { display: flex; justify-content: space-between; align-items: center; background-color: var(--code-header-bg); padding: 0.75rem 1.2rem; }
+        .code-lang { font-family: 'Fira Code', monospace; color: var(--text-secondary); font-size: 0.9em; }
+        pre { font-family: 'Fira Code', monospace; margin: 0; padding: 1.5rem; font-size: 1.05em; color: var(--text-primary); white-space: pre-wrap; line-height: 1.8; font-variant-ligatures: common-ligatures; }
+        .keyword { color: var(--code-keyword); font-weight: 500;} .string { color: var(--code-string); } .comment { color: var(--code-comment); font-style: italic; } .function { color: var(--code-function); font-weight: 500; } .number { color: var(--code-number); } .operator { color: var(--code-operator); } .brackets { color: var(--code-brackets); }
+        
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        
+        /* --- MOBILE RESPONSIVE STYLES --- */
+        @media (max-width: 768px) {
+            body { font-size: 1rem; }
+            .content-card h2 { font-size: clamp(1.8rem, 7vw, 2.2rem); }
+            .content-card h3 { font-size: 1.5rem; }
+            header h1 { font-size: 1.4em; }
+        }
+
+        @media (max-width: 600px) {
+            .container { width: 100%; margin: 0; }
+            .content-card { padding: 1.5rem; border-radius: 0; margin-top: 1rem; border-left: none; border-right: none; }
+            header { padding-left: 1rem; padding-right: 1rem; }
+            header h1 { font-size: 1.3em; }
+            header h1 .fab { display: none; }
+            .content-card h2 { padding-bottom: 1rem; margin-bottom: 2rem; }
+            .content-card h3 { font-size: 1.3rem; }
+            pre { padding: 1rem; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="header-content">
+            <h1><i class="fab fa-python"></i> Python Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fas fa-book-open"></i> Unit 3: Python Data Structures & OOP Q&A</h2>
+            
+            <section id="two-marks">
+                <h3><i class="fas fa-list-ol"></i> Section A (2 Marks Questions)</h3>
+                
+                <h4>1. Write the difference between list and tuple.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>List</th><th>Tuple</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Mutability</strong></td><td><strong>Mutable</strong> (can be changed after creation).</td><td><strong>Immutable</strong> (cannot be changed after creation).</td></tr>
+                            <tr><td><strong>Syntax</strong></td><td>Created using square brackets `[]`.</td><td>Created using parentheses `()`.</td></tr>
+                            <tr><td><strong>Performance</strong></td><td>Slightly slower due to mutability.</td><td>Faster than lists, as it is immutable.</td></tr>
+                            <tr><td><strong>Use Case</strong></td><td>Used when the data needs to be modified, like a list of items.</td><td>Used for data that should not change, like coordinates or database records.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>4. What is tuple and how to unpack it?</h4>
+                <p>A <strong>tuple</strong> is an ordered, immutable collection of elements in Python. <strong>Unpacking</strong> a tuple means assigning its items to multiple variables in a single statement. The number of variables must match the number of items.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="comment"># Create a tuple</span>
+point = <span class="brackets">(</span><span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span><span class="brackets">)</span>
+
+<span class="comment"># Unpack the tuple</span>
+x, y, z = point
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"x: {x}, y: {y}, z: {z}"</span><span class="brackets">)</span></code></pre>
+                </div>
+                
+                <h4>11. What is set? Assign some element into set and print it.</h4>
+                <p>A <strong>set</strong> is an unordered collection of unique, immutable items in Python. Sets automatically discard duplicate elements.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="comment"># Create a set with a duplicate element</span>
+my_set = <span class="brackets">{</span><span class="number">10</span>, <span class="string">'apple'</span>, <span class="number">3.14</span>, <span class="number">10</span>, <span class="string">'banana'</span><span class="brackets">}</span>
+
+<span class="function">print</span><span class="brackets">(</span>my_set<span class="brackets">)</span>
+<span class="comment"># Output: {10, 'apple', 3.14, 'banana'} (order may vary)</span></code></pre>
+                </div>
+                
+                <h4>19. What is an object? How to use it?</h4>
+                <p>An <strong>object</strong> is an instance of a class. It represents a real-world entity and bundles data (attributes) and behavior (methods) together. To use an object, you first create it (instantiation) and then access its attributes and call its methods using the dot (`.`) operator.</p>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code>my_list = <span class="brackets">[</span><span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span><span class="brackets">]</span>  <span class="comment"># my_list is an object of the 'list' class</span>
+my_list.append<span class="brackets">(</span><span class="number">4</span><span class="brackets">)</span>    <span class="comment"># Using the 'append' method of the list object</span></code></pre>
+                </div>
+
+                <h4>20. What is constructor? How to create it in python?</h4>
+                <p>A <strong>constructor</strong> is a special method in a class that is automatically called when a new object is created. Its primary purpose is to initialize the object's attributes. In Python, the constructor is always named `__init__()`.</p>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="keyword">class</span> Car:
+    <span class="comment"># Constructor method</span>
+    <span class="keyword">def</span> <span class="function">__init__</span><span class="brackets">(</span><span class="keyword">self</span>, color<span class="brackets">)</span><span class="operator">:</span>
+        <span class="keyword">self</span>.color = color  <span class="comment"># Initializing an attribute</span>
+
+<span class="comment"># Creating an object calls the constructor</span>
+my_car = Car<span class="brackets">(</span><span class="string">"Red"</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span>my_car.color<span class="brackets">)</span> <span class="comment"># Output: Red</span></code></pre>
+                </div>
+            </section>
+            
+            <section id="five-marks">
+                <h3><i class="fas fa-star-half-alt"></i> Section B & Question Bank (5 Marks Questions)</h3>
+                
+                <h4>1. What is list and write the use of following functions. Append(), extend(), sort(), reverse(), index()</h4>
+                <p>A <strong>list</strong> is an ordered and mutable data collection in Python that can store a sequence of elements. Its elements can be changed, added, or removed after creation.</p>
+                <ul>
+                    <li><strong>`append(element)`:</strong> Adds a single element to the end of the list.</li>
+                    <li><strong>`extend(iterable)`:</strong> Adds all elements of an iterable (like another list) to the end.</li>
+                    <li><strong>`sort()`:</strong> Sorts the list's elements in place (by default, ascending).</li>
+                    <li><strong>`reverse()`:</strong> Reverses the order of elements in the list in place.</li>
+                    <li><strong>`index(element)`:</strong> Returns the index of the first occurrence of the specified element.</li>
+                </ul>
+                
+                <h4>2. How to create a user define function? Explain with an example to find the highest of two integer value using function.</h4>
+                <p>A user-defined function is a block of reusable code created using the `def` keyword, followed by the function name, parentheses `()` for parameters, and a colon `:`. The code block inside must be indented.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="comment"># 1. Define the function</span>
+<span class="keyword">def</span> <span class="function">find_highest</span><span class="brackets">(</span>a, b<span class="brackets">)</span><span class="operator">:</span>
+    <span class="string">"""This function takes two numbers and returns the highest."""</span>
+    <span class="keyword">if</span> a > b<span class="operator">:</span>
+        <span class="keyword">return</span> a
+    <span class="keyword">else</span><span class="operator">:</span>
+        <span class="keyword">return</span> b
+
+<span class="comment"># 2. Call the function</span>
+highest_value = find_highest<span class="brackets">(</span><span class="number">10</span>, <span class="number">25</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The highest number is: {highest_value}"</span><span class="brackets">)</span></code></pre>
+                </div>
+
+                <h4>5. What is tuple? How to create it? Store 10 integer values in to a list and find their average.</h4>
+                <h5>Part 1: Tuple</h5>
+                <p>A <strong>tuple</strong> is an ordered, immutable collection of elements. It's created by placing comma-separated elements inside parentheses `()`.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code>my_tuple = <span class="brackets">(</span><span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"cherry"</span><span class="brackets">)</span></code></pre>
+                </div>
+                <h5>Part 2: List and Average</h5>
+                <p>This program stores 10 integers in a list and calculates their average.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code>numbers = <span class="brackets">[</span><span class="number">10</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">50</span>, <span class="number">60</span>, <span class="number">75</span>, <span class="number">80</span>, <span class="number">95</span>, <span class="number">100</span><span class="brackets">]</span>
+total_sum = <span class="function">sum</span><span class="brackets">(</span>numbers<span class="brackets">)</span>
+average = total_sum / <span class="function">len</span><span class="brackets">(</span>numbers<span class="brackets">)</span>
+
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The list is: {numbers}"</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The average is: {average}"</span><span class="brackets">)</span></code></pre>
+                </div>
+            </section>
+            
+            <section id="eight-marks">
+                <h3><i class="fas fa-star"></i> Section C (8 Marks Questions)</h3>
+                
+                <h4>3. What is nested loop? Write with an example using while loop.</h4>
+                <p>A <strong>nested loop</strong> is a loop placed inside another loop. For each single iteration of the outer loop, the inner loop completes its full set of iterations. This structure is very useful for working with two-dimensional data structures like matrices or for creating patterns.</p>
+                <h5>Example: Printing a Multiplication Table using Nested `while` Loops</h5>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="comment"># Outer loop controls the rows (from 1 to 5)</span>
+i = <span class="number">1</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">"Multiplication Table (5x5):"</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">"---------------------------"</span><span class="brackets">)</span>
+<span class="keyword">while</span> i <= <span class="number">5</span><span class="operator">:</span>
+    <span class="comment"># Inner loop controls the columns (from 1 to 5)</span>
+    j = <span class="number">1</span>
+    <span class="keyword">while</span> j <= <span class="number">5</span><span class="operator">:</span>
+        product = i * j
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"{product:</span><span class="number">3</span><span class="string">}"</span>, end=<span class="string">" "</span><span class="brackets">)</span> <span class="comment"># Format for alignment</span>
+        j += <span class="number">1</span>
+    <span class="function">print</span><span class="brackets">()</span> <span class="comment"># Move to the next line</span>
+    i += <span class="number">1</span></code></pre>
+                </div>
+
+                <h4>4. Create a dictionary book to store some book details like book code, name, price and author. Input any book code and print the book name, price and author details.</h4>
+                <p>To store details for multiple books, we use a nested dictionary where the main dictionary's keys are book codes. The value for each key is another dictionary containing that book's details.</p>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="comment"># 1. Create a nested dictionary to store book details</span>
+books = <span class="brackets">{</span>
+    <span class="string">"B101"</span><span class="operator">:</span> <span class="brackets">{</span><span class="string">"name"</span><span class="operator">:</span> <span class="string">"The Python Handbook"</span>, <span class="string">"price"</span><span class="operator">:</span> <span class="number">499.00</span>, <span class="string">"author"</span><span class="operator">:</span> <span class="string">"A. Sharma"</span><span class="brackets">}</span>,
+    <span class="string">"B102"</span><span class="operator">:</span> <span class="brackets">{</span><span class="string">"name"</span><span class="operator">:</span> <span class="string">"Data Structures in C"</span>, <span class="string">"price"</span><span class="operator">:</span> <span class="number">650.50</span>, <span class="string">"author"</span><span class="operator">:</span> <span class="string">"R. Verma"</span><span class="brackets">}</span>
+<span class="brackets">}</span>
+
+<span class="comment"># 2. Prompt the user to enter a book code</span>
+input_code = <span class="function">input</span><span class="brackets">(</span><span class="string">"Enter Book Code: "</span><span class="brackets">)</span>
+
+<span class="comment"># 3. Check if the code exists and print details</span>
+<span class="keyword">if</span> input_code <span class="keyword">in</span> books<span class="operator">:</span>
+    details = books<span class="brackets">[</span>input_code<span class="brackets">]</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">"\n--- Book Details Found ---"</span><span class="brackets">)</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"Name: {details['name']}"</span><span class="brackets">)</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"Author: {details['author']}"</span><span class="brackets">)</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"Price: ₹{details['price']:.2f}"</span><span class="brackets">)</span>
+<span class="keyword">else</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"\nSorry, book with code '{input_code}' not found."</span><span class="brackets">)</span></code></pre>
+                </div>
+
+                <h4>5. Create a class employee having data members empno, ename and salary. Write a constructor to assign default value. Write a function to calculate net salary. Net salary = salary + 20% bonus on salary. Write another function to print the employee details including net salary.</h4>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="keyword">class</span> Employee:
+    <span class="string">"""A class to represent an employee."""</span>
+
+    <span class="comment"># 1. Constructor with default values</span>
+    <span class="keyword">def</span> <span class="function">__init__</span><span class="brackets">(</span><span class="keyword">self</span>, empno=<span class="number">0</span>, ename=<span class="string">"N/A"</span>, salary=<span class="number">0.0</span><span class="brackets">)</span><span class="operator">:</span>
+        <span class="keyword">self</span>.empno = empno
+        <span class="keyword">self</span>.ename = ename
+        <span class="keyword">self</span>.salary = salary
+
+    <span class="comment"># 2. Method to calculate net salary</span>
+    <span class="keyword">def</span> <span class="function">calculate_net_salary</span><span class="brackets">(</span><span class="keyword">self</span><span class="brackets">)</span><span class="operator">:</span>
+        bonus = <span class="keyword">self</span>.salary * <span class="number">0.20</span>
+        <span class="keyword">return</span> <span class="keyword">self</span>.salary + bonus
+
+    <span class="comment"># 3. Method to print all details</span>
+    <span class="keyword">def</span> <span class="function">display_details</span><span class="brackets">(</span><span class="keyword">self</span><span class="brackets">)</span><span class="operator">:</span>
+        net_sal = <span class="keyword">self</span>.calculate_net_salary<span class="brackets">()</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">"--- Employee Details ---"</span><span class="brackets">)</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"Employee Number: {self.empno}"</span><span class="brackets">)</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"Employee Name:   {self.ename}"</span><span class="brackets">)</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"Base Salary:     ₹{self.salary:.2f}"</span><span class="brackets">)</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"Net Salary (w/Bonus): ₹{net_sal:.2f}"</span><span class="brackets">)</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">"------------------------\n"</span><span class="brackets">)</span>
+
+<span class="comment"># --- Demonstrate the class ---</span>
+emp1 = Employee<span class="brackets">(</span><span class="number">101</span>, <span class="string">"Ravi Kumar"</span>, <span class="number">50000</span><span class="brackets">)</span>
+emp1.display_details<span class="brackets">()</span>
+
+emp_default = Employee<span class="brackets">()</span>
+emp_default.display_details<span class="brackets">()</span></code></pre>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Crafted by Pratyush Swain</p></footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = (theme === 'dark'); };
+        const savedTheme = localStorage.getItem('pratyushCompleteNotesTheme') || 'dark'; applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('pratyushCompleteNotesTheme', newTheme); applyTheme(newTheme); });
+        
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
