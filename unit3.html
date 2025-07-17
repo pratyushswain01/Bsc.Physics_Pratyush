@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3: Introduction to Python - The Ultimate Guide</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+    <style>
+        /* --- THEME & GENERAL STYLES --- */
+        :root {
+            --bg-color: #f4f7f9; --card-bg: #ffffff; --primary-accent: #3776ab; --secondary-accent: #ffd43b; --text-primary: #212529; --text-secondary: #495057;
+            --border-color: rgba(0, 0, 0, 0.1); --shadow-color: rgba(55, 118, 171, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #eef2f5; --table-header-bg: #f8f9fa; --tip-bg: #e7f5ff; --tip-border: #90c0df;
+        }
+        body.dark-mode {
+            --bg-color: #0b1d2c; --card-bg: #112940; --primary-accent: #61dafb; --secondary-accent: #ffde57; --text-primary: #e5e5e5; --text-secondary: #a0b3c6;
+            --border-color: rgba(255, 255, 255, 0.15); --shadow-color: rgba(97, 218, 251, 0.1); --header-bg: rgba(11, 29, 44, 0.85);
+            --code-bg: #1c3650; --table-header-bg: #15314b; --tip-bg: #15314b; --tip-border: #2a6f97;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary);
+            line-height: 1.8; transition: background-color 0.3s ease, color 0.3s ease; opacity: 0; animation: fadeIn 0.5s ease forwards;
+        }
+        body.loaded { opacity: 1; }
+        .container { width: 95%; max-width: 950px; margin: 1.5rem auto; position: relative; z-index: 2; }
+        
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.4em; color: var(--primary-accent); font-weight: 700; }
+        header h1 .fab { color: var(--secondary-accent); margin-right: 10px; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 32px 0 var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2em; color: var(--primary-accent); text-align: center; margin-top: 0; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-accent); display: flex; align-items: center; justify-content: center; gap: 15px;}
+        .content-card h3 { font-size: 1.5em; color: var(--text-primary); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; }
+        .content-card h3 i { margin-right: 12px; color: var(--primary-accent); font-size: 0.9em; }
+        .content-card h4 { font-size: 1.15em; color: var(--primary-accent); margin-top: 1.8rem; margin-bottom: 0.8rem; font-weight: 600; }
+        .content-card p, .content-card li { color: var(--text-secondary); font-size: 1.05em; }
+        .content-card ul { list-style: none; padding-left: 0; }
+        .content-card li { padding-left: 1.8rem; position: relative; margin-bottom: 0.75rem; }
+        .content-card li::before { content: '\f105'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 3px; }
+        
+        pre, code { font-family: 'Fira Code', monospace; }
+        .code-block { background-color: var(--code-bg); padding: 1.2em 1.5em; border-radius: 8px; font-size: 0.95em; color: var(--text-primary); white-space: pre-wrap; margin: 1.5rem 0; border: 1px solid var(--border-color); overflow-x: auto;}
+        code:not(pre > code) { background-color: var(--code-bg); padding: 0.2em 0.4em; border-radius: 4px; color: #d6336c; font-weight: 500; }
+        body.dark-mode code:not(pre > code) { color: #f06595; }
+
+        .table-container { overflow-x: auto; margin-top: 1.5rem;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); }
+
+        .tip-box { background-color: var(--tip-bg); border-left: 5px solid var(--tip-border); padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: var(--primary-accent); }
+
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s, opacity 0.3s; }
+        #toTopBtn:hover { opacity: 0.8; }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        
+        @media (min-width: 600px) {
+            .container { margin: 2.5rem auto; } .content-card { padding: 2.5rem 3rem; } header h1 { font-size: 1.6em; }
+            .content-card h2 { font-size: 2.4em; } .content-card h3 { font-size: 1.7em; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+    <header>
+        <div class="header-content">
+            <h1><i class="fab fa-python"></i>Python Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fab fa-python" style="color:var(--secondary-accent)"></i> Unit 3: Introduction to Python</h2>
+            
+            <section id="getting-started">
+                <h3><i class="fas fa-rocket"></i> 1. Getting Started with Python</h3>
+                <p>Python is a high-level, interpreted programming language known for its simple, readable syntax. It was created by Guido van Rossum and released in 1991. Its design philosophy emphasizes code readability, making it an excellent choice for beginners and for rapid application development.</p>
+                <div class="tip-box"><strong>The Zen of Python:</strong> You can see the guiding principles of Python by typing <code>import this</code> into a Python interpreter. The first line is "Beautiful is better than ugly."</div>
+            </section>
+            
+            <section id="basics">
+                <h3><i class="fas fa-cubes"></i> 2. Python Basics</h3>
+                <h4>Identifiers and Variables</h4>
+                <p>An <strong>identifier</strong> is a name given to an entity like a variable, function, or class. Rules for identifiers:</p>
+                <ul>
+                    <li>Can be a combination of letters (a-z, A-Z), digits (0-9), and underscore (_).</li>
+                    <li>Cannot start with a digit.</li>
+                    <li>Are case-sensitive (<code>age</code> and <code>Age</code> are different).</li>
+                    <li>Cannot be a keyword.</li>
+                </ul>
+                <p>A <strong>variable</strong> is a symbolic name that is a reference or pointer to an object. Once an object is assigned to a variable, you can refer to the object by that name.</p>
+                <pre class="code-block"><code># Variable assignment
+age = 25              # age is an integer variable
+name = "Alice"        # name is a string variable
+is_student = True     # is_student is a boolean variable
+pi_value = 3.14       # pi_value is a float variable
+
+print(name, "is", age, "years old.")</code></pre>
+
+                <h4>Keywords</h4>
+                <p>Keywords are reserved words in Python that have special meaning. They cannot be used as variable names. There are 35 keywords in Python 3.8.</p>
+                <p>Examples: <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>def</code>, <code>class</code>, <code>True</code>, <code>False</code>, <code>None</code>, <code>import</code>.</p>
+                
+                <h4>Comments, Indentation, and Multi-Lining</h4>
+                <ul>
+                    <li><strong>Comments:</strong> Start with <code>#</code>. They are ignored by the interpreter and are used for explaining code.</li>
+                    <li><strong>Indentation:</strong> Python uses indentation (whitespace at the beginning of a line) to define code blocks, unlike other languages that use braces <code>{}</code>. This is a strict rule.</li>
+                    <li><strong>Multi-lining:</strong> A long statement can be split into multiple lines using the backslash <code>\</code> character.</li>
+                </ul>
+                <pre class="code-block"><code># This is a single-line comment
+
+# Correct Indentation defines a code block
+if age > 18:
+    print("You are an adult.") # This line is inside the if-block
+
+# Multi-line statement
+total_sum = 1 + 2 + 3 + \
+            4 + 5 + 6
+print(total_sum) # Output: 21</code></pre>
+            </section>
+            
+            <section id="data-types">
+                <h3><i class="fas fa-atom"></i> 3. Data Types and Variables</h3>
+                <h4>Basic (Primitive) Types</h4>
+                <ul>
+                    <li><strong>Integer (int):</strong> Whole numbers, like <code>10</code>, <code>-50</code>, <code>0</code>.</li>
+                    <li><strong>Float (float):</strong> Numbers with a decimal point, like <code>9.81</code>, <code>-0.001</code>.</li>
+                    <li><strong>String (str):</strong> Sequence of characters, enclosed in single <code>'</code>, double <code>"</code>, or triple <code>'''</code> quotes.</li>
+                    <li><strong>Boolean (bool):</strong> Represents truth values, can only be <code>True</code> or <code>False</code>.</li>
+                </ul>
+
+                <h4>Mutable vs. Immutable Types</h4>
+                <p>This is a fundamental concept in Python.</p>
+                <ul>
+                    <li><strong>Immutable Types:</strong> Their value/state cannot be changed after creation. If you change them, a new object is created in memory. Examples: <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>tuple</code>.</li>
+                    <li><strong>Mutable Types:</strong> Their value/state can be changed in-place after creation. Examples: <code>list</code>, <code>dict</code>, <code>set</code>.</li>
+                </ul>
+                <pre class="code-block"><code># --- Immutable Example (str) ---
+my_string = "hello"
+print(id(my_string))  # Print memory address, e.g., 2206716501360
+
+my_string = my_string + " world" # A NEW string object is created
+print(my_string) # "hello world"
+print(id(my_string)) # A NEW memory address, e.g., 2206716760176
+
+# --- Mutable Example (list) ---
+my_list = [1, 2, 3]
+print(id(my_list)) # Print memory address, e.g., 2206716616640
+
+my_list.append(4) # The list is modified IN-PLACE
+print(my_list) # [1, 2, 3, 4]
+print(id(my_list)) # SAME memory address, e.g., 2206716616640</code></pre>
+
+                <h4>Type Conversion (Casting)</h4>
+                <p>You can convert values from one type to another using built-in functions like <code>int()</code>, <code>float()</code>, <code>str()</code>.</p>
+                <pre class="code-block"><code>num_string = "100"
+num_integer = int(num_string)  # Convert string to integer
+print(num_integer + 5) # Output: 105
+
+num_float = float(num_integer) # Convert integer to float
+print(num_float) # Output: 100.0</code></pre>
+            </section>
+            
+            <section id="operators">
+                <h3><i class="fas fa-calculator"></i> 4. Operators</h3>
+                <h4>Arithmetic Operators</h4>
+                <ul>
+                    <li><code>+</code> (Addition), <code>-</code> (Subtraction), <code>*</code> (Multiplication), <code>/</code> (Float Division)</li>
+                    <li><code>//</code> (Integer/Floor Division), <code>%</code> (Modulus/Remainder), <code>**</code> (Exponent)</li>
+                </ul>
+
+                <h4>Operator Precedence & Associativity</h4>
+                <p>Precedence determines which operators are evaluated first. Associativity determines the order for operators with the same precedence.</p>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Precedence</th><th>Operator</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td>Highest</td><td><code>()</code></td><td>Parentheses</td></tr>
+                            <tr><td></td><td><code>**</code></td><td>Exponent (Right-to-Left)</td></tr>
+                            <tr><td></td><td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></td><td>Multiplication/Division (Left-to-Right)</td></tr>
+                            <tr><td>Lowest</td><td><code>+</code>, <code>-</code></td><td>Addition/Subtraction (Left-to-Right)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <pre class="code-block"><code># Precedence example
+result = 10 + 2 * 3   # 2 * 3 is done first (precedence)
+print(result) # Output: 16
+
+# Associativity example
+result = 2 ** 3 ** 2  # Evaluated as 2 ** (3 ** 2) -> 2 ** 9
+print(result) # Output: 512</code></pre>
+            </section>
+
+            <section id="strings">
+                <h3><i class="fas fa-file-alt"></i> 5. Working with Strings</h3>
+                <h4>Accessing String Elements (Slicing)</h4>
+                <p>You can access parts of a string using a slice <code>[start:stop:step]</code>. Indices start at 0.</p>
+                <pre class="code-block"><code>text = "Python is Fun!"
+print(text[0])       # 'P' (First character)
+print(text[-1])      # '!' (Last character)
+print(text[0:6])     # 'Python' (from index 0 up to, but not including, 6)
+print(text[7:])      # 'is Fun!' (from index 7 to the end)
+print(text[::-1])    # '!nuF si nohtyP' (Reverse the string)</code></pre>
+
+                <h4>Common String Methods and Functions</h4>
+                <ul>
+                    <li><code>len(str)</code>: A built-in function to get the length of a string.</li>
+                    <li><code>str.upper()</code> / <code>str.lower()</code>: Convert to uppercase/lowercase.</li>
+                    <li><code>str.strip()</code>: Remove leading/trailing whitespace.</li>
+                    <li><code>str.find('sub')</code>: Returns the first index of 'sub'; -1 if not found.</li>
+                    <li><code>str.replace('old', 'new')</code>: Replaces all occurrences of 'old' with 'new'.</li>
+                </ul>
+            </section>
+
+            <section id="io">
+                <h3><i class="fas fa-terminal"></i> 6. Console Input & Output</h3>
+                <p>Getting input from the user and displaying output is essential.</p>
+                
+                <h4>Receiving Input and Console I/O</h4>
+                <p>The <code>input()</code> function reads a line from the console, converts it to a string, and returns it.</p>
+                <pre class="code-block"><code># I/O Operation
+user_name = input("Enter your name: ")
+user_age_str = input("Enter your age: ")
+
+# input() always returns a string, so we need to convert it
+user_age_int = int(user_age_str)
+
+print("Hello, " + user_name + "!")</code></pre>
+                
+                <h4>Formatted Printing with f-Strings</h4>
+                <p>F-strings (formatted string literals) provide a concise and convenient way to embed expressions inside string literals for formatting.</p>
+                 <pre class="code-block"><code># Formatting Printing
+print(f"Hello, {user_name}! You will be {user_age_int + 1} next year.")
+# Example output: Hello, Alice! You will be 26 next year.
+
+pi = 3.14159265
+print(f"The value of Pi is approximately {pi:.2f}") 
+# .2f formats the float to 2 decimal places
+# Output: The value of Pi is approximately 3.14</code></pre>
+            </section>
+
+            <section id="control-flow">
+                <h3><i class="fas fa-code-branch"></i> 7. Control Flow Instructions</h3>
+                <h4>Decision Control (if, elif, else)</h4>
+                <p>This allows the program to execute different blocks of code based on conditions.</p>
+                <ul>
+                    <li><strong>Logical Operators:</strong> <code>and</code>, <code>or</code>, <code>not</code></li>
+                    <li><strong>Conditional Expression (Ternary Operator):</strong> A one-line if-else statement. <code>value_if_true if condition else value_if_false</code></li>
+                    <li><strong><code>pass</code> Statement:</strong> A null operation. It's used as a placeholder where code is syntactically required but you have nothing to write yet.</li>
+                </ul>
+                <pre class="code-block"><code>score = 85
+
+if score >= 90:
+    grade = 'A'
+elif score >= 80:
+    grade = 'B'
+elif score >= 70:
+    grade = 'C'
+else:
+    grade = 'F'
+    
+print(f"Your grade is {grade}") # Output: Your grade is B
+
+# Ternary operator
+status = "Adult" if user_age_int >= 18 else "Minor"
+print(f"Status: {status}")
+
+# Pass statement
+if user_age_int < 0:
+    pass # TODO: Add error handling here later
+</code></pre>
+
+                <h4>Repetition Control (Loops)</h4>
+                <p>Loops are used to execute a block of code repeatedly.</p>
+                <ul>
+                    <li><strong><code>for</code> loop:</strong> Iterates over a sequence (like a list, string, or range).</li>
+                    <li><strong><code>while</code> loop:</strong> Repeats as long as a condition is true.</li>
+                    <li><strong><code>break</code>:</strong> Immediately exits the current loop.</li>
+                    <li><strong><code>continue</code>:</strong> Skips the rest of the current iteration and proceeds to the next one.</li>
+                    <li><strong><code>else</code> block in a loop:</strong> Executes only if the loop completes normally (i.e., not terminated by a <code>break</code> statement).</li>
+                </ul>
+                <pre class="code-block"><code># for loop with range()
+for i in range(5):  # 0, 1, 2, 3, 4
+    print(i, end=" ") # Output: 0 1 2 3 4
+print()
+
+# while loop
+count = 5
+while count > 0:
+    print(count, end=" ") # Output: 5 4 3 2 1 
+    count -= 1
+print()
+
+# break, continue, and else in a loop
+for num in range(2, 10):
+    if num == 7:
+        continue # Skip printing 7
+    if num == 9:
+        print("\nFound 9, breaking loop.")
+        break    # Exit the loop
+    print(num, end=" ")
+else:
+    print("Loop finished without breaking.") # This line won't run
+
+# Output: 2 3 4 5 6 8 
+#         Found 9, breaking loop.
+</code></pre>
+            </section>
+
+            <section id="modules">
+                 <h3><i class="fas fa-puzzle-piece"></i> 8. Modules and Built-in Functions</h3>
+                 <p>Python's power comes from its extensive standard library, accessible through modules.</p>
+                 <ul>
+                     <li><strong>Built-in Functions:</strong> Always available, like <code>print()</code>, <code>len()</code>, <code>int()</code>, <code>input()</code>, <code>range()</code>.</li>
+                     <li><strong>Modules:</strong> Files containing Python code that you can import into your script to use their functions and classes. Example: the <code>math</code> module.</li>
+                 </ul>
+                 <pre class="code-block"><code># Using a module
+import math
+
+radius = 5
+area = math.pi * math.pow(radius, 2)
+print(f"The area of the circle is {area:.2f}") # Output: The area of the circle is 78.54
+
+# Using built-in all() and any() functions
+# all(): returns True if all items in an iterable are true
+# any(): returns True if any item in an iterable is true
+list1 = [True, True, True]
+list2 = [True, False, True]
+
+print(f"all(list1): {all(list1)}") # True
+print(f"any(list2): {any(list2)}") # True
+print(f"all(list2): {all(list2)}") # False</code></pre>
+                 <div class="tip-box"><strong>Objects and Classes (A Glimpse):</strong> Your syllabus mentions classes/objects. In Python, everything is an object. An object has properties (data) and methods (functions). For example, a string object has data (the characters) and methods like <code>.upper()</code>. A <code>class</code> is the blueprint for creating objects. You've already been using them!</div>
+            </section>
+
+        </article>
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Unit 3 Python Notes | Crafted by Pratyush Swain</p></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('loader');
+        window.addEventListener('load', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; document.body.classList.add('loaded'); }, 500);
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            themeToggle.checked = (theme === 'dark');
+        };
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none"; };
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
