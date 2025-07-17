@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Course Modules - Light Edition</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* New Light Theme Palette */
+            --light-bg: #f4f7fc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --primary-text-dark: #1e293b; /* Dark Slate Blue for titles */
+            --secondary-text-gray: #64748b; /* Lighter gray for descriptions */
+            --accent-color: #0ea5e9; /* A vibrant Sky Blue */
+            --shadow-color: rgba(30, 41, 59, 0.05);
+            --shadow-hover-color: rgba(30, 41, 59, 0.1);
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--primary-text-dark);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 4rem 1rem;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        #canvas-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .main-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            color: var(--primary-text-dark);
+        }
+
+        #modules-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        
+        .module-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .module-card-link {
+            display: block;
+            text-decoration: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 280px;
+            padding: 2rem;
+            
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transform-style: preserve-3d; 
+            will-change: transform, box-shadow;
+            transition: transform 0.1s linear, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .module-card-link:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 25px var(--shadow-hover-color);
+        }
+
+        .module-card-content {
+            transform: translateZ(20px);
+        }
+        
+        .module-card-content h3 {
+            color: var(--primary-text-dark);
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 0 0 0.75rem 0;
+            transition: color 0.3s ease;
+        }
+        
+        .module-card-link:hover .module-card-content h3 {
+            color: var(--accent-color);
+        }
+
+        .module-card-content p {
+            color: var(--secondary-text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="canvas-background"></canvas>
+
+    <h1 class="main-title">Course Modules</h1>
+    
+    <main id="modules-container"></main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DYNAMIC DATA AND CARD GENERATION ---
+            const modulesData = [
+                { title: 'Unit 1: Computer Fundamentals', description: 'Hardware, software, and networking basics.', link: 'computer-fundamentals.html' },
+                { title: 'Unit 2: Program Development', description: 'Algorithms, flowcharts, and programming paradigms.', link: 'program-development.html' },
+                { title: 'Unit 3: Python Core Concepts', description: 'Syntax, data types, control flow, and core principles.', link: 'python-core-concepts.html' },
+                { title: 'Unit 4: Advanced Python', description: 'Data structures, functions, and recursion.', link: 'advanced-python.html' }
+            ];
+            const container = document.getElementById('modules-container');
+            modulesData.forEach((module, index) => {
+                const cardWrapper = document.createElement('div');
+                cardWrapper.className = 'module-card';
+                cardWrapper.style.animationDelay = `${index * 0.15}s`;
+                const cardLink = document.createElement('a');
+                cardLink.href = module.link;
+                cardLink.className = 'module-card-link';
+                const content = document.createElement('div');
+                content.className = 'module-card-content';
+                content.innerHTML = `<h3>${module.title}</h3><p>${module.description}</p>`;
+                cardLink.appendChild(content);
+                cardWrapper.appendChild(cardLink);
+                container.appendChild(cardWrapper);
+            });
+
+
+            // --- INTERACTIVE 3D TILT EFFECT ---
+            const cards = document.querySelectorAll('.module-card-link');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                    const centerX = rect.width / 2, centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -7;
+                    const rotateY = ((x - centerX) / centerX) * 7;
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                });
+            });
+
+
+            // --- NEW LIGHT-THEME ANIMATED CANVAS BACKGROUND ---
+            const canvas = document.getElementById('canvas-background');
+            const ctx = canvas.getContext('2d');
+            let shapes = [];
+            const shapeCount = 20;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            class Shape {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 50 + 20; // Size from 20 to 70
+                    this.speedX = Math.random() * 0.4 - 0.2; // Slow horizontal drift
+                    this.speedY = Math.random() * 0.4 - 0.2; // Slow vertical drift
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.005; // Very slow rotation
+                    this.color = `rgba(14, 165, 233, ${Math.random() * 0.1 + 0.05})`; // Very transparent blue
+                }
+
+                update() {
+                    if (this.x > canvas.width + this.size) this.x = -this.size;
+                    else if (this.x < -this.size) this.x = canvas.width + this.size;
+                    if (this.y > canvas.height + this.size) this.y = -this.size;
+                    else if (this.y < -this.size) this.y = canvas.height + this.size;
+
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.angle += this.rotationSpeed;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    // Draw a hexagon
+                    for (let i = 0; i < 6; i++) {
+                         ctx.lineTo(Math.cos(Math.PI / 3 * i) * this.size, Math.sin(Math.PI / 3 * i) * this.size);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            
+            function initShapes() {
+                shapes = [];
+                for(let i=0; i<shapeCount; i++) {
+                    shapes.push(new Shape());
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for(let i=0; i<shapes.length; i++) {
+                    shapes[i].update();
+                    shapes[i].draw();
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                initShapes();
+            });
+
+            resizeCanvas();
+            initShapes();
+            animate();
+        });
+    </script>
+</body>
+</html>
