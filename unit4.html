@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4: The Complete Guide to Python Data Structures - Pratyush Swain</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME & GENERAL STYLES (MOBILE-FIRST & LARGER FONTS) --- */
+        :root {
+            --bg-color: #f8fafc; --card-bg: #ffffff; --primary-accent: #4f46e5; --secondary-accent: #f97316; --text-primary: #111827; --text-secondary: #4b5563;
+            --border-color: #e5e7eb; --shadow-color: rgba(79, 70, 229, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f3f4f6; --code-header-bg: #e5e7eb; --tip-bg: #eef2ff; --tip-border: #818cf8; --table-header-bg: #f3f4f6;
+            /* Syntax Highlighting */
+            --code-keyword: #7c3aed; --code-string: #16a34a; --code-comment: #9ca3af; --code-function: #be185d; --code-number: #ea580c; --code-operator: #2563eb;
+        }
+        body.dark-mode {
+            --bg-color: #111827; --card-bg: #1f2937; --primary-accent: #818cf8; --secondary-accent: #fb923c; --text-primary: #f9fafb; --text-secondary: #d1d5db;
+            --border-color: #374151; --shadow-color: rgba(129, 140, 248, 0.05); --header-bg: rgba(31, 41, 55, 0.85);
+            --code-bg: #2b354a; --code-header-bg: #374151; --tip-bg: rgba(129, 140, 248, 0.08); --tip-border: var(--primary-accent); --table-header-bg: #374151;
+            /* Syntax Highlighting */
+            --code-keyword: #c792ea; --code-string: #c3e88d; --code-comment: #6b7280; --code-function: #82aaff; --code-number: #ffcb6b; --code-operator: #89ddff;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 1.9; font-weight: 300; font-size: 1.1rem; /* BASE FONT SIZE INCREASED */ transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards; }
+        .container { width: 95%; max-width: 1000px; margin: 1.5rem auto; position: relative; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.5em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fas { color: var(--secondary-accent); }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.2em; color: var(--text-primary); text-align: center; margin: 0 0 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fas { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.6em; color: var(--primary-accent); margin: 3rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.25em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .content-card p, .content-card li { color: var(--text-secondary); }
+        .content-card ul { padding-left: 1.5rem; list-style-type: '✓'; }
+        li::marker { color: var(--secondary-accent); }
+        li { margin-bottom: 0.5rem; padding-left: 0.8rem; }
+        
+        .table-container { overflow-x: auto; margin: 1.8rem 0; border: 1px solid var(--border-color); border-radius: 8px;}
+        table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); }
+        tbody tr:last-child td { border-bottom: none; }
+        td code { background-color: var(--code-bg); padding: 0.2em 0.4em; border-radius: 4px; color: var(--primary-accent); }
+        
+        .code-container { margin: 2rem 0; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .code-header { display: flex; justify-content: space-between; align-items: center; background-color: var(--code-header-bg); padding: 0.75rem 1.2rem; }
+        .code-lang { font-family: 'Fira Code', monospace; color: var(--text-secondary); font-size: 0.85em; }
+        .copy-btn { background: none; border: 1px solid var(--border-color); color: var(--text-secondary); font-family: 'Poppins', sans-serif; font-size: 0.8em; padding: 5px 12px; border-radius: 5px; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); }
+        .copy-btn.copied { background-color: #2ecc71; color: white; border-color: #27ae60;}
+        pre { font-family: 'Fira Code', monospace; margin: 0; padding: 1.5rem; font-size: 1em; color: var(--text-primary); white-space: pre-wrap; line-height: 1.8; overflow-x: auto; }
+        .keyword { color: var(--code-keyword); font-weight: 500;} .string { color: var(--code-string); } .comment { color: var(--code-comment); font-style: italic; } .function { color: var(--code-function); font-weight: 500; } .number { color: var(--code-number); } .operator { color: var(--code-operator); } .brackets { color: var(--text-secondary); }
+
+        .tip-box { background-color: var(--tip-bg); border-left: 5px solid var(--tip-border); padding: 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: var(--text-primary); font-weight: 600; }
+
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        
+        @media (min-width: 768px) {
+            .content-card { padding: 2.5rem 3rem; }
+            .content-card h2 { font-size: 2.5em; }
+            .content-card h3 { font-size: 1.7em; }
+            pre { padding: 1.5rem; font-size: 1.05em; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-cubes"></i> Unit 4: Data Structures</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fas fa-list-alt"></i> Python Lists: Mutable Collections</h2>
+            <section id="list-intro">
+                <h3><i class="fas fa-info-circle"></i> 1. Introduction to Lists</h3>
+                <ul>
+                    <li>Lists are containers used to store a collection of values of any type.</li>
+                    <li>They are <strong>mutable</strong>, meaning you can change, add, and remove elements in-place after the list has been created.</li>
+                    <li>They are <strong>ordered</strong>, meaning items have a defined order which is preserved.</li>
+                    <li>Syntax: Create lists with square brackets `[]`, with items separated by commas.</li>
+                </ul>
+            </section>
+            
+            <section id="list-creation">
+                <h3><i class="fas fa-plus-square"></i> 2. Creating Lists</h3>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">empty_list</span> <span class="operator">=</span> <span class="brackets">[]</span>  <span class="comment"># A blank or empty list</span>
+<span class="variable">integers</span> <span class="operator">=</span> <span class="brackets">[</span><span class="number">2</span><span class="operator">,</span><span class="number">3</span><span class="operator">,</span><span class="number">5</span><span class="brackets">]</span>  <span class="comment"># A list of integers</span>
+<span class="variable">mixed_types</span> <span class="operator">=</span> <span class="brackets">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2.3</span><span class="operator">,</span> <span class="string">'zero'</span><span class="brackets">]</span>  <span class="comment"># List of mixed value types</span>
+<span class="variable">nested_list</span> <span class="operator">=</span> <span class="brackets">[</span><span class="number">1</span><span class="operator">,</span><span class="number">2</span><span class="operator">,</span><span class="number">3</span><span class="operator">,</span><span class="brackets">[</span><span class="number">11</span><span class="operator">,</span><span class="number">44</span><span class="operator">,</span><span class="number">23</span><span class="brackets">]</span><span class="brackets">]</span> <span class="comment"># A list containing another list</span>
+
+<span class="comment"># Creating a list from an existing sequence</span>
+<span class="variable">from_string</span> <span class="operator">=</span> <span class="function">list</span><span class="brackets">(</span><span class="string">'hello'</span><span class="brackets">)</span>  <span class="comment"># ['h', 'e', 'l', 'l', 'o']</span>
+<span class="variable">my_tuple</span> <span class="operator">=</span> <span class="brackets">(</span><span class="string">'w'</span><span class="operator">,</span><span class="string">'e'</span><span class="operator">,</span><span class="string">'r'</span><span class="brackets">)</span>
+<span class="variable">from_tuple</span> <span class="operator">=</span> <span class="function">list</span><span class="brackets">(</span><span class="variable">my_tuple</span><span class="brackets">)</span>  <span class="comment"># ['w', 'e', 'r']</span>
+</code></pre>
+                </div>
+            </section>
+            
+            <section id="list-access-slicing">
+                <h3><i class="fas fa-hand-point-up"></i> 3. Accessing & Slicing</h3>
+                <p>Use indexing `[i]` for single items and slicing `[start:stop:step]` for sub-lists.</p>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">my_list</span> <span class="operator">=</span> <span class="brackets">[</span><span class="number">1</span><span class="operator">,</span><span class="number">2</span><span class="operator">,</span><span class="number">3</span><span class="operator">,</span><span class="number">4</span><span class="operator">,</span><span class="number">5</span><span class="operator">,</span><span class="number">6</span><span class="operator">,</span><span class="number">7</span><span class="operator">,</span><span class="number">8</span><span class="operator">,</span><span class="number">9</span><span class="operator">,</span><span class="number">10</span><span class="brackets">]</span>
+
+<span class="function">print</span><span class="brackets">(</span><span class="variable">my_list</span><span class="brackets">[</span><span class="number">2</span><span class="operator">:</span><span class="number">5</span><span class="brackets">]</span><span class="brackets">)</span>      <span class="comment"># Output: [3, 4, 5]</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">my_list</span><span class="brackets">[</span><span class="operator">-</span><span class="number">9</span><span class="operator">:</span><span class="operator">-</span><span class="number">5</span><span class="brackets">]</span><span class="brackets">)</span>   <span class="comment"># Output: [2, 3, 4, 5]</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">my_list</span><span class="brackets">[</span><span class="operator">-</span><span class="number">1</span><span class="operator">:</span><span class="operator">-</span><span class="number">9</span><span class="operator">:</span><span class="operator">-</span><span class="number">1</span><span class="brackets">]</span><span class="brackets">)</span> <span class="comment"># Output: [10, 9, 8, 7, 6, 5, 4, 3]</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">my_list</span><span class="brackets">[</span><span class="number">1</span><span class="operator">:</span><span class="number">6</span><span class="operator">:</span><span class="number">2</span><span class="brackets">]</span><span class="brackets">)</span>      <span class="comment"># Output: [2, 4, 6]</span>
+</code></pre>
+                </div>
+            </section>
+            
+            <section id="list-methods">
+                 <h3><i class="fas fa-cogs"></i> 4. Common List Operations</h3>
+                 <p>This table summarizes all list methods from your PDF.</p>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Operation</th><th>Syntax</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Add to End</strong></td><td><code>my_list.append(item)</code></td><td>Adds a single item to the end of the list.</td></tr>
+                            <tr><td><strong>Add Multiple</strong></td><td><code>my_list.extend(other_list)</code></td><td>Adds all items from another list to the end.</td></tr>
+                            <tr><td><strong>Insert</strong></td><td><code>my_list.insert(index, item)</code></td><td>Inserts an item at a specific index.</td></tr>
+                            <tr><td><strong>Delete by Index</strong></td><td><code>del my_list[index]</code></td><td>Deletes item at a specific index.</td></tr>
+                            <tr><td><strong>Delete by Value</strong></td><td><code>my_list.remove(value)</code></td><td>Removes the first occurrence of a specified value.</td></tr>
+                             <tr><td><strong>Pop Item</strong></td><td><code>my_list.pop(index)</code></td><td>Removes and returns item at index (or last item if empty).</td></tr>
+                             <tr><td><strong>Clear List</strong></td><td><code>my_list.clear()</code></td><td>Removes all items from the list.</td></tr>
+                            <tr><td><strong>Get Length</strong></td><td><code>len(my_list)</code></td><td>Returns the number of items.</td></tr>
+                            <tr><td><strong>Count Occurrences</strong></td><td><code>my_list.count(value)</code></td><td>Counts how many times a value appears.</td></tr>
+                             <tr><td><strong>Find Index</strong></td><td><code>my_list.index(value)</code></td><td>Returns the index of the first occurrence of a value.</td></tr>
+                            <tr><td><strong>Sort In-Place</strong></td><td><code>my_list.sort()</code></td><td>Sorts the list. Use `reverse=True` for descending.</td></tr>
+                            <tr><td><strong>Reverse In-Place</strong></td><td><code>my_list.reverse()</code></td><td>Reverses the order of the list.</td></tr>
+                            <tr><td><strong>Get Max/Min</strong></td><td><code>max(my_list)</code>, <code>min(my_list)</code></td><td>Returns the largest or smallest item.</td></tr>
+                             <tr><td><strong>Join Lists</strong></td><td><code>list1 + list2</code></td><td>Concatenates two lists to create a new one.</td></tr>
+                            <tr><td><strong>Replicate List</strong></td><td><code>my_list * 3</code></td><td>Creates a new list by repeating items.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </article>
+        
+        <!-- Tuples Section -->
+        <article class="content-card">
+            <h2><i class="fas fa-lock"></i> Tuples: Immutable Collections</h2>
+             <section id="tuple-intro">
+                <h3><i class="fas fa-info-circle"></i> 1. Introduction to Tuples</h3>
+                 <ul>
+                    <li>Tuples are like lists, but they are **immutable** (cannot be changed or updated after creation).</li>
+                    <li>They are represented by parentheses `()`.</li>
+                    <li>Because they are immutable, they are faster than lists and can be used as keys in a dictionary.</li>
+                </ul>
+            </section>
+            <section id="tuple-ops">
+                 <h3><i class="fas fa-cogs"></i> 2. Tuple Operations</h3>
+                 <p>Most tuple operations are similar to lists, except for the ones that modify the data.</p>
+                 <ul>
+                     <li><strong>Creation:</strong> <code>my_tup = (1, 2, 3)</code> or from a sequence with <code>tuple("hello")</code>.</li>
+                     <li><strong>Access & Slicing:</strong> Works exactly like lists. `my_tup[0]`, `my_tup[1:3]`.</li>
+                     <li><strong>Looping:</strong> Works exactly like lists, both by item and by index.</li>
+                     <li><strong>Joining:</strong> Use the `+` operator to join tuples into a new tuple.</li>
+                     <li><strong>Multiplying:</strong> Use the `*` operator to repeat a tuple's content.</li>
+                 </ul>
+                 <h4>The "Modify" Workaround</h4>
+                 <p>To "modify" a tuple, you must convert it to a list, perform the change, and then convert it back to a tuple.</p>
+                  <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">my_tuple</span> <span class="operator">=</span> <span class="brackets">(</span><span class="number">1</span><span class="operator">,</span><span class="number">2</span><span class="operator">,</span><span class="number">3</span><span class="operator">,</span><span class="number">4</span><span class="brackets">)</span>
+<span class="variable">temp_list</span> <span class="operator">=</span> <span class="function">list</span><span class="brackets">(</span><span class="variable">my_tuple</span><span class="brackets">)</span>  <span class="comment"># Convert to list</span>
+<span class="variable">temp_list</span><span class="operator">.</span><span class="function">append</span><span class="brackets">(</span><span class="number">33</span><span class="brackets">)</span>         <span class="comment"># Modify the list</span>
+<span class="variable">my_tuple</span> <span class="operator">=</span> <span class="function">tuple</span><span class="brackets">(</span><span class="variable">temp_list</span><span class="brackets">)</span>   <span class="comment"># Convert back to tuple</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">my_tuple</span><span class="brackets">)</span>  <span class="comment"># Output: (1, 2, 3, 4, 33)</span>
+</code></pre>
+                </div>
+                 
+                 <h4>Unpacking with Asterisk `*`</h4>
+                 <p>If you have more values than variables, the asterisk will collect the rest of the values into a list.</p>
+                  <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">fruits</span> <span class="operator">=</span> <span class="brackets">(</span><span class="string">"apple"</span><span class="operator">,</span> <span class="string">"banana"</span><span class="operator">,</span> <span class="string">"cherry"</span><span class="operator">,</span> <span class="string">"strawberry"</span><span class="operator">,</span> <span class="string">"raspberry"</span><span class="brackets">)</span>
+<span class="brackets">(</span><span class="variable">green</span><span class="operator">,</span> <span class="variable">yellow</span><span class="operator">,</span> <span class="operator">*</span><span class="variable">red_fruits</span><span class="brackets">)</span> <span class="operator">=</span> <span class="variable">fruits</span>
+
+<span class="function">print</span><span class="brackets">(</span><span class="variable">green</span><span class="brackets">)</span>        <span class="comment"># apple</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">red_fruits</span><span class="brackets">)</span> <span class="comment"># ['cherry', 'strawberry', 'raspberry']</span>
+</code></pre>
+                </div>
+            </section>
+        </article>
+
+        <!-- Dictionaries and Sets Section -->
+         <article class="content-card">
+            <h2><i class="fas fa-book"></i> Dictionaries & Sets</h2>
+            <section id="dict-intro">
+                 <h3><i class="fas fa-key"></i> 1. Dictionaries: Key-Value Storage</h3>
+                 <ul>
+                     <li>Dictionaries are unordered collections of **key-value pairs**.</li>
+                     <li>They are **mutable**.</li>
+                     <li>Keys must be **unique** and **immutable** (e.g., strings, numbers, or tuples). Values can be anything.</li>
+                     <li>Created with curly braces `{}`. Syntax: `my_dict = {'key1': 'value1', 'key2': 'value2'}`.</li>
+                </ul>
+                 
+                <h4>Common Dictionary Operations</h4>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">my_disc</span> <span class="operator">=</span> <span class="brackets">{</span><span class="string">"name"</span><span class="operator">:</span> <span class="string">"kailash"</span><span class="operator">,</span> <span class="string">"age"</span><span class="operator">:</span> <span class="number">23</span><span class="operator">,</span> <span class="string">"dob"</span><span class="operator">:</span> <span class="string">"18-05-1980"</span><span class="brackets">}</span>
+
+<span class="comment"># Add or Update a key-value pair</span>
+<span class="variable">my_disc</span><span class="brackets">[</span><span class="string">'Address'</span><span class="brackets">]</span> <span class="operator">=</span> <span class="string">"Berhampur"</span>
+<span class="variable">my_disc</span><span class="brackets">[</span><span class="string">'age'</span><span class="brackets">]</span> <span class="operator">=</span> <span class="number">40</span>
+
+<span class="comment"># Remove a key-value pair</span>
+<span class="keyword">del</span> <span class="variable">my_disc</span><span class="brackets">[</span><span class="string">'dob'</span><span class="brackets">]</span>
+
+<span class="comment"># Check for a key's existence</span>
+<span class="keyword">if</span> <span class="string">'name'</span> <span class="keyword">in</span> <span class="variable">my_disc</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">"Name key exists."</span><span class="brackets">)</span>
+
+<span class="comment"># Iterating</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">"\nIterating through items:"</span><span class="brackets">)</span>
+<span class="keyword">for</span> <span class="variable">key</span><span class="operator">,</span> <span class="variable">value</span> <span class="keyword">in</span> <span class="variable">my_disc</span><span class="operator">.</span><span class="function">items</span><span class="brackets">()</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"  {</span><span class="variable">key</span><span class="string">}</span><span class="string">: </span><span class="string">{</span><span class="variable">value</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
+</code></pre>
+                </div>
+            </section>
+            
+            <section id="set-intro">
+                 <h3><i class="fas fa-star-of-life"></i> 2. Sets: Unique Unordered Items</h3>
+                 <ul>
+                    <li>Sets are collections of **unique**, **unordered** items.</li>
+                     <li>They are **mutable**.</li>
+                     <li>They automatically remove duplicate elements.</li>
+                     <li>Excellent for fast membership testing and mathematical set operations.</li>
+                </ul>
+                <div class="tip-box">To create an empty set, you **must** use `my_set = set()`. Using `my_set = {}` creates an empty dictionary.</div>
+                 
+                 <h4>Set Operations</h4>
+                  <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">days1</span> <span class="operator">=</span> <span class="brackets">{</span><span class="string">"Monday"</span><span class="operator">,</span> <span class="string">"Tuesday"</span><span class="operator">,</span> <span class="string">"Wednesday"</span><span class="brackets">}</span>
+<span class="variable">days2</span> <span class="operator">=</span> <span class="brackets">{</span><span class="string">"Wednesday"</span><span class="operator">,</span> <span class="string">"Thursday"</span><span class="operator">,</span> <span class="string">"Friday"</span><span class="brackets">}</span>
+
+<span class="comment"># Union: all unique items from both</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">days1</span> <span class="operator">|</span> <span class="variable">days2</span><span class="brackets">)</span>
+
+<span class="comment"># Intersection: items present in both</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">days1</span> <span class="operator">&</span> <span class="variable">days2</span><span class="brackets">)</span> <span class="comment"># {'Wednesday'}</span>
+
+<span class="comment"># Difference: items in days1 but not in days2</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">days1</span> <span class="operator">-</span> <span class="variable">days2</span><span class="brackets">)</span> <span class="comment"># {'Monday', 'Tuesday'}</span>
+
+<span class="comment"># Symmetric Difference: items in one set or the other, but not both</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">days1</span> <span class="operator">^</span> <span class="variable">days2</span><span class="brackets">)</span>
+</code></pre>
+                </div>
+
+                <h4>Removing Items from Sets</h4>
+                <div class="tip-box"><strong>`remove()` vs `discard()`:</strong><br> `my_set.remove(item)` will raise a `KeyError` if the item is not found. <br> `my_set.discard(item)` will do nothing if the item is not found (it won't raise an error). Use `discard()` when you don't care if the item exists or not.</div>
+            </section>
+        </article>
+
+         <article class="content-card">
+            <h2><i class="fas fa-calculator"></i> The Math Module</h2>
+            <p>The `math` module provides access to a huge range of mathematical functions and constants.</p>
+            <div class="table-container">
+                <table>
+                     <thead><tr><th>Function</th><th>Description</th></tr></thead>
+                     <tbody>
+                        <tr><td colspan="2" style="background-color: var(--code-header-bg); font-weight: bold;">Number-theoretic</td></tr>
+                        <tr><td><code>math.factorial(n)</code></td><td>Calculates n!</td></tr>
+                        <tr><td><code>math.gcd(*integers)</code></td><td>Greatest Common Divisor.</td></tr>
+                        <tr><td><code>math.lcm(*integers)</code></td><td>Least Common Multiple.</td></tr>
+                        <tr><td colspan="2" style="background-color: var(--code-header-bg); font-weight: bold;">Floating-point arithmetic</td></tr>
+                         <tr><td><code>math.ceil(x)</code></td><td>Rounds a number up to the nearest integer.</td></tr>
+                        <tr><td><code>math.floor(x)</code></td><td>Rounds a number down to the nearest integer.</td></tr>
+                        <tr><td><code>math.fabs(x)</code></td><td>Returns the absolute value of x.</td></tr>
+                         <tr><td><code>math.fmod(x,y)</code></td><td>Remainder of division, with the sign of x.</td></tr>
+                        <tr><td><code>math.modf(x)</code></td><td>Returns the fractional and integer parts of x as a tuple.</td></tr>
+                        <tr><td colspan="2" style="background-color: var(--code-header-bg); font-weight: bold;">Power and logarithmic</td></tr>
+                        <tr><td><code>math.pow(x,y)</code></td><td>Calculates x raised to the power of y.</td></tr>
+                        <tr><td><code>math.sqrt(x)</code></td><td>Calculates the square root of x.</td></tr>
+                        <tr><td><code>math.exp(x)</code></td><td>Calculates e**x.</td></tr>
+                         <tr><td><code>math.log(x, base)</code></td><td>Calculates the logarithm of x to the given base.</td></tr>
+                         <tr><td colspan="2" style="background-color: var(--code-header-bg); font-weight: bold;">Trigonometric</td></tr>
+                          <tr><td><code>math.sin(x)</code>, <code>math.cos(x)</code>, <code>math.tan(x)</code></td><td>Calculates sin, cos, or tan of x (in radians).</td></tr>
+                           <tr><td><code>math.degrees(x)</code>, <code>math.radians(x)</code></td><td>Converts between degrees and radians.</td></tr>
+                           <tr><td colspan="2" style="background-color: var(--code-header-bg); font-weight: bold;">Constants</td></tr>
+                           <tr><td><code>math.pi</code></td><td>The constant π (3.14159...).</td></tr>
+                           <tr><td><code>math.e</code></td><td>The constant e (2.71828...).</td></tr>
+                     </tbody>
+                </table>
+            </div>
+        </article>
+
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Crafted by Pratyush Swain</p></footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = (theme === 'dark'); };
+        const savedTheme = localStorage.getItem('unit4NotesThemeFinal') || 'dark'; applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('unit4NotesThemeFinal', newTheme); applyTheme(newTheme); });
+        
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const pre = e.target.closest('.code-container').querySelector('pre');
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    button.classList.add('copied');
+                    setTimeout(() => { button.innerHTML = 'Copy'; button.classList.remove('copied'); }, 2000);
+                }).catch(err => console.error('Failed to copy: ', err));
+            });
+        });
+    });
+    </script>
+</body>
+</html>
