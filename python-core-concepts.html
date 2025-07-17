@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Introduction - Q&A</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #6d28d9; --secondary-accent: #f59e0b; --text-primary: #1f2937; --text-secondary: #4b5563;
+            --border-color: #e5e7eb; --shadow-color: rgba(109, 40, 217, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f3f4f6; --code-header-bg: #e5e7eb; --tip-bg: #eef2ff; --tip-border: #a5b4fc; --table-header-bg: #f3f4f6;
+            --code-keyword: #7c3aed; --code-string: #16a34a; --code-comment: #9ca3af; --code-function: #be185d; --code-number: #ea580c; --code-operator: #2563eb; --code-brackets: #4b5563;
+        }
+        body.dark-mode {
+            --bg-color: #111827; --card-bg: #1f2937; --primary-accent: #a78bfa; --secondary-accent: #facc15; --text-primary: #f9fafb; --text-secondary: #d1d5db;
+            --border-color: #374151; --shadow-color: rgba(167, 139, 250, 0.05); --header-bg: rgba(31, 41, 55, 0.85);
+            --code-bg: #212b40; --code-header-bg: #374151; --tip-bg: rgba(167, 139, 250, 0.08); --tip-border: var(--primary-accent); --table-header-bg: #374151;
+            --code-keyword: #c792ea; --code-string: #c3e88d; --code-comment: #6b7280; --code-function: #82aaff; --code-number: #ffcb6b; --code-operator: #89ddff; --code-brackets: #d1d5db;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 1.8; font-weight: 300; font-size: 1.1rem; transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards; }
+        .container { width: 95%; max-width: 1000px; margin: 2rem auto; position: relative; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fab { color: var(--secondary-accent); font-size: 1.2em; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.8em; color: var(--text-primary); text-align: center; margin: 0 0 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fab { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.8em; color: var(--primary-accent); margin: 3.5rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.3em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .content-card h5 { font-size: 1.1em; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.5rem; }
+        .content-card p, .content-card li { color: var(--text-secondary); }
+        .content-card ul, ol { padding-left: 2rem; } li { margin-bottom: 0.5rem; }
+        .table-container { overflow-x: auto; margin: 1.8rem 0; border: 1px solid var(--border-color); border-radius: 8px;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); font-size: 1em;}
+        tbody tr:last-child td { border-bottom: none; }
+
+        .code-container { margin: 2rem 0; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .code-header { display: flex; justify-content: space-between; align-items: center; background-color: var(--code-header-bg); padding: 0.75rem 1.2rem; }
+        .code-lang { font-family: 'Fira Code', monospace; color: var(--text-secondary); font-size: 0.9em; }
+        pre { font-family: 'Fira Code', monospace; margin: 0; padding: 1.5rem; font-size: 1.05em; color: var(--text-primary); white-space: pre-wrap; line-height: 1.8; font-variant-ligatures: common-ligatures; }
+        .keyword { color: var(--code-keyword); font-weight: 500;} .string { color: var(--code-string); } .comment { color: var(--code-comment); font-style: italic; } .function { color: var(--code-function); font-weight: 500; } .number { color: var(--code-number); } .operator { color: var(--code-operator); } .brackets { color: var(--code-brackets); }
+        
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        
+        /* --- MOBILE RESPONSIVE STYLES --- */
+        @media (max-width: 768px) {
+            body { font-size: 1rem; }
+            .content-card h2 { font-size: clamp(1.8rem, 7vw, 2.2rem); }
+            .content-card h3 { font-size: 1.5rem; }
+            header h1 { font-size: 1.4em; }
+        }
+
+        @media (max-width: 600px) {
+            .container { width: 100%; margin: 0; }
+            .content-card { padding: 1.5rem; border-radius: 0; margin-top: 1rem; border-left: none; border-right: none; }
+            header { padding-left: 1rem; padding-right: 1rem; }
+            header h1 { font-size: 1.3em; }
+            header h1 .fab { display: none; }
+            .content-card h2 { padding-bottom: 1rem; margin-bottom: 2rem; }
+            .content-card h3 { font-size: 1.3rem; }
+            pre { padding: 1rem; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="header-content">
+            <h1><i class="fab fa-python"></i> Python Introduction Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fas fa-book-open"></i> Unit 3: Introduction to Python Q&A</h2>
+            
+            <section id="two-marks">
+                <h3><i class="fas fa-list-ol"></i> Section A (2 Marks Questions)</h3>
+                
+                <h4>2. What are the advantages of Python programming language?</h4>
+                <p>The main advantages of Python are:</p>
+                <ul>
+                    <li><strong>Easy to Read and Learn:</strong> Its syntax is simple and clean, resembling plain English.</li>
+                    <li><strong>Large Standard Library:</strong> It includes a vast collection of modules and functions for common tasks.</li>
+                    <li><strong>Cross-Platform:</strong> Python code can run on different operating systems (Windows, macOS, Linux) without modification.</li>
+                    <li><strong>Interpreted Language:</strong> Code is executed line by line, which simplifies debugging and allows for rapid development.</li>
+                </ul>
+
+                <h4>3. What are tokens in Python? How many types of tokens are allowed in Python? Exemplify your answer.</h4>
+                <p>A <strong>token</strong> is the smallest individual unit in a Python program that is meaningful to the interpreter. Python has five types of tokens:</p>
+                <ol>
+                    <li><strong>Keywords:</strong> Reserved words like `if`, `for`, `def`.</li>
+                    <li><strong>Identifiers:</strong> Names for variables, functions, etc., like `my_variable`.</li>
+                    <li><strong>Literals:</strong> Constant data values like `101` or `"hello"`.</li>
+                    <li><strong>Operators:</strong> Symbols that perform operations, like `+`, `-`, `*`, `=`.</li>
+                    <li><strong>Punctuators:</strong> Symbols for structure, like `()`, `{ }`, `,`, `#`.</li>
+                </ol>
+                <p><strong>Example:</strong> In the statement `x = 10`, the tokens are `x` (Identifier), `=` (Operator), and `10` (Literal).</p>
+
+                <h4>8. How are string-literals represented and implemented in Python?</h4>
+                <p><strong>Representation:</strong> String-literals in Python can be enclosed in single quotes (`'hello'`), double quotes (`"world"`), or triple quotes for multi-line strings (`'''This is a multi-line string'''`).</p>
+                <p><strong>Implementation:</strong> Internally, Python strings are implemented as **immutable sequences** of Unicode characters. This immutability means that once a string is created, it cannot be changed. Any operation that appears to modify a string actually creates a new string object in memory.</p>
+
+                <h4>12. What is a variable? How are they important for a program?</h4>
+                <p>A <strong>variable</strong> is a named location in the computer's memory used to store data. You can assign a value to a variable and refer to it later by its name.</p>
+                <p><strong>Importance:</strong> Variables are crucial because they allow a program to store and manipulate data. They make code readable and manageable by giving descriptive names to values (e.g., `user_age = 25` is more understandable than just `25`). They also enable programs to work with data that can change during execution.</p>
+
+                <h4>15. What is the significant of pass statement?</h4>
+                <p>The `pass` statement in Python is a null operation; nothing happens when it executes. Its significance is that it acts as a **placeholder**. It is used when a statement is syntactically required, but you have no code to write, preventing syntax errors in empty function definitions, classes, or `if` blocks.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="keyword">def</span> <span class="function">my_future_function</span><span class="brackets">()</span><span class="operator">:</span>
+    <span class="keyword">pass</span>  <span class="comment"># To avoid a syntax error for an empty function body</span></code></pre>
+                </div>
+
+                <h4>17. What is type casting? How it is used?</h4>
+                <p><strong>Type casting</strong> (or type conversion) is the process of explicitly converting a value from one data type to another. It is used by calling the target data type's constructor function (like `int()`, `float()`, or `str()`) on a value.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code>num_string = <span class="string">"100"</span>       <span class="comment"># A string</span>
+num_integer = <span class="function">int</span><span class="brackets">(</span>num_string<span class="brackets">)</span> <span class="comment"># Casting string to integer</span>
+<span class="function">print</span><span class="brackets">(</span>num_integer + <span class="number">5</span><span class="brackets">)</span>   <span class="comment"># Output: 105</span></code></pre>
+                </div>
+
+                <h4>18. Write any four basic application of python?</h4>
+                <p>Four basic applications of Python are:</p>
+                <ol>
+                    <li><strong>Web Development:</strong> Using frameworks like Django and Flask to build web applications and APIs.</li>
+                    <li><strong>Data Science and Machine Learning:</strong> Using libraries like Pandas, NumPy, and Scikit-learn for data analysis, visualization, and building AI models.</li>
+                    <li><strong>Automation and Scripting:</strong> Writing scripts to automate repetitive tasks like file management, data processing, and system administration.</li>
+                    <li><strong>Desktop GUI Applications:</strong> Creating user-friendly desktop applications with toolkits like Tkinter, PyQt, or Kivy.</li>
+                </ol>
+
+                <h4>19. Write the difference between break and continue.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>`break` Statement</th><th>`continue` Statement</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Purpose</strong></td><td>Terminates the entire loop immediately.</td><td>Skips the rest of the current iteration and proceeds to the next one.</td></tr>
+                            <tr><td><strong>Control Flow</strong></td><td>Control passes to the statement immediately following the loop.</td><td>Control passes to the beginning of the loop for the next iteration.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section id="five-marks">
+                <h3><i class="fas fa-star-half-alt"></i> Section B & Question Bank (5 Marks Questions)</h3>
+                
+                <h4>3. What is an operator and explain the Arithmetic and logical operators used in python.</h4>
+                <p>An <strong>operator</strong> is a symbol that performs an operation on one or more values, which are known as operands. For example, in `10 + 5`, `+` is the operator and `10` and `5` are the operands.</p>
+                
+                <h5>1. Arithmetic Operators</h5>
+                <p>These operators are used to perform mathematical calculations.</p>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Operator</th><th>Name</th><th>Example (a=10, b=3)</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr><td>`+`</td><td>Addition</td><td>`a + b`</td><td>`13`</td></tr>
+                            <tr><td>`-`</td><td>Subtraction</td><td>`a - b`</td><td>`7`</td></tr>
+                            <tr><td>`*`</td><td>Multiplication</td><td>`a * b`</td><td>`30`</td></tr>
+                            <tr><td>`/`</td><td>Division</td><td>`a / b`</td><td>`3.33`</td></tr>
+                            <tr><td>`%`</td><td>Modulus</td><td>`a % b`</td><td>`1`</td></tr>
+                            <tr><td>`//`</td><td>Floor Division</td><td>`a // b`</td><td>`3`</td></tr>
+                            <tr><td>`**`</td><td>Exponent</td><td>`a ** b`</td><td>`1000`</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h5>2. Logical Operators</h5>
+                <p>These operators are used to combine conditional statements and work with Boolean (`True` or `False`) values.</p>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Operator</th><th>Description</th><th>Example (x=True, y=False)</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr><td>`and`</td><td>Returns `True` if both statements are true.</td><td>`x and y`</td><td>`False`</td></tr>
+                            <tr><td>`or`</td><td>Returns `True` if one of the statements is true.</td><td>`x or y`</td><td>`True`</td></tr>
+                            <tr><td>`not`</td><td>Reverses the result.</td><td>`not x`</td><td>`False`</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>5. Write the use of various string function to work with string values.</h4>
+                <p>Python provides a rich set of built-in functions and methods to manipulate strings. Some of the most common ones are:</p>
+                <ol>
+                    <li><strong>`len()` function:</strong> Returns the number of characters in a string.</li>
+                    <li><strong>`.upper()` and `.lower()` methods:</strong> Convert a string to all uppercase or all lowercase letters.</li>
+                    <li><strong>`.strip()` method:</strong> Removes any leading (start) and trailing (end) whitespace characters.</li>
+                    <li><strong>`.split(separator)` method:</strong> Splits a string into a list of substrings based on a specified separator.</li>
+                    <li><strong>`.replace(old, new)` method:</strong> Returns a new string where a specified value is replaced with another.</li>
+                </ol>
+
+                <h4>7. What is for loop. Write with an example to print first 20 natural numbers.</h4>
+                <p>A <strong>`for` loop</strong> in Python is an iteration construct used to execute a block of code repeatedly for each item in a sequence (such as a list, tuple, or string). It is ideal for situations where you know in advance how many times you want to loop.</p>
+                <h5>Example: Program to print the first 20 natural numbers</h5>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code><span class="function">print</span><span class="brackets">(</span><span class="string">"The first 20 natural numbers are:"</span><span class="brackets">)</span>
+<span class="keyword">for</span> number <span class="keyword">in</span> <span class="function">range</span><span class="brackets">(</span><span class="number">1</span>, <span class="number">21</span><span class="brackets">)</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span>number<span class="brackets">)</span></code></pre>
+                </div>
+
+                <h4>9. What is conditional statement. Write with an example with multiple conditional statements.</h4>
+                <p>A <strong>conditional statement</strong> is a programming construct that allows a program to execute different blocks of code based on whether a specific condition evaluates to `True` or `False`. In Python, the primary conditional statements are `if`, `elif` (else if), and `else`.</p>
+                <h5>Example with multiple conditional statements (Grading System):</h5>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span></div>
+                    <pre><code>score = <span class="function">int</span><span class="brackets">(</span><span class="function">input</span><span class="brackets">(</span><span class="string">"Enter the student's score: "</span><span class="brackets">)</span><span class="brackets">)</span>
+
+<span class="keyword">if</span> score >= <span class="number">90</span><span class="operator">:</span>
+    grade = <span class="string">"A"</span>
+<span class="keyword">elif</span> score >= <span class="number">80</span><span class="operator">:</span>
+    grade = <span class="string">"B"</span>
+<span class="keyword">elif</span> score >= <span class="number">70</span><span class="operator">:</span>
+    grade = <span class="string">"C"</span>
+<span class="keyword">else</span><span class="operator">:</span>
+    grade = <span class="string">"F"</span>
+
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The student's grade is: {grade}"</span><span class="brackets">)</span></code></pre>
+                </div>
+            </section>
+            
+            <section id="eight-marks">
+                <h3><i class="fas fa-star"></i> Section C (8 Marks Questions)</h3>
+                <p><em>(Note: There were no check-marked 8-mark questions listed on this particular question paper.)</em></p>
+            </section>
+
+        </article>
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Crafted by Pratyush Swain</p></footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = (theme === 'dark'); };
+        const savedTheme = localStorage.getItem('pratyushCompleteNotesTheme') || 'dark'; applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('pratyushCompleteNotesTheme', newTheme); applyTheme(newTheme); });
+        
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
