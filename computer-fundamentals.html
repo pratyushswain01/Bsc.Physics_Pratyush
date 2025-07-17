@@ -56,6 +56,73 @@
         #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
         #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
         footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        
+        /* --- MOBILE RESPONSIVE STYLES --- */
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 1rem; /* Adjust base font size for mobile */
+                line-height: 1.8;
+            }
+            .container {
+                width: 100%; /* Use full width on mobile */
+                margin: 0;
+            }
+            header {
+                padding: 1rem 5%;
+            }
+            header h1 {
+                font-size: 1.3em; /* Smaller header title */
+            }
+            .content-card {
+                padding: 1.5rem; /* Reduce padding significantly */
+                margin-top: 0;
+                border-radius: 0; /* Full-width card feel */
+                border-left: none;
+                border-right: none;
+                box-shadow: none; /* Can remove shadow on mobile if preferred */
+            }
+            .content-card:first-of-type {
+                border-top: none; /* No top border if it's right under the header */
+            }
+            .content-card h2 {
+                font-size: 2em;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+            }
+            .content-card h3 {
+                font-size: 1.5em;
+                margin-top: 2.5rem;
+            }
+            .content-card h4 {
+                font-size: 1.15em;
+                margin-top: 1.5rem;
+            }
+            .content-card ul, .content-card ol {
+                padding-left: 1.5rem; /* Reduce list indentation */
+            }
+            th, td {
+                padding: 12px 10px; /* Tighter padding for table cells */
+            }
+            #toTopBtn {
+                bottom: 15px;
+                right: 15px;
+            }
+            footer {
+                margin-top: 0;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            header h1 {
+                font-size: 1.2em; /* Further reduce title for very small screens */
+                gap: 8px;
+            }
+            .content-card h2 {
+                font-size: 1.8em;
+            }
+            .content-card h3 {
+                font-size: 1.4em;
+            }
+        }
     </style>
 </head>
 <body class="dark-mode">
