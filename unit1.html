@@ -17,29 +17,31 @@
             --bg-color: #f0f2f5;
             --card-bg: #ffffff;
             --primary-accent: #0052d4;
-            --gradient-accent: linear-gradient(45deg, #0052d4, #4364f7, #6fb1fc);
             --text-primary: #1d2a35;
             --text-secondary: #5c6a79;
             --border-color: rgba(0, 0, 0, 0.1);
             --shadow-color: rgba(0, 82, 212, 0.1);
             --header-bg: rgba(255, 255, 255, 0.8);
             --code-bg: #e9ecef;
+            --card-hover-border: #0052d4;
         }
         body.dark-mode {
             --bg-color: #0d1117;
             --card-bg: #161b22;
             --primary-accent: #58a6ff;
-            --gradient-accent: linear-gradient(45deg, #58a6ff, #367cde);
             --text-primary: #c9d1d9;
             --text-secondary: #8b949e;
             --border-color: rgba(255, 255, 255, 0.15);
             --shadow-color: rgba(88, 166, 255, 0.15);
             --header-bg: rgba(13, 17, 23, 0.8);
             --code-bg: #21262d;
+            --card-hover-border: #58a6ff;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body { 
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -52,9 +54,9 @@
         }
         body.loaded { opacity: 1; }
         .container { 
-            width: 90%;
+            width: 95%;
             max-width: 900px;
-            margin: 2.5rem auto;
+            margin: 1.5rem auto;
             position: relative;
             z-index: 2;
         }
@@ -67,16 +69,13 @@
         /* --- HEADER & THEME SWITCHER --- */
         header { 
             background-color: var(--header-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1rem 5%;
-            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%; border-bottom: 1px solid var(--border-color);
             position: sticky; top: 0; z-index: 1000;
         }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; }
-        header h1 .fa-book-open { margin-right: 12px; }
-        .theme-switcher { position: relative; }
+        header h1 { margin: 0; font-size: 1.4em; color: var(--primary-accent); font-weight: 700; }
+        header h1 .fa-book-open { margin-right: 10px; }
         #theme-toggle { display: none; }
         .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
@@ -85,95 +84,112 @@
 
         /* --- NOTES CONTENT STYLES --- */
         .content-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem 2.5rem;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 1.5rem;
             box-shadow: 0 8px 32px 0 var(--shadow-color);
-            margin-top: 2rem;
-            transition: all 0.3s ease;
+            margin-top: 2rem; animation: slideUp 0.6s ease-out;
         }
         .content-card h2 {
-            font-size: 2.2em;
-            color: var(--primary-accent);
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            font-size: 1.8em; color: var(--primary-accent); text-align: center;
+            margin-top: 0; margin-bottom: 2rem; padding-bottom: 1rem;
             border-bottom: 2px solid var(--border-color);
         }
         .content-card h3 {
-            font-size: 1.6em;
-            color: var(--text-primary);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
+            font-size: 1.4em; color: var(--text-primary);
+            margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color); display: flex; align-items: center;
+        }
+        .content-card h3 i {
+            margin-right: 12px; color: var(--primary-accent);
+            font-size: 0.9em;
         }
         .content-card h4 {
-            font-size: 1.2em;
-            color: var(--primary-accent);
-            margin-top: 1.8rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.15em; color: var(--primary-accent);
+            margin-top: 1.8rem; margin-bottom: 0.8rem;
         }
         .content-card p, .content-card li {
-            color: var(--text-secondary);
-            font-size: 1.05em;
+            color: var(--text-secondary); font-size: 1em;
         }
-        .content-card ul {
-            list-style: none;
-            padding-left: 0;
-        }
+        .content-card ul { list-style: none; padding-left: 0; }
         .content-card li {
-            padding-left: 1.8rem;
-            position: relative;
+            padding-left: 1.8rem; position: relative;
             margin-bottom: 0.75rem;
         }
         .content-card li::before {
-            content: '\f101'; /* Font Awesome right arrow icon */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: var(--primary-accent);
-            position: absolute;
-            left: 0;
-            top: 1px;
+            content: '\f101'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            color: var(--primary-accent); position: absolute; left: 0; top: 1px;
         }
         code {
-            font-family: 'Fira Code', monospace;
-            background-color: var(--code-bg);
-            padding: 0.2em 0.4em;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--text-primary);
+            font-family: 'Fira Code', monospace; background-color: var(--code-bg);
+            padding: 0.2em 0.4em; border-radius: 4px;
+            font-size: 0.9em; color: var(--text-primary);
         }
-        
-        /* --- TABLE STYLES --- */
-        .notes-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
+
+        /* --- RESPONSIVE GENERATIONS TABLE --- */
+        .generations-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .generation-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            background-color: var(--bg-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .generation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-hover-border);
+            box-shadow: 0 6px 15px var(--shadow-color);
+        }
+        .generation-card h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .generation-card p {
+            margin: 0.5rem 0;
             font-size: 0.95em;
         }
-        .notes-table th, .notes-table td {
-            border: 1px solid var(--border-color);
-            padding: 0.8rem 1rem;
-            text-align: left;
+        .generation-card strong {
+            color: var(--text-primary);
         }
-        .notes-table th {
-            background-color: var(--code-bg);
-            color: var(--primary-accent);
-            font-weight: 600;
+
+        /* --- BACK TO TOP BUTTON --- */
+        #toTopBtn {
+            display: none; position: fixed; bottom: 20px; right: 20px;
+            z-index: 99; border: none; outline: none;
+            background-color: var(--primary-accent); color: white;
+            cursor: pointer; padding: 12px; border-radius: 50%;
+            width: 48px; height: 48px; font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, opacity 0.3s;
         }
-        .notes-table td {
-            vertical-align: top;
-        }
-        
-        /* --- SCROLL REVEAL --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        
+        #toTopBtn:hover { background-color: var(--text-primary); }
+
         /* --- FOOTER --- */
         footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+
+        /* --- MEDIA QUERIES FOR LARGER SCREENS --- */
+        @media (min-width: 600px) {
+            .container { margin: 2.5rem auto; }
+            .content-card { padding: 2rem 2.5rem; }
+            header h1 { font-size: 1.6em; }
+            .content-card h2 { font-size: 2.2em; }
+            .content-card h3 { font-size: 1.6em; }
+            /* Make generations a 2-column grid on larger screens */
+            .generations-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 900px) {
+            /* Make generations a 3-column grid on very large screens */
+             .generations-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -191,58 +207,43 @@
     </header>
     
     <main class="container">
-        <article class="content-card reveal">
+        <article class="content-card">
             <h2>Unit 1: Computer Fundamentals</h2>
 
-            <!-- Section 1: Introduction to Computer -->
             <section id="intro">
-                <h3>1. Introduction to Computer</h3>
+                <h3><i class="fas fa-laptop-code"></i> 1. Introduction to Computer</h3>
                 <p>A <strong>computer</strong> is an electronic device that manipulates information, or data. It has the ability to store, retrieve, and process data according to a set of instructions. Computers are used for a vast range of tasks, from simple document creation to complex scientific calculations.</p>
 
                 <h4>1.1 Generations of Computers</h4>
-                <p>The history of computers is categorized into generations, each marked by a significant technological advancement.</p>
-                <table class="notes-table">
-                    <thead>
-                        <tr>
-                            <th>Generation</th>
-                            <th>Period</th>
-                            <th>Key Technology</th>
-                            <th>Characteristics</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>First</strong></td>
-                            <td>1940-1956</td>
-                            <td>Vacuum Tubes</td>
-                            <td>Very large, high power consumption, unreliable, used machine language. E.g., ENIAC.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Second</strong></td>
-                            <td>1956-1963</td>
-                            <td>Transistors</td>
-                            <td>Smaller, faster, cheaper, more reliable than first-gen. Used assembly language. E.g., IBM 1401.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Third</strong></td>
-                            <td>1964-1971</td>
-                            <td>Integrated Circuits (ICs)</td>
-                            <td>Increased speed and efficiency, keyboards and monitors introduced. E.g., IBM-360 series.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fourth</strong></td>
-                            <td>1971-Present</td>
-                            <td>Microprocessors (VLSI)</td>
-                            <td>Thousands of ICs on a single chip. Led to personal computers (PCs). E.g., Apple Macintosh.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fifth</strong></td>
-                            <td>Present & Beyond</td>
-                            <td>Artificial Intelligence (AI) & ULSI</td>
-                            <td>Focus on parallel processing, AI, expert systems, and natural language.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p>The history of computers is categorized into generations, each marked by a significant technological advancement. This evolution led to smaller, faster, and more powerful devices.</p>
+                
+                <div class="generations-container">
+                    <div class="generation-card">
+                        <h4>First Generation (1940-56)</h4>
+                        <p><strong>Technology:</strong> Vacuum Tubes</p>
+                        <p><strong>Characteristics:</strong> Very large, high power consumption, unreliable, used machine language. E.g., ENIAC.</p>
+                    </div>
+                    <div class="generation-card">
+                        <h4>Second Generation (1956-63)</h4>
+                        <p><strong>Technology:</strong> Transistors</p>
+                        <p><strong>Characteristics:</strong> Smaller, faster, cheaper, and more reliable. Used assembly language. E.g., IBM 1401.</p>
+                    </div>
+                    <div class="generation-card">
+                        <h4>Third Generation (1964-71)</h4>
+                        <p><strong>Technology:</strong> Integrated Circuits (ICs)</p>
+                        <p><strong>Characteristics:</strong> Increased speed and efficiency. Keyboards and monitors were introduced. E.g., IBM-360 series.</p>
+                    </div>
+                    <div class="generation-card">
+                        <h4>Fourth Generation (1971-Present)</h4>
+                        <p><strong>Technology:</strong> Microprocessors (VLSI)</p>
+                        <p><strong>Characteristics:</strong> Thousands of ICs on a single chip. Led to the Personal Computer (PC). E.g., Apple Macintosh.</p>
+                    </div>
+                    <div class="generation-card">
+                        <h4>Fifth Generation (Present & Beyond)</h4>
+                        <p><strong>Technology:</strong> AI & ULSI</p>
+                        <p><strong>Characteristics:</strong> Focus on parallel processing, Artificial Intelligence, expert systems, and natural language processing.</p>
+                    </div>
+                </div>
 
                 <h4>1.2 Types of Computers</h4>
                 <ul>
@@ -253,27 +254,17 @@
                 </ul>
             </section>
 
-            <!-- Section 2: Computer System Hardware -->
             <section id="hardware">
-                <h3>2. Computer System Hardware</h3>
-                <p>Hardware refers to the physical components of a computer system.</p>
-
+                <h3><i class="fas fa-cogs"></i> 2. Computer System Hardware</h3>
+                <p>Hardware refers to the physical components of a computer system that you can see and touch.</p>
                 <h4>2.1 Block Diagram of a Computer</h4>
                 <p>A computer system consists of an <strong>Input Unit</strong>, a <strong>Central Processing Unit (CPU)</strong>, a <strong>Memory Unit</strong>, and an <strong>Output Unit</strong>. The CPU is the core, containing the <strong>Control Unit (CU)</strong> and the <strong>Arithmetic Logic Unit (ALU)</strong>.</p>
-                <ul>
-                    <li><strong>Input Unit:</strong> Accepts data from the user (e.g., keyboard, mouse).</li>
-                    <li><strong>CPU:</strong> Processes data. The CU directs operations while the ALU performs calculations.</li>
-                    <li><strong>Memory Unit:</strong> Stores data and instructions.</li>
-                    <li><strong>Output Unit:</strong> Presents results to the user (e.g., monitor, printer).</li>
-                </ul>
             </section>
 
-            <!-- Section 3: Computer Memory -->
             <section id="memory">
-                <h3>3. Computer Memory</h3>
-                <p>Memory is where the computer holds data and instructions for processing.</p>
+                <h3><i class="fas fa-memory"></i> 3. Computer Memory</h3>
+                <p>Memory is where the computer holds data and instructions for processing. It is organized in a hierarchy based on speed, cost, and capacity.</p>
                 <h4>3.1 Memory Hierarchy</h4>
-                <p>Memory is organized in a hierarchy based on speed, cost, and capacity. Faster memory is more expensive and has less capacity.</p>
                 <ul>
                     <li><strong>CPU Registers:</strong> Fastest, smallest memory, located inside the CPU itself.</li>
                     <li><strong>Cache Memory:</strong> A very high-speed buffer between the CPU and main memory (RAM). Stores frequently used data.</li>
@@ -282,9 +273,8 @@
                 </ul>
             </section>
             
-            <!-- Section 4: I/O Devices -->
             <section id="io-devices">
-                <h3>4. Input & Output Devices</h3>
+                <h3><i class="fas fa-keyboard"></i> 4. Input & Output Devices</h3>
                 <h4>4.1 Input Devices</h4>
                 <ul>
                     <li><strong>Keyboard & Mouse:</strong> Standard devices for user interaction.</li>
@@ -299,42 +289,39 @@
                 </ul>
             </section>
 
-            <!-- Section 5: Software -->
             <section id="software">
-                <h3>5. Computer Software</h3>
+                <h3><i class="fas fa-compact-disc"></i> 5. Computer Software</h3>
                 <p>Software is a set of instructions that tells the hardware what to do.</p>
                 <ul>
-                    <li><strong>System Software:</strong> Manages computer hardware and provides a platform for applications (e.g., <code>Windows</code>, <code>Linux</code>, Device Drivers).</li>
-                    <li><strong>Application Software:</strong> Programs designed for end-users to perform specific tasks (e.g., <code>MS Word</code>, <code>Chrome</code>, <code>Photoshop</code>).</li>
+                    <li><strong>System Software:</strong> Manages hardware and provides a platform for applications (e.g., <code>Windows</code>, <code>Linux</code>).</li>
+                    <li><strong>Application Software:</strong> Programs for end-users to perform specific tasks (e.g., <code>MS Word</code>, <code>Chrome</code>).</li>
                     <li><strong>Utility Software:</strong> Helps to maintain and configure the computer (e.g., Antivirus, Disk Cleanup).</li>
-                    <li><strong>Firmware:</strong> Permanent software programmed into a device's read-only memory (e.g., BIOS).</li>
+                    <li><strong>Firmware:</strong> Permanent software in read-only memory (e.g., BIOS).</li>
                 </ul>
             </section>
 
-            <!-- Section 6: Networking -->
             <section id="networking">
-                <h3>6. Computer Network</h3>
+                <h3><i class="fas fa-network-wired"></i> 6. Computer Network</h3>
                 <p>A computer network is a collection of interconnected computers for sharing resources and information.</p>
-                
                 <h4>6.1 Network Types</h4>
                 <ul>
-                    <li><strong>LAN (Local Area Network):</strong> Covers a small geographical area like an office or home.</li>
+                    <li><strong>LAN (Local Area Network):</strong> Covers a small area like an office or home.</li>
                     <li><strong>MAN (Metropolitan Area Network):</strong> Spans a city, connecting multiple LANs.</li>
-                    <li><strong>WAN (Wide Area Network):</strong> Covers a large area, like a country. The <strong>Internet</strong> is the largest WAN.</li>
+                    <li><strong>WAN (Wide Area Network):</strong> Covers a large area. The <strong>Internet</strong> is the largest WAN.</li>
                 </ul>
-
                 <h4>6.2 Network Devices</h4>
                 <ul>
                     <li><strong>Repeater:</strong> Amplifies a signal to extend its range.</li>
-                    <li><strong>Hub:</strong> A basic connector that broadcasts data to all connected devices.</li>
-                    <li><strong>Bridge:</strong> Connects two LANs and filters traffic based on MAC addresses.</li>
-                    <li><strong>Switch:</strong> A smart hub that sends data only to the intended recipient device.</li>
-                    <li><strong>Router:</strong> Connects different networks and forwards data packets between them using IP addresses. It's the key to the internet.</li>
-                    <li><strong>Gateway:</strong> A node that connects two networks with different protocols, acting as an entry/exit point.</li>
+                    <li><strong>Hub:</strong> Basic connector that broadcasts data to all devices.</li>
+                    <li><strong>Switch:</strong> Smart hub that sends data only to the intended recipient.</li>
+                    <li><strong>Router:</strong> Connects different networks and forwards data between them.</li>
+                    <li><strong>Gateway:</strong> Connects two networks with different protocols.</li>
                 </ul>
             </section>
         </article>
     </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
     <footer><p>Created & Designed by Pratyush Swain</p></footer>
 
@@ -352,27 +339,25 @@
             document.body.classList.toggle('dark-mode', theme === 'dark');
             themeToggle.checked = (theme === 'dark');
         };
-
         const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         applyTheme(savedTheme);
-
         themeToggle.addEventListener('change', () => {
             const newTheme = themeToggle.checked ? 'dark' : 'light';
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
         });
 
-        // --- 2. SCROLL-REVEAL ANIMATION ---
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
+        // --- 2. BACK TO TOP BUTTON LOGIC ---
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                toTopBtn.style.display = "block";
+            } else {
+                toTopBtn.style.display = "none";
+            }
+        };
+        toTopBtn.addEventListener("click", () => {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
     });
     </script>
