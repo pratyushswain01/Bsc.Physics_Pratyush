@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: Computer Fundamentals - CS Notes</title>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        /* --- THEME & GENERAL STYLES --- */
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary-accent: #0052d4;
+            --gradient-accent: linear-gradient(45deg, #0052d4, #4364f7, #6fb1fc);
+            --text-primary: #1d2a35;
+            --text-secondary: #5c6a79;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 82, 212, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --code-bg: #e9ecef;
+        }
+        body.dark-mode {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --primary-accent: #58a6ff;
+            --gradient-accent: linear-gradient(45deg, #58a6ff, #367cde);
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --border-color: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(88, 166, 255, 0.15);
+            --header-bg: rgba(13, 17, 23, 0.8);
+            --code-bg: #21262d;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        body.loaded { opacity: 1; }
+        .container { 
+            width: 90%;
+            max-width: 900px;
+            margin: 2.5rem auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* --- PRELOADER --- */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- HEADER & THEME SWITCHER --- */
+        header { 
+            background-color: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; }
+        header h1 .fa-book-open { margin-right: 12px; }
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+
+        /* --- NOTES CONTENT STYLES --- */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+        .content-card h2 {
+            font-size: 2.2em;
+            color: var(--primary-accent);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .content-card h3 {
+            font-size: 1.6em;
+            color: var(--text-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .content-card h4 {
+            font-size: 1.2em;
+            color: var(--primary-accent);
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .content-card p, .content-card li {
+            color: var(--text-secondary);
+            font-size: 1.05em;
+        }
+        .content-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .content-card li {
+            padding-left: 1.8rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        .content-card li::before {
+            content: '\f101'; /* Font Awesome right arrow icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary-accent);
+            position: absolute;
+            left: 0;
+            top: 1px;
+        }
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--text-primary);
+        }
+        
+        /* --- TABLE STYLES --- */
+        .notes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95em;
+        }
+        .notes-table th, .notes-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            text-align: left;
+        }
+        .notes-table th {
+            background-color: var(--code-bg);
+            color: var(--primary-accent);
+            font-weight: 600;
+        }
+        .notes-table td {
+            vertical-align: top;
+        }
+        
+        /* --- SCROLL REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div></div>
+
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-book-open"></i>CS Notes</h1>
+            <div class="theme-switcher">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="slider"></label>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <article class="content-card reveal">
+            <h2>Unit 1: Computer Fundamentals</h2>
+
+            <!-- Section 1: Introduction to Computer -->
+            <section id="intro">
+                <h3>1. Introduction to Computer</h3>
+                <p>A <strong>computer</strong> is an electronic device that manipulates information, or data. It has the ability to store, retrieve, and process data according to a set of instructions. Computers are used for a vast range of tasks, from simple document creation to complex scientific calculations.</p>
+
+                <h4>1.1 Generations of Computers</h4>
+                <p>The history of computers is categorized into generations, each marked by a significant technological advancement.</p>
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>Generation</th>
+                            <th>Period</th>
+                            <th>Key Technology</th>
+                            <th>Characteristics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>First</strong></td>
+                            <td>1940-1956</td>
+                            <td>Vacuum Tubes</td>
+                            <td>Very large, high power consumption, unreliable, used machine language. E.g., ENIAC.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Second</strong></td>
+                            <td>1956-1963</td>
+                            <td>Transistors</td>
+                            <td>Smaller, faster, cheaper, more reliable than first-gen. Used assembly language. E.g., IBM 1401.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Third</strong></td>
+                            <td>1964-1971</td>
+                            <td>Integrated Circuits (ICs)</td>
+                            <td>Increased speed and efficiency, keyboards and monitors introduced. E.g., IBM-360 series.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fourth</strong></td>
+                            <td>1971-Present</td>
+                            <td>Microprocessors (VLSI)</td>
+                            <td>Thousands of ICs on a single chip. Led to personal computers (PCs). E.g., Apple Macintosh.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fifth</strong></td>
+                            <td>Present & Beyond</td>
+                            <td>Artificial Intelligence (AI) & ULSI</td>
+                            <td>Focus on parallel processing, AI, expert systems, and natural language.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>1.2 Types of Computers</h4>
+                <ul>
+                    <li><strong>Supercomputer:</strong> The most powerful computers, used for complex tasks like weather forecasting and scientific research.</li>
+                    <li><strong>Mainframe Computer:</strong> Large, powerful computers used by corporations for bulk data processing and transaction handling.</li>
+                    <li><strong>Minicomputer:</strong> A multi-user computer, smaller than a mainframe but larger than a microcomputer. Often used as a server.</li>
+                    <li><strong>Microcomputer (PC):</strong> Designed for individual use. Includes desktops, laptops, tablets, and smartphones.</li>
+                </ul>
+            </section>
+
+            <!-- Section 2: Computer System Hardware -->
+            <section id="hardware">
+                <h3>2. Computer System Hardware</h3>
+                <p>Hardware refers to the physical components of a computer system.</p>
+
+                <h4>2.1 Block Diagram of a Computer</h4>
+                <p>A computer system consists of an <strong>Input Unit</strong>, a <strong>Central Processing Unit (CPU)</strong>, a <strong>Memory Unit</strong>, and an <strong>Output Unit</strong>. The CPU is the core, containing the <strong>Control Unit (CU)</strong> and the <strong>Arithmetic Logic Unit (ALU)</strong>.</p>
+                <ul>
+                    <li><strong>Input Unit:</strong> Accepts data from the user (e.g., keyboard, mouse).</li>
+                    <li><strong>CPU:</strong> Processes data. The CU directs operations while the ALU performs calculations.</li>
+                    <li><strong>Memory Unit:</strong> Stores data and instructions.</li>
+                    <li><strong>Output Unit:</strong> Presents results to the user (e.g., monitor, printer).</li>
+                </ul>
+            </section>
+
+            <!-- Section 3: Computer Memory -->
+            <section id="memory">
+                <h3>3. Computer Memory</h3>
+                <p>Memory is where the computer holds data and instructions for processing.</p>
+                <h4>3.1 Memory Hierarchy</h4>
+                <p>Memory is organized in a hierarchy based on speed, cost, and capacity. Faster memory is more expensive and has less capacity.</p>
+                <ul>
+                    <li><strong>CPU Registers:</strong> Fastest, smallest memory, located inside the CPU itself.</li>
+                    <li><strong>Cache Memory:</strong> A very high-speed buffer between the CPU and main memory (RAM). Stores frequently used data.</li>
+                    <li><strong>Primary Memory (RAM):</strong> The computer's main working memory. It is volatile (data is lost on power off).</li>
+                    <li><strong>Secondary Memory (Storage):</strong> Non-volatile storage for long-term data retention (e.g., HDD, SSD, USB Drive).</li>
+                </ul>
+            </section>
+            
+            <!-- Section 4: I/O Devices -->
+            <section id="io-devices">
+                <h3>4. Input & Output Devices</h3>
+                <h4>4.1 Input Devices</h4>
+                <ul>
+                    <li><strong>Keyboard & Mouse:</strong> Standard devices for user interaction.</li>
+                    <li><strong>Scanner:</strong> Converts physical documents into digital format.</li>
+                    <li><strong>Microphone:</strong> Captures audio input.</li>
+                </ul>
+                <h4>4.2 Output Devices</h4>
+                <ul>
+                    <li><strong>Monitor (VDU):</strong> Displays visual information.</li>
+                    <li><strong>Printer:</strong> Creates hard copies of documents.</li>
+                    <li><strong>Speakers:</strong> Produce audio output.</li>
+                </ul>
+            </section>
+
+            <!-- Section 5: Software -->
+            <section id="software">
+                <h3>5. Computer Software</h3>
+                <p>Software is a set of instructions that tells the hardware what to do.</p>
+                <ul>
+                    <li><strong>System Software:</strong> Manages computer hardware and provides a platform for applications (e.g., <code>Windows</code>, <code>Linux</code>, Device Drivers).</li>
+                    <li><strong>Application Software:</strong> Programs designed for end-users to perform specific tasks (e.g., <code>MS Word</code>, <code>Chrome</code>, <code>Photoshop</code>).</li>
+                    <li><strong>Utility Software:</strong> Helps to maintain and configure the computer (e.g., Antivirus, Disk Cleanup).</li>
+                    <li><strong>Firmware:</strong> Permanent software programmed into a device's read-only memory (e.g., BIOS).</li>
+                </ul>
+            </section>
+
+            <!-- Section 6: Networking -->
+            <section id="networking">
+                <h3>6. Computer Network</h3>
+                <p>A computer network is a collection of interconnected computers for sharing resources and information.</p>
+                
+                <h4>6.1 Network Types</h4>
+                <ul>
+                    <li><strong>LAN (Local Area Network):</strong> Covers a small geographical area like an office or home.</li>
+                    <li><strong>MAN (Metropolitan Area Network):</strong> Spans a city, connecting multiple LANs.</li>
+                    <li><strong>WAN (Wide Area Network):</strong> Covers a large area, like a country. The <strong>Internet</strong> is the largest WAN.</li>
+                </ul>
+
+                <h4>6.2 Network Devices</h4>
+                <ul>
+                    <li><strong>Repeater:</strong> Amplifies a signal to extend its range.</li>
+                    <li><strong>Hub:</strong> A basic connector that broadcasts data to all connected devices.</li>
+                    <li><strong>Bridge:</strong> Connects two LANs and filters traffic based on MAC addresses.</li>
+                    <li><strong>Switch:</strong> A smart hub that sends data only to the intended recipient device.</li>
+                    <li><strong>Router:</strong> Connects different networks and forwards data packets between them using IP addresses. It's the key to the internet.</li>
+                    <li><strong>Gateway:</strong> A node that connects two networks with different protocols, acting as an entry/exit point.</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+
+    <footer><p>Created & Designed by Pratyush Swain</p></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. PRELOADER & THEME LOGIC ---
+        const loader = document.getElementById('loader');
+        window.addEventListener('load', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; document.body.classList.add('loaded'); }, 500);
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            themeToggle.checked = (theme === 'dark');
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // --- 2. SCROLL-REVEAL ANIMATION ---
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    });
+    </script>
+</body>
+</html>
