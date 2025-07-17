@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2: Program Development & Design - CS Notes</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        /* --- THEME & GENERAL STYLES --- */
+        :root {
+            --bg-color: #f0f2f5; --card-bg: #ffffff; --primary-accent: #0052d4; --text-primary: #1d2a35; --text-secondary: #5c6a79;
+            --border-color: rgba(0, 0, 0, 0.1); --shadow-color: rgba(0, 82, 212, 0.1); --header-bg: rgba(255, 255, 255, 0.8);
+            --code-bg: #e9ecef; --table-header-bg: #f8f9fa;
+        }
+        body.dark-mode {
+            --bg-color: #0d1117; --card-bg: #161b22; --primary-accent: #58a6ff; --text-primary: #c9d1d9; --text-secondary: #8b949e;
+            --border-color: rgba(255, 255, 255, 0.15); --shadow-color: rgba(88, 166, 255, 0.15); --header-bg: rgba(13, 17, 23, 0.8);
+            --code-bg: #21262d; --table-header-bg: #21262d;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary);
+            line-height: 1.8; transition: background-color 0.3s ease, color 0.3s ease; opacity: 0; animation: fadeIn 0.5s ease forwards;
+        }
+        body.loaded { opacity: 1; }
+        .container { width: 95%; max-width: 900px; margin: 1.5rem auto; position: relative; z-index: 2; }
+        
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        header { 
+            background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.4em; color: var(--primary-accent); font-weight: 700; }
+        header h1 .fa-book-open { margin-right: 10px; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 32px 0 var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 1.8em; color: var(--primary-accent); text-align: center; margin-top: 0; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border-color); }
+        .content-card h3 { font-size: 1.4em; color: var(--text-primary); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; }
+        .content-card h3 i { margin-right: 12px; color: var(--primary-accent); font-size: 0.9em; }
+        .content-card h4 { font-size: 1.15em; color: var(--primary-accent); margin-top: 1.8rem; margin-bottom: 0.8rem; }
+        .content-card p, .content-card li { color: var(--text-secondary); font-size: 1em; }
+        .content-card ul { list-style: none; padding-left: 0; }
+        .content-card li { padding-left: 1.8rem; position: relative; margin-bottom: 0.75rem; }
+        .content-card li::before { content: '\f101'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 1px; }
+        
+        .code-block { font-family: 'Fira Code', monospace; background-color: var(--code-bg); padding: 1em 1.5em; border-radius: 8px; font-size: 0.95em; color: var(--text-primary); white-space: pre-wrap; margin: 1rem 0; border: 1px solid var(--border-color); }
+        .table-container { overflow-x: auto; margin-top: 1.5rem;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); }
+
+        td div[class^="symbol"] { margin: 0 auto; }
+        .symbol-oval { width: 100px; height: 50px; background-color: var(--bg-color); border: 2px solid var(--primary-accent); border-radius: 50%; }
+        .symbol-parallelogram { width: 110px; height: 50px; background-color: var(--bg-color); border: 2px solid var(--primary-accent); transform: skew(-20deg); }
+        .symbol-rectangle { width: 110px; height: 50px; background-color: var(--bg-color); border: 2px solid var(--primary-accent); }
+        .symbol-diamond { width: 70px; height: 70px; background-color: var(--bg-color); border: 2px solid var(--primary-accent); transform: rotate(45deg); }
+        .symbol-arrow { width: 80px; height: 2px; background-color: var(--primary-accent); position: relative; }
+        .symbol-arrow::after { content: ''; position: absolute; right: -2px; top: -4px; border-style: solid; border-width: 5px 0 5px 8px; border-color: transparent transparent transparent var(--primary-accent);}
+        
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s, opacity 0.3s; }
+        #toTopBtn:hover { opacity: 0.8; }
+
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+
+        @media (min-width: 600px) {
+            .container { margin: 2.5rem auto; } .content-card { padding: 2rem 2.5rem; } header h1 { font-size: 1.6em; }
+            .content-card h2 { font-size: 2.2em; } .content-card h3 { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader"><div class="spinner"></div></div>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-book-open"></i>CS Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+    <main class="container">
+        <article class="content-card">
+            <h2>Unit 2: Program Development & Design</h2>
+            <section id="program-development">
+                <h3><i class="fas fa-tasks"></i> 1. Program Development</h3>
+                <p>Program development, also known as the Software Development Life Cycle (SDLC), is a systematic process for creating software. It ensures the final product is efficient, reliable, and meets user requirements.</p>
+                <h4>The key stages are:</h4>
+                <ul>
+                    <li><strong>Problem Analysis:</strong> The first and most critical step. It involves understanding the problem completely: defining the inputs, the required outputs, and the constraints.</li>
+                    <li><strong>Program Design:</strong> Creating a blueprint for the solution. This involves breaking down the problem into smaller modules and deciding on the logic and algorithms to use.</li>
+                    <li><strong>Development (Coding):</strong> Translating the design into an actual program using a chosen programming language.</li>
+                    <li><strong>Testing & Debugging:</strong> Running the program to find and fix errors (bugs).</li>
+                    <li><strong>Deployment & Maintenance:</strong> Making the software available to users and updating it over time.</li>
+                </ul>
+            </section>
+            <section id="algorithm">
+                <h3><i class="fas fa-sitemap"></i> 2. Algorithm</h3>
+                <p>An <strong>algorithm</strong> is a step-by-step, unambiguous set of instructions to solve a specific problem. It's a logical blueprint written in natural language.</p>
+                <h4>2.1 Pseudo Code</h4>
+                <p><strong>Pseudo code</strong> is an informal, high-level description of an algorithm. It uses natural language mixed with programming conventions to outline the logic without strict syntax rules.</p>
+                <p><strong>Example: Algorithm to add two numbers</strong></p>
+                <pre class="code-block"><code>START
+  DECLARE number1, number2, sum
+  INPUT number1
+  INPUT number2
+  CALCULATE sum = number1 + number2
+  PRINT sum
+END</code></pre>
+                <h4>2.2 Control Structures</h4>
+                <p>These are the blocks that control the flow of execution in an algorithm.</p>
+                <ul>
+                    <li><strong>Sequence:</strong> Instructions are executed one after another in order.</li>
+                    <li><strong>Selection (Decision):</strong> Used for making decisions (e.g., IF-THEN-ELSE). A condition is checked, and a block of instructions is executed based on the result.</li>
+                    <li><strong>Iteration (Looping):</strong> Allows a block of instructions to be executed repeatedly (e.g., FOR, WHILE loops).</li>
+                </ul>
+            </section>
+            <section id="flowchart">
+                <h3><i class="fas fa-project-diagram"></i> 3. Flowchart</h3>
+                <p>A <strong>flowchart</strong> is a visual representation of an algorithm. It uses standard symbols to depict the sequence of operations and decisions.</p>
+                <h4>Common Flowchart Symbols:</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Symbol</th><th>Name</th><th>Function</th></tr></thead>
+                        <tbody>
+                            <tr><td><div class="symbol-oval"></div></td><td>Terminal (Oval)</td><td>Represents the Start or End point.</td></tr>
+                            <tr><td><div class="symbol-parallelogram"></div></td><td>Input/Output</td><td>Indicates reading data (Input) or displaying results (Output).</td></tr>
+                            <tr><td><div class="symbol-rectangle"></div></td><td>Process</td><td>Represents a calculation or an operation.</td></tr>
+                            <tr><td><div class="symbol-diamond"></div></td><td>Decision</td><td>Shows a point where a decision is made (Yes/No).</td></tr>
+                            <tr><td><div class="symbol-arrow"></div></td><td>Flow Lines</td><td>Connects symbols and shows the direction of flow.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="paradigms">
+                <h3><i class="fas fa-lightbulb"></i> 4. Programming Paradigms & Design</h3>
+                <p>A <strong>programming paradigm</strong> is a style or "way" of structuring computer programs.</p>
+                <ul>
+                    <li><strong>Structured Programming:</strong> Focuses on logical structure using sequences, selections, and iterations. (e.g., C, Pascal).</li>
+                    <li><strong>Object-Oriented Programming (OOP):</strong> Revolves around "objects," which bundle data and methods together. (e.g., Java, C++).</li>
+                    <li><strong>Top-Down Design:</strong> Starts with the main problem and breaks it down into smaller sub-problems.</li>
+                    <li><strong>Bottom-Up Design:</strong> Starts by designing and coding the most basic modules first, then integrating them into a complete system.</li>
+                </ul>
+                <h4>Characteristics of a Good Program:</h4>
+                <ul>
+                    <li><strong>Correctness:</strong> Produces accurate results for all valid inputs.</li>
+                    <li><strong>Readability & Maintainability:</strong> Easy to understand, modify, and debug.</li>
+                    <li><strong>Efficiency:</strong> Uses computer resources (CPU, memory) effectively.</li>
+                    <li><strong>Robustness:</strong> Handles unexpected inputs or errors gracefully without crashing.</li>
+                </ul>
+            </section>
+            <section id="languages">
+                 <h3><i class="fas fa-code"></i> 5. Programming Languages</h3>
+                 <p>A programming language is a set of rules and syntax used to write computer instructions.</p>
+                 <h4>5.1 Low-Level vs. High-Level Languages</h4>
+                 <ul>
+                    <li><strong>Low-Level Languages:</strong> Closer to machine hardware. Includes Machine Language (binary) and Assembly Language (mnemonics).</li>
+                    <li><strong>High-Level Languages:</strong> Closer to human language, easier to write (e.g., C++, Java, Python). Must be translated to machine code.</li>
+                </ul>
+                <h4>5.2 Language Translators</h4>
+                <p>A translator converts source code (human-readable) into machine code (computer-readable).</p>
+                 <ul>
+                    <li><strong>Assembler:</strong> Translates Assembly Language into machine code.</li>
+                    <li><strong>Compiler:</strong> Translates an entire program at once into an executable file. (e.g., for C, C++).</li>
+                    <li><strong>Interpreter:</strong> Translates and executes a program line-by-line. No separate executable is created. (e.g., for Python, JavaScript).</li>
+                </ul>
+            </section>
+            <section id="environment">
+                <h3><i class="fas fa-tools"></i> 6. Development Environment</h3>
+                <p>This refers to the set of tools used to create software.</p>
+                 <ul>
+                    <li><strong>Editor:</strong> For writing and editing source code (e.g., Notepad++, VS Code).</li>
+                    <li><strong>Linker:</strong> Combines compiled object files into a single executable program.</li>
+                    <li><strong>Loader:</strong> Part of the OS that loads the executable file into memory to run it.</li>
+                    <li><strong>Integrated Development Environment (IDE):</strong> A suite that bundles all the above tools (editor, compiler, debugger) into one application (e.g., Visual Studio, Eclipse).</li>
+                </ul>
+                <h4>Programming Errors:</h4>
+                 <ul>
+                    <li><strong>Syntax Errors:</strong> "Grammar" errors that violate the language's rules. Caught by the compiler.</li>
+                    <li><strong>Logical Errors (Bugs):</strong> The program runs but produces incorrect results due to flawed logic.</li>
+                    <li><strong>Runtime Errors:</strong> Errors that occur while the program is running, often causing it to crash (e.g., division by zero).</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+    <footer><p>Created & Designed with care for learning.</p></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('loader');
+        window.addEventListener('load', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; document.body.classList.add('loaded'); }, 500);
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            themeToggle.checked = (theme === 'dark');
+        };
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none"; };
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
