@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1 Notes - Computer Fundamentals & Networking</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #6d28d9; --secondary-accent: #f59e0b; --text-primary: #1f2937; --text-secondary: #4b5563;
+            --border-color: #e5e7eb; --shadow-color: rgba(109, 40, 217, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f3f4f6; --code-header-bg: #e5e7eb; --tip-bg: #eef2ff; --tip-border: #a5b4fc; --table-header-bg: #f3f4f6;
+            --code-keyword: #7c3aed; --code-string: #16a34a; --code-comment: #9ca3af; --code-function: #be185d; --code-number: #ea580c; --code-operator: #2563eb;
+        }
+        body.dark-mode {
+            --bg-color: #111827; --card-bg: #1f2937; --primary-accent: #a78bfa; --secondary-accent: #facc15; --text-primary: #f9fafb; --text-secondary: #d1d5db;
+            --border-color: #374151; --shadow-color: rgba(167, 139, 250, 0.05); --header-bg: rgba(31, 41, 55, 0.85);
+            --code-bg: #212b40; --code-header-bg: #374151; --tip-bg: rgba(167, 139, 250, 0.08); --tip-border: var(--primary-accent); --table-header-bg: #374151;
+            --code-keyword: #c792ea; --code-string: #c3e88d; --code-comment: #6b7280; --code-function: #82aaff; --code-number: #ffcb6b; --code-operator: #89ddff;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 2; font-weight: 300; font-size: 1.1rem; transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards; }
+        .container { width: 95%; max-width: 1000px; margin: 2rem auto; position: relative; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fas { color: var(--secondary-accent); font-size: 1.2em; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.8em; color: var(--text-primary); text-align: center; margin: 0 0 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fas { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.8em; color: var(--primary-accent); margin: 3.5rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.3em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .content-card p, .content-card li { color: var(--text-secondary); }
+        .content-card ul, ol { padding-left: 2rem; } li { margin-bottom: 0.5rem; }
+        .table-container { overflow-x: auto; margin: 1.8rem 0; border: 1px solid var(--border-color); border-radius: 8px;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); font-size: 1em;}
+        tbody tr:last-child td { border-bottom: none; }
+        
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-desktop"></i> Computer Science Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fas fa-book-open"></i> Unit 1: Computer Fundamentals & Networking</h2>
+            
+            <section id="two-marks">
+                <h3><i class="fas fa-list-ol"></i> Section A (2 Marks Questions)</h3>
+                
+                <h4>1. Differentiate between computer hardware and software.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis</th><th>Hardware</th><th>Software</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Definition</strong></td><td>Physical, tangible components of a computer.</td><td>A set of instructions or programs to operate a computer.</td></tr>
+                            <tr><td><strong>Nature</strong></td><td>Can be touched and seen.</td><td>Cannot be touched (intangible).</td></tr>
+                            <tr><td><strong>Examples</strong></td><td>CPU, RAM, Keyboard, Monitor.</td><td>Windows OS, MS Office, Chrome.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>2. Differentiate between system software and application software.</h4>
+                <div class="table-container">
+                    <table>
+                         <thead><tr><th>Basis</th><th>System Software</th><th>Application Software</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Purpose</strong></td><td>Manages hardware and provides a platform for applications.</td><td>Performs specific tasks for the end-user.</td></tr>
+                            <tr><td><strong>Dependency</strong></td><td>Can run independently.</td><td>Depends on system software to run.</td></tr>
+                            <tr><td><strong>Examples</strong></td><td>Operating System, Device Drivers.</td><td>MS Word, Photoshop, Games.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>3. What is a binary code and why it is used in a computer?</h4>
+                <p>Binary code is a system that represents text, computer processor instructions, or any other data using a two-symbol system, typically "0" and "1". It is used in computers because their fundamental components (transistors) operate in two states: on or off, which can be directly represented by 1 and 0, respectively. This makes it the most basic language of a computer.</p>
+
+                <h4>4. What is a computer Algorithm and why is it important in computer science?</h4>
+                <p>A computer algorithm is a finite, step-by-step set of instructions for solving a problem or accomplishing a task. It is important because it provides a clear, unambiguous blueprint for writing a computer program. A well-designed algorithm ensures that the program is correct, efficient, and reliable.</p>
+
+                <h4>5. What is a computer's cache memory and how does it improve performance?</h4>
+                <p>Cache memory is a small, extremely fast type of volatile memory that provides high-speed data access to the CPU. It improves performance by storing frequently used data and instructions, reducing the time the CPU spends waiting for data from the slower main memory (RAM).</p>
+
+                <h4>6. What is computer booting?</h4>
+                <p>Booting is the process of starting a computer. It begins when the power is turned on and involves loading the operating system (OS) from the storage drive into the main memory (RAM). The initial instructions for booting are stored in the BIOS or UEFI firmware.</p>
+
+                <h4>7. Define Register.</h4>
+                <p>A register is a small amount of very fast memory located directly inside the Central Processing Unit (CPU). Registers are used to hold the data, instructions, and addresses that the CPU is currently working on, allowing for extremely quick processing.</p>
+
+                <h4>8. What role does the ALU play in a computer system?</h4>
+                <p>The ALU (Arithmetic Logic Unit) is a crucial component of the CPU. Its role is to perform all arithmetic operations (like addition, subtraction, multiplication) and logical operations (like AND, OR, NOT). It is the mathematical brain of the computer.</p>
+
+                <h4>9. Differentiate between static RAM and dynamic RAM.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis</th><th>Static RAM (SRAM)</th><th>Dynamic RAM (DRAM)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Technology</strong></td><td>Made of flip-flops.</td><td>Made of capacitors and transistors.</td></tr>
+                            <tr><td><strong>Speed</strong></td><td>Faster.</td><td>Slower.</td></tr>
+                            <tr><td><strong>Refresh</strong></td><td>Does not need to be refreshed.</td><td>Must be refreshed constantly.</td></tr>
+                            <tr><td><strong>Use</strong></td><td>CPU cache memory.</td><td>Main system memory (RAM).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>10. Name the different types of ROM.</h4>
+                <p>The main types of Read-Only Memory (ROM) are:</p>
+                <ul>
+                    <li><strong>PROM:</strong> Programmable Read-Only Memory</li>
+                    <li><strong>EPROM:</strong> Erasable Programmable Read-Only Memory</li>
+                    <li><strong>EEPROM:</strong> Electrically Erasable Programmable Read-Only Memory</li>
+                </ul>
+
+                <h4>11. What is router and how is it different from repeater?</h4>
+                <p>A <strong>router</strong> is a networking device that connects different networks and forwards data packets between them based on their IP address. A <strong>repeater</strong> is a simpler device that only regenerates and retransmits a network signal to extend its range, without any routing intelligence.</p>
+
+                <h4>12. Write down the importance of networking.</h4>
+                <p>The importance of networking includes:</p>
+                <ul>
+                    <li><strong>Resource Sharing:</strong> Sharing hardware like printers and files.</li>
+                    <li><strong>Communication:</strong> Enabling email, video conferencing, and messaging.</li>
+                    <li><strong>Access to Information:</strong> Providing access to remote databases and the internet.</li>
+                    <li><strong>Centralized Management:</strong> Simplifying software updates and data backups.</li>
+                </ul>
+
+                <h4>13. Define hybrid computer with suitable example.</h4>
+                <p>A hybrid computer is a computer that has features of both analog and digital computers. It combines the speed of analog computers and the memory and accuracy of digital computers. For example, a computer used in a hospital's ICU to monitor a patient's heartbeat (analog) and then convert the data into numbers and values (digital) is a hybrid computer.</p>
+
+                <h4>14. Name the different types of networks on the basis of geographical area.</h4>
+                <p>The main types of networks based on geographical area are:</p>
+                <ul>
+                    <li><strong>PAN (Personal Area Network)</strong> - a few meters</li>
+                    <li><strong>LAN (Local Area Network)</strong> - a room, building, or campus</li>
+                    <li><strong>MAN (Metropolitan Area Network)</strong> - a city</li>
+                    <li><strong>WAN (Wide Area Network)</strong> - a country or the globe</li>
+                </ul>
+
+                <h4>15. Differentiate between hub and switch.</h4>
+                <div class="table-container">
+                     <table>
+                        <thead><tr><th>Feature</th><th>Hub</th><th>Switch</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Transmission</strong></td><td>Broadcasts data to all devices.</td><td>Sends data only to the intended device.</td></tr>
+                            <tr><td><strong>Intelligence</strong></td><td>"Dumb" device (Layer 1).</td><td>"Intelligent" device (Layer 2), uses MAC addresses.</td></tr>
+                            <tr><td><strong>Bandwidth</strong></td><td>Shares bandwidth among all devices.</td><td>Provides dedicated bandwidth to each port.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>16. What is Gateway in computer network?</h4>
+                <p>A gateway is a networking device that acts as an entry/exit point for a network, connecting two dissimilar networks that use different communication protocols. It translates data from one protocol to another. Your home router acts as a gateway between your local LAN and the internet (WAN).</p>
+
+                <h4>17. What are storage devices? Write down its function.</h4>
+                <p>Storage devices are computer hardware used to store data and programs permanently (non-volatile). Their function is to retain information even when the computer is powered off, allowing it to be retrieved later. Examples include Hard Disk Drives (HDD), Solid-State Drives (SSD), and USB flash drives.</p>
+
+                <h4>18. Differentiate between LAN and WAN.</h4>
+                 <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>LAN</th><th>WAN</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Area</strong></td><td>Covers a small area (e.g., office building).</td><td>Covers a large geographical area (e.g., a country).</td></tr>
+                            <tr><td><strong>Speed</strong></td><td>Very high speed.</td><td>Slower speed compared to LAN.</td></tr>
+                            <tr><td><strong>Ownership</strong></td><td>Usually privately owned.</td><td>Often uses public or leased lines.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>19. What is volatile memory?</h4>
+                <p>Volatile memory is a type of computer memory that requires power to maintain the stored information. All data is lost when the power is turned off. The most common example is RAM (Random Access Memory).</p>
+
+            </section>
+            
+            <section id="five-marks">
+                <h3><i class="fas fa-star-half-alt"></i> Section B (5 Marks Questions)</h3>
+
+                <h4>1. What is software? Explain different types of software.</h4>
+                <p><strong>Software</strong> is a collection of instructions, data, or programs that tell a computer how to perform specific tasks. It is the logical, intangible part of a computer system. Software is broadly classified into two main types:</p>
+                
+                <h5>1. System Software</h5>
+                <p>System software manages the computer's hardware and provides a platform for application software. It is essential for the computer's operation.</p>
+                <ul>
+                    <li><strong>Operating System (OS):</strong> The core software that manages all hardware and software resources. Examples: Windows, macOS, Linux, Android.</li>
+                    <li><strong>Device Drivers:</strong> Programs that allow the OS to communicate with specific hardware devices like printers or graphics cards.</li>
+                    <li><strong>Utility Software:</strong> Programs that help maintain and configure the computer. Examples: Antivirus software, disk cleanup tools.</li>
+                </ul>
+
+                <h5>2. Application Software</h5>
+                <p>Application software (apps) is designed to perform specific tasks for the end-user.</p>
+                <ul>
+                    <li><strong>Word Processors:</strong> For creating documents (e.g., MS Word).</li>
+                    <li><strong>Web Browsers:</strong> For accessing the internet (e.g., Chrome).</li>
+                    <li><strong>Spreadsheet Software:</strong> For organizing and analyzing data (e.g., MS Excel).</li>
+                    <li><strong>Database Software:</strong> For managing databases (e.g., MySQL).</li>
+                </ul>
+
+                <h4>2. What do you mean by internet? Explain with its application.</h4>
+                <p>The <strong>Internet</strong> is a massive, global network of interconnected computer networks. It uses the standard TCP/IP protocol suite to link billions of devices worldwide, allowing them to communicate and share information. It is a "network of networks" that is not owned by any single entity.</p>
+                <h5>Applications of the Internet:</h5>
+                <ol>
+                    <li><strong>World Wide Web (WWW):</strong> A system of interlinked hypertext documents accessed via the internet. It's how we access websites.</li>
+                    <li><strong>Communication:</strong> Email, instant messaging (WhatsApp), video conferencing (Zoom, Google Meet), and social media (Facebook, Instagram).</li>
+                    <li><strong>E-Commerce:</strong> Buying and selling goods and services online through platforms like Amazon and Flipkart.</li>
+                    <li><strong>Information Retrieval:</strong> Accessing a vast amount of information through search engines like Google.</li>
+                    <li><strong>Entertainment:</strong> Streaming music (Spotify), videos (YouTube, Netflix), and online gaming.</li>
+                </ol>
+
+                <h4>3. Explain different types of networks.</h4>
+                <p>Computer networks are classified based on their geographical scope:</p>
+                <ul>
+                    <li><strong>PAN (Personal Area Network):</strong> Spans a very small area, typically around a single person (a few meters). It's used to connect personal devices like a smartphone, laptop, and wireless headphones via Bluetooth.</li>
+                    <li><strong>LAN (Local Area Network):</strong> Connects devices within a limited area like a home, office building, or school campus. It has high speed and is usually privately owned. Technologies include Ethernet and Wi-Fi.</li>
+                    <li><strong>MAN (Metropolitan Area Network):</strong> Covers a larger area than a LAN, such as a city. It often interconnects multiple LANs. It can be owned by a single organization or a public provider like a cable company.</li>
+                    <li><strong>WAN (Wide Area Network):</strong> Spans a large geographical area, like a country or the entire globe. It consists of multiple interconnected LANs and MANs. The Internet is the world's largest WAN. It uses public communication lines and has slower speeds than LANs.</li>
+                </ul>
+                
+                <h4>4. Differentiate between Analog computer and digital computer.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis</th><th>Analog Computer</th><th>Digital Computer</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Data Type</strong></td><td>Processes continuous data that changes constantly (e.g., temperature, pressure).</td><td>Processes discrete data represented by binary digits (0s and 1s).</td></tr>
+                            <tr><td><strong>Accuracy</strong></td><td>Less accurate and has limited precision.</td><td>Highly accurate and precise.</td></tr>
+                            <tr><td><strong>Speed</strong></td><td>Very fast as it processes data in real-time.</td><td>Slower compared to analog for real-time processing, but fast for calculations.</td></tr>
+                            <tr><td><strong>Memory</strong></td><td>Very limited storage capacity.</td><td>Large storage capacity.</td></tr>
+                            <tr><td><strong>Example</strong></td><td>A traditional thermometer, a speedometer.</td><td>Laptops, smartphones, calculators.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>5. What is Register? Explain different types of register with suitable net sketch.</h4>
+                <p>A <strong>Register</strong> is a small, extremely fast memory location inside the CPU. It holds data temporarily that is being actively processed. Since registers are part of the CPU chip itself, they provide the fastest way for the system to access data.</p>
+                <h5>Types of Registers:</h5>
+                <ul>
+                    <li><strong>Memory Address Register (MAR):</strong> Holds the memory address of the data or instruction that needs to be fetched from or stored into memory.</li>
+                    <li><strong>Memory Data Register (MDR):</strong> Holds the data that is being transferred to or from memory. It acts as a buffer.</li>
+                    <li><strong>Program Counter (PC):</strong> Holds the memory address of the next instruction to be executed.</li>
+                    <li><strong>Accumulator (AC):</strong> Stores the result of calculations performed by the ALU.</li>
+                    <li><strong>Instruction Register (IR):</strong> Holds the current instruction being executed.</li>
+                </ul>
+                <p><em>(A net sketch would show the CPU with these registers inside, connected to the ALU and Control Unit, with arrows pointing to and from the main memory via a system bus).</em></p>
+
+                <h4>6. Explain mainframe computer with suitable diagram and how it is different from super computer.</h4>
+                <p>A <strong>Mainframe Computer</strong> is a large, powerful computer primarily used by large organizations for critical applications, such as bulk data processing, transaction processing, and enterprise resource planning. They are known for their high reliability, availability, and security. A single mainframe can support thousands of users simultaneously.</p>
+                <p><em>(A diagram would show a central mainframe unit connected to numerous terminals, storage devices, and printers).</em></p>
+                <h5>Difference between Mainframe and Supercomputer:</h5>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis</th><th>Mainframe Computer</th><th>Supercomputer</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Primary Task</strong></td><td>Processes a huge number of transactions and I/O operations simultaneously. (High throughput).</td><td>Executes a few, extremely complex calculations at very high speed. (High processing speed).</td></tr>
+                            <tr><td><strong>Users</strong></td><td>Used in banks, airlines, and insurance companies for massive transaction processing.</td><td>Used in scientific research, weather forecasting, and complex simulations.</td></tr>
+                            <tr><td><strong>Speed Metric</strong></td><td>Measured in MIPS (Millions of Instructions Per Second).</td><td>Measured in FLOPS (Floating-Point Operations Per Second).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                 <h4>7. Briefly explain different input devices with functionalities.</h4>
+                <p>Input devices are hardware peripherals used to provide data and control signals to a computer. Some common input devices are:</p>
+                <ol>
+                    <li><strong>Keyboard:</strong> The most common input device, used to enter text, numbers, and commands into the computer.</li>
+                    <li><strong>Mouse:</strong> A pointing device that detects two-dimensional motion, allowing users to interact with graphical user interfaces (GUIs) by clicking and selecting items.</li>
+                    <li><strong>Scanner:</strong> A device that optically scans images, printed text, or objects and converts them into a digital format.</li>
+                    <li><strong>Microphone:</strong> An audio input device that converts sound waves into electrical signals, allowing the computer to record voice or other sounds.</li>
+                    <li><strong>Webcam (Web Camera):</strong> A video camera that feeds its image in real time to or through a computer, used for video conferencing and streaming.</li>
+                </ol>
+
+                 <h4>8. What is firmware? Write down its application.</h4>
+                <p><strong>Firmware</strong> is a special type of software that is permanently stored on a hardware device's read-only memory (ROM). It provides low-level control for the device's specific hardware. Unlike regular software, it is not typically changed or updated by the end-user.</p>
+                <h5>Applications of Firmware:</h5>
+                <ul>
+                    <li><strong>Computer BIOS/UEFI:</strong> The firmware on a computer's motherboard that initializes the hardware during the booting process.</li>
+                    <li><strong>Embedded Systems:</strong> In devices like washing machines, microwaves, and traffic lights, firmware acts as the device's operating system.</li>
+                    <li><strong>Consumer Electronics:</strong> In TVs, remote controls, and digital cameras, firmware controls their basic functions.</li>
+                    <li><strong>Network Devices:</strong> Routers and switches run on firmware that manages their networking tasks.</li>
+                </ul>
+
+                <h4>9. Briefly explain different output devices with functionalities.</h4>
+                <p>Output devices are hardware peripherals that receive data from a computer and translate it into a human-perceptible form, such as text, graphics, audio, or video.</p>
+                <ol>
+                    <li><strong>Monitor (or Display Screen):</strong> The most common output device, displaying information in visual form.</li>
+                    <li><strong>Printer:</strong> A device that produces a hard copy (a permanent physical representation) of text or graphics on paper.</li>
+                    <li><strong>Speakers:</strong> Audio output devices that convert electronic signals from the computer into sound waves.</li>
+                    <li><strong>Projector:</strong> A device that takes a video signal from a computer and projects the corresponding image onto a large screen.</li>
+                    <li><strong>Headphones:</strong> A personal audio output device worn on or over the ears.</li>
+                </ol>
+
+                <h4>10. What is memory? Explain briefly different types of computer memory.</h4>
+                <p><strong>Computer Memory</strong> refers to the physical devices used to store data and programs, either temporarily or permanently. It is one of the fundamental components of a computer system.</p>
+                <h5>Types of Computer Memory:</h5>
+                <ol>
+                    <li><strong>Primary Memory (Main Memory):</strong> This is volatile memory that the CPU can access directly. It holds data and instructions that are currently in use.
+                        <ul>
+                            <li><strong>RAM (Random Access Memory):</strong> Volatile memory for active programs and data. Data is lost when power is off.</li>
+                            <li><strong>ROM (Read-Only Memory):</strong> Non-volatile memory that stores firmware like the BIOS. Data is permanent.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Secondary Memory (Storage):</strong> This is non-volatile memory used for long-term storage of data and programs. It is slower than primary memory.
+                        <ul>
+                            <li><strong>HDD (Hard Disk Drive):</strong> A magnetic storage device with large capacity.</li>
+                            <li><strong>SSD (Solid-State Drive):</strong> A faster, more durable storage device that uses flash memory.</li>
+                            <li><strong>Optical Disks:</strong> CD, DVD, Blu-ray discs.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>11. What is operating system? Explain its functionalities.</h4>
+                <p>An <strong>Operating System (OS)</strong> is the core system software that acts as an intermediary between the computer hardware and the end-user. It manages all the hardware and software resources of the system.</p>
+                <h5>Major Functionalities of an OS:</h5>
+                <ul>
+                    <li><strong>Process Management:</strong> Manages the execution of programs (processes), including scheduling and termination.</li>
+                    <li><strong>Memory Management:</strong> Allocates and de-allocates memory space to programs as needed.</li>
+                    <li><strong>File Management:</strong> Organizes and manages files and directories on storage devices, controlling their creation, deletion, and access.</li>
+                    <li><strong>Device Management:</strong> Manages communication with hardware devices through their drivers.</li>
+                    <li><strong>Security:</strong> Provides security through user authentication (passwords) and protecting system resources from unauthorized access.</li>
+                    <li><strong>User Interface:</strong> Provides an interface (Command-Line or Graphical) for the user to interact with the computer.</li>
+                </ul>
+
+                 <h4>12. Explain about various generation of computer.</h4>
+                <p>The evolution of computers is categorized into five generations:</p>
+                <ol>
+                    <li><strong>First Generation (1940s-1950s):</strong> Used vacuum tubes as the main component. They were enormous, expensive, consumed a lot of power, and were unreliable. Example: ENIAC.</li>
+                    <li><strong>Second Generation (1950s-1960s):</strong> Replaced vacuum tubes with transistors, which were smaller, faster, cheaper, and more reliable. Assembly language was used. Example: IBM 1401.</li>
+                    <li><strong>Third Generation (1960s-1970s):</strong> Used Integrated Circuits (ICs), where multiple transistors were placed on a single silicon chip. This made computers smaller and more powerful. High-level programming languages were introduced. Example: IBM System/360.</li>
+                    <li><strong>Fourth Generation (1970s-Present):</strong> Used microprocessors, which contain thousands or millions of transistors on a single chip (Very Large Scale Integration - VLSI). This led to the development of personal computers (PCs). Example: Apple Macintosh, IBM PC.</li>
+                    <li><strong>Fifth Generation (Present and Beyond):</strong> Focuses on Artificial Intelligence (AI), parallel processing, and quantum computing. These computers are designed to understand natural language and make decisions like humans.</li>
+                </ol>
+            </section>
+            
+            <section id="eight-marks">
+                <h3><i class="fas fa-star"></i> Section C (8 Marks Questions)</h3>
+
+                <h4>1. What is a Network? Explain different types of computer Network.</h4>
+                <p>A <strong>computer network</strong> is a collection of two or more interconnected computers and other hardware devices (like printers, servers) linked together through communication channels. The primary purpose of a network is to facilitate the sharing of resources (such as files, software, and hardware) and to enable communication (such as email and video conferencing) among users.</p>
+                
+                <h5>Types of Computer Networks</h5>
+                <p>Computer networks are primarily classified based on the geographical area they span. The main types are:</p>
+                
+                <h5>1. LAN (Local Area Network)</h5>
+                <ul>
+                    <li><strong>Area:</strong> A LAN connects devices within a limited geographical area, such as a single building, an office, a school, or a home.</li>
+                    <li><strong>Ownership:</strong> They are typically privately owned and managed by a single organization or individual.</li>
+                    <li><strong>Speed:</strong> LANs offer very high data transfer speeds (e.g., 100 Mbps to 10 Gbps) because of the short distances involved.</li>
+                    <li><strong>Technology:</strong> Common technologies are Ethernet (cables) and Wi-Fi (wireless).</li>
+                </ul>
+
+                <h5>2. MAN (Metropolitan Area Network)</h5>
+                <ul>
+                    <li><strong>Area:</strong> A MAN covers a larger area than a LAN, such as an entire city. It can be formed by interconnecting multiple LANs.</li>
+                    <li><strong>Ownership:</strong> A MAN can be owned by a single organization or by a public service provider.</li>
+                    <li><strong>Technology:</strong> MANs often use fiber optic cables.</li>
+                </ul>
+
+                <h5>3. WAN (Wide Area Network)</h5>
+                <ul>
+                    <li><strong>Area:</strong> A WAN spans a very large geographical area, such as a state, a country, or the entire globe. It is a network of networks.</li>
+                    <li><strong>Ownership:</strong> WANs are rarely owned by a single organization and use public telecommunication channels.</li>
+                    <li><strong>Speed:</strong> Data transfer speeds are significantly slower than in a LAN.</li>
+                    <li><strong>Example:</strong> The Internet is the largest WAN in the world.</li>
+                </ul>
+
+                <h5>4. PAN (Personal Area Network)</h5>
+                <ul>
+                    <li><strong>Area:</strong> This is the smallest type of network, centered around an individual's personal workspace (a few meters).</li>
+                    <li><strong>Technology:</strong> Bluetooth and Wi-Fi Direct are common technologies.</li>
+                </ul>
+
+                <h4>2. What do you mean by memory hierarchy? Explain Briefly.</h4>
+                <p>The <strong>Memory Hierarchy</strong> in a computer system is a structural arrangement of its various memory and storage devices. It is organized in a pyramid-like structure based on three key characteristics: access speed, cost per bit, and storage capacity.</p>
+                <p>The core principle is that the fastest memories are the most expensive and have the smallest capacity, so they are placed at the top of the hierarchy, closest to the CPU. As you move down the hierarchy, the speed and cost decrease, while the capacity increases.</p>
+                
+                <h5>Levels of the Memory Hierarchy:</h5>
+                <ol>
+                    <li><strong>Level 0: CPU Registers:</strong>
+                        <ul>
+                            <li><strong>Location:</strong> Inside the CPU.</li>
+                            <li><strong>Characteristics:</strong> Fastest access speed, highest cost, smallest capacity. Holds data currently being processed.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Level 1: Cache Memory:</strong>
+                        <ul>
+                            <li><strong>Location:</strong> On or very close to the CPU chip.</li>
+                            <li><strong>Characteristics:</strong> Slower than registers but much faster than RAM. Stores frequently accessed data from RAM to reduce access time.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Level 2: Primary Memory (RAM):</strong>
+                        <ul>
+                            <li><strong>Location:</strong> On the motherboard.</li>
+                            <li><strong>Characteristics:</strong> Slower than cache, but much faster than secondary storage. It is volatile and holds the OS, active programs, and data.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Level 3: Secondary Storage:</strong>
+                        <ul>
+                            <li><strong>Location:</strong> Internal or external drives.</li>
+                            <li><strong>Characteristics:</strong> Slowest access speed, lowest cost per bit, largest capacity. It is non-volatile. Examples include SSDs, HDDs.</li>
+                        </ul>
+                    </li>
+                     <li><strong>Level 4: Tertiary Storage (Offline Storage):</strong>
+                        <ul>
+                            <li><strong>Location:</strong> External, often removable media.</li>
+                            <li><strong>Characteristics:</strong> Very slow, used for backups and archiving. Examples include magnetic tapes and optical disk libraries.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>3. Explain the classification of computer based on data processed.</h4>
+                <p>Computers can be classified into three main types based on the kind of data they are designed to process:</p>
+                <h5>1. Analog Computers</h5>
+                <ul>
+                    <li><strong>Data Processed:</strong> They process analog data, which is continuous in nature and not discrete. This data represents physical quantities like temperature, pressure, voltage, and speed.</li>
+                    <li><strong>Functionality:</strong> They measure continuous changes in physical quantities. They don't require storage as they measure and process data in real-time.</li>
+                    <li><strong>Accuracy:</strong> They are less accurate compared to digital computers.</li>
+                    <li><strong>Examples:</strong> Speedometer of a car, traditional thermometer, seismograph.</li>
+                </ul>
+                <h5>2. Digital Computers</h5>
+                <ul>
+                    <li><strong>Data Processed:</strong> They process digital data, which is discrete and represented in binary form (0s and 1s).</li>
+                    <li><strong>Functionality:</strong> They perform calculations and logical operations with high speed and accuracy. They have large memory and storage capacities.</li>
+                    <li><strong>Accuracy:</strong> They are highly accurate and provide precise results.</li>
+                    <li><strong>Examples:</strong> Laptops, desktops, smartphones, calculators. All modern computers are digital computers.</li>
+                </ul>
+                <h5>3. Hybrid Computers</h5>
+                <ul>
+                    <li><strong>Data Processed:</strong> They are designed to process both analog and digital data. They combine the features of both types.</li>
+                    <li><strong>Functionality:</strong> They accept continuous analog signals, convert them into digital form for processing, and can provide output in either analog or digital form. They combine the high speed of analog computers with the accuracy and memory of digital computers.</li>
+                    <li><strong>Accuracy:</strong> They offer good accuracy and high processing speed.</li>
+                    <li><strong>Examples:</strong> Computers used in hospital ICUs to monitor a patient's vital signs (analog) and convert them into digital data for analysis. Computers used in scientific experiments and industrial control processes.</li>
+                </ul>
+
+                <h4>4. Explain different types of networking devices. Differentiate between LAN and WAN.</h4>
+                <h5>Types of Networking Devices:</h5>
+                <ol>
+                    <li><strong>Hub:</strong> A basic Layer 1 device that connects multiple computers in a LAN. It broadcasts any incoming data packet to all connected ports, leading to inefficiency and traffic collision.</li>
+                    <li><strong>Switch:</strong> A more intelligent Layer 2 device that connects devices in a LAN. It learns the MAC address of each connected device and forwards data packets only to the specific destination port, improving network performance significantly.</li>
+                    <li><strong>Router:</strong> A Layer 3 device that connects two or more different networks (e.g., a home LAN to the Internet WAN). It uses IP addresses to determine the best path to forward data packets between networks. Routers are the backbone of the internet.</li>
+                    <li><strong>Repeater:</strong> A Layer 1 device used to regenerate and retransmit a weak network signal. It helps to extend the physical range of a network by combating signal degradation (attenuation) over long distances.</li>
+                    <li><strong>Gateway:</strong> A versatile device that acts as a bridge between two dissimilar networks using different protocols. It performs protocol conversion to allow communication. A home router, for instance, acts as a gateway between the local network and the ISP's network.</li>
+                </ol>
+                <h5>Differentiation between LAN and WAN:</h5>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis for Comparison</th><th>LAN (Local Area Network)</th><th>WAN (Wide Area Network)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Geographical Scope</strong></td><td>Confined to a small area like a single building or office.</td><td>Spans a large geographical area like a city, country, or the globe.</td></tr>
+                            <tr><td><strong>Ownership</strong></td><td>Usually privately owned and managed by the organization it serves.</td><td>Often uses public or leased infrastructure from telecom companies.</td></tr>
+                            <tr><td><strong>Data Transfer Speed</strong></td><td>Offers very high speeds (e.g., 100 Mbps to 10 Gbps).</td><td>Has much lower data transfer speeds compared to LANs.</td></tr>
+                            <tr><td><strong>Setup & Maintenance</strong></td><td>Relatively easy and inexpensive to set up and maintain.</td><td>Complex and expensive to set up and maintain.</td></tr>
+                            <tr><td><strong>Congestion & Errors</strong></td><td>Lower congestion and fewer transmission errors due to a controlled environment.</td><td>Higher congestion and greater chance of errors due to the large scale.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Crafted by Pratyush Swain</p></footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = (theme === 'dark'); };
+        const savedTheme = localStorage.getItem('pratyushCompleteNotesTheme') || 'dark'; applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('pratyushCompleteNotesTheme', newTheme); applyTheme(newTheme); });
+        
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
