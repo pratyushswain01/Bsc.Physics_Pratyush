@@ -3,387 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit 3: Introduction to Python - The Ultimate Guide</title>
+    <title>Unit 3: The Complete Guide to Python Fundamentals</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
     <style>
         /* --- THEME & GENERAL STYLES --- */
         :root {
-            --bg-color: #f4f7f9; --card-bg: #ffffff; --primary-accent: #3776ab; --secondary-accent: #ffd43b; --text-primary: #212529; --text-secondary: #495057;
-            --border-color: rgba(0, 0, 0, 0.1); --shadow-color: rgba(55, 118, 171, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
-            --code-bg: #eef2f5; --table-header-bg: #f8f9fa; --tip-bg: #e7f5ff; --tip-border: #90c0df;
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #3A7CA5; --secondary-accent: #FDB813; --text-primary: #212529; --text-secondary: #495057;
+            --border-color: #dee2e6; --shadow-color: rgba(58, 124, 165, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f1f3f5; --code-header-bg: #e9ecef; --tip-bg: #e7f5ff; --tip-border: #a5d8ff;
+            /* Syntax Highlighting - Light Mode */
+            --code-keyword: #d9480f; --code-string: #2b9a44; --code-comment: #868e96; --code-function: #3A7CA5; --code-number: #a61e4d; --code-operator: #845ef7;
         }
         body.dark-mode {
-            --bg-color: #0b1d2c; --card-bg: #112940; --primary-accent: #61dafb; --secondary-accent: #ffde57; --text-primary: #e5e5e5; --text-secondary: #a0b3c6;
-            --border-color: rgba(255, 255, 255, 0.15); --shadow-color: rgba(97, 218, 251, 0.1); --header-bg: rgba(11, 29, 44, 0.85);
-            --code-bg: #1c3650; --table-header-bg: #15314b; --tip-bg: #15314b; --tip-border: #2a6f97;
+            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #61dafb; --secondary-accent: #ffcb2b; --text-primary: #e0e0e0; --text-secondary: #a0a0a0;
+            --border-color: #333; --shadow-color: rgba(97, 218, 251, 0.05); --header-bg: rgba(30, 30, 30, 0.85);
+            --code-bg: #282c34; --code-header-bg: #21252b; --tip-bg: rgba(97, 218, 251, 0.08); --tip-border: var(--primary-accent);
+            /* Syntax Highlighting - Dark Mode (Atom One Dark Inspired) */
+            --code-keyword: #c678dd; --code-string: #98c379; --code-comment: #7f848e; --code-function: #61afef; --code-number: #d19a66; --code-operator: #56b6c2;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { 
             font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary);
-            line-height: 1.8; transition: background-color 0.3s ease, color 0.3s ease; opacity: 0; animation: fadeIn 0.5s ease forwards;
+            line-height: 1.9; font-weight: 300; transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards;
         }
-        body.loaded { opacity: 1; }
-        .container { width: 95%; max-width: 950px; margin: 1.5rem auto; position: relative; z-index: 2; }
+        .container { width: 95%; max-width: 950px; margin: 2rem auto; position: relative; }
         
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .spinner { width: 50px; height: 50px; border: 5px solid var(--border-color); border-top-color: var(--primary-accent); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
         header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        header h1 { margin: 0; font-size: 1.4em; color: var(--primary-accent); font-weight: 700; }
-        header h1 .fab { color: var(--secondary-accent); margin-right: 10px; }
+        header h1 { margin: 0; font-size: 1.5em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fab { color: var(--secondary-accent); font-size: 1.2em; }
         #theme-toggle { display: none; }
-        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
 
-        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 32px 0 var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
-        .content-card h2 { font-size: 2em; color: var(--primary-accent); text-align: center; margin-top: 0; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--secondary-accent); display: flex; align-items: center; justify-content: center; gap: 15px;}
-        .content-card h3 { font-size: 1.5em; color: var(--text-primary); margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; }
-        .content-card h3 i { margin-right: 12px; color: var(--primary-accent); font-size: 0.9em; }
-        .content-card h4 { font-size: 1.15em; color: var(--primary-accent); margin-top: 1.8rem; margin-bottom: 0.8rem; font-weight: 600; }
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 3rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.5em; color: var(--text-primary); text-align: center; margin: 0 0 2.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fab { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.7em; color: var(--primary-accent); margin: 3rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.2em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.8rem; font-weight: 600; }
         .content-card p, .content-card li { color: var(--text-secondary); font-size: 1.05em; }
-        .content-card ul { list-style: none; padding-left: 0; }
-        .content-card li { padding-left: 1.8rem; position: relative; margin-bottom: 0.75rem; }
-        .content-card li::before { content: '\f105'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 3px; }
-        
-        pre, code { font-family: 'Fira Code', monospace; }
-        .code-block { background-color: var(--code-bg); padding: 1.2em 1.5em; border-radius: 8px; font-size: 0.95em; color: var(--text-primary); white-space: pre-wrap; margin: 1.5rem 0; border: 1px solid var(--border-color); overflow-x: auto;}
-        code:not(pre > code) { background-color: var(--code-bg); padding: 0.2em 0.4em; border-radius: 4px; color: #d6336c; font-weight: 500; }
-        body.dark-mode code:not(pre > code) { color: #f06595; }
+        .content-card ul { list-style: none; padding-left: 0.5rem; }
+        .content-card li { padding-left: 2rem; position: relative; margin-bottom: 0.8rem; }
+        .content-card li::before { content: '\f0da'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--secondary-accent); position: absolute; left: 0; top: 4px; transition: color 0.2s; }
 
-        .table-container { overflow-x: auto; margin-top: 1.5rem;}
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); }
+        .code-container { margin: 1.8rem 0; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .code-header { display: flex; justify-content: space-between; align-items: center; background-color: var(--code-header-bg); padding: 0.5rem 1rem; }
+        .code-lang { font-family: 'Fira Code', monospace; color: var(--text-secondary); font-size: 0.85em; }
+        .copy-btn { background: none; border: 1px solid var(--border-color); color: var(--text-secondary); font-family: 'Poppins', sans-serif; font-size: 0.8em; padding: 4px 10px; border-radius: 5px; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); }
+        .copy-btn.copied { background-color: var(--code-string); color: white; border-color: var(--code-string);}
+        pre { font-family: 'Fira Code', monospace; margin: 0; padding: 1.2rem 1.5rem; font-size: 1em; color: var(--text-primary); white-space: pre-wrap; line-height: 1.7; overflow-x: auto; font-variant-ligatures: common-ligatures; }
+        /* Syntax Highlighting Span Styles */
+        .keyword { color: var(--code-keyword); font-weight: 500;}
+        .string { color: var(--code-string); }
+        .comment { color: var(--code-comment); font-style: italic; }
+        .function { color: var(--code-function); font-weight: 500; }
+        .number { color: var(--code-number); }
+        .operator { color: var(--code-operator); }
+        .brackets { color: var(--text-secondary); }
 
-        .tip-box { background-color: var(--tip-bg); border-left: 5px solid var(--tip-border); padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
-        .tip-box strong { color: var(--primary-accent); }
+        .tip-box { background-color: var(--tip-bg); border-left: 5px solid var(--tip-border); padding: 1.2rem 1.8rem; margin: 2rem 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: var(--text-primary); font-weight: 600; }
 
-        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; outline: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s, opacity 0.3s; }
-        #toTopBtn:hover { opacity: 0.8; }
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
         footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
-        
-        @media (min-width: 600px) {
-            .container { margin: 2.5rem auto; } .content-card { padding: 2.5rem 3rem; } header h1 { font-size: 1.6em; }
-            .content-card h2 { font-size: 2.4em; } .content-card h3 { font-size: 1.7em; }
-        }
     </style>
 </head>
-<body>
-    <div id="loader"><div class="spinner"></div></div>
+<body class="dark-mode"> <!-- Default to Dark Mode for the Pro feel -->
     <header>
         <div class="header-content">
-            <h1><i class="fab fa-python"></i>Python Notes</h1>
-            <div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div>
+            <h1><i class="fab fa-python"></i> The Complete Python Guide</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
         </div>
     </header>
 
     <main class="container">
         <article class="content-card">
-            <h2><i class="fab fa-python" style="color:var(--secondary-accent)"></i> Unit 3: Introduction to Python</h2>
+            <h2><i class="fab fa-python"></i> Unit 3: Introduction to Python</h2>
             
             <section id="getting-started">
-                <h3><i class="fas fa-rocket"></i> 1. Getting Started with Python</h3>
-                <p>Python is a high-level, interpreted programming language known for its simple, readable syntax. It was created by Guido van Rossum and released in 1991. Its design philosophy emphasizes code readability, making it an excellent choice for beginners and for rapid application development.</p>
-                <div class="tip-box"><strong>The Zen of Python:</strong> You can see the guiding principles of Python by typing <code>import this</code> into a Python interpreter. The first line is "Beautiful is better than ugly."</div>
+                <h3><i class="fas fa-rocket"></i> 1. Introduction to Python</h3>
+                <p>Python is a high-level, interpreted programming language known for its remarkable readability and simple syntax. This makes it an ideal first language for beginners and a powerful tool for rapid development for experts. In Python, you write code that looks close to plain English, focusing on solving problems rather than wrestling with complex syntax.</p>
             </section>
             
             <section id="basics">
-                <h3><i class="fas fa-cubes"></i> 2. Python Basics</h3>
-                <h4>Identifiers and Variables</h4>
-                <p>An <strong>identifier</strong> is a name given to an entity like a variable, function, or class. Rules for identifiers:</p>
+                <h3><i class="fas fa-cubes"></i> 2. Python Basics: The Building Blocks</h3>
+                <h4>Identifiers, Keywords, and Variables</h4>
                 <ul>
-                    <li>Can be a combination of letters (a-z, A-Z), digits (0-9), and underscore (_).</li>
-                    <li>Cannot start with a digit.</li>
-                    <li>Are case-sensitive (<code>age</code> and <code>Age</code> are different).</li>
-                    <li>Cannot be a keyword.</li>
+                    <li><strong>Identifiers:</strong> Names for variables, functions, etc. Must start with a letter or underscore, followed by letters, numbers, or underscores. They are case-sensitive (<code>Age</code> is not <code>age</code>).</li>
+                    <li><strong>Keywords:</strong> Reserved words with special meanings like <code>if</code>, <code>for</code>, <code>def</code>, <code>class</code>. You cannot use them as identifiers.</li>
+                    <li><strong>Variables:</strong> Labels for data. Python is dynamically typed, so you don't declare types. The type is inferred when you assign a value.</li>
                 </ul>
-                <p>A <strong>variable</strong> is a symbolic name that is a reference or pointer to an object. Once an object is assigned to a variable, you can refer to the object by that name.</p>
-                <pre class="code-block"><code># Variable assignment
-age = 25              # age is an integer variable
-name = "Alice"        # name is a string variable
-is_student = True     # is_student is a boolean variable
-pi_value = 3.14       # pi_value is a float variable
 
-print(name, "is", age, "years old.")</code></pre>
-
-                <h4>Keywords</h4>
-                <p>Keywords are reserved words in Python that have special meaning. They cannot be used as variable names. There are 35 keywords in Python 3.8.</p>
-                <p>Examples: <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>def</code>, <code>class</code>, <code>True</code>, <code>False</code>, <code>None</code>, <code>import</code>.</p>
-                
-                <h4>Comments, Indentation, and Multi-Lining</h4>
+                <h4>Comments, Indentation, & Multi-lining</h4>
                 <ul>
-                    <li><strong>Comments:</strong> Start with <code>#</code>. They are ignored by the interpreter and are used for explaining code.</li>
-                    <li><strong>Indentation:</strong> Python uses indentation (whitespace at the beginning of a line) to define code blocks, unlike other languages that use braces <code>{}</code>. This is a strict rule.</li>
-                    <li><strong>Multi-lining:</strong> A long statement can be split into multiple lines using the backslash <code>\</code> character.</li>
+                    <li><strong>Comments:</strong> Use <code>#</code> for single-line comments. They are crucial for explaining your code's logic.</li>
+                    <li><strong>Indentation:</strong> Python's signature feature. It's not optional; it defines code blocks (like inside an <code>if</code> statement or a loop). Four spaces per indentation level is the standard.</li>
+                    <li><strong>Multi-lining:</strong> For long lines of code, use a backslash <code>\</code> to continue a statement on the next line.</li>
                 </ul>
-                <pre class="code-block"><code># This is a single-line comment
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="comment"># This is a comment. It explains the code.</span>
+<span class="variable">user_name</span> <span class="operator">=</span> <span class="string">'Pratyush'</span>  <span class="comment"># A variable with an identifier 'user_name'</span>
 
-# Correct Indentation defines a code block
-if age > 18:
-    print("You are an adult.") # This line is inside the if-block
+<span class="keyword">if</span> <span class="function">len</span><span class="brackets">(</span><span class="variable">user_name</span><span class="brackets">)</span> <span class="operator">></span> <span class="number">0</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"Welcome, </span><span class="string">{</span><span class="variable">user_name</span><span class="string">}</span><span class="string">!"</span><span class="brackets">)</span> <span class="comment"># This line is indented, so it's inside the 'if' block.</span>
 
-# Multi-line statement
-total_sum = 1 + 2 + 3 + \
-            4 + 5 + 6
-print(total_sum) # Output: 21</code></pre>
+<span class="comment"># A multi-line statement for readability</span>
+<span class="variable">total_calculation</span> <span class="operator">=</span> <span class="brackets">(</span><span class="number">100</span> <span class="operator">+</span> <span class="number">200</span> <span class="operator">+</span> <span class="number">300</span> <span class="operator">+</span> 
+                     <span class="number">400</span> <span class="operator">+</span> <span class="number">500</span><span class="brackets">)</span>
+</code></pre>
+                </div>
+
+                <h4>Objects in Python</h4>
+                <div class="tip-box"><strong>Everything is an Object:</strong> A core concept. Every value in Python—a number, a string, a list, even a function—is an object. An object bundles data (attributes) and functionality (methods) together. When you write <code>user_name.upper()</code>, you are calling the <code>upper()</code> method on the string object stored in `user_name`. A <code>class</code> is the blueprint used to create these objects.</div>
             </section>
-            
+
             <section id="data-types">
-                <h3><i class="fas fa-atom"></i> 3. Data Types and Variables</h3>
-                <h4>Basic (Primitive) Types</h4>
+                <h3><i class="fas fa-atom"></i> 3. Python Types & Operators</h3>
+                <h4>Basic & Container Types</h4>
                 <ul>
-                    <li><strong>Integer (int):</strong> Whole numbers, like <code>10</code>, <code>-50</code>, <code>0</code>.</li>
-                    <li><strong>Float (float):</strong> Numbers with a decimal point, like <code>9.81</code>, <code>-0.001</code>.</li>
-                    <li><strong>String (str):</strong> Sequence of characters, enclosed in single <code>'</code>, double <code>"</code>, or triple <code>'''</code> quotes.</li>
-                    <li><strong>Boolean (bool):</strong> Represents truth values, can only be <code>True</code> or <code>False</code>.</li>
+                    <li><strong>Basic Types:</strong> The simplest data forms. <code>int</code> (e.g., <code>10</code>), <code>float</code> (e.g., <code>3.14</code>), <code>str</code> (e.g., <code>"hello"</code>), <code>bool</code> (<code>True</code> or <code>False</code>).</li>
+                    <li><strong>Container Types:</strong> Hold collections of other objects. Main examples are <code>list</code>, <code>tuple</code>, <code>dict</code>, and <code>set</code> (covered in Unit 4).</li>
                 </ul>
 
                 <h4>Mutable vs. Immutable Types</h4>
-                <p>This is a fundamental concept in Python.</p>
+                <p>This critical distinction affects how you work with data.</p>
                 <ul>
-                    <li><strong>Immutable Types:</strong> Their value/state cannot be changed after creation. If you change them, a new object is created in memory. Examples: <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>tuple</code>.</li>
-                    <li><strong>Mutable Types:</strong> Their value/state can be changed in-place after creation. Examples: <code>list</code>, <code>dict</code>, <code>set</code>.</li>
+                    <li><strong>Immutable:</strong> Value cannot be changed after creation. All Basic Types are immutable. Any "change" creates a brand new object in memory.</li>
+                    <li><strong>Mutable:</strong> Value can be changed in-place without creating a new object. Lists and Dictionaries are mutable.</li>
                 </ul>
-                <pre class="code-block"><code># --- Immutable Example (str) ---
-my_string = "hello"
-print(id(my_string))  # Print memory address, e.g., 2206716501360
 
-my_string = my_string + " world" # A NEW string object is created
-print(my_string) # "hello world"
-print(id(my_string)) # A NEW memory address, e.g., 2206716760176
+                <h4>Arithmetic Operators, Precedence, & Associativity</h4>
+                <p>These define the rules of mathematical and logical operations.</p>
+                <ul>
+                    <li><strong>Operators:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> (float division), <code>//</code> (floor division), <code>%</code> (modulus), <code>**</code> (exponent).</li>
+                    <li><strong>Precedence:</strong> The order of operations. <code>**</code> is first, then <code>* / % //</code>, then <code>+ -</code>. Parentheses <code>()</code> override all.</li>
+                    <li><strong>Associativity:</strong> Order for operators with the same precedence. Most are left-to-right (e.g., <code>10-5-2</code> is <code>(10-5)-2</code>). The exponent operator <code>**</code> is right-to-left (<code>2**3**2</code> is <code>2**(3**2)</code>).</li>
+                </ul>
+                 <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="comment"># Precedence example: multiplication before addition</span>
+<span class="variable">result</span> <span class="operator">=</span> <span class="number">10</span> <span class="operator">+</span> <span class="number">5</span> <span class="operator">*</span> <span class="number">2</span>  <span class="comment"># 10 + 10</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">result</span><span class="brackets">)</span>  <span class="comment"># Output: 20</span>
 
-# --- Mutable Example (list) ---
-my_list = [1, 2, 3]
-print(id(my_list)) # Print memory address, e.g., 2206716616640
+<span class="comment"># Using parentheses to control the order</span>
+<span class="variable">result_controlled</span> <span class="operator">=</span> <span class="brackets">(</span><span class="number">10</span> <span class="operator">+</span> <span class="number">5</span><span class="brackets">)</span> <span class="operator">*</span> <span class="number">2</span>  <span class="comment"># 15 * 2</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">result_controlled</span><span class="brackets">)</span> <span class="comment"># Output: 30</span>
 
-my_list.append(4) # The list is modified IN-PLACE
-print(my_list) # [1, 2, 3, 4]
-print(id(my_list)) # SAME memory address, e.g., 2206716616640</code></pre>
-
+<span class="comment"># Floor division (discards the remainder)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="number">10</span> <span class="operator">//</span> <span class="number">3</span><span class="brackets">)</span> <span class="comment"># Output: 3</span>
+</code></pre>
+                </div>
+                
                 <h4>Type Conversion (Casting)</h4>
-                <p>You can convert values from one type to another using built-in functions like <code>int()</code>, <code>float()</code>, <code>str()</code>.</p>
-                <pre class="code-block"><code>num_string = "100"
-num_integer = int(num_string)  # Convert string to integer
-print(num_integer + 5) # Output: 105
+                <p>You can explicitly change a value's type using functions like <code>int()</code>, <code>float()</code>, and <code>str()</code>.</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">age_str</span> <span class="operator">=</span> <span class="string">"25"</span> <span class="comment"># Data from an input form is often a string</span>
+<span class="variable">age_int</span> <span class="operator">=</span> <span class="function">int</span><span class="brackets">(</span><span class="variable">age_str</span><span class="brackets">)</span> <span class="comment"># Convert to an integer for calculations</span>
 
-num_float = float(num_integer) # Convert integer to float
-print(num_float) # Output: 100.0</code></pre>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"In five years, you will be </span><span class="string">{</span><span class="variable">age_int</span> <span class="operator">+</span> <span class="number">5</span><span class="string">}</span><span class="string"> years old."</span><span class="brackets">)</span>
+</code></pre>
+                </div>
             </section>
             
-            <section id="operators">
-                <h3><i class="fas fa-calculator"></i> 4. Operators</h3>
-                <h4>Arithmetic Operators</h4>
-                <ul>
-                    <li><code>+</code> (Addition), <code>-</code> (Subtraction), <code>*</code> (Multiplication), <code>/</code> (Float Division)</li>
-                    <li><code>//</code> (Integer/Floor Division), <code>%</code> (Modulus/Remainder), <code>**</code> (Exponent)</li>
-                </ul>
-
-                <h4>Operator Precedence & Associativity</h4>
-                <p>Precedence determines which operators are evaluated first. Associativity determines the order for operators with the same precedence.</p>
-                <div class="table-container">
-                    <table>
-                        <thead><tr><th>Precedence</th><th>Operator</th><th>Description</th></tr></thead>
-                        <tbody>
-                            <tr><td>Highest</td><td><code>()</code></td><td>Parentheses</td></tr>
-                            <tr><td></td><td><code>**</code></td><td>Exponent (Right-to-Left)</td></tr>
-                            <tr><td></td><td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></td><td>Multiplication/Division (Left-to-Right)</td></tr>
-                            <tr><td>Lowest</td><td><code>+</code>, <code>-</code></td><td>Addition/Subtraction (Left-to-Right)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                 <pre class="code-block"><code># Precedence example
-result = 10 + 2 * 3   # 2 * 3 is done first (precedence)
-print(result) # Output: 16
-
-# Associativity example
-result = 2 ** 3 ** 2  # Evaluated as 2 ** (3 ** 2) -> 2 ** 9
-print(result) # Output: 512</code></pre>
-            </section>
-
             <section id="strings">
-                <h3><i class="fas fa-file-alt"></i> 5. Working with Strings</h3>
-                <h4>Accessing String Elements (Slicing)</h4>
-                <p>You can access parts of a string using a slice <code>[start:stop:step]</code>. Indices start at 0.</p>
-                <pre class="code-block"><code>text = "Python is Fun!"
-print(text[0])       # 'P' (First character)
-print(text[-1])      # '!' (Last character)
-print(text[0:6])     # 'Python' (from index 0 up to, but not including, 6)
-print(text[7:])      # 'is Fun!' (from index 7 to the end)
-print(text[::-1])    # '!nuF si nohtyP' (Reverse the string)</code></pre>
-
-                <h4>Common String Methods and Functions</h4>
+                <h3><i class="fas fa-file-alt"></i> 4. Deep Dive into Strings</h3>
+                <p>Strings are one of the most used types. They are immutable sequences of characters.</p>
+                <h4>Accessing, Slicing, and Properties</h4>
                 <ul>
-                    <li><code>len(str)</code>: A built-in function to get the length of a string.</li>
-                    <li><code>str.upper()</code> / <code>str.lower()</code>: Convert to uppercase/lowercase.</li>
-                    <li><code>str.strip()</code>: Remove leading/trailing whitespace.</li>
-                    <li><code>str.find('sub')</code>: Returns the first index of 'sub'; -1 if not found.</li>
-                    <li><code>str.replace('old', 'new')</code>: Replaces all occurrences of 'old' with 'new'.</li>
+                    <li><strong>Accessing:</strong> Use square brackets <code>[]</code> with an index (starting from 0). <code>text[0]</code> is the first character.</li>
+                    <li><strong>Slicing:</strong> Extract a portion of the string with <code>[start:stop:step]</code>.</li>
+                    <li><strong>Built-in Functions/Methods:</strong> <code>len()</code> gives the length. Methods like <code>.upper()</code>, <code>.lower()</code>, <code>.strip()</code>, <code>.find()</code>, and <code>.replace()</code> provide powerful functionality. Remember, these methods return a *new* string; they don't change the original.</li>
+                    <li><strong>Comparison:</strong> Strings are compared lexicographically (like in a dictionary). <code>'a' < 'b'</code> is <code>True</code>.</li>
                 </ul>
-            </section>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">quote</span> <span class="operator">=</span> <span class="string">"   Learning Python is rewarding!   "</span>
 
-            <section id="io">
-                <h3><i class="fas fa-terminal"></i> 6. Console Input & Output</h3>
-                <p>Getting input from the user and displaying output is essential.</p>
-                
-                <h4>Receiving Input and Console I/O</h4>
-                <p>The <code>input()</code> function reads a line from the console, converts it to a string, and returns it.</p>
-                <pre class="code-block"><code># I/O Operation
-user_name = input("Enter your name: ")
-user_age_str = input("Enter your age: ")
+<span class="comment"># Clean up the string using a method</span>
+<span class="variable">cleaned_quote</span> <span class="operator">=</span> <span class="variable">quote</span><span class="operator">.</span><span class="function">strip</span><span class="brackets">()</span>  <span class="comment"># Removes leading/trailing whitespace</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">cleaned_quote</span><span class="brackets">)</span>
 
-# input() always returns a string, so we need to convert it
-user_age_int = int(user_age_str)
+<span class="comment"># Replace a word</span>
+<span class="variable">modified_quote</span> <span class="operator">=</span> <span class="variable">cleaned_quote</span><span class="operator">.</span><span class="function">replace</span><span class="brackets">(</span><span class="string">'rewarding'</span><span class="operator">,</span> <span class="string">'empowering'</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="variable">modified_quote</span><span class="brackets">)</span>
 
-print("Hello, " + user_name + "!")</code></pre>
-                
-                <h4>Formatted Printing with f-Strings</h4>
-                <p>F-strings (formatted string literals) provide a concise and convenient way to embed expressions inside string literals for formatting.</p>
-                 <pre class="code-block"><code># Formatting Printing
-print(f"Hello, {user_name}! You will be {user_age_int + 1} next year.")
-# Example output: Hello, Alice! You will be 26 next year.
-
-pi = 3.14159265
-print(f"The value of Pi is approximately {pi:.2f}") 
-# .2f formats the float to 2 decimal places
-# Output: The value of Pi is approximately 3.14</code></pre>
-            </section>
-
-            <section id="control-flow">
-                <h3><i class="fas fa-code-branch"></i> 7. Control Flow Instructions</h3>
-                <h4>Decision Control (if, elif, else)</h4>
-                <p>This allows the program to execute different blocks of code based on conditions.</p>
-                <ul>
-                    <li><strong>Logical Operators:</strong> <code>and</code>, <code>or</code>, <code>not</code></li>
-                    <li><strong>Conditional Expression (Ternary Operator):</strong> A one-line if-else statement. <code>value_if_true if condition else value_if_false</code></li>
-                    <li><strong><code>pass</code> Statement:</strong> A null operation. It's used as a placeholder where code is syntactically required but you have nothing to write yet.</li>
-                </ul>
-                <pre class="code-block"><code>score = 85
-
-if score >= 90:
-    grade = 'A'
-elif score >= 80:
-    grade = 'B'
-elif score >= 70:
-    grade = 'C'
-else:
-    grade = 'F'
-    
-print(f"Your grade is {grade}") # Output: Your grade is B
-
-# Ternary operator
-status = "Adult" if user_age_int >= 18 else "Minor"
-print(f"Status: {status}")
-
-# Pass statement
-if user_age_int < 0:
-    pass # TODO: Add error handling here later
+<span class="comment"># Find the start index of a word</span>
+<span class="variable">position</span> <span class="operator">=</span> <span class="variable">modified_quote</span><span class="operator">.</span><span class="function">find</span><span class="brackets">(</span><span class="string">'Python'</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"'Python' starts at index: </span><span class="string">{</span><span class="variable">position</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
 </code></pre>
-
-                <h4>Repetition Control (Loops)</h4>
-                <p>Loops are used to execute a block of code repeatedly.</p>
-                <ul>
-                    <li><strong><code>for</code> loop:</strong> Iterates over a sequence (like a list, string, or range).</li>
-                    <li><strong><code>while</code> loop:</strong> Repeats as long as a condition is true.</li>
-                    <li><strong><code>break</code>:</strong> Immediately exits the current loop.</li>
-                    <li><strong><code>continue</code>:</strong> Skips the rest of the current iteration and proceeds to the next one.</li>
-                    <li><strong><code>else</code> block in a loop:</strong> Executes only if the loop completes normally (i.e., not terminated by a <code>break</code> statement).</li>
-                </ul>
-                <pre class="code-block"><code># for loop with range()
-for i in range(5):  # 0, 1, 2, 3, 4
-    print(i, end=" ") # Output: 0 1 2 3 4
-print()
-
-# while loop
-count = 5
-while count > 0:
-    print(count, end=" ") # Output: 5 4 3 2 1 
-    count -= 1
-print()
-
-# break, continue, and else in a loop
-for num in range(2, 10):
-    if num == 7:
-        continue # Skip printing 7
-    if num == 9:
-        print("\nFound 9, breaking loop.")
-        break    # Exit the loop
-    print(num, end=" ")
-else:
-    print("Loop finished without breaking.") # This line won't run
-
-# Output: 2 3 4 5 6 8 
-#         Found 9, breaking loop.
-</code></pre>
+                </div>
             </section>
+            
+            <section id="io-and-control">
+                <h3><i class="fas fa-terminal"></i> 5. I/O and Control Flow</h3>
+                <h4>Console I/O and Formatting</h4>
+                <ul>
+                    <li><strong>Input:</strong> The <code>input("prompt")</code> function gets user input from the console. It always returns a string.</li>
+                    <li><strong>Output:</strong> The <code>print()</code> function displays information.</li>
+                    <li><strong>Formatting:</strong> **F-strings** (<code>f"..."</code>) are the modern, standard way to embed expressions directly inside strings. They are fast, readable, and powerful.</li>
+                </ul>
+                
+                <h4>Decision Control (<code>if</code>/<code>elif</code>/<code>else</code>)</h4>
+                <p>This is the core of your program's logic. It allows you to execute specific code blocks based on whether a condition is true or false.</p>
 
-            <section id="modules">
-                 <h3><i class="fas fa-puzzle-piece"></i> 8. Modules and Built-in Functions</h3>
-                 <p>Python's power comes from its extensive standard library, accessible through modules.</p>
+                <h4>Conditional Expression (Ternary Operator)</h4>
+                <p>A compact, one-line version of an `if/else` statement. It's great for simple assignments.</p>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">age</span> <span class="operator">=</span> <span class="function">int</span><span class="brackets">(</span><span class="function">input</span><span class="brackets">(</span><span class="string">"Please enter your age: "</span><span class="brackets">)</span><span class="brackets">)</span>
+
+<span class="comment"># Ternary operator for a concise assignment</span>
+<span class="variable">status</span> <span class="operator">=</span> <span class="string">"Adult"</span> <span class="keyword">if</span> <span class="variable">age</span> <span class="operator">>=</span> <span class="number">18</span> <span class="keyword">else</span> <span class="string">"Minor"</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"Your status is: </span><span class="string">{</span><span class="variable">status</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
+
+<span class="comment"># Full if/elif/else structure for complex logic</span>
+<span class="keyword">if</span> <span class="variable">status</span> <span class="operator">==</span> <span class="string">"Adult"</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">"You can vote and drive."</span><span class="brackets">)</span>
+<span class="keyword">elif</span> <span class="variable">age</span> <span class="operator">></span> <span class="number">12</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">"You are a teenager."</span><span class="brackets">)</span>
+<span class="keyword">else</span><span class="operator">:</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">"You are a child."</span><span class="brackets">)</span>
+</code></pre>
+                </div>
+            </section>
+            
+            <section id="loops">
+                <h3><i class="fas fa-sync-alt"></i> 6. Repetition: The Power of Loops</h3>
+                <p>Loops are fundamental for automating tasks and processing collections of data without repeating code.</p>
+                <h4>Looping Instructions: <code>for</code> & <code>while</code></h4>
+                <ul>
+                    <li><strong><code>for</code> loop:</strong> The "definite" loop. Use it when you want to iterate over a sequence (like a list, a string, or a range of numbers) a specific number of times.</li>
+                    <li><strong><code>while</code> loop:</strong> The "indefinite" loop. Use it when you want to repeat a block of code as long as a certain condition remains true.</li>
+                </ul>
+
+                <h4>Controlling Loop Behavior: <code>break</code>, <code>continue</code>, <code>pass</code>, and <code>else</code></h4>
+                <ul>
+                    <li><strong><code>break</code>:</strong> Exits the loop immediately, regardless of the loop's condition.</li>
+                    <li><strong><code>continue</code>:</strong> Skips the rest of the current iteration and jumps to the beginning of the next one.</li>
+                    <li><strong><code>pass</code>:</strong> A null statement. It's a placeholder used when a statement is syntactically required but you don't want any code to execute.</li>
+                    <li><strong><code>else</code> block in a loop:</strong> This is a unique Python feature. The `else` block executes *only if the loop completes its entire sequence naturally* (i.e., it was not terminated by a `break` statement). This is incredibly useful for search operations.</li>
+                </ul>
+
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="variable">search_target</span> <span class="operator">=</span> <span class="number">7</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"Searching for the number </span><span class="string">{</span><span class="variable">search_target</span><span class="string">}</span><span class="string">..."</span><span class="brackets">)</span>
+
+<span class="keyword">for</span> <span class="variable">number</span> <span class="keyword">in</span> <span class="function">range</span><span class="brackets">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">11</span><span class="brackets">)</span><span class="operator">:</span>
+    <span class="keyword">if</span> <span class="variable">number</span> <span class="operator">==</span> <span class="variable">search_target</span><span class="operator">:</span>
+        <span class="function">print</span><span class="brackets">(</span><span class="string">f"Found it! Number </span><span class="string">{</span><span class="variable">number</span><span class="string">}</span><span class="string">."</span><span class="brackets">)</span>
+        <span class="keyword">break</span> <span class="comment"># Exit the loop since we found what we wanted</span>
+<span class="keyword">else</span><span class="operator">:</span>
+    <span class="comment"># This block only runs if the 'for' loop finishes without a 'break'.</span>
+    <span class="function">print</span><span class="brackets">(</span><span class="string">f"The number </span><span class="string">{</span><span class="variable">search_target</span><span class="string">}</span><span class="string"> was not found in the range."</span><span class="brackets">)</span>
+</code></pre>
+                </div>
+            </section>
+            
+            <section id="modules-and-functions">
+                 <h3><i class="fas fa-puzzle-piece"></i> 7. Modules and Built-in Functions</h3>
+                 <p>Python's "batteries-included" philosophy means it comes with a vast Standard Library, organized into **modules**.</p>
                  <ul>
-                     <li><strong>Built-in Functions:</strong> Always available, like <code>print()</code>, <code>len()</code>, <code>int()</code>, <code>input()</code>, <code>range()</code>.</li>
-                     <li><strong>Modules:</strong> Files containing Python code that you can import into your script to use their functions and classes. Example: the <code>math</code> module.</li>
+                    <li><strong>Modules:</strong> Python files containing functions, classes, and variables that you can import and use in your code. The <code>math</code> module is a classic example.</li>
+                    <li><strong>Built-in Functions:</strong> A core set of functions that are always available without needing to import anything. You've been using them all along: <code>print()</code>, <code>len()</code>, <code>int()</code>, <code>range()</code>, etc.</li>
+                    <li><strong><code>all()</code> and <code>any()</code>:</strong> These are powerful built-in functions for working with iterables (like lists). <code>all()</code> returns <code>True</code> if every element is true. <code>any()</code> returns <code>True</code> if at least one element is true.</li>
                  </ul>
-                 <pre class="code-block"><code># Using a module
-import math
+                  <div class="code-container">
+                    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn">Copy</button></div>
+                    <pre><code><span class="comment"># 1. Using a module from the standard library</span>
+<span class="keyword">import</span> <span class="variable">math</span>
 
-radius = 5
-area = math.pi * math.pow(radius, 2)
-print(f"The area of the circle is {area:.2f}") # Output: The area of the circle is 78.54
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The value of PI is: </span><span class="string">{</span><span class="variable">math</span><span class="operator">.</span><span class="variable">pi</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"The square root of 16 is: </span><span class="string">{</span><span class="variable">math</span><span class="operator">.</span><span class="function">sqrt</span><span class="brackets">(</span><span class="number">16</span><span class="brackets">)</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
 
-# Using built-in all() and any() functions
-# all(): returns True if all items in an iterable are true
-# any(): returns True if any item in an iterable is true
-list1 = [True, True, True]
-list2 = [True, False, True]
+<span class="comment"># 2. Using the all() and any() built-in functions</span>
+<span class="variable">permissions</span> <span class="operator">=</span> <span class="brackets">[</span><span class="keyword">True</span><span class="operator">,</span> <span class="keyword">True</span><span class="operator">,</span> <span class="keyword">False</span><span class="operator">,</span> <span class="keyword">True</span><span class="brackets">]</span>
 
-print(f"all(list1): {all(list1)}") # True
-print(f"any(list2): {any(list2)}") # True
-print(f"all(list2): {all(list2)}") # False</code></pre>
-                 <div class="tip-box"><strong>Objects and Classes (A Glimpse):</strong> Your syllabus mentions classes/objects. In Python, everything is an object. An object has properties (data) and methods (functions). For example, a string object has data (the characters) and methods like <code>.upper()</code>. A <code>class</code> is the blueprint for creating objects. You've already been using them!</div>
+<span class="comment"># Does the user have full permissions?</span>
+<span class="variable">has_all_permissions</span> <span class="operator">=</span> <span class="function">all</span><span class="brackets">(</span><span class="variable">permissions</span><span class="brackets">)</span> <span class="comment"># False, because one is False</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"User has all permissions: </span><span class="string">{</span><span class="variable">has_all_permissions</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
+
+<span class="comment"># Does the user have at least one permission?</span>
+<span class="variable">has_some_permissions</span> <span class="operator">=</span> <span class="function">any</span><span class="brackets">(</span><span class="variable">permissions</span><span class="brackets">)</span> <span class="comment"># True</span>
+<span class="function">print</span><span class="brackets">(</span><span class="string">f"User has some permissions: </span><span class="string">{</span><span class="variable">has_some_permissions</span><span class="string">}</span><span class="string">"</span><span class="brackets">)</span>
+</code></pre>
+                 </div>
             </section>
-
         </article>
     </main>
 
     <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
-    <footer><p>Unit 3 Python Notes | Crafted by Pratyush Swain</p></footer>
-
+    <footer><p>The Complete Guide to Python Fundamentals | Crafted for Clarity</p></footer>
+    
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const loader = document.getElementById('loader');
-        window.addEventListener('load', () => {
-            loader.style.opacity = '0';
-            setTimeout(() => { loader.style.display = 'none'; document.body.classList.add('loaded'); }, 500);
-        });
-
+        // --- THEME SWITCHER LOGIC ---
         const themeToggle = document.getElementById('theme-toggle');
         const applyTheme = (theme) => {
             document.body.classList.toggle('dark-mode', theme === 'dark');
             themeToggle.checked = (theme === 'dark');
         };
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const savedTheme = localStorage.getItem('proThemeV2') || 'dark'; // Default to dark
         applyTheme(savedTheme);
         themeToggle.addEventListener('change', () => {
             const newTheme = themeToggle.checked ? 'dark' : 'light';
-            localStorage.setItem('theme', newTheme);
+            localStorage.setItem('proThemeV2', newTheme);
             applyTheme(newTheme);
         });
-
+        
+        // --- BACK TO TOP BUTTON LOGIC ---
         const toTopBtn = document.getElementById("toTopBtn");
-        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none"; };
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
         toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+
+        // --- "COPY CODE" BUTTON FUNCTIONALITY ---
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const codeBlock = e.target.closest('.code-container').querySelector('pre');
+                navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+                    button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    button.classList.add('copied');
+                    setTimeout(() => {
+                        button.innerHTML = 'Copy';
+                        button.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => console.error('Failed to copy: ', err));
+            });
+        });
     });
     </script>
 </body>
