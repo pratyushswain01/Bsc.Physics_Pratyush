@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2 Notes - Programming Fundamentals & Logic</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #6d28d9; --secondary-accent: #f59e0b; --text-primary: #1f2937; --text-secondary: #4b5563;
+            --border-color: #e5e7eb; --shadow-color: rgba(109, 40, 217, 0.1); --header-bg: rgba(255, 255, 255, 0.85);
+            --code-bg: #f3f4f6; --code-header-bg: #e5e7eb; --tip-bg: #eef2ff; --tip-border: #a5b4fc; --table-header-bg: #f3f4f6;
+            --code-keyword: #7c3aed; --code-string: #16a34a; --code-comment: #9ca3af; --code-function: #be185d; --code-number: #ea580c; --code-operator: #2563eb;
+        }
+        body.dark-mode {
+            --bg-color: #111827; --card-bg: #1f2937; --primary-accent: #a78bfa; --secondary-accent: #facc15; --text-primary: #f9fafb; --text-secondary: #d1d5db;
+            --border-color: #374151; --shadow-color: rgba(167, 139, 250, 0.05); --header-bg: rgba(31, 41, 55, 0.85);
+            --code-bg: #212b40; --code-header-bg: #374151; --tip-bg: rgba(167, 139, 250, 0.08); --tip-border: var(--primary-accent); --table-header-bg: #374151;
+            --code-keyword: #c792ea; --code-string: #c3e88d; --code-comment: #6b7280; --code-function: #82aaff; --code-number: #ffcb6b; --code-operator: #89ddff;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); line-height: 2; font-weight: 300; font-size: 1.1rem; transition: background-color 0.3s ease, color 0.3s ease; animation: fadeIn 0.5s ease forwards; }
+        .container { width: 95%; max-width: 1000px; margin: 2rem auto; position: relative; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        header h1 { margin: 0; font-size: 1.6em; color: var(--primary-accent); font-weight: 700; display: flex; align-items: center; gap: 12px;}
+        header h1 .fas { color: var(--secondary-accent); font-size: 1.2em; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #777; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); }
+
+        .content-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; box-shadow: 0 10px 40px var(--shadow-color); margin-top: 2rem; animation: slideUp 0.6s ease-out; }
+        .content-card h2 { font-size: 2.8em; color: var(--text-primary); text-align: center; margin: 0 0 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--primary-accent); font-weight: 700;}
+        .content-card h2 .fas { color: var(--secondary-accent); }
+        .content-card h3 { font-size: 1.8em; color: var(--primary-accent); margin: 3.5rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: 600; }
+        .content-card h3 i { margin-right: 15px; font-size: 0.8em; }
+        .content-card h4 { font-size: 1.3em; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .content-card p, .content-card li { color: var(--text-secondary); }
+        .content-card ul, ol { padding-left: 2rem; } li { margin-bottom: 0.5rem; }
+        .table-container { overflow-x: auto; margin: 1.8rem 0; border: 1px solid var(--border-color); border-radius: 8px;}
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        thead th { background-color: var(--table-header-bg); font-weight: 600; color: var(--text-primary); font-size: 1em;}
+        tbody tr:last-child td { border-bottom: none; }
+        
+        .code-container { margin: 2rem 0; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--code-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+        .code-header { display: flex; justify-content: space-between; align-items: center; background-color: var(--code-header-bg); padding: 0.75rem 1.2rem; }
+        .code-lang { font-family: 'Fira Code', monospace; color: var(--text-secondary); font-size: 0.9em; }
+        pre { font-family: 'Fira Code', monospace; margin: 0; padding: 1.5rem; font-size: 1.05em; color: var(--text-primary); white-space: pre-wrap; line-height: 1.8; font-variant-ligatures: common-ligatures; }
+        
+        #toTopBtn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 99; border: none; background-color: var(--primary-accent); color: white; cursor: pointer; padding: 12px; border-radius: 50%; width: 48px; height: 48px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #toTopBtn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-cogs"></i> Programming Fundamentals Notes</h1>
+            <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="content-card">
+            <h2><i class="fas fa-book-open"></i> Unit 2: Programming Fundamentals & Logic</h2>
+            
+            <section id="two-marks">
+                <h3><i class="fas fa-list-ol"></i> Section A (2 Marks Questions)</h3>
+                
+                <h4>1. What is an algorithm? Write down characteristics of an algorithm.</h4>
+                <p>An <strong>algorithm</strong> is a well-defined, step-by-step procedure for solving a problem. Its characteristics are: Finiteness, Definiteness, Input, Output, and Effectiveness.</p>
+
+                <h4>2. What is Pseudocode? Give one example of it.</h4>
+                <p><strong>Pseudocode</strong> is an informal, high-level description of an algorithm, using natural language conventions. Example (to add two numbers):</p>
+                <div class="code-container">
+                    <div class="code-header"><span class="code-lang">pseudocode</span></div>
+                    <pre><code>START
+  READ A, B
+  SUM = A + B
+  PRINT SUM
+STOP</code></pre>
+                </div>
+
+                <h4>3. What is a flow chart? Give the name of different symbols used in flow chart.</h4>
+                <p>A <strong>flowchart</strong> is a graphical representation of an algorithm. Common symbols include: Oval (Start/End), Parallelogram (Input/Output), Rectangle (Process), and Diamond (Decision).</p>
+                
+                <h4>4. What is top-down design approach?</h4>
+                <p>Top-down design is a problem-solving approach where a complex problem is broken down into smaller, more manageable sub-problems. This process is repeated until each sub-problem is simple enough to be solved directly. It is characteristic of procedural programming.</p>
+
+                <h4>5. What is syntax error? How is it different from semantic error?</h4>
+                <p>A <strong>syntax error</strong> violates the grammatical rules of a language (e.g., a missing semicolon). A <strong>semantic error</strong> is syntactically correct but logically meaningless (e.g., `x * y = z;`). Syntax errors are caught by the compiler; semantic errors may or may not be.</p>
+
+                <h4>6. Differentiate between low level language and high-level language.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>Low-Level Language</th><th>High-Level Language</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Readability</strong></td><td>Hard for humans to read (binary).</td><td>Easy to read (English-like).</td></tr>
+                            <tr><td><strong>Machine Dependency</strong></td><td>Machine-dependent.</td><td>Machine-independent.</td></tr>
+                            <tr><td><strong>Examples</strong></td><td>Machine Language, Assembly.</td><td>C++, Java, Python.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>7. Differentiate between compile time and run-time error.</h4>
+                <p>A <strong>compile-time error</strong> (like a syntax error) is detected by the compiler *before* the program is executed. A <strong>run-time error</strong> occurs *during* program execution, often due to an illegal operation like division by zero, even if the syntax is correct.</p>
+
+                <h4>8. Differentiate between compiler and interpreter.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>Compiler</th><th>Interpreter</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Translation</strong></td><td>Translates the entire program at once.</td><td>Translates the program line by line.</td></tr>
+                            <tr><td><strong>Object Code</strong></td><td>Generates an executable file.</td><td>Does not generate an object file.</td></tr>
+                            <tr><td><strong>Execution Speed</strong></td><td>Faster execution.</td><td>Slower execution.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>9. What is an assembler?</h4>
+                <p>An assembler is a translator that converts a program written in assembly language (which uses mnemonics like ADD, MOV) into machine language (binary code).</p>
+
+                <h4>10. Differentiate between algorithm and flow chart.</h4>
+                <p>An <strong>algorithm</strong> is a textual, step-by-step description of a solution. A <strong>flowchart</strong> is a graphical, diagrammatic representation of that same solution, using symbols to show the flow of logic.</p>
+
+                <h4>11. What is structured programming?</h4>
+                <p>Structured programming is a paradigm that uses a top-down approach and relies on three basic control structures (sequence, selection, and iteration) to write clear, manageable, and modular code. It discourages the use of 'goto' statements.</p>
+
+                <h4>12. What is a loader in programming language?</h4>
+                <p>A loader is a part of the operating system that takes an executable file from secondary storage and loads it into main memory (RAM) to prepare it for execution by the CPU.</p>
+
+                <h4>13. What is linker?</h4>
+                <p>A linker is a utility program that combines one or more object files (generated by a compiler) and library files into a single executable file.</p>
+                
+                <h4>14. Define testing.</h4>
+                <p>Testing is the process of executing a program with the intent of finding errors. It is a quality control activity to verify that the software meets the specified requirements and is free of defects.</p>
+                
+                <h4>15. What is debugging?</h4>
+                <p>Debugging is the process of locating, analyzing, and fixing errors or bugs that have been identified in a computer program, often after they have been found during testing.</p>
+
+                <h4>16. What is link time error?</h4>
+                <p>A link-time error occurs when the linker is unable to resolve a reference, such as when a function is called but its definition cannot be found in any of the linked object files or libraries.</p>
+
+                <h4>17. What are the characteristics of a good program?</h4>
+                <p>A good program should be: Correct and Reliable, Efficient (in time and space), Readable, Maintainable, and Portable.</p>
+                
+                <h4>18. What is bottom-up design approach?</h4>
+                <p>Bottom-up design is a problem-solving approach where individual components or modules are designed and built first. These modules are then integrated to form larger systems. It is characteristic of object-oriented programming.</p>
+
+                <h4>19. What are translators?</h4>
+                <p>Translators are system programs that convert source code written in one programming language into another, typically machine language. The main types are compilers, interpreters, and assemblers.</p>
+                
+                <h4>20. What are control structures?</h4>
+                <p>Control structures are programming constructs that control the flow of execution. The three basic types are: Sequential (step-by-step), Selection (if-else), and Iteration (loops like for/while).</p>
+            </section>
+            
+            <section id="five-marks">
+                <h3><i class="fas fa-star-half-alt"></i> Section B (5 Marks Questions)</h3>
+
+                <h4>1. What is flow chart? Explain different symbols used in a flow chart.</h4>
+                <p>A <strong>flowchart</strong> is a graphical or pictorial representation of an algorithm. It uses standard symbols to depict the sequence of operations and the flow of control in a program, making the logic easier to visualize and understand.</p>
+                <h5>Common Flowchart Symbols:</h5>
+                <ul>
+                    <li><strong>Oval (Terminal):</strong> Represents the Start or End point of the algorithm.</li>
+                    <li><strong>Parallelogram (Input/Output):</strong> Represents an operation where data is read from the user (Input) or displayed to the user (Output).</li>
+                    <li><strong>Rectangle (Process):</strong> Represents a computational step, such as an assignment or a calculation.</li>
+                    <li><strong>Diamond (Decision):</strong> Represents a point where a decision is made. It has one entry point and at least two exit points (e.g., Yes/No, True/False).</li>
+                    <li><strong>Arrows (Flow lines):</strong> Indicate the direction of flow and connect the symbols.</li>
+                </ul>
+
+                <h4>2. Write down the algorithm that converts an input inch into its equivalent centimeters. Draw the flow chart of it.</h4>
+                <h5>Algorithm:</h5>
+                <ol>
+                    <li><strong>Step 1:</strong> Start.</li>
+                    <li><strong>Step 2:</strong> Declare two variables, `inch` and `cm`.</li>
+                    <li><strong>Step 3:</strong> Read the value for `inch` from the user.</li>
+                    <li><strong>Step 4:</strong> Calculate the centimeters using the formula: `cm = inch * 2.54`.</li>
+                    <li><strong>Step 5:</strong> Print the value of `cm`.</li>
+                    <li><strong>Step 6:</strong> Stop.</li>
+                </ol>
+                <h5>Flowchart Description:</h5>
+                <ul>
+                    <li>An <strong>Oval</strong> symbol with "Start".</li>
+                    <li>An arrow pointing to a <strong>Parallelogram</strong> with "Read inch".</li>
+                    <li>An arrow to a <strong>Rectangle</strong> with "cm = inch * 2.54".</li>
+                    <li>An arrow to a <strong>Parallelogram</strong> with "Print cm".</li>
+                    <li>An arrow to an <strong>Oval</strong> with "Stop".</li>
+                </ul>
+
+                <h4>3. Explain different languages translators in language processor.</h4>
+                <p>Language translators are system programs that convert source code from one language to another. The main types are:</p>
+                <ul>
+                    <li><strong>Assembler:</strong> Translates assembly language (using mnemonics) into machine language (binary code). It performs a one-to-one conversion.</li>
+                    <li><strong>Compiler:</strong> Translates an entire high-level language program into machine code at once. It generates an executable file and reports all syntax errors together after scanning the whole program.</li>
+                    <li><strong>Interpreter:</strong> Translates and executes a high-level language program line by line. It does not create an executable file and stops at the first error it encounters.</li>
+                </ul>
+
+                <h4>4. Write down short notes on assembler, compiler and interpreter.</h4>
+                <p><strong>Assembler:</strong> An assembler is a translator for assembly language. It converts symbolic instruction codes (mnemonics) like `ADD`, `MOV`, and `SUB` into their binary equivalents that the CPU can execute. This translation is direct and fast, as each assembly instruction typically corresponds to one machine instruction.</p>
+                <p><strong>Compiler:</strong> A compiler is a translator for high-level languages like C++ and Java. It works by taking the entire source code file, checking it for syntax errors, and if none are found, translating it into a complete, standalone executable file. This process is done before the program is run, which allows the final executable to run very quickly.</p>
+                <p><strong>Interpreter:</strong> An interpreter also works with high-level languages like Python and JavaScript. Instead of translating the whole program beforehand, it reads one line of the source code, translates it, executes it, and then moves to the next line. This makes debugging easier but generally results in slower overall execution compared to a compiled program.</p>
+                
+                <h4>5. Differentiate between top-down and bottom-up approach.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Basis</th><th>Top-Down Approach</th><th>Bottom-Up Approach</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Concept</strong></td><td>A large problem is broken down into smaller sub-problems.</td><td>Individual components are built first and then integrated into a larger system.</td></tr>
+                            <tr><td><strong>Flow</strong></td><td>Flows from a general overview to specific details.</td><td>Flows from specific details to a general system.</td></tr>
+                            <tr><td><strong>Paradigm</strong></td><td>Characteristic of Procedural/Structured Programming.</td><td>Characteristic of Object-Oriented Programming.</td></tr>
+                            <tr><td><strong>Example</strong></td><td>Breaking down a "Car" system into "Engine," "Transmission," and "Chassis" sub-systems.</td><td>Building "Tire," "Piston," and "Steering Wheel" modules and then combining them.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>6. What is an error? Explain different types of errors in programming language.</h4>
+                <p>An <strong>error</strong> (or bug) is a mistake in a program that causes it to behave in an unintended way. The main types are:</p>
+                <ol>
+                    <li><strong>Compile-time Errors (Syntax Errors):</strong> These errors violate the grammatical rules of the language and are caught by the compiler before the program runs. Examples include missing semicolons or misspelled keywords.</li>
+                    <li><strong>Run-time Errors:</strong> These errors occur during program execution. The code is syntactically correct, but an illegal operation is attempted, such as division by zero or trying to access a file that doesn't exist.</li>
+                    <li><strong>Logical Errors:</strong> These are the most difficult to find. The program compiles and runs without crashing, but it produces the wrong output because of a flaw in the programmer's logic (e.g., using `+` instead of `-` in a formula).</li>
+                </ol>
+
+                <h4>7. Differentiate between object-oriented and procedure-oriented programming.</h4>
+                <p><strong>Procedure-Oriented Programming (POP)</strong> focuses on functions or procedures. The program is divided into functions, and data is often global and can be accessed freely. Example: C.</p>
+                <p><strong>Object-Oriented Programming (OOP)</strong> focuses on objects, which bundle data and the functions that operate on that data together. It emphasizes data security through concepts like encapsulation. Example: Java, C++.</p>
+                
+                <h4>8. What is programming language? Explain different generations of programming language.</h4>
+                <p>A <strong>programming language</strong> is a formal language with a set of rules and syntax used to write instructions for a computer. Its generations are:</p>
+                <ul>
+                    <li><strong>1GL (First Generation):</strong> Machine Language (binary).</li>
+                    <li><strong>2GL (Second Generation):</strong> Assembly Language (mnemonics).</li>
+                    <li><strong>3GL (Third Generation):</strong> High-Level Languages (e.g., C, Java, Python).</li>
+                    <li><strong>4GL (Fourth Generation):</strong> Very High-Level Languages, often for specific purposes (e.g., SQL for databases).</li>
+                    <li><strong>5GL (Fifth Generation):</strong> Languages for AI and logic programming (e.g., Prolog).</li>
+                </ul>
+                
+                <h4>9. Explain different steps involved in development programs.</h4>
+                <p>The development of a program typically follows the Software Development Life Cycle (SDLC):</p>
+                <ol>
+                    <li><strong>Requirement Analysis:</strong> Understanding and defining the problem and what the software needs to do.</li>
+                    <li><strong>Design:</strong> Planning the software's architecture, creating algorithms, and designing the user interface.</li>
+                    <li><strong>Implementation (Coding):</strong> Writing the source code in a chosen programming language based on the design.</li>
+                    <li><strong>Testing:</strong> Executing the program to find and identify bugs or defects.</li>
+                    <li><strong>Deployment:</strong> Releasing the software to users.</li>
+                    <li><strong>Maintenance:</strong> Updating and fixing the software after its release to handle new requirements or discovered bugs.</li>
+                </ol>
+
+                <h4>10. Explain programming paradigm and design in programming language.</h4>
+                <p>A <strong>programming paradigm</strong> is a fundamental style or approach to programming. It dictates how programs are structured and how problems are solved. Major paradigms include Imperative (Procedural, Object-Oriented) and Declarative (Functional, Logic).</p>
+                <p><strong>Programming design</strong> is the process of planning the program's structure before coding. This includes choosing the right algorithms and data structures. The design approach is often influenced by the paradigm. For instance, procedural programming uses top-down design, while object-oriented programming often uses bottom-up design.</p>
+            </section>
+            
+            <section id="eight-marks">
+                <h3><i class="fas fa-star"></i> Section C (8 Marks Questions)</h3>
+
+                <h4>1. What is flow chart? Explain standard notation of flow chart? Give one example of it.</h4>
+                <p>A <strong>flowchart</strong> is a diagrammatic representation of an algorithm or a workflow. It provides a visual and easy-to-understand model of a process by using standard symbols connected by arrows to show the sequence of operations and flow of control.</p>
+                <h5>Standard Notation (Symbols):</h5>
+                <ul>
+                    <li><strong>Oval (Terminal):</strong> Represents the Start and End points of the algorithm. Every flowchart must begin with a "Start" terminal and end with an "End" or "Stop" terminal.</li>
+                    <li><strong>Parallelogram (Input/Output):</strong> Used to represent any operation that involves taking input from a user or displaying output.</li>
+                    <li><strong>Rectangle (Process):</strong> Represents a processing step, such as a calculation (e.g., `sum = a + b`) or data manipulation.</li>
+                    <li><strong>Diamond (Decision):</strong> Represents a conditional statement where a decision must be made. It has one entry point and two or more exit points labeled with the possible outcomes (e.g., True/False, Yes/No).</li>
+                    <li><strong>Arrows (Flow Lines):</strong> Connect the symbols and indicate the direction of logical flow through the algorithm.</li>
+                    <li><strong>Circle (Connector):</strong> Used to connect different parts of a flowchart, especially when it spans multiple pages or is too complex to be drawn with direct lines.</li>
+                </ul>
+                <h5>Example: Flowchart to find the larger of two numbers</h5>
+                <ol>
+                    <li>Start with an <strong>Oval</strong> labeled "Start".</li>
+                    <li>Draw an arrow to a <strong>Parallelogram</strong> labeled "Input A, B".</li>
+                    <li>Draw an arrow to a <strong>Diamond</strong> labeled "Is A > B?".</li>
+                    <li>From the "Yes" exit of the diamond, draw an arrow to a <strong>Parallelogram</strong> labeled "Print A".</li>
+                    <li>From the "No" exit of the diamond, draw an arrow to a <strong>Parallelogram</strong> labeled "Print B".</li>
+                    <li>Draw arrows from both "Print" parallelograms to a final <strong>Oval</strong> labeled "End".</li>
+                </ol>
+
+                <h4>2. Explain briefly about control structure.</h4>
+                <p><strong>Control structures</strong> are fundamental building blocks in programming that allow a programmer to alter the normal sequential flow of execution. They enable programs to make decisions and perform repetitive tasks. Without them, a program would execute line by line from top to bottom without variation. There are three main types:</p>
+                <ol>
+                    <li><strong>Sequential Structure:</strong> This is the default control structure. Instructions are executed one after another in the order they are written in the source code.</li>
+                    <li><strong>Selection (Conditional) Structure:</strong> This structure allows the program to choose between two or more alternative paths of execution based on a condition.
+                        <ul>
+                            <li><strong>`if` statement:</strong> Executes a block of code only if a specified condition is true.</li>
+                            <li><strong>`if-else` statement:</strong> Executes one block of code if the condition is true, and another block if it is false.</li>
+                            <li><strong>`if-elif-else` (or `switch`/`case`):</strong> Allows for checking multiple conditions and executing a specific block of code for the first condition that evaluates to true.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Iteration (Looping) Structure:</strong> This structure allows a block of code to be executed repeatedly as long as a certain condition is met.
+                        <ul>
+                            <li><strong>`while` loop:</strong> A pre-test loop that repeatedly executes a block of code as long as its condition remains true. The condition is checked *before* each iteration.</li>
+                            <li><strong>`do-while` loop:</strong> A post-test loop that executes a block of code at least once, and then continues to repeat as long as its condition remains true. The condition is checked *after* each iteration.</li>
+                            <li><strong>`for` loop:</strong> A counting loop that is ideal for iterating a specific number of times or over the elements of a sequence (like a list or an array).</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>3. Write down the short notes on: (1) Loader (2) Linker (3) Testing (4) Debugging.</h4>
+                <p><strong>(1) Loader:</strong> A loader is a vital system program that is part of the operating system. Its primary job is to load an executable file from secondary storage (like a hard disk) into main memory (RAM) so it can be executed. The loader allocates memory space for the program, copies the program's code and data into that space, and then transfers control to the program's starting point to begin execution.</p>
+                <p><strong>(2) Linker:</strong> A linker is a utility program that takes the object files generated by a compiler and combines them into a single executable file. Its main task is "symbol resolution," which means it finds the definitions for functions and variables that are referenced in one file but defined in another (such as a library file like `printf`) and links them together.</p>
+                <p><strong>(3) Testing:</strong> Testing is a proactive process in software development aimed at finding defects. It involves executing a program with a set of test cases and comparing the actual results with the expected results. The goal is not to prove the program is correct, but to find any errors and ensure the software meets quality standards and user requirements before it is released.</p>
+                <p><strong>(4) Debugging:</strong> Debugging is a reactive process that begins after a bug has been identified (often through testing). It is the systematic process of finding the root cause of the error, analyzing why it occurred, and then fixing the code to eliminate the bug. Debugging often involves using tools called debuggers to step through the code line by line and inspect the state of variables.</p>
+                
+                <h4>4. Differentiate between structured programming and object-oriented programming.</h4>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Feature</th><th>Structured Programming (POP)</th><th>Object-Oriented Programming (OOP)</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Core Concept</strong></td><td>Focuses on functions or procedures.</td><td>Focuses on objects that bundle data and methods.</td></tr>
+                            <tr><td><strong>Approach</strong></td><td>Follows a Top-Down design approach.</td><td>Follows a Bottom-Up design approach.</td></tr>
+                            <tr><td><strong>Data Handling</strong></td><td>Data and functions are separate. Data is often global and less secure.</td><td>Data and methods are encapsulated together in objects.</td></tr>
+                            <tr><td><strong>Data Security</strong></td><td>Less secure due to exposed global data.</td><td>More secure due to data hiding and encapsulation.</td></tr>
+                            <tr><td><strong>Key Features</strong></td><td>Modularity through functions and control structures.</td><td>Based on Classes, Objects, Inheritance, and Polymorphism.</td></tr>
+                            <tr><td><strong>Reusability</strong></td><td>Limited code reusability (via function calls).</td><td>High code reusability through Inheritance.</td></tr>
+                            <tr><td><strong>Example Languages</strong></td><td>C, Pascal, FORTRAN.</td><td>Java, C++, Python, C#.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>5. What is an editor? Explain different types of editor with example.</h4>
+                <p>An <strong>editor</strong> is a software program that allows a user to create and modify text files. In the context of programming, these are called text editors or code editors, and they are the primary tool for writing source code.</p>
+                <h5>Types of Editors:</h5>
+                <ol>
+                    <li><strong>Simple Text Editors:</strong> These provide basic text editing functionalities without any special features for programming. They are lightweight and fast.
+                        <ul><li><strong>Examples:</strong> Notepad (Windows), TextEdit (macOS), Gedit (Linux).</li></ul>
+                    </li>
+                    <li><strong>Code Editors (Programming Text Editors):</strong> These are advanced text editors specifically designed for writing code. They include features that make programming easier, such as:
+                        <ul>
+                            <li><strong>Syntax Highlighting:</strong> Displays code in different colors and fonts according to its category (keywords, strings, comments).</li>
+                            <li><strong>Code Completion:</strong> Suggests code snippets and variable names as you type.</li>
+                            <li><strong>Error Highlighting:</strong> Underlines potential syntax errors in real-time.</li>
+                            <li><strong>Examples:</strong> Visual Studio Code (VS Code), Sublime Text, Atom.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Integrated Development Environments (IDEs):</strong> An IDE is a comprehensive software suite that bundles all the essential tools for software development into a single application. It typically includes a code editor, a compiler/interpreter, and a debugger.
+                        <ul>
+                            <li><strong>Features:</strong> They include all the features of a code editor plus tools for building, running, and debugging programs, as well as project management and version control integration.</li>
+                            <li><strong>Examples:</strong> PyCharm (for Python), Eclipse (for Java), Visual Studio (for .NET/C++).</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+        </article>
+    </main>
+
+    <button id="toTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <footer><p>Crafted by Pratyush Swain</p></footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = (theme === 'dark'); };
+        const savedTheme = localStorage.getItem('pratyushCompleteNotesTheme') || 'dark'; applyTheme(savedTheme);
+        themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('pratyushCompleteNotesTheme', newTheme); applyTheme(newTheme); });
+        
+        const toTopBtn = document.getElementById("toTopBtn");
+        window.onscroll = () => { toTopBtn.style.display = (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) ? "flex" : "none"; toTopBtn.style.alignItems='center'; toTopBtn.style.justifyContent='center';};
+        toTopBtn.addEventListener("click", () => window.scrollTo({top: 0, behavior: 'smooth'}) );
+    });
+    </script>
+</body>
+</html>
