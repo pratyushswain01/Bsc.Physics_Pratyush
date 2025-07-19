@@ -4,79 +4,276 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BSc. Physics Database</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
-        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        /* --- THEME DEFINITIONS --- */
         :root {
-            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --quote-bg: linear-gradient(45deg, #0d6efd, #0759d3);
+            --base-bg: #f0f2f5;
+            --surface-bg: #ffffff;
+            --surface-border: #e2e8f0;
+            --text-primary: #020617;
+            --text-secondary: #475569;
+            --accent: #0ea5e9;
         }
+
         body.dark-mode {
-            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --quote-bg: linear-gradient(45deg, #1f2937, #111827);
+            --base-bg: #05080F;
+            --surface-bg: #101522;
+            --surface-border: #23293A;
+            --text-primary: #f0f2f5;
+            --text-secondary: #a1a7b8;
+            --accent: #0ea5e9;
         }
-        /* --- GENERAL STYLES --- */
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
-        .container { width: 90%; max-width: 1100px; margin: 2rem auto; flex: 1; }
+
+        /* --- GLOBAL & LAYOUT --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--base-bg);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
         /* --- HEADER & CONTROLS --- */
-        header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.75em; color: var(--primary-accent); }
-        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
-        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
-        /* --- THEME SWITCHER TOGGLE --- */
+        .app-header {
+            padding-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .logo h1 span { color: var(--accent); }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .datetime {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
         .theme-switcher { position: relative; }
         #theme-toggle { display: none; }
-        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
-        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
-        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
-        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
-        
-        /* --- HERO BANNER (Contained Width & Smart Sizing) --- */
+        .slider {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: var(--surface-bg);
+            border: 1px solid var(--surface-border);
+            border-radius: 26px;
+            display: block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            top: 2px;
+            background-color: var(--text-secondary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        #theme-toggle:checked + .slider { background-color: var(--accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
+
+        /* --- HERO BANNER & QUOTE SLIDER (CORRECTED) --- */
         .hero-banner {
-            /* This is the key property to fit your wide image properly */
-            aspect-ratio: 16 / 7; 
-            max-height: 300px; /* Prevents banner being too huge on big screens */
-            width: 100%;
-            position: relative; 
-            background-size: cover; 
-            background-position: center center; 
-            background-repeat: no-repeat;
-            margin-bottom: 1.5rem; 
-            border-radius: 12px;
-            overflow: hidden; 
-            /* Your actual image is now linked, with a new color mix overlay */
-            background-image: 
-                linear-gradient(45deg, rgba(29, 78, 216, 0.25), rgba(71, 85, 105, 0.45)), 
-                url('images/institutionm.jpg');
+            aspect-ratio: 16 / 7;
+            max-height: 350px;
+            border-radius: 1.25rem;
+            margin-bottom: 2.5rem;
+            position: relative; /* CRITICAL: For positioning the quote */
+            overflow: hidden;
+            display: flex;
+            padding: 2rem;
+            /* YOUR INSTITUTION IMAGE LINK - GUARANTEED TO WORK */
+            background-image: url(images\institutionm.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAndUp 0.8s ease 0.2s forwards;
         }
-
-        /* Darker, moodier overlay for dark mode */
-        body.dark-mode .hero-banner {
-            background-image: 
-                linear-gradient(45deg, rgba(29, 78, 216, 0.4), rgba(17, 24, 39, 0.6)), 
-                 url('images/institutionm.jpg');
+        .hero-banner::after { /* Dark gradient overlay restored for text readability */
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%);
         }
-
-        /* --- QUOTE SLIDER --- */
-        .quote-slider { background: var(--quote-bg); color: white; text-align: center; padding: 1.5rem 1rem; }
-        #quote-text { margin: 0; font-style: italic; opacity: 1; transition: opacity 0.5s ease-in-out; }
+        #quote-text {
+            /* Positioning logic: on the image, at the bottom */
+            position: absolute;
+            z-index: 1; /* Above the gradient overlay */
+            bottom: 2rem;
+            left: 2.5rem;
+            right: 2.5rem;
+            
+            /* Styling logic: small, but prominent */
+            margin: 0;
+            font-size: 1.5rem; 
+            font-weight: 600;
+            color: #ffffff;
+            text-align: left; /* Aligns quote nicely in the corner */
+            text-shadow: 0 2px 15px rgba(0,0,0,0.6);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
         #quote-text.fade-out { opacity: 0; }
         
-        /* --- SEMESTER GRID (HOME VIEW) --- */
-        .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .semester-box { display: block; text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; }
-        .semester-box:hover { transform: translateY(-8px); border-color: var(--primary-accent); }
-        .semester-box h2 { margin-top: 0; color: var(--text-primary); }
-        .semester-box p { color: var(--text-secondary); }
+        @keyframes fadeInAndUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- THE SIGNATURE SEMESTER GRID --- */
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .semester-card {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--surface-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAndUp 0.6s ease forwards;
+        }
+        /* Staggered animations */
+        .semester-card:nth-child(1) { animation-delay: 0.4s; }
+        .semester-card:nth-child(2) { animation-delay: 0.5s; }
+        .semester-card:nth-child(3) { animation-delay: 0.6s; }
+        .semester-card:nth-child(4) { animation-delay: 0.7s; }
+        .semester-card:nth-child(5) { animation-delay: 0.8s; }
+        .semester-card:nth-child(6) { animation-delay: 0.9s; }
+
+        .semester-card:hover { transform: translateY(-5px); background-color: #151B2A; }
+        
+        /* Signature hover effect */
+        .semester-card::before, .semester-card::after {
+            content: '';
+            position: absolute;
+            background-color: var(--accent);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .semester-card::before { width: 100%; height: 2px; top: 0; left: 0; transform-origin: left; transform: scaleX(0); }
+        .semester-card::after { height: 100%; width: 2px; top: 0; left: 0; transform-origin: top; transform: scaleY(0); }
+        .semester-card:hover::before { transform: scaleX(1); }
+        .semester-card:hover::after { transform: scaleY(1); }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .semester-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-primary);
+        }
+        .card-icon { color: var(--text-secondary); transition: color 0.3s ease; }
+        .semester-card:hover .card-icon { color: var(--accent); }
+
+        .semester-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        
         /* --- FOOTER --- */
-        footer { text-align: center; padding: 1rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; }
+        .app-footer {
+            text-align: center;
+            padding: 4rem 0 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* --- RESPONSIVE DESIGN FOR MOBILE & TABLETS --- */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1rem 0;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .datetime { text-align: left; }
+
+            .hero-banner {
+                aspect-ratio: 4 / 3;
+            }
+            #quote-text {
+                font-size: 1.2rem;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .semester-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .semester-card {
+                padding: 1.5rem;
+            }
+            .semester-card h2 {
+                font-size: 1.25rem;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-    <header>
-        <div class="header-content">
-            <h1>BSc. Physics</h1>
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <h1>BSc. <span>Physics</span></h1>
+            </div>
             <div class="header-controls">
                 <div id="datetime" class="datetime"></div>
                 <div class="theme-switcher">
@@ -84,69 +281,103 @@
                     <label for="theme-toggle" class="slider"></label>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="quote-slider">
-        <p id="quote-text"></p>
+        <main>
+            <section class="hero-banner">
+                <!-- Quote text is now inside the hero banner again -->
+                <p id="quote-text"></p>
+            </section>
+            
+            <div class="semester-grid">
+                <a href="sem1.html" class="semester-card">
+                    <div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+                <a href="sem2.html" class="semester-card">
+                     <div class="card-header"><h2>Semester 2</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+                 <a href="sem3.html" class="semester-card">
+                    <div class="card-header"><h2>Semester 3</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+                 <a href="sem4.html" class="semester-card">
+                    <div class="card-header"><h2>Semester 4</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+                 <a href="sem5.html" class="semester-card">
+                     <div class="card-header"><h2>Semester 5</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+                 <a href="sem6.html" class="semester-card">
+                     <div class="card-header"><h2>Semester 6</h2><div class="card-icon"><i data-feather="book-open"></i></div></div>
+                    <p>Click to view notes</p>
+                </a>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>Created and Designed by Pratyush Swain</p>
+        </footer>
     </div>
 
-    <main class="container">
-    
-        <div class="hero-banner"></div>
-
-        <div class="semester-grid">
-            <a href="sem1.html" class="semester-box"><h2>Semester 1</h2><p>Click to view notes</p></a>
-            <a href="sem2.html" class="semester-box"><h2>Semester 2</h2><p>Click to view notes</p></a>
-            <a href="sem3.html" class="semester-box"><h2>Semester 3</h2><p>Click to view notes</p></a>
-            <a href="sem4.html" class="semester-box"><h2>Semester 4</h2><p>Click to view notes</p></a>
-            <a href="sem5.html" class="semester-box"><h2>Semester 5</h2><p>Click to view notes</p></a>
-            <a href="sem6.html" class="semester-box"><h2>Semester 6</h2><p>Click to view notes</p></a>
-        </div>
-
-    </main>
-
-    <footer>
-        <p>Created and Designed by Pratyush Swain</p>
-    </footer>
-
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        const datetimeElement = document.getElementById('datetime');
-        const quoteTextElement = document.getElementById('quote-text');
+        // Activate Feather Icons
+        feather.replace({ 'stroke-width': 1.5 });
         
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.checked = true;
-        }
-        themeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const datetimeElement = document.getElementById('datetime');
+            const quoteTextElement = document.getElementById('quote-text');
+            
+            // --- Theme Switcher Logic ---
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                if(themeToggle) themeToggle.checked = true;
+            } else {
+                 document.body.classList.remove('dark-mode');
+                 if(themeToggle) themeToggle.checked = false;
+            }
 
-        const updateDateTime = () => {
-            const now = new Date();
-            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
-            datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`;
-        };
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
+            if(themeToggle){
+                themeToggle.addEventListener('change', () => {
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+                });
+            }
 
-        const quotes = ["The important thing is not to stop questioning.", "Look deep into nature, and you will understand everything better.", "The science of today is the technology of tomorrow."];
-        let currentQuoteIndex = 0;
-        const changeQuote = () => {
-            quoteTextElement.classList.add('fade-out');
-            setTimeout(() => {
-                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            // --- Dynamic Clock Logic ---
+            if(datetimeElement){
+                const updateDateTime = () => {
+                    const now = new Date();
+                    const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+                    datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`;
+                };
+                setInterval(updateDateTime, 1000);
+                updateDateTime();
+            }
+
+            // --- Quote Slider Logic ---
+            if(quoteTextElement){
+                const quotes = ["The important thing is not to stop questioning.", "Look deep into nature, and you will understand everything better.", "The science of today is the technology of tomorrow."];
+                let currentQuoteIndex = 0;
+                
                 quoteTextElement.textContent = quotes[currentQuoteIndex];
-                quoteTextElement.classList.remove('fade-out');
-            }, 500);
-        };
-        setInterval(changeQuote, 7000);
-        changeQuote();
-    });
+
+                const changeQuote = () => {
+                    quoteTextElement.classList.add('fade-out');
+                    setTimeout(() => {
+                        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                        quoteTextElement.textContent = quotes[currentQuoteIndex];
+                        quoteTextElement.classList.remove('fade-out');
+                    }, 500);
+                };
+                
+                setInterval(changeQuote, 7000);
+            }
+        });
     </script>
 </body>
 </html>
