@@ -72,7 +72,7 @@
 
         /* --- Main Content Area --- */
         .main-content {
-            flex: 1; /* Makes the main content fill available space */
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -81,14 +81,16 @@
 
         .video-container {
             width: 100%;
-            max-width: 800px; /* Max width for the video */
+            max-width: 800px;
             box-shadow: 0 10px 30px var(--shadow-color);
             border-radius: 12px;
-            overflow: hidden; /* Ensures video corners are rounded */
+            overflow: hidden;
+            /* HIGHLIGHT: Add a background color that matches the poster/video to prevent flash */
+            background-color: #f8f7f4; 
         }
 
         video {
-            display: block; /* Removes bottom space under the video */
+            display: block;
             width: 100%;
             height: auto;
         }
@@ -107,7 +109,7 @@
             color: #777;
             font-size: 0.9rem;
         }
-
+        
         /* --- Responsive Design for smaller screens --- */
         @media (max-width: 600px) {
             .page-header {
@@ -134,14 +136,11 @@
     <main class="main-content">
         <div class="video-container">
             <!-- 
-              VIDEO ATTRIBUTES EXPLAINED:
-              id="introVideo":  A unique name so our JavaScript can find this exact video.
-              autoplay:        Tells the browser to play the video as soon as possible.
-              muted:           REQUIRED for autoplay to work in most modern browsers (Chrome, Safari).
-              playsinline:     Prevents the video from going full-screen on mobile devices.
+              HIGHLIGHT: Added the 'poster' attribute.
+              This image will show instantly while the video loads invisibly in the background.
             -->
-            <video id="introVideo" autoplay muted playsinline>
-                <source src="images\BSc.Physics I SDVM.mp4" type="video/mp4">
+            <video id="introVideo" autoplay muted playsinline poster="images/video_poster.jpg">
+                <source src="images/BSc.Physics I SDVM.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -153,12 +152,12 @@
         <p class="footer-text">Created by Pratyush Swain </p>
     </footer>
 
-    <!-- ======== JAVASCRIPT FOR REDIRECTION ======== -->
+    <!-- ======== JAVASCRIPT FOR REDIRECTION (No changes needed here) ======== -->
     <script>
-        // 1. Find the video element on the page using its ID
+        // Find the video element on the page using its ID
         const introVideo = document.getElementById('introVideo');
 
-        // 2. Create a function that will redirect the page
+        // Create a function that will redirect the page
         function redirectToNextPage() {
             // Wait for 1.5 seconds (1500 milliseconds) before redirecting
             setTimeout(function() {
@@ -167,7 +166,7 @@
             }, 1500);
         }
 
-        // 3. Listen for the 'ended' event on the video.
+        // Listen for the 'ended' event on the video.
         // This event fires automatically when the video playback is complete.
         introVideo.addEventListener('ended', redirectToNextPage);
     </script>
