@@ -31,27 +31,30 @@
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
         
-        /* --- HERO BANNER (Full-width Image) --- */
+        /* --- HERO BANNER (Contained Width & Smart Sizing) --- */
         .hero-banner {
-            /* Height is now taller for a "wider" banner feel */
-            height: 40vh; 
-            max-height: 280px; /* Prevents banner from being too tall on desktops */
+            /* This is the key property to fit your wide image properly */
+            aspect-ratio: 16 / 7; 
+            max-height: 300px; /* Prevents banner being too huge on big screens */
             width: 100%;
             position: relative; 
             background-size: cover; 
             background-position: center center; 
             background-repeat: no-repeat;
-            /* A real image is now linked directly so it will work */
+            margin-bottom: 1.5rem; 
+            border-radius: 12px;
+            overflow: hidden; 
+            /* Your actual image is now linked, with a new color mix overlay */
             background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), 
-                url('images/institutionm.jpg');
+                linear-gradient(45deg, rgba(29, 78, 216, 0.25), rgba(71, 85, 105, 0.45)), 
+                url('institutionm.jpg');
         }
 
-        /* Different overlay for dark mode with the same real image */
+        /* Darker, moodier overlay for dark mode */
         body.dark-mode .hero-banner {
             background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
-                url('images/institutionm.jpg');
+                linear-gradient(45deg, rgba(29, 78, 216, 0.4), rgba(17, 24, 39, 0.6)), 
+                 url('institutionm.jpg');
         }
 
         /* --- QUOTE SLIDER --- */
@@ -84,15 +87,14 @@
         </div>
     </header>
 
-    <!-- ===== HERO BANNER SECTION (CORRECT METHOD) ===== -->
-    <div class="hero-banner"></div>
-    <!-- =============================================== -->
-
     <div class="quote-slider">
         <p id="quote-text"></p>
     </div>
 
     <main class="container">
+    
+        <div class="hero-banner"></div>
+
         <div class="semester-grid">
             <a href="sem1.html" class="semester-box"><h2>Semester 1</h2><p>Click to view notes</p></a>
             <a href="sem2.html" class="semester-box"><h2>Semester 2</h2><p>Click to view notes</p></a>
@@ -101,6 +103,7 @@
             <a href="sem5.html" class="semester-box"><h2>Semester 5</h2><p>Click to view notes</p></a>
             <a href="sem6.html" class="semester-box"><h2>Semester 6</h2><p>Click to view notes</p></a>
         </div>
+
     </main>
 
     <footer>
