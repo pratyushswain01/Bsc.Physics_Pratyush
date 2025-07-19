@@ -1,125 +1,175 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSc. Physics Database</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <title>Welcome</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        /* --- Global Styles & Theming --- */
         :root {
-            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --quote-bg: linear-gradient(45deg, #0d6efd, #0759d3);
+            --background-color: #f8f7f4;
+            --header-footer-bg: #ffffff;
+            --text-color: #2c3e50;
+            --primary-accent: #0077b6; /* A professional blue */
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
-        body.dark-mode {
-            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --quote-bg: linear-gradient(45deg, #1f2937, #111827);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        /* --- GENERAL STYLES --- */
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
-        .container { width: 90%; max-width: 1100px; margin: 2rem auto; flex: 1; }
-        /* --- HEADER & CONTROLS --- */
-        header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 1.75em; color: var(--primary-accent); }
-        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
-        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
-        /* --- THEME SWITCHER TOGGLE --- */
-        .theme-switcher { position: relative; }
-        #theme-toggle { display: none; }
-        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
-        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
-        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
-        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
-        /* --- QUOTE SLIDER --- */
-        .quote-slider { background: var(--quote-bg); color: white; text-align: center; padding: 1rem; }
-        #quote-text { margin: 0; font-style: italic; opacity: 1; transition: opacity 0.5s ease-in-out; }
-        #quote-text.fade-out { opacity: 0; }
-        /* --- SEMESTER GRID (HOME VIEW) --- */
-        .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .semester-box { display: block; text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; }
-        .semester-box:hover { transform: translateY(-8px); border-color: var(--primary-accent); }
-        .semester-box h2 { margin-top: 0; color: var(--text-primary); }
-        .semester-box p { color: var(--text-secondary); }
-        /* --- FOOTER --- */
-        footer { text-align: center; padding: 1rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; }
+
+        html, body {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* --- Main Page Layout (Flexbox) --- */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header Section --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: var(--header-footer-bg);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .header-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            background-color: var(--primary-accent);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .header-button:hover {
+            background-color: #005f8e;
+            transform: translateY(-2px);
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            flex: 1; /* Makes the main content fill available space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px; /* Max width for the video */
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-radius: 12px;
+            overflow: hidden; /* Ensures video corners are rounded */
+        }
+
+        video {
+            display: block; /* Removes bottom space under the video */
+            width: 100%;
+            height: auto;
+        }
+
+        /* --- Footer Section --- */
+        .page-footer {
+            padding: 1.5rem;
+            text-align: center;
+            background-color: var(--header-footer-bg);
+            border-top: 1px solid #e0e0e0;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .footer-text {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsive Design for smaller screens --- */
+        @media (max-width: 600px) {
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .header-title {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-content">
-            <h1>BSc. Physics</h1>
-            <div class="header-controls">
-                <div id="datetime" class="datetime"></div>
-                <div class="theme-switcher">
-                    <input type="checkbox" id="theme-toggle">
-                    <label for="theme-toggle" class="slider"></label>
-                </div>
-            </div>
-        </div>
+    <!-- ======== HEADER ======== -->
+    <header class="page-header">
+        <h1 class="header-title">Welcome</h1>
+        <button class="header-button">Get Started</button>
     </header>
 
-    <div class="quote-slider">
-        <p id="quote-text"></p>
-    </div>
-
-    <main class="container">
-        <div class="semester-grid">
-            <a href="sem1.html" class="semester-box"><h2>Semester 1</h2><p>Click to view notes</p></a>
-            <a href="sem2.html" class="semester-box"><h2>Semester 2</h2><p>Click to view notes</p></a>
-            <a href="sem3.html" class="semester-box"><h2>Semester 3</h2><p>Click to view notes</p></a>
-            <a href="sem4.html" class="semester-box"><h2>Semester 4</h2><p>Click to view notes</p></a>
-            <a href="sem5.html" class="semester-box"><h2>Semester 5</h2><p>Click to view notes</p></a>
-            <a href="sem6.html" class="semester-box"><h2>Semester 6</h2><p>Click to view notes</p></a>
+    <!-- ======== MAIN CONTENT (VIDEO) ======== -->
+    <main class="main-content">
+        <div class="video-container">
+            <!-- 
+              VIDEO ATTRIBUTES EXPLAINED:
+              id="introVideo":  A unique name so our JavaScript can find this exact video.
+              autoplay:        Tells the browser to play the video as soon as possible.
+              muted:           REQUIRED for autoplay to work in most modern browsers (Chrome, Safari).
+              playsinline:     Prevents the video from going full-screen on mobile devices.
+            -->
+            <video id="introVideo" autoplay muted playsinline>
+                <source src="BSc.Physics I SDVM.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </main>
 
-    <footer>
-        <p>Created and Designed by Pratyush Swain</p>
+    <!-- ======== FOOTER ======== -->
+    <footer class="page-footer">
+        <p class="footer-text">© 2024 BSc. Physics I SDVM. All rights reserved.</p>
     </footer>
 
+    <!-- ======== JAVASCRIPT FOR REDIRECTION ======== -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // This script only needs to handle features on the home page.
-        const themeToggle = document.getElementById('theme-toggle');
-        const datetimeElement = document.getElementById('datetime');
-        const quoteTextElement = document.getElementById('quote-text');
-        
-        // Theme switcher logic
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.checked = true;
+        // 1. Find the video element on the page using its ID
+        const introVideo = document.getElementById('introVideo');
+
+        // 2. Create a function that will redirect the page
+        function redirectToNextPage() {
+            // Wait for 1.5 seconds (1500 milliseconds) before redirecting
+            setTimeout(function() {
+                // Change the window's location to the new page
+                window.location.href = 'semester.html';
+            }, 1500);
         }
-        themeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
-        });
 
-        // Dynamic clock
-        const updateDateTime = () => {
-            const now = new Date();
-            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
-            datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`;
-        };
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
-
-        // Quote slider
-        const quotes = ["The important thing is not to stop questioning.", "Look deep into nature, and you will understand everything better.", "The science of today is the technology of tomorrow."];
-        let currentQuoteIndex = 0;
-        const changeQuote = () => {
-            quoteTextElement.classList.add('fade-out');
-            setTimeout(() => {
-                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-                quoteTextElement.textContent = quotes[currentQuoteIndex];
-                quoteTextElement.classList.remove('fade-out');
-            }, 500);
-        };
-        setInterval(changeQuote, 7000);
-        changeQuote();
-    });
+        // 3. Listen for the 'ended' event on the video.
+        // This event fires automatically when the video playback is complete.
+        introVideo.addEventListener('ended', redirectToNextPage);
     </script>
+
 </body>
 </html>
