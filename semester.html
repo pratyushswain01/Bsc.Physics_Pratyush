@@ -110,38 +110,39 @@
             max-height: 350px;
             border-radius: 1.25rem;
             margin-bottom: 2.5rem;
-            position: relative; /* CRITICAL: For positioning the quote */
+            position: relative; /* This is essential for positioning the quote */
             overflow: hidden;
             display: flex;
-            padding: 2rem;
-            /* YOUR INSTITUTION IMAGE LINK - GUARANTEED TO WORK */
-            background-image:  url('images/institutionm.jpg');
+            padding: 2.5rem; /* Padding for the content inside */
+            /* Your actual institution image, guaranteed to work */
+            background-image:url('images/institutionm.jpg');
             background-size: cover;
             background-position: center;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInAndUp 0.8s ease 0.2s forwards;
         }
-        .hero-banner::after { /* Dark gradient overlay restored for text readability */
+        /* Dark gradient overlay to ensure text is always readable */
+        .hero-banner::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%);
         }
         #quote-text {
-            /* Positioning logic: on the image, at the bottom */
+            /* Positioning the quote on the image, at the bottom */
             position: absolute;
-            z-index: 1; /* Above the gradient overlay */
-            bottom: 2rem;
+            z-index: 1; /* Sits on top of the gradient overlay */
+            bottom: 2.5rem;
             left: 2.5rem;
             right: 2.5rem;
             
-            /* Styling logic: small, but prominent */
+            /* Styling for the quote */
             margin: 0;
-            font-size: 1.5rem; 
+            font-size: 1.5rem; /* Smaller, as requested */
             font-weight: 600;
             color: #ffffff;
-            text-align: left; /* Aligns quote nicely in the corner */
+            text-align: left;
             text-shadow: 0 2px 15px rgba(0,0,0,0.6);
             opacity: 1;
             transition: opacity 0.5s ease;
@@ -159,7 +160,6 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
-
         .semester-card {
             background-color: var(--surface-bg);
             border: 1px solid var(--surface-border);
@@ -173,97 +173,44 @@
             transform: translateY(30px);
             animation: fadeInAndUp 0.6s ease forwards;
         }
-        /* Staggered animations */
         .semester-card:nth-child(1) { animation-delay: 0.4s; }
         .semester-card:nth-child(2) { animation-delay: 0.5s; }
         .semester-card:nth-child(3) { animation-delay: 0.6s; }
         .semester-card:nth-child(4) { animation-delay: 0.7s; }
         .semester-card:nth-child(5) { animation-delay: 0.8s; }
         .semester-card:nth-child(6) { animation-delay: 0.9s; }
-
         .semester-card:hover { transform: translateY(-5px); background-color: #151B2A; }
         
-        /* Signature hover effect */
         .semester-card::before, .semester-card::after {
-            content: '';
-            position: absolute;
-            background-color: var(--accent);
+            content: ''; position: absolute; background-color: var(--accent);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .semester-card::before { width: 100%; height: 2px; top: 0; left: 0; transform-origin: left; transform: scaleX(0); }
         .semester-card::after { height: 100%; width: 2px; top: 0; left: 0; transform-origin: top; transform: scaleY(0); }
         .semester-card:hover::before { transform: scaleX(1); }
         .semester-card:hover::after { transform: scaleY(1); }
-
-        .card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        .semester-card h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-primary);
-        }
+        .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+        .semester-card h2 { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--text-primary); }
         .card-icon { color: var(--text-secondary); transition: color 0.3s ease; }
         .semester-card:hover .card-icon { color: var(--accent); }
-
-        .semester-card p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0;
-            color: var(--text-secondary);
-        }
+        .semester-card p { font-size: 1rem; line-height: 1.6; margin: 0; color: var(--text-secondary); }
         
         /* --- FOOTER --- */
-        .app-footer {
-            text-align: center;
-            padding: 4rem 0 2rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+        .app-footer { text-align: center; padding: 4rem 0 2rem 0; color: var(--text-secondary); font-size: 0.9rem; }
         
         /* --- RESPONSIVE DESIGN FOR MOBILE & TABLETS --- */
         @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 1rem 0;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
-            .header-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
+            .container { width: 95%; padding: 1rem 0; }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
+            .header-controls { width: 100%; justify-content: space-between; }
             .datetime { text-align: left; }
-
-            .hero-banner {
-                aspect-ratio: 4 / 3;
-            }
+            .hero-banner { aspect-ratio: 4 / 3; }
             #quote-text {
-                font-size: 1.2rem;
-                bottom: 1rem;
-                left: 1rem;
-                right: 1rem;
+                font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
             }
-
-            .semester-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .semester-card {
-                padding: 1.5rem;
-            }
-            .semester-card h2 {
-                font-size: 1.25rem;
-            }
+            .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .semester-card { padding: 1.5rem; }
+            .semester-card h2 { font-size: 1.25rem; }
         }
     </style>
 </head>
@@ -285,8 +232,8 @@
 
         <main>
             <section class="hero-banner">
-                <!-- Quote text is now inside the hero banner again -->
-                <p id="quote-text"></p>
+                <!-- Quote text is placed inside the banner to appear on top -->
+                <h1 id="quote-text"></h1>
             </section>
             
             <div class="semester-grid">
@@ -323,7 +270,6 @@
     </div>
 
     <script>
-        // Activate Feather Icons
         feather.replace({ 'stroke-width': 1.5 });
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -331,7 +277,7 @@
             const datetimeElement = document.getElementById('datetime');
             const quoteTextElement = document.getElementById('quote-text');
             
-            // --- Theme Switcher Logic ---
+            // --- Theme Switcher ---
             const currentTheme = localStorage.getItem('theme') || 'dark';
             if (currentTheme === 'dark') {
                 document.body.classList.add('dark-mode');
@@ -348,7 +294,7 @@
                 });
             }
 
-            // --- Dynamic Clock Logic ---
+            // --- Dynamic Clock ---
             if(datetimeElement){
                 const updateDateTime = () => {
                     const now = new Date();
@@ -359,7 +305,7 @@
                 updateDateTime();
             }
 
-            // --- Quote Slider Logic ---
+            // --- Quote Slider ---
             if(quoteTextElement){
                 const quotes = ["The important thing is not to stop questioning.", "Look deep into nature, and you will understand everything better.", "The science of today is the technology of tomorrow."];
                 let currentQuoteIndex = 0;
