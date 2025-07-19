@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSc. Physics - Welcome</title>
+    
+    <!-- Google Fonts for futuristic look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        /* =================================== */
+        /*          CSS STYLES START           */
+        /* =================================== */
+
+        /* --- Global & Body Setup --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #030617; /* Deep space blue/black */
+            font-family: 'Share Tech Mono', monospace;
+            color: #f0f0f0;
+            overflow: hidden; /* Prevents scrollbars */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* --- Particle Background Canvas --- */
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Place it behind everything */
+        }
+
+        /* --- Main Content Container --- */
+        .welcome-container {
+            position: relative;
+            z-index: 1; /* Place it in front of the background */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Helper Class for Animation --- */
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+
+        /* --- Atom Animation --- */
+        #atom-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+            transform-style: preserve-3d;
+            animation: rotate-view 30s infinite linear; /* Slower overall rotation */
+        }
+
+        .nucleus {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #9f00ff; /* Proton Purple */
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #9f00ff, 0 0 30px #9f00ff;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #00f6ff33; /* Faint Cyan */
+            transform-style: preserve-3d;
+        }
+
+        .orbit::before { /* The 'electron' */
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #00f6ff; /* Quantum Cyan */
+            border-radius: 50%;
+            top: 50%; /* Start at the horizontal midline */
+            left: 0; /* Start at the far left */
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px #00f6ff, 0 0 20px #00f6ff;
+            animation: move-electron-path 5s infinite linear;
+        }
+
+        /* Staggering and rotating orbits for a 3D effect */
+        .orbit:nth-child(2) { transform: rotateY(60deg); }
+        .orbit:nth-child(3) { transform: rotateY(-60deg); }
+        .orbit:nth-child(2)::before { animation-duration: 4s; }
+        .orbit:nth-child(3)::before { animation-duration: 6s; animation-delay: -2s; }
+
+        /* --- Text Styling --- */
+        #main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px #fff, 0 0 20px #00f6ff, 0 0 35px #00f6ff;
+        }
+
+        #subtitle {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #ccc;
+            text-shadow: 0 0 5px #ffffff80;
+        }
+
+        #credit {
+            font-size: 0.9rem;
+            margin-top: 25px;
+            color: #aaa;
+        }
+
+        /* --- Button Styling --- */
+        #initiate-button {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            border: 2px solid #00f6ff;
+            color: #00f6ff;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            margin-top: 40px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00f6ff;
+            box-shadow: 0 0 15px #00f6ff inset, 0 0 5px #00f6ff;
+            transition: all 0.3s ease;
+        }
+
+        #initiate-button:hover {
+            background-color: #00f6ff;
+            color: #030617;
+            box-shadow: 0 0 25px #00f6ff, 0 0 50px #00f6ff;
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* The electron moves in a circle along its path */
+        @keyframes move-electron-path {
+            from { transform: translate(-50%, -50%) rotate(0deg) translateX(100px) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        /* The entire atom structure slowly rotates for a 3D feel */
+        @keyframes rotate-view {
+            from { transform: rotateY(0deg) rotateX(15deg); }
+            to { transform: rotateY(360deg) rotateX(15deg); }
+        }
+        
+        /* =================================== */
+        /*          CSS STYLES END             */
+        /* =================================== */
+    </style>
+</head>
+<body>
+
+    <!-- =================================== -->
+    <!--          HTML CONTENT START         -->
+    <!-- =================================== -->
+
+    <!-- This div is the canvas for the live animated background -->
+    <div id="tsparticles"></div>
+
+    <!-- This is the main container for all the welcome page content -->
+    <div class="welcome-container">
+
+        <!-- The Animated Atom -->
+        <div id="atom-container" class="hidden">
+            <div class="nucleus"></div>
+            <div class="orbit"></div>
+            <div class="orbit"></div>
+            <div class="orbit"></div>
+        </div>
+
+        <!-- The Text Content -->
+        <h1 id="main-title" class="hidden">BSc. Physics</h1>
+        <p id="subtitle" class="hidden">SDVM, NEELAKANTHANAGAR, BAM-2</p>
+        <p id="credit" class="hidden">Created & Designed by Pratyush Swaon</p>
+
+        <!-- The Final Button -->
+        <button id="initiate-button" class="hidden">[ I N I T I A T E ]</button>
+
+    </div>
+    
+    <!-- =================================== -->
+    <!--          HTML CONTENT END           -->
+    <!-- =================================== -->
+
+
+    <!-- Library for the particle background from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+
+    <script>
+    /* =================================== */
+    /*        JAVASCRIPT LOGIC START       */
+    /* =================================== */
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // --- 1. TSPARTICLES BACKGROUND INITIALIZATION ---
+        // This creates the moving particles and lines in the background
+        tsParticles.load("tsparticles", {
+            fpsLimit: 60,
+            interactivity: {
+                events: {
+                    onHover: {
+                        enable: true,
+                        mode: "repulse",
+                    },
+                    resize: true,
+                },
+                modes: {
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4,
+                    },
+                },
+            },
+            particles: {
+                color: {
+                    value: "#00f6ff", // Quantum Cyan
+                },
+                links: {
+                    color: "#9f00ff", // Proton Purple
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.2,
+                    width: 1,
+                },
+                collisions: {
+                    enable: true,
+                },
+                move: {
+                    direction: "none",
+                    enable: true,
+                    outModes: {
+                        default: "bounce",
+                    },
+                    random: false,
+                    speed: 1,
+                    straight: false,
+                },
+                number: {
+                    density: {
+                        enable: true,
+                        area: 800,
+                    },
+                    value: 80,
+                },
+                opacity: {
+                    value: 0.5,
+                },
+                shape: {
+                    type: "circle",
+                },
+                size: {
+                    value: { min: 1, max: 3 },
+                },
+            },
+            detectRetina: true,
+        });
+
+
+        // --- 2. ANIMATION SEQUENCE ---
+        // Get references to all elements that need to be animated
+        const atomContainer = document.getElementById('atom-container');
+        const mainTitle = document.getElementById('main-title');
+        const subtitle = document.getElementById('subtitle');
+        const credit = document.getElementById('credit');
+        const initiateButton = document.getElementById('initiate-button');
+
+        // Use setTimeout to create a timed reveal sequence.
+        // The 'hidden' class is removed, which triggers the fade-in and slide-up
+        // animation defined in the CSS.
+        
+        setTimeout(() => {
+            atomContainer.classList.remove('hidden');
+        }, 500); // 0.5s delay for atom to appear
+
+        setTimeout(() => {
+            mainTitle.classList.remove('hidden');
+        }, 1500); // 1.5s delay for main title
+
+        setTimeout(() => {
+            subtitle.classList.remove('hidden');
+        }, 2500); // 2.5s delay for subtitle
+
+        setTimeout(() => {
+            credit.classList.remove('hidden');
+        }, 3000); // 3s delay for credit
+
+        setTimeout(() => {
+            initiateButton.classList.remove('hidden');
+        }, 4000); // 4s delay for the button
+        
+        // Add a click listener to the button for future functionality
+        initiateButton.addEventListener('click', () => {
+            console.log("App sequence initiated!");
+            // This is where you would add code to transition to your app's main page.
+            
+            // For now, let's create a cool fade-out effect.
+            document.body.style.transition = 'opacity 1s ease-out';
+            document.body.style.opacity = '0';
+
+            // After the fade out, you could redirect or load new content
+            setTimeout(() => {
+                alert("Welcome to the BSc. Physics App, Pratyush! Main content would load here.");
+                // We'll fade back in for this demonstration
+                document.body.style.opacity = '1';
+            }, 1000);
+        });
+
+    });
+        
+    /* =================================== */
+    /*        JAVASCRIPT LOGIC END         */
+    /* =================================== */
+    </script>
+</body>
+</html>
