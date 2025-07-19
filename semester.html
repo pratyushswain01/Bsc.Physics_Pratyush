@@ -30,30 +30,35 @@
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        /* --- HERO BANNER (Full-width Image) --- */
+        .hero-banner {
+            /* Height is now taller for a "wider" banner feel */
+            height: 40vh; 
+            max-height: 280px; /* Prevents banner from being too tall on desktops */
+            width: 100%;
+            position: relative; 
+            background-size: cover; 
+            background-position: center center; 
+            background-repeat: no-repeat;
+            /* A real image is now linked directly so it will work */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), 
+                url('images/institution.jpg');
+        }
+
+        /* Different overlay for dark mode with the same real image */
+        body.dark-mode .hero-banner {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+                url('images/institution.jpg');
+        }
+
         /* --- QUOTE SLIDER --- */
-        .quote-slider { background: var(--quote-bg); color: white; text-align: center; padding: 1rem; }
+        .quote-slider { background: var(--quote-bg); color: white; text-align: center; padding: 1.5rem 1rem; }
         #quote-text { margin: 0; font-style: italic; opacity: 1; transition: opacity 0.5s ease-in-out; }
         #quote-text.fade-out { opacity: 0; }
         
-        /* --- INSTITUTION BANNER (NEW) --- */
-        .institution-banner {
-            width: 300%;
-            padding: 1.5rem 0; /* Adds some space above and below the image */
-            text-align: center;
-            background-color: var(--bg-color); /* Ensures it blends with the page background */
-            transition: background-color 0.3s ease;
-        }
-        .institution-banner img {
-            max-height: 100px; /* Controls the maximum height of the image */
-            max-width: 90%; /* Ensures the image is responsive */
-            object-fit: contain; /* Prevents the image from being stretched */
-            opacity: 0.6; /* The transparency effect */
-            transition: opacity 0.3s ease;
-        }
-        body.dark-mode .institution-banner img {
-            opacity: 0.5;
-        }
-
         /* --- SEMESTER GRID (HOME VIEW) --- */
         .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .semester-box { display: block; text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; }
@@ -79,11 +84,9 @@
         </div>
     </header>
 
-    <!-- ===== INSTITUTION IMAGE SECTION ===== -->
-    <div class="institution-banner">
-        <img src="images\institution.jpg" alt="Institution Logo or Image">
-    </div>
-    <!-- ===================================== -->
+    <!-- ===== HERO BANNER SECTION (CORRECT METHOD) ===== -->
+    <div class="hero-banner"></div>
+    <!-- =============================================== -->
 
     <div class="quote-slider">
         <p id="quote-text"></p>
@@ -106,12 +109,10 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // This script only needs to handle features on the home page.
         const themeToggle = document.getElementById('theme-toggle');
         const datetimeElement = document.getElementById('datetime');
         const quoteTextElement = document.getElementById('quote-text');
         
-        // Theme switcher logic
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-mode');
@@ -122,7 +123,6 @@
             localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
         });
 
-        // Dynamic clock
         const updateDateTime = () => {
             const now = new Date();
             const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
@@ -131,7 +131,6 @@
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
-        // Quote slider
         const quotes = ["The important thing is not to stop questioning.", "Look deep into nature, and you will understand everything better.", "The science of today is the technology of tomorrow."];
         let currentQuoteIndex = 0;
         const changeQuote = () => {
