@@ -61,58 +61,14 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-        }
+        .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; }
         .logo h1 span { color: var(--accent); }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .datetime {
-            text-align: right;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .collab-info {
-            border-left: 2px solid var(--surface-border);
-            padding-left: 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .theme-switcher { position: relative; }
-        #theme-toggle { display: none; }
-        .slider {
-            cursor: pointer;
-            width: 50px;
-            height: 26px;
-            background-color: var(--surface-bg);
-            border: 1px solid var(--surface-border);
-            border-radius: 26px;
-            display: block;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .slider::before {
-            content: '';
-            position: absolute;
-            height: 20px;
-            width: 20px;
-            left: 2px;
-            top: 2px;
-            background-color: var(--text-secondary);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { text-align: right; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; }
+        .collab-info { border-left: 2px solid var(--surface-border); padding-left: 1rem; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 26px; display: block; position: relative; transition: all 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background-color: var(--text-secondary); border-radius: 50%; transition: all 0.3s ease; }
         #theme-toggle:checked + .slider { background-color: var(--accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
 
@@ -121,44 +77,64 @@
             aspect-ratio: 16 / 7;
             max-height: 350px;
             border-radius: 1.25rem;
-            margin-bottom: 2.5rem;
             position: relative;
             overflow: hidden;
             display: flex;
             padding: 2.5rem;
-            background-image:url('images/institutionm.jpg');
+            background-image:url('https://i.imgur.com/KIMcT6k.jpeg'); /* Placeholder Image */
             background-size: cover;
             background-position: center;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInAndUp 0.8s ease 0.2s forwards;
         }
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%);
-        }
-        #quote-text {
-            position: absolute;
-            z-index: 1;
-            bottom: 2.5rem;
-            left: 2.5rem;
-            right: 2.5rem;
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #ffffff;
-            text-align: left;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.6);
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
+        .hero-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%); }
+        #quote-text { position: absolute; z-index: 1; bottom: 2.5rem; left: 2.5rem; right: 2.5rem; margin: 0; font-size: 1.5rem; font-weight: 600; color: #ffffff; text-align: left; text-shadow: 0 2px 15px rgba(0,0,0,0.6); opacity: 1; transition: opacity 0.5s ease; }
         #quote-text.fade-out { opacity: 0; }
-        
-        @keyframes fadeInAndUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NEW MARQUEE TIMELINE RUNNER --- */
+        .timeline-runner {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: transparent;
+            border: 2px dashed var(--accent);
+            opacity: 0.8;
+            color: var(--accent);
+            padding: 0.7rem 1.5rem;
+            margin: 1.5rem 0 2.5rem 0;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            overflow: hidden; /* Important for marquee */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAndUp 0.8s ease 0.3s forwards;
+        }
+
+        .timeline-runner:hover {
+            border-style: solid;
+            background-color: rgba(14, 165, 233, 0.05);
+            opacity: 1;
+        }
+        .runner-icon {
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .runner-track {
+            flex-grow: 1;
+            overflow: hidden; /* The clipping mask for the text */
+        }
+        .runner-text {
+            display: inline-block;
+            white-space: nowrap; /* Keeps the duplicated text in one line */
+            animation: scroll-left 15s linear infinite;
+            font-weight: 600;
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         /* --- SEMESTER GRID --- */
@@ -166,7 +142,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin-bottom: 4rem; /* Add space before footer */
+            margin-bottom: 4rem;
         }
         .semester-card {
             background-color: var(--surface-bg);
@@ -176,169 +152,59 @@
             position: relative;
             overflow: hidden;
             text-decoration: none;
-            transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInAndUp 0.6s ease forwards;
         }
-        .semester-card:nth-child(1) { animation-delay: 0.4s; }
-        .semester-card:nth-child(2) { animation-delay: 0.5s; }
-        .semester-card:nth-child(3) { animation-delay: 0.6s; }
-        .semester-card:nth-child(4) { animation-delay: 0.7s; }
-        .semester-card:nth-child(5) { animation-delay: 0.8s; }
-        .semester-card:nth-child(6) { animation-delay: 0.9s; }
-        
-        .semester-card:not(.disabled-card):hover { transform: translateY(-5px); background-color: #151B2A; }
-        .semester-card::before, .semester-card::after {
-            content: ''; position: absolute; background-color: var(--accent);
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+        .semester-card:nth-child(1) { animation-delay: 0.4s; } .semester-card:nth-child(2) { animation-delay: 0.5s; } .semester-card:nth-child(3) { animation-delay: 0.6s; } .semester-card:nth-child(4) { animation-delay: 0.7s; } .semester-card:nth-child(5) { animation-delay: 0.8s; } .semester-card:nth-child(6) { animation-delay: 0.9s; }
+        .semester-card:not(.disabled-card):hover { transform: translateY(-5px); }
+        body.dark-mode .semester-card:not(.disabled-card):hover { background-color: #151B2A; }
+        .semester-card::before, .semester-card::after { content: ''; position: absolute; background-color: var(--accent); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
         .semester-card::before { width: 100%; height: 2px; top: 0; left: 0; transform-origin: left; transform: scaleX(0); }
         .semester-card::after { height: 100%; width: 2px; top: 0; left: 0; transform-origin: top; transform: scaleY(0); }
         .semester-card:not(.disabled-card):hover::before { transform: scaleX(1); }
         .semester-card:not(.disabled-card):hover::after { transform: scaleY(1); }
-        
         .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
         .semester-card h2 { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--text-primary); transition: color 0.3s ease; }
         .card-icon { color: var(--text-secondary); transition: color 0.3s ease; }
         .semester-card:not(.disabled-card):hover .card-icon,
         .semester-card:not(.disabled-card):hover h2 { color: var(--accent); }
         .semester-card p { font-size: 1rem; line-height: 1.6; margin: 0; color: var(--text-secondary); transition: color 0.3s ease; }
-        .semester-card:not(.disabled-card):hover p { color: #e2e8f0; }
+        body.dark-mode .semester-card:not(.disabled-card):hover p { color: #e2e8f0; }
+        .disabled-card { cursor: not-allowed; filter: grayscale(40%); opacity: 0.75 !important; }
+        .launch-soon-badge { display: inline-block; margin-top: 1rem; background-color: var(--danger); color: #ffffff; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; border-radius: 50px; animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); } }
 
-        .disabled-card {
-            cursor: not-allowed;
-            filter: grayscale(40%);
-            opacity: 0.75 !important;
-        }
-        .launch-soon-badge {
-            display: inline-block;
-            margin-top: 1rem;
-            background-color: var(--danger);
-            color: #ffffff;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 50px;
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
-        }
-
-        /* --- NEW FOOTER STYLES --- */
-        .app-footer {
-            background-color: var(--surface-bg);
-            padding: 4rem 0 0 0;
-            margin-top: 3rem;
-            border-top: 1px solid var(--surface-border);
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 3rem;
-        }
-        .footer-column h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin: 0 0 1.25rem 0;
-        }
-        .footer-column p, .footer-column a {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            text-decoration: none;
-        }
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .footer-column li {
-            margin-bottom: 0.75rem;
-        }
-        .footer-column a:hover {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1.25rem;
-        }
+        /* --- FOOTER STYLES --- */
+        .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: 3rem; border-top: 1px solid var(--surface-border); }
+        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; width: 90%; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; }
+        .footer-column h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 1.25rem 0; }
+        .footer-column p, .footer-column a { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; text-decoration: none; }
+        .footer-column ul { list-style: none; padding: 0; margin: 0; } .footer-column li { margin-bottom: 0.75rem; }
+        .footer-column a:hover { color: var(--accent); text-decoration: underline; }
+        .footer-logo { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; }
         .footer-logo span { color: var(--accent); }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--social-bg);
-            border-radius: 50%;
-            color: #ffffff !important;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .social-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--surface-border);
-            text-align: center;
-            padding: 1.5rem 0;
-        }
-        .footer-bottom p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .footer-bottom a {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .footer-bottom a:hover {
-            color: var(--accent);
-        }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--social-bg); border-radius: 50%; color: #ffffff !important; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .social-links a:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-decoration: none; }
+        .footer-bottom { border-top: 1px solid var(--surface-border); text-align: center; padding: 1.5rem 0; }
+        .footer-bottom p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+        .footer-bottom a { color: var(--text-secondary); font-weight: 500; }
+        .footer-bottom a:hover { color: var(--accent); }
         
         /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 820px) {
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        @media (max-width: 820px) { .footer-content { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) {
             .container { width: 95%; padding: 1rem 0; }
             .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
             .header-controls { width: 100%; justify-content: space-between; }
             .datetime { text-align: left; }
             .hero-banner { aspect-ratio: 4 / 3; }
-            #quote-text {
-                font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-            }
+            #quote-text { font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
             .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .semester-card { padding: 1.5rem; }
-            .semester-card h2 { font-size: 1.25rem; }
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            .app-footer { padding-top: 3rem; }
+            .semester-card { padding: 1.5rem; } .semester-card h2 { font-size: 1.25rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 2.5rem; } .app-footer { padding-top: 3rem; }
         }
     </style>
 </head>
@@ -346,23 +212,33 @@
 
     <div class="container">
         <header class="app-header">
-            <div class="logo">
-                <h1>BSc. <span>Physics</span></h1>
-                <div class="collab-info">SDVM, Neelakanthanagar</div>
-            </div>
+            <div class="logo"><h1>BSc. <span>Physics</span></h1><div class="collab-info">SDVM, Neelakanthanagar</div></div>
             <div class="header-controls">
                 <div id="datetime" class="datetime"></div>
-                <div class="theme-switcher">
-                    <input type="checkbox" id="theme-toggle" checked>
-                    <label for="theme-toggle" class="slider"></label>
-                </div>
+                <div class="theme-switcher"><input type="checkbox" id="theme-toggle" checked><label for="theme-toggle" class="slider"></label></div>
             </div>
         </header>
 
         <main>
-            <section class="hero-banner">
-                <h1 id="quote-text"></h1>
-            </section>
+            <section class="hero-banner"><h1 id="quote-text"></h1></section>
+            
+            <!-- NEW MARQUEE TIMELINE RUNNER -->
+            <a href="semtime.html" class="timeline-runner">
+                <i class="runner-icon" data-feather="bell"></i>
+                <div class="runner-track">
+                    <div class="runner-text">
+                        <span>Semester - 2 Timeline (Updated)</span>
+                        <span style="margin: 0 2rem;">•</span>
+                        <span>Click here for details</span>
+                        <span style="margin: 0 2rem;">•</span>
+                         <!-- Duplicated for seamless loop -->
+                        <span>Semester - 2 Timeline (Updated)</span>
+                        <span style="margin: 0 2rem;">•</span>
+                        <span>Click here for details</span>
+                        <span style="margin: 0 2rem;">•</span>
+                    </div>
+                </div>
+            </a>
             
             <div class="semester-grid">
                 <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
@@ -377,89 +253,45 @@
 
     <footer class="app-footer">
         <div class="footer-content">
-            <div class="footer-column">
-                <div class="footer-logo">BSc. <span>Physics</span></div>
-                <p>Your central hub for BSc. Physics resources from Saraswati Degree Vidya Mandir, Neelakanthanagar, Bam-2 . We provide structured notes and guides to help you succeed in your academic journey.</p>
-            </div>
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="sem2.html">Semester Notes</a></li>
-                    <li><a href="pratyushkumarswain2005@gmail.com">Contact Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Connect With Us</h3>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
-                </div>
-            </div>
+            <div class="footer-column"><div class="footer-logo">BSc. <span>Physics</span></div><p>Your central hub for BSc. Physics resources from Saraswati Degree Vidya Mandir, Neelakanthanagar, Bam-2 . We provide structured notes and guides to help you succeed in your academic journey.</p></div>
+            <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="about.html">About Us</a></li><li><a href="sem2.html">Semester Notes</a></li><li><a href="pratyushkumarswain2005@gmail.com">Contact Support</a></li></ul></div>
+            <div class="footer-column"><h3>Connect With Us</h3><div class="social-links"><a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a><a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a><a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a></div></div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2025 Pratyush Swain. All Rights Reserved. • <a href="privacy.html">Privacy Policy</a> • <a href="terms.html">Terms of Use</a></p>
-        </div>
+        <div class="footer-bottom"><p>© 2025 Pratyush Swain. All Rights Reserved. • <a href="privacy.html">Privacy Policy</a> • <a href="terms.html">Terms of Use</a></p></div>
     </footer>
 
     <script>
-        feather.replace({ 'stroke-width': 2 }); // Thicker icons for social links look better
-        
         document.addEventListener('DOMContentLoaded', () => {
+            feather.replace({ 'stroke-width': 1.5 });
+
             const themeToggle = document.getElementById('theme-toggle');
             const datetimeElement = document.getElementById('datetime');
             const quoteTextElement = document.getElementById('quote-text');
             
-            // --- Theme Switcher ---
             const currentTheme = localStorage.getItem('theme');
-            if (currentTheme === 'light') {
-                document.body.classList.remove('dark-mode');
-                if(themeToggle) themeToggle.checked = false;
-            } else {
-                document.body.classList.add('dark-mode');
-                if(themeToggle) themeToggle.checked = true;
-            }
+            if (currentTheme === 'light') { document.body.classList.remove('dark-mode'); if(themeToggle) themeToggle.checked = false; } 
+            else { document.body.classList.add('dark-mode'); if(themeToggle) themeToggle.checked = true; }
+            if(themeToggle){ themeToggle.addEventListener('change', () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light'); }); }
 
-            if(themeToggle){
-                themeToggle.addEventListener('change', () => {
-                    document.body.classList.toggle('dark-mode');
-                    localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
-                });
-            }
-
-            // --- Dynamic Clock ---
             if(datetimeElement){
-                const updateDateTime = () => {
-                    const now = new Date();
-                    const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
-                    datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`;
-                };
+                const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`; };
                 setInterval(updateDateTime, 1000);
                 updateDateTime();
             }
 
-            // --- Quote Slider ---
             if(quoteTextElement){
                 const quotes = [
-                    "The important thing is not to stop questioning.", 
-                    "Look deep into nature, and you will understand everything better.", 
+                    "The important thing is not to stop questioning. Curiosity has its own reason for existence.", 
+                    "Look deep into nature, and then you will understand everything better.", 
                     "The science of today is the technology of tomorrow.",
                     "Physics is the law of the universe, and we are all its humble citizens."
                 ];
                 let currentQuoteIndex = 0;
-                
                 quoteTextElement.textContent = quotes[currentQuoteIndex];
-
                 const changeQuote = () => {
                     quoteTextElement.classList.add('fade-out');
-                    setTimeout(() => {
-                        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-                        quoteTextElement.textContent = quotes[currentQuoteIndex];
-                        quoteTextElement.classList.remove('fade-out');
-                    }, 500);
+                    setTimeout(() => { currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length; quoteTextElement.textContent = quotes[currentQuoteIndex]; quoteTextElement.classList.remove('fade-out'); }, 500);
                 };
-                
                 setInterval(changeQuote, 7000);
             }
         });
