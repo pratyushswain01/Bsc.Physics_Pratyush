@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Energy: Complete Question Bank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8; --card-bg: #ffffff; --text-primary: #1e293b; --text-secondary: #475569; --accent-primary: #0891b2; --accent-secondary: #0ea5e9; --border-color: #e2e8f0; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --alert-bg: rgba(14, 165, 233, 0.1);
+        }
+        body.dark-mode {
+            --bg-color: #0f172a; --card-bg: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --accent-primary: #22d3ee; --accent-secondary: #38bdf8; --border-color: #334155; --shadow-color: rgba(0, 0, 0, 0.1); --header-bg: rgba(15, 23, 42, 0.8); --alert-bg: rgba(34, 211, 238, 0.15);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+        .container { width: 90%; max-width: 900px; margin: 0 auto; padding: 2rem 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-title h1 { font-size: 1.8rem; margin: 0; color: var(--accent-secondary); font-weight: 700; }
+        .header-title p { font-size: 1rem; margin: 0.25rem 0 0; color: var(--text-secondary); }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border-color); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); }
+        main { margin-top: 2.5rem; }
+        .question-category { margin-bottom: 3rem; }
+        .question-category h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent-secondary); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        .question-accordion { display: flex; flex-direction: column; gap: 1rem; }
+        .question-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow-color); width: 100%; text-align: left; }
+        .question-header:hover { border-color: var(--accent-secondary); transform: translateY(-3px); }
+        .question-header.active { border-color: var(--accent-secondary); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        .question-header p { margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); }
+        .question-header .icon { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.4s ease; margin-left: 1rem; flex-shrink: 0; }
+        .question-header.active .icon { transform: rotate(180deg); color: var(--accent-secondary); }
+        .answer-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; border-radius: 0 0 12px 12px; }
+        .answer-content-inner { position: relative; padding: 1.5rem 1.75rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 12px 12px; margin-top: -10px; background-color: var(--bg-color); color: var(--text-secondary); }
+        .answer-content-inner strong { color: var(--text-primary); font-weight: 600; }
+        .answer-content-inner ul, .answer-content-inner ol { padding-left: 1.5rem; } .answer-content-inner ul li, .answer-content-inner ol li { margin-bottom: 0.75rem; }
+        .copy-button { position: absolute; top: 1rem; right: 1rem; background: none; border: 1px solid var(--border-color); color: var(--text-secondary); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; z-index: 2;}
+        .copy-button:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); }
+        .copy-button .feather-copy { display: block; } .copy-button .feather-check { display: none; }
+        .copy-button.copied .feather-copy { display: none; } .copy-button.copied .feather-check { display: block; color: white; }
+        .mcq-answer-btn { background-color: var(--accent-secondary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .mcq-answer-btn:hover { filter: brightness(1.1); }
+        .mcq-revealed-answer { display: none; margin-left: 1rem; font-weight: 600; color: var(--accent-secondary); }
+        .alert { background-color: var(--alert-bg); border-left: 5px solid var(--accent-secondary); padding: 1.2rem; margin: 1.5rem 0; border-radius: 8px; font-weight: 500; color: #0e7490; }
+        body.dark-mode .alert { color: #a5f3fc; }
+        footer { text-align: center; padding: 2.5rem 0 1.5rem 0; font-size: 0.9em; color: var(--text-secondary); }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Wind Energy: Q&A</h1>
+                <p>Complete Question Bank</p>
+            </div>
+            <a href="re-eh-questions.html" class="back-button"><i data-feather="arrow-left"></i> Back to Units</a>
+        </header>
+
+        <main>
+            <!-- MCQ Section -->
+            <div class="question-category">
+                <h2><i data-feather="check-square"></i>Multiple Choice Questions (1 Mark Each)</h2>
+                <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. Wind energy is harnessed by using a ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Turbine generator</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. Maximum wind energy available is proportional to ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Cube of the wind velocity</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. Which of the following is not an advantage of wind energy conversion.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Wind turbines can damage the habitats of birds and marine life.</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. Which of the following is not an advantage of wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Unpredictable</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. Which of the following is the basic component of the wind power system?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Shaft without mechanical gear</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. Which of the Heating and cooling of the atmosphere generates?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) Convection currents</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>7. What is the main source for the formation of wind?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Sun</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>8. What happens when the land near the earth’s equator is heated?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Large atmospheric winds are created</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. What are used to turn wind energy into electrical energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><a class="mcq-answer-btn">Reveal</a><span class="mcq-revealed-answer">(a) Turbines</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. At what range of speed is the electricity from the wind turbine is generated?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) 30-35 mph</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>11. What instrument measures Wind Speed?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Anemometer</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>12. Select the following Pros (Advantages) of using Wind Energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Only (a) & (b)</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>13. Ocean wind farms are 3x more expensive than land wind farms. What is/are Advantage(s) that they have over land wind farms?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) All of the above</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>14. Offshore wind farm is located ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) on bodies of water</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>15. How does the air move in a land breeze?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) From the land to the ocean</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>16. Winds are generated by ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Only (a) & (b)</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>17. Are wind turbines mostly built one at a time, or are they mostly built in groups?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) They are built in groups called "wind farms"</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>18. The Coriolis effect causes ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) global winds and surface currents to move in a curved path instead of a straight line</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>19. Wind turbine blades have ___ Types cross section for to extract energy from wind.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) Aerofoil</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>20. The power of wind per unit area normal to the normal direction of wind is known as ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(a) Power density</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>21. Which device is used for to turn wind energy into mechanical energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Turbine</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>22. Which device is used for to turn mechanical energy into electrical energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(c) Generator</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>23. Wind intensity can be described by ___.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(d) Beaufort</span></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>24. The amount of energy available in wind is directly proportional to ___ of the wind speed.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Reveal</button><span class="mcq-revealed-answer">(b) Cube power</span></div></div></div>
+                </div>
+            </div>
+
+            <!-- Short Answer Section -->
+            <div class="question-category">
+                <h2><i data-feather="message-circle"></i>Short Answer Type Questions</h2>
+                <div class="question-accordion">
+                     <div class="question-box"><div class="question-header"><p>1. What is wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind energy is a form of solar energy, describing the process by which moving air (wind) is used to generate mechanical power or electricity. Wind turbines convert the kinetic energy of the wind into rotational mechanical energy, which a generator then converts into electrical energy.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. What is wind energy with example?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind energy involves using a device to harness the power of the wind. Examples include a traditional **windmill** used for grinding grain, a **wind pump** for drawing water from a well, or a modern **wind turbine** used for generating electricity to power homes and businesses.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. What is the difference between solar and wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>The primary difference is the conversion method. <strong>Solar energy</strong> (photovoltaic) directly converts sunlight into electricity using semiconductor materials. <strong>Wind energy</strong> is an indirect form of solar energy; it harnesses the kinetic energy of air that has been set in motion by the sun's uneven heating of the Earth, converting this kinetic energy into electricity mechanically.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. What are major uses of wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>The major modern use of wind energy is the large-scale **generation of electricity** for grids. Historically and in some niche applications, it is also used for mechanical work, such as **pumping water** (wind pumps) and **grinding grain** (windmills). Other uses include sailing, flying kites, and various recreational activities.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. How does wind power help the environment?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind power helps the environment primarily by generating electricity without producing greenhouse gas emissions like carbon dioxide. This reduces the overall reliance on fossil fuels, which in turn mitigates climate change, reduces air and water pollution, and conserves finite natural resources.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. How efficient is wind power?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>A modern wind turbine is typically 30-45% efficient at converting the kinetic energy in wind into electricity, with efficiency potentially increasing to 50% in peak winds. This is very close to the theoretical maximum efficiency (Betz' Limit of 59.3%). Their high capacity factor (operating 70-80% of the time) makes them a reliable power source throughout the year.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>7. What is a wind turbine?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>A wind turbine is a device that works like the opposite of a fan. Instead of using electricity to create wind, it uses wind to create electricity. When hit by the wind, the blades rotate a central rotor. This rotation spins a generator, which converts the mechanical motion into electrical energy.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>8. How does a wind turbine work?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind turbines operate on a simple principle. The wind pushes against two or three propeller-like blades, causing them to rotate around a rotor. The rotor is connected to a main shaft, which then spins a generator to create electricity. This process converts the wind's kinetic energy into mechanical energy, and then into electrical energy.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. How does a windmill operate?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>A windmill operates on the same principle as a turbine: wind pushes on blades to create rotation. However, the term "windmill" typically refers to an older design used for mechanical work. Instead of a generator, the rotating main shaft is connected through gears to a device like a grinding stone or a water pump.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. How is wind energy stored?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind energy is difficult to store directly. Instead, the electricity it generates is stored. A common large-scale method is **Pumped-Hydro Storage**, where excess electricity pumps water uphill to a reservoir. When power is needed, the water flows back down through a turbine. Other methods include large **battery storage systems** and **Compressed Air Energy Storage (CAES)**, where air is compressed into underground caverns.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>11. What is wind energy potential?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>Wind energy potential refers to the amount of energy that can be feasibly extracted from the wind in a particular location or region. It is a great resource of renewable energy that serves as an alternative to fossil fuels and shows significant promise for reducing adverse environmental effects.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>12. How much of the world's energy is wind?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>As of recent data (around 2020), wind was the second largest renewable energy source worldwide after hydropower. It produced more than 6% of global electricity from a capacity of over 743 GW. This percentage is growing rapidly every year as more wind farms are installed.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>13. Which country is the leader in harvesting wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p><strong>China</strong> is the world leader in harvesting wind energy in terms of total installed capacity, possessing over one-quarter of the world's total wind power capacity.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>14. What's the future of wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button><p>The future of wind energy is very strong. Reports like the Wind Vision Report show that it can be a viable and major source of renewable electricity in many countries. It has the potential to support a large domestic supply chain, creating hundreds of thousands of jobs in manufacturing, installation, and service by 2050.</p></div></div></div>
+                </div>
+            </div>
+
+            <!-- Long Answer Section -->
+            <div class="question-category">
+                <h2><i data-feather="edit"></i>Long Answer Type Questions</h2>
+                 <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. Discuss about different configurations of wind turbines and their advantage and disadvantages.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button>
+                        <p>Wind turbines are primarily classified by the orientation of their axis of rotation relative to the wind.</p>
+                        <p><strong>1. Horizontal Axis Wind Turbine (HAWT):</strong></p>
+                        <p>This is the most common configuration, resembling a traditional propeller. The main rotor shaft and generator are located at the top of a tall tower.</p>
+                        <ul>
+                            <li><strong>Advantages:</strong> High efficiency due to blade design that can be pitched to optimize angle. Tall towers allow them to access stronger, more stable winds high above the ground. They are a mature, well-understood technology.</li>
+                            <li><strong>Disadvantages:</strong> They are complex, requiring a yaw mechanism to constantly face the wind. The tall tower makes maintenance difficult and expensive. They are also visually obtrusive and can cause noise pollution.</li>
+                        </ul>
+                        <p><strong>2. Vertical Axis Wind Turbine (VAWT):</strong></p>
+                        <p>The main rotor shaft is arranged vertically. This category includes designs like the Darrieus ("egg-beater") and Savonius (S-shaped) turbines.</p>
+                         <ul>
+                            <li><strong>Advantages:</strong> They are omnidirectional, meaning they don't need a yaw system to face the wind. The heavy generator and gearbox can be placed at the base, making maintenance much easier and safer. They are generally quieter and less visually intrusive than HAWTs.</li>
+                            <li><strong>Disadvantages:</strong> Lower efficiency compared to HAWTs. The blades are closer to the ground where wind speeds are lower and more turbulent. Many designs are not self-starting and require an initial push. They experience significant cyclical stress on the blades, which can lead to fatigue.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. What is Betz' limit? Derive an expression for it? Explain the advantages and disadvantages of any types of vertical axis wind turbines?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button>
+                        <p><strong>What is Betz' Limit?</strong></p>
+                        <p>Betz's Law states that a wind turbine can never capture more than <strong>16/27 (or 59.3%)</strong> of the kinetic energy in the wind. This is the theoretical maximum efficiency for any wind turbine and is known as the Betz Limit. It arises because if a turbine were 100% efficient, it would have to stop the wind completely, meaning no air could flow through it, and no energy would be extracted. There must be some exit velocity for the turbine to work.</p>
+                        <p><strong>(Derivation is highly mathematical and usually beyond the scope of a short summary, but involves applying the principles of conservation of mass and momentum to the air flowing through an ideal turbine disc.)</strong></p>
+                        <div class="alert">The power coefficient, Cp, represents the fraction of power extracted from the wind, and Betz's law proves that Cp(max) = 16/27.</div>
+                        <p><strong>Advantages and Disadvantages of Vertical Axis Wind Turbines (VAWTs):</strong></p>
+                         <ul>
+                            <li><strong>Advantages:</strong>
+                                <ol>
+                                    <li><strong>Omnidirectional:</strong> They accept wind from any direction, eliminating the need for a complex yaw mechanism.</li>
+                                    <li><strong>Easy Maintenance:</strong> The gearbox and generator are at ground level, making them easier and safer to access and maintain.</li>
+                                    <li><strong>Lower Noise & Visual Impact:</strong> They are generally quieter and, being shorter, have less of a visual impact on the landscape.</li>
+                                </ol>
+                            </li>
+                             <li><strong>Disadvantages:</strong>
+                                 <ol>
+                                     <li><strong>Lower Efficiency:</strong> They are less efficient at converting wind to electricity than horizontal axis turbines.</li>
+                                     <li><strong>Turbulent Wind:</strong> Being closer to the ground, they operate in slower, more turbulent wind, which reduces power output and increases stress.</li>
+                                     <li><strong>Self-Starting Issues:</strong> Some designs, particularly the Darrieus type, are not self-starting and require an external power source to begin rotating.</li>
+                                 </ol>
+                            </li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>13. Explain the working principle of horizontal axis wind mill with suitable diagrams. How to control the operation of wind mill? Explain its mechanism</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="copy-button" title="Copy Answer"><i data-feather="copy"></i><i data-feather="check"></i></button>
+                        <p><strong>Working Principle of a Horizontal Axis Wind Mill (HAWT):</strong></p>
+                        <p>A HAWT extracts energy from the wind using propeller-like blades mounted on a horizontal axis. The fundamental principle is converting the linear motion of wind (kinetic energy) into rotational motion (mechanical energy).</p>
+                        <ol>
+                           <li><strong>Blade Interaction:</strong> The blades are designed as aerofoils. As wind flows over them, it creates a pressure difference between the upper and lower surfaces, generating an aerodynamic lift force, similar to an airplane wing. This lift force causes the blades to rotate.</li>
+                           <li><strong>Rotor and Shaft:</strong> The blades are attached to a central hub, forming the rotor. The rotor is connected to a low-speed main shaft.</li>
+                           <li><strong>Gearbox:</strong> The low-speed shaft enters a gearbox which increases the rotational speed (e.g., from 20 rpm to over 1500 rpm), which is required for efficient electricity generation.</li>
+                           <li><strong>Generator:</strong> The high-speed shaft from the gearbox is connected to a generator. The generator uses the principle of electromagnetic induction to convert this high-speed rotational energy into electrical energy.</li>
+                        </ol>
+                         <p><strong>(Diagram should show a typical HAWT with labels for blades, rotor, nacelle, gearbox, generator, yaw drive, and tower.)</strong></p>
+                        <p><strong>Controlling the Operation:</strong></p>
+                        <p>Controlling a windmill is crucial for safety and efficiency.</p>
+                        <ul>
+                           <li><strong>Yaw Control:</strong> A HAWT must always face into the wind. A wind vane on the nacelle detects the wind direction. A motor-driven <strong>yaw mechanism</strong> then rotates the entire nacelle (the housing at the top) to keep it aligned.</li>
+                           <li><strong>Pitch Control:</strong> To control the power output and prevent damage in very high winds, modern turbines can change the angle (pitch) of their blades. In high winds, the blades are "pitched" out of the wind to reduce lift and slow the rotation. In low winds, they are pitched to capture the maximum energy.</li>
+                           <li><strong>Braking System:</strong> For maintenance or in dangerously high winds, turbines have a mechanical braking system (often a disc brake on the high-speed shaft) that can bring the rotor to a complete stop.</li>
+                        </ul>
+                    </div></div></div>
+                 </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <footer><p>© 2025 Pratyush Swain. All Rights Reserved.</p></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace({ 'stroke-width': 1.5 });
+            
+            document.querySelectorAll('.question-header').forEach(header => {
+                header.addEventListener('click', (event) => {
+                    if (event.target.closest('.mcq-answer-btn, .copy-button')) return;
+                    const content = header.nextElementSibling, isOpen = header.classList.contains('active');
+                    if (isOpen) {
+                        header.classList.remove('active');
+                        content.style.maxHeight = null;
+                    } else {
+                        header.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            document.querySelectorAll('.mcq-answer-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerSpan = button.nextElementSibling;
+                    button.style.display = 'none';
+                    answerSpan.style.display = 'inline';
+                    const answerContent = button.closest('.answer-content');
+                    if (answerContent.style.maxHeight !== "0px") {
+                         answerContent.style.maxHeight = answerContent.scrollHeight + 'px';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.copy-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const clone = button.parentElement.cloneNode(true);
+                    clone.querySelector('.copy-button')?.remove();
+                    const answerText = clone.innerText.trim();
+                    navigator.clipboard.writeText(answerText).then(() => {
+                        button.classList.add('copied');
+                        setTimeout(() => button.classList.remove('copied'), 1500);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
