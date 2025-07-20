@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renewable Energy & EH | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        :root {
+            --bg-color: #f4f7fc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(100, 116, 139, 0.08);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --accent: #3b82f6;
+            --back-btn-bg: #e9ecef;
+            --back-btn-color: #495057;
+        }
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --header-bg: rgba(30, 41, 59, 0.85);
+            --accent: #60a5fa;
+            --back-btn-bg: #374151;
+            --back-btn-color: #e5e7eb;
+        }
+
+        /* --- GENERAL STYLES & ANIMATIONS --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .title-container { display: flex; align-items: center; gap: 0.8rem; }
+        .title-container .logo { font-size: 1.8em; color: var(--accent); }
+        header h1 { margin: 0; font-size: 1.3em; font-weight: 600; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        
+        /* --- THEME SWITCHER --- */
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23f59e0b" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2393c5fd" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        .page-header {
+            text-align: left;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        /* --- UNIT GRID & CARDS --- */
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .unit-card {
+            display: block;
+            text-decoration: none;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            opacity: 0;
+            animation: fadeInAndUp 0.8s ease-out forwards;
+        }
+        /* Staggered animation delays */
+        .unit-card:nth-child(1) { animation-delay: 0.2s; }
+        .unit-card:nth-child(2) { animation-delay: 0.3s; }
+        .unit-card:nth-child(3) { animation-delay: 0.4s; }
+        .unit-card:nth-child(4) { animation-delay: 0.5s; }
+        .unit-card:nth-child(5) { animation-delay: 0.6s; }
+
+        .unit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px -5px var(--shadow-color);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .unit-card h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+        }
+        .unit-card p {
+            margin: 0 0 1.5rem 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .card-footer {
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Footer */
+        footer { text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        @media (max-width: 767px) {
+            .unit-grid { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <div class="header-content">
+            <div class="title-container">
+                <i class="fas fa-solar-panel logo"></i>
+                <h1>Renewable Energy & EH</h1>
+            </div>
+            <div class="header-controls">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <a href="sem2.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Semester 2</a>
+        </div>
+
+        <div class="unit-grid">
+            <a href="re-eh-unit1.html" class="unit-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-atom"></i></div>
+                    <h2>Unit 1: Fossil Fuels & Nuclear Energy</h2>
+                </div>
+                <p>Covers fossil fuel origins, processing, nuclear fission & fusion, and the need for renewable alternatives.</p>
+                <div class="card-footer">View Notes <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="re-eh-unit2.html" class="unit-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-sun"></i></div>
+                    <h2>Unit 2: Solar Energy & Photovoltaics</h2>
+                </div>
+                <p>Explores solar radiation, energy storage, solar ponds, and various applications like solar cells and PV systems.</p>
+                <div class="card-footer">View Notes <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="re-eh-unit3.html" class="unit-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-wave-square"></i></div>
+                    <h2>Unit 3: Piezoelectric Energy Harvesting</h2>
+                </div>
+                <p>Fundamentals of the piezoelectric effect, materials, and applications in generating power from mechanical stress and vibrations.</p>
+                <div class="card-footer">View Notes <i class="fas fa-arrow-right"></i></div>
+            </a>
+            
+            <a href="re-eh-unit4.html" class="unit-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-magnet"></i></div>
+                    <h2>Unit 4: Electromagnetic Energy Harvesting</h2>
+                </div>
+                <p>Principles of electromagnetic induction and its use in harvesting energy from motion, vibrations, and other ambient sources.</p>
+                <div class="card-footer">View Notes <i class="fas fa-arrow-right"></i></div>
+            </a>
+            
+            <a href="re-eh-questions.html" class="unit-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>Semester Questions</h2>
+                </div>
+                <p>A collection of previous year question papers and important questions to aid in your exam preparation.</p>
+                <div class="card-footer">View Questions <i class="fas fa-arrow-right"></i></div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Pratyush Swain. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            if (themeToggle) themeToggle.checked = (theme === 'dark');
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
