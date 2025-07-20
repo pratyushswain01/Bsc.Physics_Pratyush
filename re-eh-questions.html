@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renewable Energy & Energy Harvesting | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #0ea5e9;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-primary: #60a5fa;
+            --accent-secondary: #38bdf8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        .header-title h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .header-title p {
+            font-size: 1rem;
+            margin: 0.25rem 0 0;
+            color: var(--text-secondary);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 26px; display: block; position: relative; transition: all 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background-color: var(--text-secondary); border-radius: 50%; transition: all 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--accent-primary); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border-color); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .unit-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px var(--shadow-color);
+            border-color: var(--accent-primary);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--accent-secondary);
+        }
+        .unit-card h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        .unit-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            flex-grow: 1; /* Pushes the link to the bottom */
+        }
+
+        .view-notes-link {
+            margin-top: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+        .view-notes-link:hover {
+            gap: 0.8rem;
+            color: var(--accent-secondary);
+        }
+        
+        footer { text-align: center; padding: 2.5rem 0 1.5rem 0; font-size: 0.9em; color: var(--text-secondary); }
+
+        /* Specific Icon styling for better visual recognition */
+        .icon-unit1 i, .icon-unit2 i, .icon-unit3 i, .icon-unit4 i, .icon-questions i { font-size: 1.5rem; width: 32px; height: 32px; display: inline-flex; justify-content: center; align-items: center; border-radius: 8px; }
+        .icon-unit1 i { color: #f97316; background-color: rgba(249, 115, 22, 0.1); }
+        .icon-unit2 i { color: #eab308; background-color: rgba(234, 179, 8, 0.1); }
+        .icon-unit3 i { color: #22c55e; background-color: rgba(34, 197, 94, 0.1); }
+        .icon-unit4 i { color: #6366f1; background-color: rgba(99, 102, 241, 0.1); }
+        .icon-questions i { color: var(--accent-primary); background-color: rgba(59, 130, 246, 0.1); }
+
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Renewable Energy & Harvesting</h1>
+                <p>GE-3 Course Material & Notes</p>
+            </div>
+            <div class="header-controls">
+                <a href="sem3.html" class="back-button"><i data-feather="arrow-left"></i> Back</a>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle" checked>
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="unit-grid">
+                
+                <!-- Unit 1 -->
+                <div class="unit-card">
+                    <div class="card-header">
+                        <span class="card-icon icon-unit1"><i class="fa-solid fa-fire-flame-simple"></i></span>
+                        <h2>Unit 1: Fossil Fuels & Nuclear Energy</h2>
+                    </div>
+                    <p>Covers fossil fuel origins, processing, nuclear fission & fusion, and the need for renewable alternatives.</p>
+                    <a href="re-eh-unit1.html" class="view-notes-link">
+                        <span>View Notes</span><i data-feather="arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Unit 2 -->
+                <div class="unit-card">
+                    <div class="card-header">
+                        <span class="card-icon icon-unit2"><i class="fa-solid fa-sun"></i></span>
+                        <h2>Unit 2: Solar Energy & Photovoltaics</h2>
+                    </div>
+                    <p>Explores solar radiation, energy storage, solar ponds, and various applications like solar cells and PV systems.</p>
+                    <a href="re-eh-unit2.html" class="view-notes-link">
+                        <span>View Notes</span><i data-feather="arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Unit 3 -->
+                <div class="unit-card">
+                    <div class="card-header">
+                        <span class="card-icon icon-unit3"><i class="fa-solid fa-wave-square"></i></span>
+                        <h2>Unit 3: Piezoelectric Energy Harvesting</h2>
+                    </div>
+                    <p>Fundamentals of the piezoelectric effect, materials, and applications in generating power from mechanical stress and vibrations.</p>
+                    <a href="re-eh-unit3.html" class="view-notes-link">
+                        <span>View Notes</span><i data-feather="arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Unit 4 -->
+                <div class="unit-card">
+                    <div class="card-header">
+                        <span class="card-icon icon-unit4"><i class="fa-solid fa-magnet"></i></span>
+                        <h2>Unit 4: Electromagnetic Energy Harvesting</h2>
+                    </div>
+                    <p>Principles of electromagnetic induction and its use in harvesting energy from motion, vibrations, and other ambient sources.</p>
+                    <a href="re-eh-unit4.html" class="view-notes-link">
+                        <span>View Notes</span><i data-feather="arrow-right"></i>
+                    </a>
+                </div>
+
+                
+
+            </div>
+        </main>
+
+    </div>
+    
+    <footer><p>© 2025 Pratyush Swain. All Rights Reserved.</p></footer>
+
+    <script>
+        feather.replace({ 'stroke-width': 2 });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.remove('dark-mode');
+                if(themeToggle) themeToggle.checked = false;
+            } else {
+                document.body.classList.add('dark-mode');
+                if(themeToggle) themeToggle.checked = true;
+            }
+
+            if(themeToggle){
+                themeToggle.addEventListener('change', () => {
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
