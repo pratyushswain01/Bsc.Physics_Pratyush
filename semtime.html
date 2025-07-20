@@ -89,54 +89,56 @@
         #theme-toggle:checked + .slider { background-color: var(--accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2393c5fd" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
         
-        /* --- NEW: INFO BAR & PAGE TITLE --- */
-        .info-bar {
-            text-align: center;
-            padding: 0.75rem 1rem;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            font-weight: 500;
-            opacity: 0;
-            animation: fadeInAndUp 0.8s ease-out 0.1s forwards;
-        }
-        .page-title {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            animation: fadeInAndUp 0.8s ease-out 0.2s forwards;
-        }
-        .page-title h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0 0 0.5rem 0;
-        }
-        .page-title p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .info-bar { text-align: center; padding: 0.75rem 1rem; background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9em; font-weight: 500; opacity: 0; animation: fadeInAndUp 0.8s ease-out 0.1s forwards; }
+        .page-title { text-align: center; margin-bottom: 2.5rem; opacity: 0; animation: fadeInAndUp 0.8s ease-out 0.2s forwards; }
+        .page-title h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.5rem 0; }
+        .page-title p { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
 
-        /* --- TIMELINE SECTION STYLES --- */
+        /* --- TIMELINE SECTION STYLES (TABLE FORMAT) --- */
         .timeline-section {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2.5rem;
+            padding: 1rem;
             box-shadow: 0 10px 25px -5px var(--shadow-color);
             opacity: 0;
             animation: fadeInAndUp 0.8s ease-out 0.4s forwards;
+            overflow-x: auto; /* Fallback for very small screens */
         }
-        .table-container { overflow-x: auto; }
-        .timeline-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        .timeline-table th, .timeline-table td { padding: 1rem 1.25rem; text-align: left; border-bottom: 1px solid var(--border-color); }
-        .timeline-table th { font-weight: 600; color: var(--text-secondary); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; }
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .timeline-table th, .timeline-table td {
+            padding: 1rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .timeline-table th {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
         .timeline-table tr:last-child td { border-bottom: none; }
         .timeline-table tr:nth-child(even) { background-color: var(--table-stripe-bg); }
-        .badge { padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8em; font-weight: 600; white-space: nowrap; display: inline-block; }
+        .timeline-table td:last-child {
+            white-space: normal; /* Allow subject column to wrap */
+        }
+
+        /* --- MOBILE-SPECIFIC TABLE ADJUSTMENTS --- */
+        @media (max-width: 767px) {
+            .timeline-section { padding: 0.5rem; }
+            .timeline-table {
+                font-size: 0.85em; /* Make font slightly smaller */
+            }
+            .timeline-table th, .timeline-table td {
+                padding: 0.8rem 0.4rem; /* Reduce padding to save space */
+            }
+        }
+        
+        /* Badge Styles */
+        .badge { padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.9em; font-weight: 600; display: inline-block; white-space: nowrap; }
         .badge-major { background-color: #3b82f620; color: #2563eb; }
         .badge-minor { background-color: #8b5cf620; color: #7c3aed; }
         .badge-mdc { background-color: #10b98120; color: #059669; }
@@ -148,29 +150,14 @@
         body.dark-mode .badge-aec { background-color: #f9731630; color: #fb923c; }
         body.dark-mode .badge-sec { background-color: #ef444430; color: #f87171; }
 
-        /* --- GOOD LUCK MESSAGE --- */
-        .good-luck-message {
-            margin-top: 2.5rem;
-            text-align: center;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInAndUp 0.8s ease-out 0.6s forwards;
-        }
-        .good-luck-message::before {
-            content: ''; position: absolute; inset: -1px; border-radius: 16px; background: linear-gradient(45deg, var(--accent), #10b981, #f97316, var(--accent)); background-size: 400% 400%; z-index: 0; animation: glowing-border 10s ease infinite; filter: blur(5px); opacity: 0.7;
-        }
+        .good-luck-message { margin-top: 2.5rem; text-align: center; background-color: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); position: relative; overflow: hidden; opacity: 0; animation: fadeInAndUp 0.8s ease-out 0.6s forwards; }
+        .good-luck-message::before { content: ''; position: absolute; inset: -1px; border-radius: 16px; background: linear-gradient(45deg, var(--accent), #10b981, #f97316, var(--accent)); background-size: 400% 400%; z-index: 0; animation: glowing-border 10s ease infinite; filter: blur(5px); opacity: 0.7; }
         @keyframes glowing-border { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .good-luck-content { position: relative; z-index: 1; }
         .good-luck-content .icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem; }
         .good-luck-content p { font-size: 1.25em; font-weight: 600; color: var(--text-primary); margin: 0; }
         .good-luck-content span { font-size: 0.9em; color: var(--text-secondary); }
 
-        /* --- FOOTER --- */
         footer { text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
     </style>
 </head>
@@ -194,7 +181,7 @@
 
    <div class="info-bar">
     <p><strong>Berhampur University</strong></p>
-    <p>Schedule as per Notification No. 5415, Dated: July 17, 2025</p>
+    <p>Schedule as per Notification No. 5415, Dated: July 17, 2025, Berhampur University</p>
 </div>
 
 
@@ -205,22 +192,20 @@
         </div>
 
         <section class="timeline-section">
-            <div class="table-container">
-                <table class="timeline-table">
-                    <thead>
-                        <tr><th>Date</th><th>Day</th><th>Paper Type</th><th>Subject</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>30.07.2025</td><td>Wednesday</td><td><span class="badge badge-major">Major-III</span></td><td>Physics</td></tr>
-                        <tr><td>01.08.2025</td><td>Friday</td><td><span class="badge badge-major">Major-IV</span></td><td>Physics</td></tr>
-                        <tr><td>02.08.2025</td><td>Saturday</td><td><span class="badge badge-minor">Minor-II</span></td><td>Computer Science / Mathematics / Psychology etc.</td></tr>
-                        <tr><td>04.08.2025</td><td>Monday</td><td><span class="badge badge-minor">Minor-IV</span></td><td>Chemistry / Electronics / Geology etc.</td></tr>
-                        <tr><td>05.08.2025</td><td>Tuesday</td><td><span class="badge badge-mdc">MDC-II</span></td><td>Indian Knowledge System</td></tr>
-                        <tr><td>06.08.2025</td><td>Wednesday</td><td><span class="badge badge-aec">AEC-II</span></td><td>English</td></tr>
-                        <tr><td>07.08.2025</td><td>Thursday</td><td><span class="badge badge-sec">SEC-I</span></td><td>Renewable Energy & Energy Harvesting</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="timeline-table">
+                <thead>
+                    <tr><th>Date</th><th>Day</th><th>Paper Type</th><th>Subject</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>30.07.2025</td><td>Wednesday</td><td><span class="badge badge-major">Major-III</span></td><td>Physics</td></tr>
+                    <tr><td>01.08.2025</td><td>Friday</td><td><span class="badge badge-major">Major-IV</span></td><td>Physics</td></tr>
+                    <tr><td>02.08.2025</td><td>Saturday</td><td><span class="badge badge-minor">Minor-II</span></td><td>Computer Science / Mathematics / Psychology etc.</td></tr>
+                    <tr><td>04.08.2025</td><td>Monday</td><td><span class="badge badge-minor">Minor-IV</span></td><td>Chemistry / Electronics / Geology etc.</td></tr>
+                    <tr><td>05.08.2025</td><td>Tuesday</td><td><span class="badge badge-mdc">MDC-II</span></td><td>Indian Knowledge System</td></tr>
+                    <tr><td>06.08.2025</td><td>Wednesday</td><td><span class="badge badge-aec">AEC-II</span></td><td>English</td></tr>
+                    <tr><td>07.08.2025</td><td>Thursday</td><td><span class="badge badge-sec">SEC-I</span></td><td>Renewable Energy & Energy Harvesting</td></tr>
+                </tbody>
+            </table>
         </section>
 
         <section class="good-luck-message">
@@ -233,7 +218,7 @@
     </main>
 
     <footer>
-        <p>© 2025 Pratyush Swain. All Rights Reserved.</p>
+        <p>© 2024 Pratyush Swain. All Rights Reserved.</p>
     </footer>
 
     <script>
