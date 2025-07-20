@@ -279,12 +279,30 @@
                 updateDateTime();
             }
 
-            if(quoteTextElement){
-                const quotes = [ "The important thing is not to stop questioning. Curiosity has its own reason for existence.", "Look deep into nature, and then you will understand everything better.", "The science of today is the technology of tomorrow.", "Physics is the law of the universe, and we are all its humble citizens." ];
+                      if(quoteTextElement){
+                const quotes = [ 
+                    "Saraswati Degree Vidya Mandir, Neelakanthanagar, Berhampur",
+                    "A Central Hub for B.Sc. Physics Notes & Academic Resources.",
+                    "The universe is under no obligation to make sense to you.",
+                    "Everything is energy and that’s all there is to it. Match the frequency of the reality you want.",
+                    "Science is a way of thinking much more than it is a body of knowledge.",
+                    "Physics is the poetry of reality.",
+                    "Somewhere, something incredible is waiting to be known.",
+                    "The important thing is not to stop questioning. Curiosity has its own reason for existence.",
+                    "Look deep into nature, and then you will understand everything better.",
+                    "The science of today is the technology of tomorrow."
+                ];
                 let currentQuoteIndex = 0;
                 quoteTextElement.textContent = quotes[currentQuoteIndex];
-                const changeQuote = () => { quoteTextElement.classList.add('fade-out'); setTimeout(() => { currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length; quoteTextElement.textContent = quotes[currentQuoteIndex]; quoteTextElement.classList.remove('fade-out'); }, 500); };
-                setInterval(changeQuote, 7000);
+                const changeQuote = () => {
+                    quoteTextElement.classList.add('fade-out');
+                    setTimeout(() => {
+                        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                        quoteTextElement.textContent = quotes[currentQuoteIndex];
+                        quoteTextElement.classList.remove('fade-out');
+                    }, 500);
+                };
+                setInterval(changeQuote, 6000); // Adjusted interval slightly for better reading of more quotes
             }
         });
     </script>
