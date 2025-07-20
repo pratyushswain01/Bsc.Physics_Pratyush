@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3: Piezoelectric Energy Harvesting | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lora:wght@400;600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(149, 157, 165, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --accent: #06b6d4; /* Cyan/Teal for Piezoelectric */
+            --back-btn-bg: #f1f5f9;
+            --back-btn-color: #475569;
+            --key-point-bg: #ecfeff;
+        }
+        body.dark-mode {
+            --bg-color: #020617;
+            --card-bg: #0f172a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --header-bg: rgba(15, 23, 42, 0.8);
+            --accent: #22d3ee; /* Lighter Cyan for Dark Mode */
+            --back-btn-bg: #1e293b;
+            --back-btn-color: #94a3b8;
+            --key-point-bg: #16293a;
+        }
+
+        /* --- GENERAL STYLES & ANIMATIONS --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .title-container { display: flex; align-items: center; gap: 0.8rem; }
+        .title-container .logo { font-size: 1.8em; color: var(--accent); }
+        header h1 { margin: 0; font-size: 1.3em; font-weight: 600; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        
+        /* --- THEME SWITCHER --- */
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23f59e0b" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2393c5fd" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        .page-header { margin-bottom: 1.5rem; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        /* --- NOTES CONTENT STYLING --- */
+        .notes-title { text-align: center; margin-bottom: 2rem; opacity: 0; animation: fadeInAndUp 0.6s ease-out 0.2s forwards; }
+        .notes-title h1 { font-family: 'Lora', serif; font-size: 2.5rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+
+        .content-block { background-color: var(--card-bg); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; box-shadow: 0 8px 30px var(--shadow-color); opacity: 0; animation: fadeInAndUp 0.8s ease-out forwards; border: 1px solid var(--border-color); }
+        .content-block:nth-of-type(1) { animation-delay: 0.4s; } .content-block:nth-of-type(2) { animation-delay: 0.5s; } .content-block:nth-of-type(3) { animation-delay: 0.6s; } .content-block:nth-of-type(4) { animation-delay: 0.7s; }
+
+        .content-block h2 { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin: 0 0 1.5rem 0; }
+        .content-block h3 { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem 0; color: var(--accent); }
+        .content-block p, .content-block li { font-size: 1rem; line-height: 1.9; color: var(--text-secondary); text-align: justify; }
+        .content-block ul { list-style: none; padding-left: 0; }
+        .content-block li { position: relative; padding-left: 2rem; margin-bottom: 0.75rem; }
+        .content-block li::before { content: "\f0e7"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 5px; color: var(--accent); }
+
+        .table-container { overflow-x: auto; margin: 2rem 0; border: 1px solid var(--border-color); border-radius: 8px; }
+        .comparison-table { width: 100%; min-width: 600px; border-collapse: collapse; }
+        .comparison-table th, .comparison-table td { border: 1px solid var(--border-color); padding: 1rem; text-align: left; }
+        .comparison-table th { background-color: var(--key-point-bg); font-weight: 600; }
+
+        .key-concept { background-color: var(--key-point-bg); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; display: flex; gap: 1.5rem; align-items: flex-start; }
+        .key-concept i { font-size: 2rem; color: var(--accent); margin-top: 5px; }
+        .key-concept-text h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; color: var(--text-primary); }
+        .key-concept-text p { margin: 0; line-height: 1.7; }
+        
+        .diagram-box { background-color: var(--key-point-bg); border: 1px dashed var(--border-color); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; font-family: 'Source Code Pro', monospace; white-space: pre; text-align: center; color: var(--text-secondary); overflow-x: auto; font-size: 0.9em;}
+
+        footer { text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        @media (max-width: 767px) {
+            .content-block { padding: 1.5rem; }
+            .notes-title h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <div class="header-content">
+            <div class="title-container">
+                <i class="fas fa-wave-square logo"></i>
+                <h1>Unit 3: Piezoelectric Energy Harvesting</h1>
+            </div>
+            <div class="header-controls">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <a href="re-eh.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Subject Page</a>
+        </div>
+        
+        <div class="notes-title">
+            <h1>Unit 3: Piezoelectric Energy Harvesting</h1>
+        </div>
+
+        <section class="content-block">
+            <h2>I. The Piezoelectric Effect</h2>
+            <div class="key-concept">
+                <i class="fas fa-compress-arrows-alt"></i>
+                <div class="key-concept-text">
+                    <h3>Fundamental Principle</h3>
+                    <p>Piezoelectricity is the ability of certain crystalline materials to generate an electric charge in response to applied mechanical stress. This remarkable property allows for the direct conversion of mechanical energy (like vibrations, pressure, or strain) into electrical energy.</p>
+                </div>
+            </div>
+            <h3>A. Direct and Reverse Piezoelectric Effects</h3>
+            <p>The phenomenon is a two-way street, described by two distinct effects:</p>
+            <ul>
+                <li><strong>Direct Piezoelectric Effect:</strong> This is the fundamental process for energy harvesting. When a mechanical stress or pressure is applied to a piezoelectric material, its crystalline lattice deforms. This deformation causes a separation of positive and negative charge centers within the crystal, creating an electric dipole and thus generating a voltage across the material.</li>
+                <li><strong>Reverse Piezoelectric Effect (or Converse Effect):</strong> When an external electric field is applied across a piezoelectric material, it results in a mechanical deformation or strain in the material. This effect is the basis for actuators, sensors, and ultrasound transducers.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>II. Piezoelectric Materials</h2>
+            <p>Materials that exhibit the piezoelectric effect are categorized into natural crystals, man-made ceramics, and polymers. The choice of material depends heavily on the application's requirements for sensitivity, durability, and operating temperature.</p>
+            <h3>A. Common Piezoelectric Materials</h3>
+            <ul>
+                <li><strong>Natural Crystals:</strong> Quartz (SiO₂) is the most well-known natural piezoelectric crystal. It is highly stable and has a very high quality factor, making it ideal for frequency standards and oscillators (e.g., in watches and computers). However, its piezoelectric effect is relatively weak.</li>
+                <li><strong>Man-Made Ceramics:</strong> Lead Zirconate Titanate (PZT) is the most widely used piezoelectric ceramic. It offers a very strong piezoelectric effect and can be manufactured in various shapes. Its main drawback is brittleness and the environmental concern of its lead content.</li>
+                <li><strong>Polymers:</strong> Polyvinylidene Fluoride (PVDF) is a flexible, lightweight, and robust piezoelectric polymer. While its piezoelectric effect is weaker than PZT, its flexibility makes it suitable for applications involving bending or conforming to curved surfaces, such as in wearable sensors.</li>
+            </ul>
+            
+            <h3>B. Comparison of Materials</h3>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead><tr><th>Property</th><th>Quartz (SiO₂)</th><th>PZT</th><th>PVDF</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Type</strong></td><td>Natural Crystal</td><td>Man-made Ceramic</td><td>Man-made Polymer</td></tr>
+                        <tr><td><strong>Piezoelectric Effect</strong></td><td>Weak</td><td>Very Strong</td><td>Moderate</td></tr>
+                        <tr><td><strong>Mechanical Property</strong></td><td>Brittle, Hard</td><td>Very Brittle, Hard</td><td>Flexible, Durable</td></tr>
+                        <tr><td><strong>Key Advantage</strong></td><td>High Stability, High Q-Factor</td><td>High Sensitivity</td><td>Flexibility, Lightweight</td></tr>
+                        <tr><td><strong>Typical Application</strong></td><td>Oscillators, Resonators</td><td>Sensors, Actuators, Harvesters</td><td>Wearable Devices, Flexible Sensors</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="content-block">
+            <h2>III. Piezoelectric Energy Harvesters</h2>
+            <div class="key-concept">
+                <i class="fas fa-cogs"></i>
+                <div class="key-concept-text">
+                    <h3>Harvesting System Structure</h3>
+                    <p>A piezoelectric energy harvester is a device designed to efficiently capture ambient mechanical energy (like vibrations) and convert it into usable electrical power. The most common configuration is the cantilever beam.</p>
+                </div>
+            </div>
+            
+            <div class="diagram-box">
+[Fixed End] ||====================|| [Free End]
+           || Piezo Layer (PZT)  ||
+           ||--------------------||
+           || Substrate (Steel)  || ----- Vibration ----->
+           ||====================||
+                              (Proof Mass)
+            </div>
+
+            <p>The typical components include:</p>
+            <ul>
+                <li><strong>Piezoelectric Layer:</strong> The active material (e.g., PZT) that generates the charge when strained.</li>
+                <li><strong>Substrate Layer:</strong> A flexible elastic layer (often metal or plastic) to which the piezoelectric material is bonded. It provides structural support.</li>
+                <li><strong>Proof Mass:</strong> A small mass attached to the free end of the cantilever. Its purpose is to lower the resonant frequency of the beam and increase the mechanical strain (and thus the voltage output) when subjected to vibrations.</li>
+                <li><strong>Electrodes:</strong> Thin conductive layers on the top and bottom of the piezoelectric material to collect the generated electric charge.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>IV. Power Conditioning Circuits and Applications</h2>
+            <h3>A. Need for Power Conditioning</h3>
+            <p>The raw electrical output from a piezoelectric harvester is typically a low-current, high-voltage Alternating Current (AC) signal that is not suitable for directly powering most electronic devices. A power conditioning circuit is essential to convert this raw output into a stable, regulated Direct Current (DC) voltage.</p>
+
+            <h3>B. Circuit Components</h3>
+            <div class="diagram-box">
+Piezo Harvester --AC--> [Full-Bridge Rectifier] --Pulsating DC--> [Smoothing Capacitor] --Ripple DC--> [Regulator] --Stable DC--> [Load/Battery]
+      (Input)                      (Conversion)                        (Filtering)                      (Stabilization)            (Output)
+            </div>
+
+            <ul>
+                <li><strong>Rectifier:</strong> Converts the AC voltage from the harvester into a pulsating DC voltage. A **full-bridge rectifier**, made of four diodes, is commonly used because it is more efficient than a half-wave rectifier.</li>
+                <li><strong>Smoothing Capacitor:</strong> A capacitor placed in parallel after the rectifier. It charges up during the voltage peaks and discharges during the troughs, smoothing out the pulsating DC into a more stable DC voltage with some ripple.</li>
+                <li><strong>Voltage Regulator:</strong> A device (like a DC-DC converter or a Zener diode) that takes the unregulated DC voltage from the capacitor and provides a constant, stable DC output voltage suitable for powering a specific load (e.g., 3.3V for a sensor).</li>
+            </ul>
+
+            <h3>C. Applications</h3>
+            <p>Piezoelectric energy harvesting is ideal for low-power applications where replacing batteries is impractical or impossible. Key applications include:</p>
+            <ul>
+                <li><strong>Wireless Sensors:</strong> Powering sensors for structural health monitoring in bridges, buildings, and aircraft by harvesting ambient vibrations.</li>
+                <li><strong>Wearable Electronics:</strong> Generating power from human motion (e.g., walking, joint movement) to power fitness trackers, smartwatches, or medical implants.</li>
+                <li><strong>Tire Pressure Monitoring Systems (TPMS):</strong> Harvesting energy from the rotation and vibration of a car tire to power the pressure sensor.</li>
+                <li><strong>Ignition Systems:</strong> The "spark" in a push-button gas lighter or grill is generated by a simple, high-impact piezoelectric crystal.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Pratyush Swain. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            if (themeToggle) themeToggle.checked = (theme === 'dark');
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
