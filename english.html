@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AECC: English Communication | Full Syllabus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root { --bg: #f5f7fa; --card-bg: #ffffff; --header-bg: rgba(255, 255, 255, 0.7); --primary: #c026d3; --primary-light: #f5d0fe; --text-main: #1f2937; --text-muted: #6b7280; --border: #e5e7eb; --shadow: rgba(0, 0, 0, 0.04); --glow: rgba(192, 38, 211, 0); --progress-track: #e5e7eb; }
+        body.dark-mode { --bg: #111827; --card-bg: #1f2937; --header-bg: rgba(17, 24, 39, 0.7); --primary: #d946ef; --primary-light: #581c87; --text-main: #d1d5db; --text-muted: #9ca3af; --border: #374151; --shadow: rgba(0, 0, 0, 0.1); --glow: rgba(217, 70, 239, 0.15); --progress-track: #374151; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .animated-item { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease-out forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .animated-item:nth-child(1) { animation-delay: 0.1s; } .animated-item:nth-child(2) { animation-delay: 0.2s; }
+        .animated-item:nth-child(3) { animation-delay: 0.3s; } .animated-item:nth-child(4) { animation-delay: 0.4s; }
+        .animated-item:nth-child(5) { animation-delay: 0.5s; } .animated-item:nth-child(6) { animation-delay: 0.6s; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        header h1 { margin: 0; font-size: 1.6em; font-weight: 700; color: var(--primary); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-muted); }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="orange"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 01-1.06 0l-1.59-1.591a.75.75 0 111.06-1.06l1.59 1.59a.75.75 0 010 1.061zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.894a.75.75 0 010-1.06l1.59-1.59a.75.75 0 011.06 1.06l-1.59 1.59a.75.75 0 01-1.06 0zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM6.106 5.106a.75.75 0 011.06 0l1.59 1.591a.75.75 0 01-1.06 1.06l-1.59-1.59a.75.75 0 010-1.061z" /></svg>'); background-size: 16px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23f5d0fe" viewBox="0 0 24 24"><path d="M11.25 3.009c.342.016.68.034.996.058a.75.75 0 01.745.814 8.25 8.25 0 00-1.42 5.093c0 4.545 3.694 8.25 8.25 8.25.396 0 .788-.029 1.176-.086a.75.75 0 01.73.918 9.75 9.75 0 01-9.352 7.02c-5.385 0-9.75-4.365-9.75-9.75 0-4.594 3.14-8.487 7.218-9.542a.75.75 0 01.57.093z"/></svg>'); }
+        @media (max-width: 768px) { header h1 { font-size: 1.2em; } .datetime { display: none; } }
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
+        .intro-section { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-muted); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 15px var(--glow); }
+        .filter-container { position: relative; }
+        .filter-input { background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 1rem 0.6rem 2.5rem; width: 300px; color: var(--text-main); font-family: 'Inter', sans-serif; transition: all 0.2s ease; }
+        .filter-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--glow); outline: none; }
+        .filter-container .fa-search { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        @media (max-width: 768px) { .intro-section { flex-direction: column; align-items: stretch; } .filter-input { width: 100%; } }
+        .progress-section { margin-bottom: 2rem; }
+        .progress-bar-container { background-color: var(--progress-track); border-radius: 10px; height: 12px; overflow: hidden; }
+        .progress-bar-fill { background-color: var(--primary); width: 0%; height: 100%; border-radius: 10px; transition: width 0.5s ease-in-out; }
+        .progress-label { text-align: right; font-size: 0.85em; font-weight: 500; color: var(--text-muted); margin-top: 0.5rem; }
+        .unit-accordion { display: flex; flex-direction: column; gap: 1rem; }
+        .unit-box.hidden { display: none; }
+        .unit-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.75rem; background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow); width: 100%; text-align: left; }
+        .unit-header:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow), 0 0 15px var(--glow); }
+        .unit-header.active { border-color: var(--primary); box-shadow: 0 0 0 3px var(--glow); }
+        .unit-header h2 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--text-main); flex-grow: 1; }
+        .unit-header-controls { display: flex; align-items: center; gap: 1rem; margin-left: 1rem; }
+        .unit-details-button { z-index: 5; display: inline-flex; justify-content: center; align-items: center; text-decoration: none; color: var(--text-muted); border: 1px solid var(--border); background-color: var(--bg); width: 36px; height: 36px; border-radius: 50%; font-size: 0.9em; transition: all 0.2s ease; }
+        .unit-details-button:hover { background-color: var(--primary); color: white; border-color: var(--primary); transform: scale(1.1); }
+        .unit-header .icon { font-size: 1.2rem; color: var(--text-muted); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .unit-header.active .icon { transform: rotate(180deg); color: var(--primary); }
+        .unit-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .unit-content-inner { padding: 1.5rem 1.75rem; border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; margin-top: -10px; background-color: var(--bg); line-height: 1.7; }
+        .unit-content-inner h4 { margin-top: 1.5rem; margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .unit-content-inner h4:first-child { margin-top: 0; }
+        .unit-content-inner ul { list-style-position: outside; padding-left: 1.5rem; margin: 0 0 1rem 0; color: var(--text-muted); }
+        .unit-content-inner li { margin-bottom: 0.5rem; }
+        .exam-blueprint-card { margin-top: 3rem; background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 12px var(--shadow); overflow: hidden; padding: 2rem; }
+        .exam-blueprint-card h3 { color: var(--text-main); font-size: 1.8em; text-align: center; margin-top: 0; }
+        .blueprint-subtitle { text-align: center; color: var(--text-muted); margin: -0.5rem 0 2rem 0; }
+        .blueprint-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .blueprint-part { background-color: var(--bg); padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-align: center; display: flex; flex-direction: column; transition: all 0.3s ease; }
+        .blueprint-part:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 25px var(--shadow), 0 0 20px var(--glow); }
+        .part-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; line-height: 1; }
+        .blueprint-part h4 { border: none; font-size: 1.1em; font-weight: 600; margin: 0 0 0.5rem 0; padding-bottom: 0; color: var(--text-main);}
+        .blueprint-part p { color: var(--text-muted); margin: 0; font-size: 0.9em; flex-grow: 1; }
+        .part-total { background-color: var(--primary-light); color: var(--primary); font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; margin-top: 1.5rem; display: inline-block; }
+        body.dark-mode .part-total { color: #f0abfc; background-color: var(--primary-light);}
+        .blueprint-summary { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-around; text-align: center; }
+        .summary-item h4 { border: none; padding: 0; margin: 0 0 0.25rem 0; font-size: 1em; color: var(--text-muted); font-weight: 500; }
+        .summary-item p { font-size: 1.5em; font-weight: 700; margin: 0; color: var(--text-main); }
+        footer { padding: 2rem 0; margin-top: 2rem; border-top: 1px solid var(--border); }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; text-align: center; font-size: 0.9em; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content"><h1>AEC-2 : English Communication</h1><div class="header-controls"><div id="datetime" class="datetime"></div><div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div></div></div>
+    </header>
+
+    <main>
+        <div class="intro-section animated-item"><a href="#" class="back-button"><i class="fas fa-arrow-left"></i> Back to Courses</a><div class="filter-container"><i class="fas fa-search"></i><input type="text" id="filter-input" class="filter-input" placeholder="Filter units by name..."></div></div>
+        
+        
+        <div class="unit-accordion">
+            <!-- UNIT 1 -->
+            <div class="unit-box animated-item" data-unit-name="Introduction Communication">
+                <div class="unit-header">
+                    <h2>Unit 1: Introduction to Communication</h2>
+                    <div class="unit-header-controls">
+                        <a href="unit1.html" class="unit-details-button" title="View Detailed Unit Page"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                        <i class="fas fa-chevron-down icon"></i>
+                    </div>
+                </div>
+                <div class="unit-content"><div class="unit-content-inner"><h4><i class="fas fa-bullseye"></i> Key Topics</h4><ul><li>Communication, its importance and factors (sender, receiver, channel, etc.).</li><li>Models of communication, the information gap principle.</li><li>Types of communication: horizontal, vertical, interpersonal, lateral.</li><li>Verbal and non-verbal communication, body language, and bias-free language.</li></ul></div></div>
+            </div>
+
+            <!-- UNIT 2 -->
+            <div class="unit-box animated-item" data-unit-name="Listening Speaking">
+                <div class="unit-header">
+                    <h2>Unit 2: Listening & Speaking Skills</h2>
+                    <div class="unit-header-controls">
+                        <a href="unit2.html" class="unit-details-button" title="View Detailed Unit Page"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                        <i class="fas fa-chevron-down icon"></i>
+                    </div>
+                </div>
+                <div class="unit-content"><div class="unit-content-inner"><h4><i class="fas fa-bullseye"></i> Key Topics</h4><ul><li>Types of listening: active, passive, empathic, interactive.</li><li>Speaking effectively: fluency, accuracy, intelligibility, and clarity.</li><li>Styles of speaking for various situations.</li><li>English pronunciation essentials: IPA, stress, rhythm, and intonation.</li></ul></div></div>
+            </div>
+
+            <!-- UNIT 3 -->
+            <div class="unit-box animated-item" data-unit-name="Reading Writing">
+                <div class="unit-header">
+                    <h2>Unit 3: Reading & Writing Comprehension</h2>
+                    <div class="unit-header-controls">
+                        <a href="unit3.html" class="unit-details-button" title="View Detailed Unit Page"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                        <i class="fas fa-chevron-down icon"></i>
+                    </div>
+                </div>
+                <div class="unit-content"><div class="unit-content-inner"><h4><i class="fas fa-bullseye"></i> Key Topics</h4><ul><li>Reading methods and techniques: skimming, scanning, global/local reading.</li><li>Understanding literal, metaphorical, and suggested meanings; identifying authorial tone.</li><li>The complete writing process: from brainstorming to post-writing.</li><li>Writing various forms: paragraphs, literary, academic, and media writing.</li></ul></div></div>
+            </div>
+
+            <!-- UNIT 4 -->
+            <div class="unit-box animated-item" data-unit-name="Grammar Vocabulary">
+                <div class="unit-header">
+                    <h2>Unit 4: Grammar & Vocabulary Building</h2>
+                    <div class="unit-header-controls">
+                        <a href="unit4.html" class="unit-details-button" title="View Detailed Unit Page"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                        <i class="fas fa-chevron-down icon"></i>
+                    </div>
+                </div>
+                <div class="unit-content"><div class="unit-content-inner"><h4><i class="fas fa-bullseye"></i> Key Topics</h4><ul><li>Applying grammar for meaning and effective communication.</li><li>Mastering verbs, modals, tense, aspect, voice, and modality.</li><li>Advanced sentence structures: complex noun phrases, clauses, and sentence types.</li><li>Building a usage-oriented and neutral vocabulary.</li></ul></div></div>
+            </div>
+        </div>
+
+        <div class="exam-blueprint-card animated-item"><h3 id="blueprint">Pre-sem / Sem Examination Blueprint</h3><p class="blueprint-subtitle">Detailed structure for the Final Semester Examination.</p><div class="blueprint-grid"><div class="blueprint-part"><div class="part-icon"><i class="fa-solid fa-list-check"></i></div><h4>Part A: Objective Type</h4><p>Multiple Choice or One-Word Answers testing core concepts.</p><div class="part-total">10 Marks</div><span>10 Qns × 1 Mark</span></div><div class="blueprint-part"><div class="part-icon"><i class="fa-solid fa-pen-to-square"></i></div><h4>Part B: Short Answers</h4><p>Brief explanations and definitions from all units.</p><div class="part-total">18 Marks</div><span>9 Qns × 2 Marks</span></div><div class="blueprint-part"><div class="part-icon"><i class="fa-solid fa-book-open"></i></div><h4>Part C: Descriptive Answers</h4><p>In-depth analysis and application of concepts.</p><div class="part-total">40 Marks</div><span>8 Qns × 5 Marks</span></div><div class="blueprint-part"><div class="part-icon"><i class="fa-solid fa-scroll"></i></div><h4>Part D: Long Answers</h4><p>Comprehensive essays and detailed critical analysis.</p><div class="part-total">32 Marks</div><span>4 Qns × 8 Marks</span></div></div><div class="blueprint-summary"><div class="summary-item"><h4>Total Questions</h4><p>31</p></div><div class="summary-item"><h4>Total Marks</h4><p>100</p></div><div class="summary-item"><h4>Exam Duration</h4><p>3 Hours</p></div></div></div>
+    </main>
+
+    <footer><div class="footer-content"><p>Designed for English Communication | Adapted by Pratyush Swain & Enhanced by AI</p></div></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const datetimeElement = document.getElementById('datetime');
+            const accordionHeaders = document.querySelectorAll('.unit-header');
+            const unitBoxes = document.querySelectorAll('.unit-box');
+            const filterInput = document.getElementById('filter-input');
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            const progressLabel = document.getElementById('progress-label');
+            const totalUnits = unitBoxes.length;
+            let openedUnits = new Set();
+            
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = theme === 'dark'; };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; applyTheme(newTheme); localStorage.setItem('theme', newTheme); });
+            
+            const updateDateTime = () => { if (!datetimeElement) return; const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); updateDateTime();
+            
+            const updateProgress = () => { const percentage = totalUnits > 0 ? (openedUnits.size / totalUnits) * 100 : 0; progressBarFill.style.width = `${percentage}%`; progressLabel.textContent = `${Math.round(percentage)}% of units reviewed`; };
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', (event) => {
+                    if (event.target.closest('.unit-details-button')) { return; }
+                    const content = header.nextElementSibling, unitBox = header.parentElement, isOpen = header.classList.contains('active');
+                    accordionHeaders.forEach(h => { if (h !== header) { h.classList.remove('active'); h.nextElementSibling.style.maxHeight = null; } });
+                    if (isOpen) { header.classList.remove('active'); content.style.maxHeight = null; } else { header.classList.add('active'); content.style.maxHeight = content.scrollHeight + "px"; openedUnits.add(unitBox); }
+                    updateProgress();
+                });
+            });
+
+            filterInput.addEventListener('input', (e) => { const searchTerm = e.target.value.toLowerCase(); unitBoxes.forEach(box => { const unitName = box.dataset.unitName.toLowerCase(); box.classList.toggle('hidden', !unitName.includes(searchTerm)); }); });
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
