@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1 Questions: Fossil Fuels & Nuclear Energy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8; --card-bg: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b; --accent-primary: #3b82f6; --accent-secondary: #f97316; --border-color: #e2e8f0; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --alert-bg: rgba(249, 115, 22, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a; --card-bg: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --accent-primary: #60a5fa; --accent-secondary: #fb923c; --border-color: #334155; --shadow-color: rgba(0, 0, 0, 0.1); --header-bg: rgba(15, 23, 42, 0.8); --alert-bg: rgba(251, 146, 60, 0.15);
+        }
+        
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+        
+        .container { width: 90%; max-width: 900px; margin: 0 auto; padding: 2rem 0; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-title h1 { font-size: 1.8rem; margin: 0; color: var(--accent-secondary); font-weight: 700; }
+        .header-title p { font-size: 1rem; margin: 0.25rem 0 0; color: var(--text-secondary); }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border-color); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); }
+
+        main { margin-top: 2.5rem; }
+        .question-category { margin-bottom: 3rem; }
+        .question-category h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent-secondary); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .question-accordion { display: flex; flex-direction: column; gap: 1rem; }
+        .question-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow-color); width: 100%; text-align: left; }
+        .question-header:hover { border-color: var(--accent-secondary); transform: translateY(-3px); }
+        .question-header.active { border-color: var(--accent-secondary); box-shadow: 0 0 15px rgba(249, 115, 22, 0.2); }
+        .question-header p { margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); }
+        .question-header .icon { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.4s ease; margin-left: 1rem; flex-shrink: 0; }
+        .question-header.active .icon { transform: rotate(180deg); color: var(--accent-secondary); }
+        
+        .answer-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; border-radius: 0 0 12px 12px; }
+        .answer-content-inner { padding: 1.5rem 1.75rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 12px 12px; margin-top: -10px; background-color: var(--bg-color); color: var(--text-secondary); }
+        .answer-content-inner strong { color: var(--text-primary); font-weight: 600; }
+        .answer-content-inner ul { padding-left: 1.5rem; } .answer-content-inner ul li { margin-bottom: 0.5rem; }
+        
+        .alert { background-color: var(--alert-bg); border-left: 5px solid var(--accent-secondary); padding: 1.2rem; margin: 1.5rem 0; border-radius: 8px; font-weight: 500; color: #b45309; }
+        body.dark-mode .alert { color: #fed7aa; }
+
+        footer { text-align: center; padding: 2.5rem 0 1.5rem 0; font-size: 0.9em; color: var(--text-secondary); }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Unit 1: Questions & Answers</h1>
+                <p>Fossil Fuels & Non-Conventional Energy</p>
+            </div>
+            <a href="re-eh-questions.html" class="back-button"><i data-feather="arrow-left"></i> Back to Units</a>
+        </header>
+
+        <main>
+            <!-- 2 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="help-circle"></i>2 Marks Questions</h2>
+                <div class="question-accordion">
+                    <!-- Q1 -->
+                    <div class="question-box"><div class="question-header"><p>1. Difference between renewable and non-renewable resources?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Renewable Resources</strong> are energy sources that replenish naturally over a short period. They are sustainable and generally have a low environmental impact. <strong>Examples:</strong> Solar, wind, hydro, and geothermal energy.</p><p><strong>Non-Renewable Resources</strong> are finite resources that are consumed much faster than they are formed. Their extraction and use often cause significant environmental pollution. <strong>Examples:</strong> Fossil fuels (coal, oil, natural gas) and nuclear fuel (uranium).</p></div></div></div>
+                    <!-- Q2 -->
+                    <div class="question-box"><div class="question-header"><p>2. Explain about Energy and Energy harvesting.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Energy</strong> is the capacity to do work. It exists in various forms like kinetic, potential, thermal, and electromagnetic energy. In this context, it refers to the power we harness to run our societies.</p><p><strong>Energy Harvesting</strong> (or energy scavenging) is the process of capturing minute amounts of energy from one or more ambient environmental sources (like light, heat, or vibrations) and converting it into usable electrical energy. It is crucial for powering low-energy electronics and sensors.</p></div></div></div>
+                    <!-- Q3 -->
+                    <div class="question-box"><div class="question-header"><p>3. What do you mean by wind energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Wind energy is a form of solar energy. It describes the process by which wind is used to generate mechanical power or electricity. Wind turbines convert the kinetic energy of the moving air (wind) into mechanical power, which can then be used directly for tasks like grinding grain or, more commonly, converted into electricity by a generator.</p></div></div></div>
+                     <!-- Q4 -->
+                    <div class="question-box"><div class="question-header"><p>4. What are the limitations of fossil fuel?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>The primary limitations of fossil fuels are:</p><ul><li><strong>Finite Supply:</strong> They are non-renewable and will eventually run out.</li><li><strong>Environmental Pollution:</strong> Burning them releases greenhouse gases (like CO₂), sulfur dioxide, and other pollutants, causing global warming and acid rain.</li><li><strong>Geopolitical Instability:</strong> Reserves are concentrated in a few regions, leading to price volatility and international conflicts.</li></ul></div></div></div>
+                    <!-- Add other 2 marks questions similarly -->
+                    <div class="question-box"><div class="question-header"><p>5. How can renewable energy benefits the environment?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Renewable energy sources benefit the environment by producing little to no greenhouse gas emissions, reducing air and water pollution, conserving natural resources for future generations, and mitigating climate change. They also promote biodiversity by reducing the need for destructive extraction practices associated with fossil fuels.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. Can renewable energy source replace fossil fuels?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Yes, renewable energy sources have the potential to largely replace fossil fuels. However, this transition faces challenges like intermittency (solar/wind are not always available), the need for massive energy storage solutions (like batteries), and the high initial cost of infrastructure. With ongoing technological advancements and investment, a full replacement is becoming increasingly feasible.</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>9. What are fossil fuels?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Fossil fuels are natural fuels such as coal, oil, and natural gas, formed in the geological past from the remains of living organisms. They are carbon-based and have a high energy density, which is released when they are burned. They are the world's dominant energy source but are non-renewable and a primary driver of climate change.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. Differentiate between conventional and nonconventional energy sources.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Conventional Sources</strong> are traditional, well-established, and widely used sources, which are typically non-renewable. Examples include fossil fuels (coal, oil) and large-scale hydropower.</p><p><strong>Nonconventional Sources</strong> are newer, less common sources, which are typically renewable and more environmentally friendly. Examples include solar, wind, geothermal, tidal, and biomass energy.</p></div></div></div>
+                </div>
+            </div>
+
+            <!-- 8 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="edit"></i>8 Marks Questions</h2>
+                <div class="question-accordion">
+                    <!-- Q1 -->
+                    <div class="question-box"><div class="question-header"><p>1. Give an account of solid fossil fuel. How is electricity generated from it?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>The primary solid fossil fuel is <strong>coal</strong>. It is a combustible sedimentary rock formed over millions of years from compressed plant matter.</p><p><strong>Electricity Generation from Coal:</strong></p><ol><li><strong>Pulverization:</strong> Raw coal is crushed into a fine powder to increase its surface area for efficient combustion.</li><li><strong>Combustion:</strong> The powdered coal is blown into a boiler furnace and burned at high temperatures, releasing a massive amount of thermal energy.</li><li><strong>Boiler and Steam Generation:</strong> This heat is used to boil water circulating in tubes within the boiler, producing high-pressure, high-temperature steam.</li><li><strong>Turbine Rotation:</strong> The high-pressure steam is directed at the blades of a turbine, causing it to rotate at high speeds. This converts thermal energy into mechanical energy.</li><li><strong>Generator:</strong> The turbine is connected to a generator, which contains coils of wire and magnets. As the turbine spins the generator, the changing magnetic field induces an electric current in the coils, generating electricity.</li><li><strong>Condensation and Cooling:</strong> After passing through the turbine, the low-pressure steam is cooled in a condenser (using water from a nearby source) back into liquid water, which is then pumped back to the boiler to repeat the cycle.</li></ol></div></div></div>
+                    <!-- Q2 -->
+                    <div class="question-box"><div class="question-header"><p>2. What is wind energy? Explain its method, advantages, and Global status.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Wind Energy</strong> is the kinetic energy of moving air, which is harnessed and converted into useful forms of power, primarily electricity.</p><p><strong>Method of Generation:</strong></p><ul><li>Wind turbines work on a simple principle: instead of using electricity to make wind—like a fan—wind turbines use wind to make electricity.</li><li>The wind turns the propeller-like blades of a turbine around a rotor.</li><li>The rotor is connected to a main shaft, which spins a generator to create electricity.</li></ul><div class="alert"><strong>Key Concept:</strong> Wind is a form of solar energy. The sun's uneven heating of the atmosphere, the earth's irregularities, and its rotation all contribute to the creation of wind.</div><p><strong>Advantages:</strong></p><ul><li><strong>Clean Energy:</strong> Wind turbines produce no greenhouse gas emissions during operation.</li><li><strong>Renewable:</strong> Wind is a natural and inexhaustible resource.</li><li><strong>Cost-Effective:</strong> It is one of the lowest-priced renewable energy sources.</li><li><strong>Land Use Efficiency:</strong> Wind farms can share land with agriculture or other uses.</li></ul><p><strong>Global Status:</strong></p><p>Wind energy is one of the fastest-growing renewable energy technologies globally. Countries like China, the United States, Germany, and India are leaders in installed wind capacity. The industry is rapidly advancing, with larger, more efficient turbines and the development of offshore wind farms becoming increasingly common to harness stronger and more consistent winds.</p></div></div></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer><p>© 2025 Pratyush Swain. All Rights Reserved.</p></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace({ 'stroke-width': 1.5 });
+            
+            const accordionHeaders = document.querySelectorAll('.question-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isOpen = header.classList.contains('active');
+                    
+                    // Optional: Close all others before opening a new one
+                    // accordionHeaders.forEach(h => { 
+                    //     h.classList.remove('active');
+                    //     h.nextElementSibling.style.maxHeight = null; 
+                    // });
+
+                    if (isOpen) {
+                        header.classList.remove('active');
+                        content.style.maxHeight = null;
+                    } else {
+                        header.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
