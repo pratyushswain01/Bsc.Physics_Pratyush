@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2 Questions: Solar Energy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8; --card-bg: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b; --accent-primary: #3b82f6; --accent-secondary: #eab308; --border-color: #e2e8f0; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --alert-bg: rgba(234, 179, 8, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a; --card-bg: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --accent-primary: #60a5fa; --accent-secondary: #facc15; --border-color: #334155; --shadow-color: rgba(0, 0, 0, 0.1); --header-bg: rgba(15, 23, 42, 0.8); --alert-bg: rgba(250, 204, 21, 0.15);
+        }
+        
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+        
+        .container { width: 90%; max-width: 900px; margin: 0 auto; padding: 2rem 0; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-title h1 { font-size: 1.8rem; margin: 0; color: var(--accent-secondary); font-weight: 700; }
+        .header-title p { font-size: 1rem; margin: 0.25rem 0 0; color: var(--text-secondary); }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border-color); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent-secondary); color: var(--text-primary); border-color: var(--accent-secondary); }
+
+        main { margin-top: 2.5rem; }
+        .question-category { margin-bottom: 3rem; }
+        .question-category h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent-secondary); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .question-accordion { display: flex; flex-direction: column; gap: 1rem; }
+        .question-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow-color); width: 100%; text-align: left; }
+        .question-header:hover { border-color: var(--accent-secondary); transform: translateY(-3px); }
+        .question-header.active { border-color: var(--accent-secondary); box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
+        .question-header p { margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); }
+        .question-header .icon { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.4s ease; margin-left: 1rem; flex-shrink: 0; }
+        .question-header.active .icon { transform: rotate(180deg); color: var(--accent-secondary); }
+        
+        .answer-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; border-radius: 0 0 12px 12px; }
+        .answer-content-inner { padding: 1.5rem 1.75rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 12px 12px; margin-top: -10px; background-color: var(--bg-color); color: var(--text-secondary); }
+        .answer-content-inner strong { color: var(--text-primary); font-weight: 600; }
+        .answer-content-inner ul { padding-left: 1.5rem; } .answer-content-inner ul li { margin-bottom: 0.5rem; }
+        
+        .alert { background-color: var(--alert-bg); border-left: 5px solid var(--accent-secondary); padding: 1.2rem; margin: 1.5rem 0; border-radius: 8px; font-weight: 500; color: #a16207; }
+        body.dark-mode .alert { color: #fef08a; }
+
+        footer { text-align: center; padding: 2.5rem 0 1.5rem 0; font-size: 0.9em; color: var(--text-secondary); }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Unit 2: Questions & Answers</h1>
+                <p>Solar Energy & Photovoltaics</p>
+            </div>
+            <a href="re-eh-questions.html" class="back-button"><i data-feather="arrow-left"></i> Back to Units</a>
+        </header>
+
+        <main>
+            <!-- 2 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="help-circle"></i>2 Marks Questions</h2>
+                <div class="question-accordion">
+                    <!-- Q1 -->
+                    <div class="question-box"><div class="question-header"><p>1. What is solar energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Solar energy is radiant light and heat from the Sun that is harnessed using a range of technologies such as solar heating, photovoltaics, and solar thermal energy. It is the most abundant renewable energy source on Earth and is essential for life, driving climate, weather, and supporting photosynthesis.</p></div></div></div>
+                    <!-- Q2 -->
+                    <div class="question-box"><div class="question-header"><p>2. What is beam and albedo radiation?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Beam Radiation (Direct Radiation):</strong> This is the solar radiation that reaches the Earth's surface directly from the Sun in a straight line without being scattered or absorbed by the atmosphere. It creates distinct shadows.</p><p><strong>Albedo Radiation (Reflected Radiation):</strong> This is the solar radiation that is reflected off the Earth's surface (e.g., ground, snow, water, buildings). The fraction of light reflected is known as the albedo of the surface.</p></div></div></div>
+                    <!-- Q3 -->
+                    <div class="question-box"><div class="question-header"><p>3. What is solar constant?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>The Solar Constant is the average amount of solar electromagnetic radiation (solar irradiance) per unit area that is received at the outer edge of Earth's atmosphere, on a plane perpendicular to the Sun's rays, at the mean Earth-Sun distance.</p><div class="alert"><strong>Value:</strong> The widely accepted value for the solar constant is approximately <strong>1361 Watts per square meter (W/m²).</strong></div></div></div></div>
+                    <!-- Q4 -->
+                    <div class="question-box"><div class="question-header"><p>4. What is a non-convective solar pond?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>A non-convective solar pond is a large-scale solar thermal energy collector and storage system. It consists of a pool of saltwater with a salinity gradient that increases with depth. The denser, saltier water at the bottom traps solar heat, while the less saline top layer acts as insulation, preventing heat loss through convection. This allows the bottom layer to reach very high temperatures, which can then be used for power generation or process heat.</p></div></div></div>
+                    <!-- Q5 -->
+                    <div class="question-box"><div class="question-header"><p>5. What is a flat plate collector?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>A flat plate collector is a type of solar thermal collector used to convert solar radiation into heat. It typically consists of an insulated metal box with a dark absorber plate under a glass or plastic cover (glazing). Solar radiation passes through the glazing and heats the absorber plate, which in turn heats a fluid (like water or air) flowing through tubes attached to the plate. It is commonly used for domestic hot water and space heating.</p></div></div></div>
+                </div>
+            </div>
+
+            <!-- 8 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="edit"></i>8 Marks Questions</h2>
+                <div class="question-accordion">
+                    <!-- Q1 -->
+                    <div class="question-box"><div class="question-header"><p>1. Discuss the various methods of storage of solar energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Storing solar energy is crucial to overcome its intermittency (no power at night or on cloudy days). The main storage methods are:</p>
+                        <ul>
+                            <li><strong>Battery Storage:</strong> Photovoltaic (PV) panels generate DC electricity, which can be stored directly in batteries (e.g., lithium-ion, lead-acid). This stored energy can be used later, especially during evenings. This is the most common method for residential and small-scale commercial systems.</li>
+                            <li><strong>Thermal Storage:</strong> Solar thermal systems store the sun's heat rather than electricity.
+                                <ul>
+                                    <li><strong>Sensible Heat Storage:</strong> Materials like water, molten salt, or rock are heated to high temperatures. The stored heat can then be used to generate steam to drive a turbine, even after the sun has set. This is used in Concentrated Solar Power (CSP) plants.</li>
+                                    <li><strong>Latent Heat Storage:</strong> Uses Phase Change Materials (PCMs) that absorb and release heat when they change phase (e.g., from solid to liquid). This allows for high energy storage density.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Mechanical Storage:</strong> Excess solar electricity can be converted into potential or kinetic energy.
+                                <ul>
+                                    <li><strong>Pumped-Hydro Storage:</strong> Excess electricity is used to pump water from a lower reservoir to a higher one. When energy is needed, the water is released back down through a turbine to generate electricity.</li>
+                                    <li><strong>Compressed Air Energy Storage (CAES):</strong> Air is compressed and stored in underground caverns. The pressurized air is later released to drive a turbine.</li>
+                                </ul>
+                            </li>
+                             <li><strong>Chemical Storage (Hydrogen):</strong> Excess solar electricity can be used to split water into hydrogen and oxygen via electrolysis. The hydrogen can be stored and later used in fuel cells to generate electricity or as a clean fuel.</li>
+                        </ul>
+                    </div></div></div>
+                    <!-- Q2 -->
+                    <div class="question-box"><div class="question-header"><p>2. Explain the construction and working of a solar cooker. Write down the importance of solar energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>A solar cooker is a device that uses direct sunlight to heat, cook, or pasteurize drinks and other food materials.</p>
+                        <p><strong>Construction:</strong></p>
+                        <ul>
+                            <li><strong>Outer Box:</strong> An insulated outer box, often made of wood or cardboard. Insulation (like glass wool or newspaper) fills the space between the walls.</li>
+                            <li><strong>Inner Box (Cooking Pot Area):</strong> A metal box painted black on the inside to absorb maximum solar radiation.</li>
+                            <li><strong>Glass Cover:</strong> A double-layered glass lid covers the box. The air trapped between the two glass panes acts as an insulator, reducing heat loss by convection and radiation. This creates a greenhouse effect inside the cooker.</li>
+                            <li><strong>Reflector:</strong> A plane mirror is often attached to the lid to reflect additional sunlight onto the glass cover, increasing the amount of incident radiation and thus the internal temperature.</li>
+                            <li><strong>Cooking Pots:</strong> The pots placed inside are also painted black for maximum heat absorption.</li>
+                        </ul>
+                        <p><strong>Working:</strong></p>
+                        <ol>
+                            <li>Sunlight (including infrared radiation) passes through the glass lid and strikes the black interior of the box and cooking pots.</li>
+                            <li>The black surfaces absorb the solar radiation and get heated, re-radiating heat in the form of long-wavelength infrared rays.</li>
+                            <li>The glass lid does not allow these longer wavelength rays to escape, trapping the heat inside. This is the greenhouse effect.</li>
+                            <li>The reflector increases the effective collection area, concentrating more sunlight and boosting the temperature, which can reach 100-140°C, sufficient for slow cooking of food like rice, lentils, and vegetables.</li>
+                        </ol>
+                        <p><strong>Importance of Solar Energy:</strong></p>
+                        <ul>
+                            <li><strong>Renewable and Abundant:</strong> It is an inexhaustible energy source.</li>
+                            <li><strong>Environmentally Friendly:</strong> It produces no greenhouse gases or pollutants, helping to combat climate change.</li>
+                            <li><strong>Reduces Electricity Bills:</strong> It can significantly lower energy costs for homes and businesses.</li>
+                            <li><strong>Energy Independence:</strong> It reduces reliance on finite and often imported fossil fuels, improving national security.</li>
+                            <li><strong>Low Maintenance:</strong> Solar energy systems generally require very little maintenance.</li>
+                            <li><strong>Rural Electrification:</strong> It is a vital solution for providing power to remote areas not connected to the main electricity grid.</li>
+                        </ul>
+                    </div></div></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer><p>© 2025 Pratyush Swain. All Rights Reserved.</p></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace({ 'stroke-width': 1.5 });
+            
+            const accordionHeaders = document.querySelectorAll('.question-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isOpen = header.classList.contains('active');
+
+                    if (isOpen) {
+                        header.classList.remove('active');
+                        content.style.maxHeight = null;
+                    } else {
+                        header.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
