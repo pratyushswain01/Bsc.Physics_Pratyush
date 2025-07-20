@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2: Solar Energy & PV | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lora:wght@400;600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(149, 157, 165, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --accent: #f97316; /* Orange for Solar */
+            --back-btn-bg: #f1f5f9;
+            --back-btn-color: #475569;
+            --key-point-bg: #fff7ed;
+        }
+        body.dark-mode {
+            --bg-color: #020617;
+            --card-bg: #0f172a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --header-bg: rgba(15, 23, 42, 0.8);
+            --accent: #fb923c; /* Lighter orange for dark mode */
+            --back-btn-bg: #1e293b;
+            --back-btn-color: #94a3b8;
+            --key-point-bg: #2f241a;
+        }
+
+        /* --- GENERAL STYLES & ANIMATIONS --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px; /* Optimal width for reading */
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .title-container { display: flex; align-items: center; gap: 0.8rem; }
+        .title-container .logo { font-size: 1.8em; color: var(--accent); }
+        header h1 { margin: 0; font-size: 1.3em; font-weight: 600; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        
+        /* --- THEME SWITCHER --- */
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23f59e0b" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2393c5fd" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        .page-header { margin-bottom: 1.5rem; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        /* --- NOTES CONTENT STYLING --- */
+        .notes-title { text-align: center; margin-bottom: 2rem; opacity: 0; animation: fadeInAndUp 0.6s ease-out 0.2s forwards; }
+        .notes-title h1 { font-family: 'Lora', serif; font-size: 2.5rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+
+        .content-block { background-color: var(--card-bg); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; box-shadow: 0 8px 30px var(--shadow-color); opacity: 0; animation: fadeInAndUp 0.8s ease-out forwards; border: 1px solid var(--border-color); }
+        .content-block:nth-of-type(1) { animation-delay: 0.4s; } .content-block:nth-of-type(2) { animation-delay: 0.5s; } .content-block:nth-of-type(3) { animation-delay: 0.6s; } .content-block:nth-of-type(4) { animation-delay: 0.7s; } .content-block:nth-of-type(5) { animation-delay: 0.8s; } .content-block:nth-of-type(6) { animation-delay: 0.9s; }
+
+        .content-block h2 { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin: 0 0 1.5rem 0; }
+        .content-block h3 { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem 0; color: var(--accent); }
+        .content-block p, .content-block li { font-size: 1rem; line-height: 1.9; color: var(--text-secondary); text-align: justify; }
+        .content-block ul { list-style: none; padding-left: 0; }
+        .content-block li { position: relative; padding-left: 2rem; margin-bottom: 0.75rem; }
+        .content-block li::before { content: "\f135"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 5px; color: var(--accent); }
+        .content-block .sub-list { margin: 1rem 0 1rem 1.5rem; }
+        .content-block .sub-list li::before { content: "\f054"; /* right arrow */ }
+        
+        /* Key Concept Box */
+        .key-concept { background-color: var(--key-point-bg); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; display: flex; gap: 1.5rem; align-items: flex-start; }
+        .key-concept i { font-size: 2rem; color: var(--accent); margin-top: 5px; }
+        .key-concept-text h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; color: var(--text-primary); }
+        .key-concept-text p { margin: 0; line-height: 1.7; }
+
+        /* Circuit Diagram Box */
+        .circuit-diagram { background-color: var(--key-point-bg); border: 1px dashed var(--border-color); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; font-family: 'Source Code Pro', monospace; white-space: pre; text-align: center; color: var(--text-secondary); overflow-x: auto;}
+        
+        footer { text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        @media (max-width: 767px) {
+            .content-block { padding: 1.5rem; }
+            .notes-title h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <div class="header-content">
+            <div class="title-container">
+                <i class="fas fa-sun logo"></i>
+                <h1>Unit 2: Solar Energy & PV</h1>
+            </div>
+            <div class="header-controls">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <a href="re-eh.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Subject Page</a>
+        </div>
+        
+        <div class="notes-title">
+            <h1>Unit 2: Solar Energy and Photovoltaics</h1>
+        </div>
+
+        <section class="content-block">
+            <h2>I. Fundamentals of Solar Energy</h2>
+            <div class="key-concept">
+                <i class="fas fa-solar-panel"></i>
+                <div class="key-concept-text">
+                    <h3>Introduction to Solar Energy</h3>
+                    <p>Solar energy is the radiant light and heat from the Sun, which has been harnessed by humans since ancient times using a range of technologies. It is the most abundant renewable energy source on our planet and is fundamental to life, driving Earth's climate, weather patterns, and the process of photosynthesis.</p>
+                </div>
+            </div>
+            
+            <h3>A. Solar Radiation and its Components</h3>
+            <p>Solar radiation, the energy emitted by the Sun, travels through space as electromagnetic waves. Upon reaching the Earth's atmosphere, it is classified into three components based on its interaction with the atmosphere:</p>
+            <ul>
+                <li><strong>Direct (Beam) Radiation:</strong> This is the solar radiation that reaches the Earth's surface in a direct line from the sun without being scattered. It is responsible for casting distinct shadows and is the primary component used by concentrating solar power systems.</li>
+                <li><strong>Diffuse Radiation:</strong> This is the solar radiation that has been scattered by atmospheric constituents like air molecules, dust, and clouds. It does not come from a single direction but rather from the entire sky. It is the reason we can see in shaded areas on a bright day.</li>
+                <li><strong>Albedo Radiation:</strong> This is the portion of solar radiation that is reflected from the Earth's surface (ground, buildings, water). The amount of albedo radiation depends heavily on the surface's reflectivity, known as its albedo value.</li>
+            </ul>
+
+            <h3>B. Importance of Solar Energy</h3>
+            <p>The importance of solar energy is multifaceted. Environmentally, it is a clean energy source that produces no greenhouse gas emissions during operation. Economically, it reduces reliance on finite and volatile fossil fuel markets. Socially, it enables decentralized power generation, bringing electricity to remote communities not connected to a national grid. It is a cornerstone of the global strategy to combat climate change.</p>
+        </section>
+
+        <section class="content-block">
+            <h2>II. Solar Energy Storage</h2>
+            <div class="key-concept">
+                <i class="fas fa-car-battery"></i>
+                <div class="key-concept-text">
+                    <h3>The Challenge of Intermittency</h3>
+                    <p>The primary drawback of solar energy is its intermittency—it is only available during daylight hours and can be affected by weather conditions. Energy storage systems are therefore crucial for providing a stable, reliable power supply around the clock.</p>
+                </div>
+            </div>
+            <h3>A. Storage Methods</h3>
+            <ul>
+                <li><strong>1. Solar Thermal Energy Storage:</strong> This method focuses on storing heat collected from the sun.
+                    <ul class="sub-list">
+                        <li><strong>a. Sensible Heat Storage:</strong> Involves raising the temperature of a storage medium (like water, molten salts, or rocks) without changing its phase. The energy stored is directly proportional to the material's mass, specific heat capacity, and the temperature change. It is the most common and straightforward thermal storage method.</li>
+                        <li><strong>b. Latent Heat Storage:</strong> Utilizes Phase Change Materials (PCMs) which absorb or release large amounts of heat at a nearly constant temperature as they change phase (e.g., solid to liquid). This method offers a much higher energy storage density compared to sensible heat storage.</li>
+                    </ul>
+                </li>
+                <li><strong>2. Battery Storage:</strong> This involves converting solar electricity into chemical energy stored in electrochemical batteries, most commonly lithium-ion batteries. This energy can be converted back to electricity on demand, making it ideal for residential and commercial PV systems.</li>
+                <li><strong>3. Mechanical Storage:</strong> This uses surplus solar electricity to store mechanical potential energy. The most established form is pumped-hydro storage, where water is pumped to a higher elevation reservoir and later released to spin turbines and generate electricity.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>III. Solar Ponds and Applications</h2>
+            <h3>A. The Solar Pond</h3>
+            <p>A solar pond is a large-scale solar thermal energy collector with integrated heat storage. The most common type is the **non-convective (or salt-gradient) solar pond**. It uses a salinity gradient to suppress natural convection, thus trapping heat at the bottom. It consists of three zones:</p>
+            <ul>
+                <li><strong>Upper Convective Zone (UCZ):</strong> A thin top layer with low salt concentration and ambient temperature.</li>
+                <li><strong>Non-Convective Zone (NCZ):</strong> A crucial middle layer where salinity and temperature increase with depth. This density gradient prevents heat from rising, acting as a transparent insulator.</li>
+                <li><strong>Lower Convective Zone (LCZ):</strong> The bottom layer with the highest salt concentration and temperature, where the solar energy is collected and stored.</li>
+            </ul>
+            <p><strong>Advantages:</strong> Provides long-term, low-cost thermal storage. <strong>Disadvantages:</strong> Requires a large land area and a source of salt, and poses an environmental risk if the saline water leaks into the ground.</p>
+            
+            <h3>B. Major Applications of Solar Energy</h3>
+            <p>Solar energy is harnessed through various devices for different purposes:</p>
+            <ul>
+                <li><strong>Solar Water Heater:</strong> Uses a flat plate collector to absorb solar heat and transfer it to water, which is then stored in an insulated tank. This is a highly efficient and popular application for reducing household energy bills.</li>
+                <li><strong>Flat Plate Collector:</strong> The core of a solar water heater. It's an insulated box with a dark absorber plate that captures solar radiation, covered by a transparent glass or plastic sheet to trap heat (greenhouse effect).</li>
+                <li><strong>Solar Distillation:</strong> A method to produce potable water from saline or contaminated water. Solar heat evaporates the water, which then condenses on a cool surface, leaving impurities behind.</li>
+                <li><strong>Solar Cooker:</strong> A device using sunlight to cook food. Box-type cookers use trapped heat, while concentrating (parabolic) cookers focus sunlight to a point to achieve higher temperatures.</li>
+                <li><strong>Solar Greenhouse:</strong> A structure designed to maximize solar heat gain and minimize heat loss, creating a controlled environment that extends the growing season for plants.</li>
+                <li><strong>Absorption Air Conditioning:</strong> Uses a solar thermal collector to provide the heat needed to drive a cooling cycle based on an absorbent-refrigerant pair, offering an eco-friendly alternative to conventional air conditioning.</li>
+                <li><strong>Solar Cell (Photovoltaic Cell):</strong> A semiconductor device that directly converts sunlight into electricity via the photovoltaic effect. This is the fundamental building block of solar panels.</li>
+            </ul>
+        </section>
+        
+        <section class="content-block">
+            <h2>IV. Photovoltaics (PV)</h2>
+            <div class="key-concept">
+                <i class="fas fa-lightbulb"></i>
+                <div class="key-concept-text">
+                    <h3>The Photovoltaic System</h3>
+                    <p>A PV system harnesses sunlight to produce electricity directly. The need for PV systems stems from their unique ability to generate power with no moving parts, no noise, and no emissions, making them highly reliable and scalable from small residential rooftops to large utility-scale solar farms.</p>
+                </div>
+            </div>
+            <h3>A. Characteristics and Key Parameters</h3>
+            <p>The performance of a **solar panel**, which is an assembly of solar cells, is defined by several key parameters derived from its Current-Voltage (I-V) curve:</p>
+            <ul>
+                <li><strong>Short-Circuit Current (I_sc):</strong> The maximum current a solar cell can produce when there is zero voltage across it (a short circuit). It is directly proportional to the intensity of sunlight (irradiance).</li>
+                <li><strong>Open-Circuit Voltage (V_oc):</strong> The maximum voltage produced by a solar cell when no current is being drawn from it (an open circuit). It is logarithmically dependent on irradiance and inversely related to temperature.</li>
+                <li><strong>Fill Factor (FF):</strong> A measure of the "squareness" of the I-V curve, indicating the cell's quality. It is the ratio of the maximum achievable power to the product of V_oc and I_sc. A higher FF indicates lower internal power losses.</li>
+                <li><strong>Efficiency (η):</strong> The most crucial metric, representing the percentage of incident solar energy that is converted into useful electrical energy. It is calculated as the ratio of the maximum power output (P_max) to the input solar power (P_in).</li>
+            </ul>
+        </section>
+        
+        <section class="content-block">
+            <h2>V. PV Modeling and Sun Tracking</h2>
+            <h3>A. PV Models and Equivalent Circuit</h3>
+            <p>To analyze and predict the behavior of a solar cell, an **equivalent circuit** model is used. The most common single-diode model represents the physical processes within the cell:</p>
+            <div class="circuit-diagram">
++----[ Rs ]----+----o V_L
+|              |
+(↑) I_ph     < I_d    < I_sh   -> I_L
+(💡)       / D /    \ R_sh\
+|              |
++--------------+----o
+            </div>
+             <ul>
+                <li><strong>I_ph (Photon Current Source):</strong> Represents the current generated by photons creating electron-hole pairs.</li>
+                <li><strong>D (Diode):</strong> Models the p-n junction, where recombination of charges (a loss mechanism) occurs.</li>
+                <li><strong>Rs (Series Resistance):</strong> Represents the internal resistance to current flow through the semiconductor material and metal contacts. A lower Rs is desirable.</li>
+                <li><strong>Rsh (Shunt Resistance):</strong> Represents leakage currents across the p-n junction. A higher Rsh is desirable.</li>
+            </ul>
+        
+            <h3>B. Sun Tracking System</h3>
+            <p><strong>Importance of Sun Tracking:</strong> Solar panels generate maximum power when they are perpendicular to the sun's rays. A sun tracking system is a device that orients the solar panels to follow the sun's path across the sky, significantly increasing the total energy captured throughout the day (by up to 40%) compared to a fixed-mount system.</p>
+            <p><strong>Components of a Sun Tracker:</strong></p>
+            <ul>
+                <li><strong>Drive Mechanism:</strong> The motors (e.g., stepper, DC) and actuators that physically move the structure.</li>
+                <li><strong>Controller:</strong> The electronic "brain" that uses algorithms or sensor data to determine the sun's position and direct the drive mechanism.</li>
+                <li><strong>Sensors:</strong> Light-Dependent Resistors (LDRs) or photodiodes are often used in pairs to detect differences in light intensity and provide feedback to the controller.</li>
+                <li><strong>Support Structure:</strong> The mechanical frame that holds the solar panels and allows for single-axis (east-west) or dual-axis (east-west and north-south) rotation.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Pratyush Swain. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            if (themeToggle) themeToggle.checked = (theme === 'dark');
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
