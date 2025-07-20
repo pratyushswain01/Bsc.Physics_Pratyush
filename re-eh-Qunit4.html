@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4 Questions: Electromagnetic Energy Harvesting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8; --card-bg: #ffffff; --text-primary: #1e293b; --text-secondary: #475569; --accent-primary: #3b82f6; --accent-secondary: #6366f1; --border-color: #e2e8f0; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --alert-bg: rgba(99, 102, 241, 0.1);
+        }
+        body.dark-mode {
+            --bg-color: #0f172a; --card-bg: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --accent-primary: #60a5fa; --accent-secondary: #818cf8; --border-color: #334155; --shadow-color: rgba(0, 0, 0, 0.1); --header-bg: rgba(15, 23, 42, 0.8); --alert-bg: rgba(129, 140, 248, 0.15);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+        .container { width: 90%; max-width: 900px; margin: 0 auto; padding: 2rem 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .header-title h1 { font-size: 1.8rem; margin: 0; color: var(--accent-secondary); font-weight: 700; }
+        .header-title p { font-size: 1rem; margin: 0.25rem 0 0; color: var(--text-secondary); }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--card-bg); color: var(--text-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; border: 1px solid var(--border-color); transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent-secondary); color: white; border-color: var(--accent-secondary); }
+
+        main { margin-top: 2.5rem; }
+        .question-category { margin-bottom: 3rem; }
+        .question-category h2 { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent-secondary); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .question-accordion { display: flex; flex-direction: column; gap: 1rem; }
+        .question-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow-color); width: 100%; text-align: left; }
+        .question-header:hover { border-color: var(--accent-secondary); transform: translateY(-3px); }
+        .question-header.active { border-color: var(--accent-secondary); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        .question-header p { margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); }
+        .question-header .icon { font-size: 1.2rem; color: var(--text-secondary); transition: transform 0.4s ease; margin-left: 1rem; flex-shrink: 0; }
+        .question-header.active .icon { transform: rotate(180deg); color: var(--accent-secondary); }
+        
+        .answer-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; border-radius: 0 0 12px 12px; }
+        .answer-content-inner { padding: 1.5rem 1.75rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 12px 12px; margin-top: -10px; background-color: var(--bg-color); color: var(--text-secondary); }
+        .answer-content-inner strong { color: var(--text-primary); font-weight: 600; }
+        .answer-content-inner ul, .answer-content-inner ol { padding-left: 1.5rem; } .answer-content-inner ul li, .answer-content-inner ol li { margin-bottom: 0.75rem; }
+        .answer-content-inner blockquote { border-left: 3px solid var(--accent-secondary); margin: 1rem 0; padding-left: 1rem; color: var(--text-primary); font-style: italic; }
+        
+        .mcq-answer-btn { background-color: var(--accent-secondary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .mcq-answer-btn:hover { filter: brightness(1.1); }
+        .mcq-revealed-answer { display: none; margin-left: 1rem; font-weight: 600; color: var(--accent-secondary); }
+        
+        .alert { background-color: var(--alert-bg); border-left: 5px solid var(--accent-secondary); padding: 1.2rem; margin: 1.5rem 0; border-radius: 8px; font-weight: 500; color: #4338ca; }
+        body.dark-mode .alert { color: #c7d2fe; }
+
+        footer { text-align: center; padding: 2.5rem 0 1.5rem 0; font-size: 0.9em; color: var(--text-secondary); }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Unit 4: Questions & Answers</h1>
+                <p>Electromagnetic Energy Harvesting</p>
+            </div>
+            <a href="re-eh-questions.html" class="back-button"><i data-feather="arrow-left"></i> Back to Units</a>
+        </header>
+
+        <main>
+
+            <!-- 1 Mark: MCQ type -->
+            <div class="question-category">
+                <h2><i data-feather="check-square"></i>MCQ Type (1 Mark Each)</h2>
+                <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. What is the main principle behind electric generators?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(b) Faraday's Law</span><p style="margin-top:1rem;"><strong>Explanation:</strong> Faraday's Law of Electromagnetic Induction is the fundamental principle stating that a changing magnetic flux through a coil of wire induces a voltage (electromotive force), which drives the current.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. What part of the linear generator moves?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(b) Rotor</span><p style="margin-top:1rem;"><strong>Explanation:</strong> The rotor is, by definition, the moving component of any generator. In a linear generator, it is the part (often containing magnets) that moves linearly within the stator.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. Which of these is NOT a carbon capture technique?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) Thermal recycling</span><p style="margin-top:1rem;"><strong>Explanation:</strong> The main carbon capture techniques are Pre-combustion, Post-combustion, and Oxy-fuel combustion. Thermal recycling is a waste management process, not a method for capturing CO2.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. Which is a **supercritical** state condition for CO2 transport?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) Temp > 31°C and Pressure > 7.4 MPa</span><p style="margin-top:1rem;"><strong>Explanation:</strong> Supercritical fluids exist above their critical temperature and pressure. For CO2, this point is 31°C and 7.4 MPa. In this state, it has liquid-like density and gas-like viscosity, making it ideal for pipeline transport.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. Fuel cells work as long as:</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(b) Fuel is supplied</span><p style="margin-top:1rem;"><strong>Explanation:</strong> Fuel cells are energy conversion devices, not storage devices like batteries. They continuously generate electricity through an electrochemical reaction as long as fuel (e.g., hydrogen) and an oxidant are provided.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. Which fuel cell operates at the highest temperature?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) SOFC</span><p style="margin-top:1rem;"><strong>Explanation:</strong> Solid Oxide Fuel Cells (SOFC) operate at extremely high temperatures (800-1000°C), making them highly efficient and fuel-flexible. PEMFC and AFC are low-temperature, while MCFC operates at a lower high temperature than SOFC.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>7. Which renewable energy source is associated with bird mortality?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) Wind</span><p style="margin-top:1rem;"><strong>Explanation:</strong> The rotating blades of large wind turbines pose a collision risk to birds and bats. This is a significant environmental consideration in the siting and operation of wind farms.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>8. The major environmental issue in solar panel production is:</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) Use of hazardous materials</span><p style="margin-top:1rem;"><strong>Explanation:</strong> The manufacturing of photovoltaic cells involves various toxic and hazardous chemicals, such as hydrofluoric acid, cadmium, and lead. Managing these materials during production and disposal is the primary environmental concern.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. Biomass can cause:</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(b) Air pollution</span><p style="margin-top:1rem;"><strong>Explanation:</strong> Burning biomass releases particulate matter, carbon monoxide (CO), nitrogen oxides (NOx), and other pollutants into the atmosphere if not controlled by advanced combustion and filtration systems.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. Which of the following best defines sustainability?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><button class="mcq-answer-btn">Click to Reveal Answer</button><span class="mcq-revealed-answer">(c) Meeting present needs without compromising the ability of future generations to meet their own needs</span><p style="margin-top:1rem;"><strong>Explanation:</strong> This is the most widely recognized definition of sustainability, originating from the Brundtland Commission Report. It emphasizes intergenerational equity.</p></div></div></div>
+                </div>
+            </div>
+
+            <!-- 1 Mark: Fill in the Blanks & Short Answer -->
+            <div class="question-category">
+                <h2><i data-feather="type"></i>Fill in the Blanks & Short Answer (1 Mark Each)</h2>
+                <div class="question-accordion">
+                     <div class="question-box"><div class="question-header"><p>1. A ____ generator converts linear motion into electricity.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> linear</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>2. The ____ part of a linear generator includes the magnet and the shaft.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> rotor (or translator)</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>3. The most commonly used carbon capture technique is ____-combustion.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> post</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>4. ____ fuel cells can use solid carbon as a fuel.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> Direct Carbon (or Carbon)</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>5. Supercritical CO2 behaves both like a ____ and a gas.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> liquid</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>6. In post-combustion capture, the solvent typically used is ____.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> an amine solution (like MEA)</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>7. Solar power may require large ____ for installation.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> land areas</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>8. The ____ effect is caused by excess CO2 in the atmosphere.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> greenhouse</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>9. Hydropower can disrupt ____ ecosystems.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> aquatic</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>10. The concept of ____ development was introduced by the UN.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Answer:</strong> sustainable</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>11. What is Faraday's law of electromagnetic induction?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Faraday's Law states that a changing magnetic field within a closed loop of wire induces an electromotive force (voltage) in that loop, which is proportional to the rate of change of the magnetic flux.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>12. Define "supercritical” state of CO2.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>It is a fluid state where CO2 is subjected to conditions above its critical temperature (31°C) and pressure (7.4 MPa), causing it to exhibit properties of both a liquid (high density) and a gas (low viscosity).</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>13. Name two components of a linear generator.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. **Stator** (the stationary part with coils). 2. **Rotor/Translator** (the moving part with magnets).</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>14. What is the role of a spring in a linear generator?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>A spring provides a restoring force that enables the rotor to oscillate. It helps tune the generator's natural frequency to match an external vibration, achieving resonance and maximizing power output.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>15. List two applications of vibration energy harvesting.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. Powering wireless sensors for structural health monitoring on bridges and buildings. 2. Self-powered tire pressure monitoring systems (TPMS) in vehicles.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>16. What is Direct Air Capture?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Direct Air Capture (DAC) is a technology designed to remove CO2 directly from the ambient atmosphere using large fans and chemical processes, rather than capturing it from a concentrated source.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>17. Name one advantage and one disadvantage of wind energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>Advantage:</strong> No greenhouse gas emissions during operation. <strong>Disadvantage:</strong> Intermittency (wind is variable).</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>18. What is meant by carbon-neutral energy?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>An energy source that produces no net emission of carbon dioxide into the atmosphere. This includes non-carbon sources (solar, wind) or sources like biomass where carbon emitted is balanced by carbon absorbed during growth.</p></div></div></div>
+                     <div class="question-box"><div class="question-header"><p>19. Name any two fuel cell types.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. Proton Exchange Membrane Fuel Cell (PEMFC). 2. Solid Oxide Fuel Cell (SOFC).</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>20. What does EOR stand for in carbon storage?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p><strong>EOR</strong> stands for **Enhanced Oil Recovery**.</p></div></div></div>
+                </div>
+            </div>
+
+            <!-- 2 Marks Questions Section -->
+             <div class="question-category">
+                <h2><i data-feather="help-circle"></i>2 Marks Questions</h2>
+                 <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. Differentiate between AC and DC generators.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>An <strong>AC (Alternating Current) Generator</strong> produces a current that periodically reverses direction. It uses slip rings to transfer this alternating current to the external circuit. A <strong>DC (Direct Current) Generator</strong> produces a current that flows in a single direction. It uses a split-ring commutator to reverse the connection to the external circuit every half rotation, ensuring the output current is always unidirectional (though pulsating).</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. Describe how a linear generator produces electricity.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>A linear generator converts linear (back-and-forth) motion into electricity using Faraday's Law. A moving rotor (with magnets) oscillates within a stationary stator (with coils). This relative motion causes the magnetic field lines from the magnets to repeatedly cut through the coils, inducing a changing magnetic flux. This changing flux generates an alternating voltage, producing an AC electrical output.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. Mention two uses of linear generators in wearable technology.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. <strong>Self-charging Smartwatches:</strong> A small linear generator can be embedded to harvest energy from the natural swinging motion of the user's arm, continuously recharging the battery. 2. <strong>Powering Biomedical Implants:</strong> They can be designed to harvest energy from internal body movements like a heartbeat or breathing to power devices such as pacemakers or health monitors.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. List the advantages of carbon fuel cells.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Advantages of Direct Carbon Fuel Cells (DCFCs) include: 1. **High theoretical efficiency** (approaching 100%). 2. **Fuel flexibility** (can use raw coal or biomass). 3. **Built-in CO2 capture**, as the exhaust is a pure stream of CO2, making sequestration much simpler.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. How does oxy-fuel combustion aid in CO2 capture?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Oxy-fuel combustion uses nearly pure oxygen for burning fuel instead of air (which is mostly nitrogen). This eliminates nitrogen from the flue gas. The resulting exhaust consists almost entirely of CO2 and water vapor. The water is easily condensed and removed, leaving a highly concentrated stream of CO2 ready for capture and storage without needing a complex chemical separation stage.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. What is the environmental impact of hydropower?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Hydropower impacts the environment by altering river ecosystems. Large dams flood vast areas of land, displacing wildlife and communities. They disrupt fish migration patterns, change river flow and sediment transport downstream, and decaying organic matter in reservoirs can release methane, a potent greenhouse gas.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>7. Define sustainability in the context of energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>In the context of energy, sustainability means meeting our current energy needs using sources and methods that do not compromise the ability of future generations to meet their own energy needs. This implies a focus on renewable resources, energy efficiency, and minimizing environmental and social harm.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>8. What is the principle behind molten carbonate fuel cells?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>The principle of a Molten Carbonate Fuel Cell (MCFC) is based on using a molten carbonate salt mixture as the electrolyte. At high operating temperatures (~650°C), carbonate ions (CO3^2-) are transported from the cathode to the anode. At the anode, they react with hydrogen fuel to produce water, CO2, and electrons, which generate the electric current.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. Explain the purpose of monitoring CO2 in underground storage.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Monitoring is essential to ensure the safety and permanence of CO2 storage. Its main purposes are: 1. **Leakage Detection:** To detect any escape of CO2 from the reservoir back to the atmosphere or into groundwater. 2. **Performance Verification:** To track the movement and behavior of the CO2 plume underground, ensuring it conforms to predictive models and remains securely trapped.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. Write two major disadvantages of CCS technology.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. **High Cost and Energy Penalty:** The equipment for capturing, transporting, and storing CO2 is very expensive and consumes a significant portion (15-30%) of the power plant's energy output, reducing its overall efficiency. 2. **Long-term Storage Risks:** There is a risk of CO2 leakage from storage sites over centuries, which could negate the climate benefits and potentially contaminate local ecosystems or groundwater.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>11. How is biomass a renewable energy source?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Biomass is renewable because it is derived from organic matter (plants, wood) which can be replenished through natural processes or sustainable agriculture. Its energy originates from the sun through photosynthesis. It is considered carbon-neutral because the CO2 released when burned is offset by the CO2 absorbed by the plants during their growth cycle.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>12. List any two challenges of renewable energy integration.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. **Grid Instability:** The intermittent nature of solar and wind energy can cause fluctuations in the power supply, making it difficult to balance supply and demand on the electrical grid. 2. **Lack of Energy Storage:** Cost-effective, large-scale energy storage solutions are still developing, making it hard to store excess energy for use when the renewable source is not available.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>13. What happens during resonance in a linear generator?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Resonance occurs when the frequency of the external ambient vibration matches the natural frequency of the generator's spring-mass system. This leads to a dramatic increase in the amplitude and velocity of the rotor's oscillation, which in turn maximizes the rate of change of magnetic flux and generates the highest possible electrical power output.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>14. Why is it easier to capture CO2 in a carbon fuel cell than by combustion?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>In a direct carbon fuel cell, the carbon fuel electrochemically reacts to produce a pure stream of CO2 as a byproduct, already separated and ready for capture. In combustion, fuel is burned with air, mixing the resulting CO2 with vast quantities of nitrogen and other gases, which then requires an energy-intensive and expensive process to separate the CO2 out.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>15. Name two pollutants released by burning fossil fuels.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Two key pollutants are <strong>Sulfur Dioxide (SO2)</strong>, which causes acid rain, and <strong>Nitrogen Oxides (NOx)</strong>, which are primary components of smog and contribute to respiratory issues.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>16. Why is hydrogen considered a clean fuel in fuel cells?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Hydrogen is a clean fuel because its reaction with oxygen in a fuel cell produces only electricity, heat, and water (H2O) as byproducts. It does not release any carbon dioxide, particulate matter, or other harmful pollutants at the point of use, making it an emission-free energy carrier.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>17. What are the risks of CO2 leakage in CCS?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Risks include: 1. **Climate Impact:** Gradual leakage can negate the purpose of CCS by releasing the stored greenhouse gas back into the atmosphere. 2. **Local Hazards:** A sudden, large-scale leak could displace oxygen at ground level, posing an asphyxiation risk to local wildlife and humans. 3. **Groundwater Contamination:** Leaked CO2 can dissolve in groundwater, forming carbonic acid, which can lower the pH and mobilize toxic heavy metals.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>18. How can electromagnetic energy harvesting support CCS?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Electromagnetic energy harvesters can power the vast network of wireless sensors needed for long-term monitoring of underground CCS sites. These sensors, which track pressure, temperature, and CO2 concentrations, can be placed in remote pipeline locations or deep underground and operate for years without needing battery replacements by harvesting energy from ambient vibrations or temperature differences.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>19. Name any two environmental issues associated with geothermal energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>1. **Release of Dissolved Gases:** Geothermal steam can carry dissolved greenhouse gases from underground, such as hydrogen sulfide (H2S), carbon dioxide, and ammonia, which must be scrubbed before release. 2. **Induced Seismicity:** The process of injecting and extracting water from the ground at high pressure can potentially induce minor earthquakes or tremors in geologically sensitive areas.</p></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>20. Why are solar panels not completely impact-free?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Solar panels have environmental impacts primarily during manufacturing and disposal. Their production is energy-intensive and uses hazardous chemicals. At the end of their lifespan, they become electronic waste containing materials like lead and cadmium that can be harmful if not properly recycled, which itself is a complex process.</p></div></div></div>
+                </div>
+            </div>
+
+
+            <!-- 5 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="file-text"></i>5 Marks Questions</h2>
+                <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. Explain the working principle of a linear generator with a diagram.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Principle:</strong> The working principle of a linear generator is <strong>Faraday's Law of Electromagnetic Induction</strong>. It states that a voltage is induced in a conductor when it is exposed to a time-varying magnetic field (or magnetic flux).</p>
+                        <p><strong>Construction:</strong></p>
+                        <blockquote>A linear generator consists of two main parts: a stationary <strong>Stator</strong>, which houses conductive coils, and a moving <strong>Rotor</strong> (also called a translator or shuttle), which contains permanent magnets. Springs are typically attached to the rotor to facilitate stable oscillation.</blockquote>
+                        <div class="alert"><strong>Diagram Explanation:</strong> Imagine a hollow tube (the Stator) with copper wire coiled around its exterior. Inside the tube, a cylindrical magnet (the Rotor) is suspended between two springs, one at each end. This entire assembly is subject to external linear vibration.</div>
+                        <p><strong>Working:</strong></p>
+                        <ol>
+                            <li>An external source of vibration (e.g., a vibrating machine, ocean waves, human movement) causes the entire device, including the stator, to move back and forth.</li>
+                            <li>Due to its inertia and the action of the springs, the magnetic rotor moves *relative* to the stator's coils.</li>
+                            <li>As the permanent magnets oscillate, their magnetic field lines continuously cut through the stationary coils of the stator.</li>
+                            <li>This relative motion creates a change in magnetic flux (Φ) through the coils, which, according to Faraday's Law (V = -N * dΦ/dt), induces an electromotive force (voltage) across the terminals of the coils.</li>
+                            <li>The continuous back-and-forth motion generates an alternating current (AC), which can be harnessed, rectified to DC if needed, and used to power electronic devices or charge a battery.</li>
+                        </ol>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. Describe three carbon capture technologies with examples.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>1. <strong>Post-Combustion Capture:</strong> This is the most mature and widely used method. CO2 is captured from the flue gas *after* the fossil fuel has been burned in air. The exhaust gas is passed through a liquid solvent (typically an amine) that selectively absorbs CO2. This CO2-rich solvent is then heated in a separate unit to release a nearly pure stream of CO2 for sequestration, and the lean solvent is recycled. <br><strong>Example:</strong> The Boundary Dam Power Station in Saskatchewan, Canada, was one of the first commercial-scale power plants to implement this technology.</p>
+                        <p>2. <strong>Pre-Combustion Capture:</strong> In this method, CO2 is removed *before* combustion. The primary fuel (e.g., coal) undergoes gasification with oxygen to produce "syngas" (a mix of Carbon Monoxide and Hydrogen). A "shift reaction" then converts the CO and water into more H2 and CO2. The CO2 is then separated from this high-pressure gas mixture, and the resulting hydrogen-rich fuel is burned to generate power with very low carbon emissions.<br><strong>Example:</strong> Integrated Gasification Combined Cycle (IGCC) power plants are designed for pre-combustion capture, although many projects have faced challenges.</p>
+                        <p>3. <strong>Oxy-fuel Combustion:</strong> Here, the fuel is combusted in almost pure oxygen instead of air. Since air is nearly 80% nitrogen, eliminating it from the combustion process results in a flue gas that is primarily CO2 and water vapor. The water is easily condensed and removed, leaving a highly concentrated stream of CO2 ready for storage without needing a complex chemical separation stage. <br><strong>Example:</strong> The Callide A Power Station oxy-fuel demonstration project in Australia.</p>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. Discuss environmental impacts of biomass, wind, and solar energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <ul>
+                           <li><strong>Biomass:</strong> While renewable, biomass energy has several environmental impacts. Burning biomass can cause <strong>air pollution</strong> by releasing particulate matter, carbon monoxide, and NOx. Large-scale cultivation of energy crops can lead to <strong>deforestation, habitat loss, and competition for land with food crops</strong>. It also requires significant amounts of water and can lead to soil degradation if not managed sustainably.</li>
+                           <li><strong>Wind:</strong> The primary environmental concerns for wind energy are its impact on wildlife, particularly <strong>bird and bat mortality</strong> due to collisions with turbine blades. Wind farms also create <strong>visual and noise pollution</strong>, which can be a concern for nearby residents. They require significant land area and the construction of access roads and transmission lines, causing some degree of habitat fragmentation.</li>
+                           <li><strong>Solar:</strong> Utility-scale solar power has a significant <strong>land-use footprint</strong>, which can lead to habitat loss. The <strong>manufacturing process of PV panels is energy-intensive and uses hazardous materials</strong> like hydrofluoric acid, lead, and cadmium. Water usage for cleaning panels and cooling in concentrated solar power plants can be substantial. End-of-life panel disposal and recycling also pose a growing challenge.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. Compare battery and fuel cell technologies.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Fundamental Difference:</strong></p>
+                        <ul>
+                            <li><strong>Battery:</strong> An energy <strong>storage</strong> device. It contains all the necessary chemicals internally and converts stored chemical energy into electrical energy. It is a closed system that must be recharged by an external power source.</li>
+                            <li><strong>Fuel Cell:</strong> An energy <strong>conversion</strong> device. It generates electricity from an external supply of fuel (like hydrogen) and an oxidant (like oxygen). It is an open system that runs as long as fuel is supplied.</li>
+                        </ul>
+                        <p><strong>Key Comparisons:</strong></p>
+                        <ul>
+                           <li><strong>Energy vs. Power Density:</strong> Fuel cells typically have a higher <strong>energy density</strong> (more energy for a given weight), making them suitable for long-range applications. Batteries often have a higher <strong>power density</strong> (can deliver energy more quickly).</li>
+                           <li><strong>Runtime and Refueling:</strong> A battery's runtime is fixed by its size. Recharging takes minutes to hours. A fuel cell's runtime is limited only by its fuel tank size, and refueling is very fast (minutes).</li>
+                           <li><strong>Efficiency:</strong> Fuel cells are generally more efficient than combustion engines but can be less efficient in a round-trip (production of hydrogen then use in a cell) compared to directly charging and discharging a battery.</li>
+                            <li><strong>Applications:</strong> Batteries are ideal for consumer electronics and most electric vehicles. Fuel cells are better suited for heavy-duty transport (buses, trucks), backup power, and applications requiring long, continuous operation.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. How is CO2 transported and stored after capture?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Transport:</strong></p>
+                        <p>After capture, CO2 is compressed into a dense, liquid-like <strong>supercritical state</strong>. This is done to reduce its volume and make transportation more efficient. The primary method of transport is via a dedicated network of <strong>pipelines</strong>, similar to those used for natural gas. For smaller quantities or locations inaccessible by pipeline, CO2 can also be transported in pressurized containers via <strong>ships, trucks, or trains</strong>.</p>
+                        <p><strong>Storage (Geological Sequestration):</strong></p>
+                        <p>The goal of storage is to isolate the CO2 from the atmosphere for centuries or longer. The most developed methods involve injecting it deep underground into suitable geological formations:</p>
+                        <ul>
+                            <li><strong>Depleted Oil and Gas Reservoirs:</strong> These are well-understood geological structures that have already proven their ability to trap fluids for millions of years. This method can be combined with <strong>Enhanced Oil Recovery (EOR)</strong>, where the injected CO2 helps to extract additional oil.</li>
+                            <li><strong>Deep Saline Aquifers:</strong> These are vast, deep underground layers of porous rock saturated with salty water (brine), which are unsuitable for drinking. They offer the largest potential storage capacity worldwide. The CO2 is injected and becomes trapped by an overlying impermeable cap rock.</li>
+                            <li><strong>Unmineable Coal Seams:</strong> CO2 can be injected into deep coal seams where it chemically adsorbs onto the coal surface, displacing methane (CH4) that was previously trapped. The methane can then be recovered and used as fuel.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>6. Write a short note on sustainability and energy sources.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Sustainability, in the context of energy, is the principle of using energy in a way that "meets the needs of the present without compromising the ability of future generations to meet their own needs." It is built on three interconnected pillars:</p><ol><li><strong>Environmental Sustainability:</strong> This focuses on minimizing the negative impacts on the planet. For energy, it means prioritizing sources with low or zero greenhouse gas emissions (like solar, wind, geothermal) to combat climate change, reducing pollution, conserving biodiversity, and minimizing land and water degradation.</li><li><strong>Economic Sustainability:</strong> This ensures that energy is affordable, reliable, and contributes to economic prosperity. A sustainable energy system provides stable energy prices, creates jobs, fosters technological innovation, and avoids the economic volatility associated with finite, geopolitically sensitive resources like oil.</li><li><strong>Social Sustainability:</strong> This pertains to equity and quality of life. A sustainable energy system must ensure fair access to energy for all people, both within a country and globally. It also means minimizing negative health impacts from pollution and considering the social consequences of energy projects on local communities.</li></ol><div class="alert"><strong>Conclusion:</strong> Fossil fuels are inherently unsustainable as they are finite and cause severe environmental harm. True energy sustainability requires a systemic shift towards a diverse mix of renewable energy sources, coupled with massive improvements in energy efficiency and conservation.</div></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>7. Describe how vibration and wave energy harvesting works.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Vibration Energy Harvesting:</strong></p>
+                        <p>This process captures kinetic energy from ambient vibrations—present in machinery, buildings, and vehicles—and converts it into usable electrical energy. The most common method is electromagnetic induction:</p>
+                        <ul>
+                            <li>A typical harvester is a spring-mass system, often a small magnet (mass) attached to a spring, placed inside a device with a coil of wire.</li>
+                            <li>When the device is subjected to external vibrations, the housing moves, but the magnet's inertia causes it to move *relative* to the coils.</li>
+                            <li>This relative motion creates a changing magnetic flux through the coils, inducing a voltage according to Faraday's Law.</li>
+                            <li>The system is designed to resonate at the source vibration's frequency for maximum power output. The electricity generated is small but sufficient to power wireless sensors and low-power electronics.</li>
+                        </ul>
+                        <p><strong>Wave Energy Harvesting:</strong></p>
+                        <p>This process extracts energy from the motion of ocean surface waves. There are several types of Wave Energy Converters (WECs):</p>
+                        <ul>
+                            <li><strong>Point Absorber Buoys:</strong> These floating devices bob up and down with the waves. This motion relative to a fixed point drives a linear or rotary generator, often using an internal piston or hydraulics.</li>
+                            <li><strong>Oscillating Water Column (OWC):</strong> These are chambers, often fixed to the shoreline, that are open to the sea below the water line. As waves rise and fall inside the chamber, they compress and decompress the air trapped above. This oscillating air flow is funneled through a Wells turbine, which spins in the same direction regardless of airflow direction, to generate electricity.</li>
+                            <li><strong>Overtopping Devices:</strong> These are like miniature reservoirs. Waves are funneled up a ramp and spill over into a basin that is elevated above sea level. The water then flows back to the sea through low-head turbines, generating power.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>8. What are the challenges in deploying CCS systems?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner"><p>Deploying Carbon Capture and Storage (CCS) systems on a large scale faces several significant challenges:</p><ul><li><strong>High Cost:</strong> The equipment for capture, transport, and injection is extremely expensive, adding a substantial cost to electricity generation. The process also has a significant "energy penalty," as it consumes 15-30% of a power plant's own energy output, reducing its overall efficiency and increasing fuel consumption.</li><li><strong>Transport Infrastructure:</strong> Moving vast quantities of captured CO2 from sources to storage sites requires a massive network of dedicated pipelines, which currently does not exist and would require huge investment and public acceptance.</li><li><strong>Storage Capacity and Security:</strong> While theoretical geological storage capacity is large, identifying, characterizing, and certifying specific sites that are guaranteed to be leak-proof for centuries is a complex technical and regulatory challenge. The long-term risk of leakage, however small, raises public safety and environmental concerns.</li><li><strong>Public Acceptance and Legal Framework:</strong> Gaining public trust for large-scale CO2 injection underground can be difficult due to perceived risks of induced seismicity and leakage. A clear legal and regulatory framework for long-term liability and monitoring is still developing in many regions.</li><li><strong>Scalability:</strong> To make a meaningful impact on climate change, thousands of large-scale CCS facilities would need to be built and operated globally, which represents an immense logistical, financial, and political undertaking.</li></ul></div></div></div>
+                    <div class="question-box"><div class="question-header"><p>9. Explain the advantages and disadvantages of using renewable energy.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Advantages:</strong></p>
+                        <ul>
+                           <li><strong>Environmental Protection:</strong> Renewable energy sources produce little to no greenhouse gas emissions or other air pollutants during operation, directly combating climate change and improving public health.</li>
+                           <li><strong>Inexhaustible and Sustainable:</strong> Sources like solar, wind, and geothermal are naturally replenished and are effectively infinite, ensuring a sustainable energy supply for future generations.</li>
+                           <li><strong>Energy Independence:</strong> By reducing reliance on imported fossil fuels, renewables enhance national security and insulate economies from the price volatility of global energy markets.</li>
+                           <li><strong>Economic Benefits:</strong> The renewable sector stimulates economic growth by creating jobs in manufacturing, installation, and maintenance. Over the long term, low and stable operating costs can lead to cheaper energy.</li>
+                        </ul>
+                         <p><strong>Disadvantages:</strong></p>
+                        <ul>
+                           <li><strong>Intermittency:</strong> Solar and wind power are variable and depend on weather conditions. This makes grid balancing challenging and requires either backup power plants or large-scale energy storage.</li>
+                           <li><strong>High Initial Capital Cost:</strong> Building renewable energy infrastructure like solar farms or wind turbines requires a significant upfront investment compared to traditional fossil fuel plants.</li>
+                           <li><strong>Large Land and Resource Requirements:</strong> Many renewables, particularly solar and wind, have a large physical footprint. They can also require specific materials whose mining can have environmental impacts.</li>
+                           <li><strong>Geographical Limitations:</strong> The best locations for renewable energy generation (e.g., very windy or sunny areas) are often far from population centers, requiring expensive new transmission infrastructure.</li>
+                        </ul>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>10. Describe the structure and function of a carbon fuel cell.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>A Direct Carbon Fuel Cell (DCFC) is an electrochemical device that converts the chemical energy of solid carbon (like coal, charcoal, or biomass) directly into electricity with high efficiency.</p>
+                        <p><strong>Structure:</strong></p>
+                        <blockquote>A DCFC consists of three main components: a negative electrode (<strong>Anode</strong>), a positive electrode (<strong>Cathode</strong>), and an ion-conducting material (<strong>Electrolyte</strong>) that separates them.</blockquote>
+                        <ul>
+                            <li><strong>Anode:</strong> This is where the solid carbon fuel is introduced and oxidized. It must be porous to allow reactions to occur.</li>
+                            <li><strong>Cathode:</strong> This is where the oxidant, typically oxygen from the air, is supplied and reduced.</li>
+                            <li><strong>Electrolyte:</strong> This is the key component. In high-temperature DCFCs, it is typically a molten salt (like a molten carbonate) or a solid oxide ceramic. Its function is to transport ions (like O^2- or CO3^2-) between the electrodes while preventing direct contact between the fuel and oxidant.</li>
+                        </ul>
+                         <p><strong>Function (Working):</strong></p>
+                        <ol>
+                            <li>At the anode, the solid carbon fuel reacts with ions transported through the electrolyte (e.g., O^2-). This electrochemical oxidation reaction is: C + 2O^2- → CO2 + 4e-.</li>
+                            <li>This reaction produces carbon dioxide (CO2) and releases electrons (e-).</li>
+                            <li>The electrons travel through an external circuit, creating a direct electric current that can power a load.</li>
+                            <li>At the cathode, oxygen from the air takes up these electrons and is reduced to form the charge-carrying ions (e.g., O2 + 4e- → 2O^2-).</li>
+                            <li>These ions then migrate through the electrolyte back to the anode, completing the circuit and sustaining the reaction.</li>
+                        </ol>
+                        <div class="alert">The overall reaction is C + O2 → CO2. Crucially, because the fuel (C) and oxidant (O2) are kept separate, the CO2 exhaust is produced as a pure, uncontaminated stream, making it exceptionally easy to capture for sequestration.</div>
+                    </div></div></div>
+                </div>
+            </div>
+            
+            <!-- 8 Marks Questions Section -->
+            <div class="question-category">
+                <h2><i data-feather="edit-3"></i>8 Marks Questions</h2>
+                 <div class="question-accordion">
+                    <div class="question-box"><div class="question-header"><p>1. Discuss the integration of electromagnetic energy harvesting (EEH) with carbon capture technologies (CCT). What are the benefits and challenges?</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>Introduction:</strong></p>
+                        <p>Integrating Electromagnetic Energy Harvesting (EEH) with Carbon Capture Technologies (CCT) presents a synergistic approach to improving the sustainability and feasibility of large-scale decarbonization. EEH can power the essential monitoring and control systems required for CCT, particularly in the storage phase.</p>
+                        <p><strong>How They Integrate:</strong></p>
+                        <p>The core of the integration lies in using EEH to power wireless sensor networks (WSNs) deployed throughout the Carbon Capture, Utilization, and Storage (CCUS) infrastructure.</p>
+                        <ul>
+                           <li><strong>Vibration Harvesting:</strong> The large-scale machinery involved in CCT (compressors, pumps, turbines) produces significant and constant vibrations. EEH devices can be attached to this equipment to convert this parasitic vibrational energy into electricity.</li>
+                           <li><strong>Thermal Harvesting:</strong> CCT processes involve significant temperature gradients (e.g., between heated solvent strippers and coolers). Thermoelectric generators (a form of EEH) can harness this temperature difference to generate power.</li>
+                           <li><strong>Application:</strong> This generated power can operate sensors that monitor pipeline integrity, pressure, temperature, flow rates, and potential CO2 concentrations. For geological storage, self-powered sensors can be deployed underground to track the CO2 plume and detect any potential leakage.</li>
+                        </ul>
+                        <p><strong>Benefits:</strong></p>
+                        <ol>
+                           <li><strong>Enhanced Safety and Reliability:</strong> Self-powered sensors enable continuous, long-term monitoring of remote or inaccessible parts of the CCS infrastructure without the need for manual battery replacement. This drastically improves the ability to detect leaks or system failures early.</li>
+                           <li><strong>Reduced Operating Costs:</strong> By eliminating the need for extensive wiring or regular battery maintenance across vast sites, EEH significantly lowers the long-term operational expenditure of the monitoring system.</li>
+                           <li><strong>Improved Energy Penalty:</strong> While the power generated by EEH is small, it offsets the energy needed for the monitoring systems, slightly reducing the overall energy penalty of the CCT process itself.</li>
+                           <li><strong>Enables "Smart" Infrastructure:</strong> A network of self-powered sensors facilitates a data-rich environment, allowing for optimized control of the CCS process and more accurate verification of stored CO2.</li>
+                        </ol>
+                         <p><strong>Challenges:</strong></p>
+                        <ol>
+                           <li><strong>Low Power Output:</strong> Current EEH devices generate power in the microwatt to milliwatt range. This requires the development of extremely low-power sensors and electronics.</li>
+                           <li><strong>Harsh Operating Environments:</strong> Sensors and harvesters deployed in CCS systems must be robust enough to withstand high pressures, corrosive environments (especially with supercritical CO2), and high temperatures.</li>
+                           <li><strong>Frequency Matching:</strong> For vibration harvesting, the harvester's resonant frequency must be carefully tuned to the dominant vibration frequency of the source machine, which can be complex and variable.</li>
+                           <li><strong>System Integration and Cost:</strong> While reducing operational cost, the initial cost and complexity of designing and integrating these self-powered sensing systems can be high.</li>
+                        </ol>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>2. Compare the environmental effects of five different renewable energy sources.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>While all renewable energy sources are significantly better for the climate than fossil fuels, none are entirely without environmental impact. Here's a comparison of five sources:</p>
+                        <ol>
+                           <li><strong>Solar (Photovoltaic):</strong>
+                               <ul>
+                                   <li><strong>Negative:</strong> Requires large land areas for utility-scale farms, which can disrupt habitats. The manufacturing process is energy-intensive and uses hazardous materials (lead, cadmium). Water is needed for cleaning panels. End-of-life panels contribute to e-waste.</li>
+                                   <li><strong>Positive:</strong> No emissions during operation, minimal noise, and can be installed on existing structures (rooftops), reducing land impact.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Wind:</strong>
+                               <ul>
+                                   <li><strong>Negative:</strong> The main impacts are visual and noise pollution, and the risk of fatal collisions for birds and bats. They require significant land for turbine spacing and access roads, leading to habitat fragmentation.</li>
+                                   <li><strong>Positive:</strong> Zero emissions during operation. Land can often be co-used for agriculture. Offshore wind has a lower visual and noise impact.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Hydropower (Large Dams):</strong>
+                               <ul>
+                                   <li><strong>Negative:</strong> Drastically alters river ecosystems by flooding vast areas (destroying habitats), disrupting fish migration, and changing downstream water flow and sediment patterns. Decaying vegetation in reservoirs can release methane, a potent greenhouse gas.</li>
+                                   <li><strong>Positive:</strong> Provides a long-lasting, stable, and dispatchable source of clean electricity. Reservoirs can also be used for flood control and irrigation.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Biomass:</strong>
+                               <ul>
+                                   <li><strong>Negative:</strong> Combustion releases air pollutants like particulate matter and NOx. If not from sustainable sources, it can lead to deforestation and compete with food crops for land and water, impacting biodiversity.</li>
+                                   <li><strong>Positive:</strong> Can be carbon-neutral if biomass is regrown sustainably. It makes use of waste materials (e.g., agricultural residues, forestry waste) that would otherwise decompose and release methane.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Geothermal:</strong>
+                               <ul>
+                                   <li><strong>Negative:</strong> Can release underground greenhouse gases (H2S, CO2) if not reinjected. Has the potential to induce minor seismicity. Drilling can be disruptive, and plants have a geographical constraint to tectonically active areas.</li>
+                                   <li><strong>Positive:</strong> Highly reliable and consistent (not intermittent). Has a very small physical footprint on the surface compared to solar or wind for the same power output.</li>
+                               </ul>
+                           </li>
+                        </ol>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>3. Design a system using linear generators for footstep energy harvesting in public places.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p><strong>System Concept: "Piezo-Electromagnetic Hybrid Floor Tile Harvester"</strong></p>
+                        <p>This system is designed to be installed in high-traffic public areas like train stations, airports, and busy sidewalks to capture energy from footsteps.</p>
+                        <p><strong>System Design and Components:</strong></p>
+                        <ol>
+                            <li><strong>Mechanical Transduction Mechanism:</strong>
+                               <ul>
+                                   <li>Each floor tile is mounted on a set of high-durability springs. When a person steps on the tile, it depresses by a small, controlled distance (e.g., 5-10 mm).</li>
+                                   <li>Underneath the tile, a vertical rack-and-pinion gear system is attached. The vertical motion of the tile (the rack) is converted into rotary motion of a flywheel (the pinion). This flywheel serves to smooth out the jerky footstep motion and provides a continuous mechanical input for the generator.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Primary Energy Generation (Linear Generator):</strong>
+                               <ul>
+                                   <li>Instead of a standard rotary generator, the depressing motion of the tile will directly drive the rotor of a <strong>linear electromagnetic generator</strong>.</li>
+                                   <li>The rotor, containing an array of powerful neodymium magnets, is pushed through a stator containing tightly wound copper coils.</li>
+                                   <li>The single downward push from a footstep creates a single, strong pulse of electricity. The springs underneath return the tile and the rotor to their original positions, ready for the next step. This design is simple and robust.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Secondary Energy Generation (Piezoelectric):</strong>
+                                <ul>
+                                   <li>To capture the high-frequency shock impact of the footstep, which is less suitable for the linear generator, an array of piezoelectric ceramic transducers is embedded within the tile's sub-flooring.</li>
+                                   <li>These materials generate a voltage when subjected to mechanical stress (the initial impact of the foot), capturing high-frequency vibration energy.</li>
+                               </ul>
+                           </li>
+                           <li><strong>Power Conditioning and Storage:</strong>
+                               <ul>
+                                   <li>The AC output from both the linear generator and the piezoelectric elements is fed into a full-wave bridge rectifier to convert it to DC.</li>
+                                   <li>This DC voltage is then regulated and boosted by a power management integrated circuit (PMIC).</li>
+                                   <li>The managed power is used to charge a bank of supercapacitors or a central lithium-ion battery array, which stores the harvested energy.</li>
+                               </ul>
+                           </li>
+                            <li><strong>Application and Output:</strong>
+                               <ul>
+                                   <li>The stored energy can be used to power low-consumption local infrastructure such as LED lighting for the walkway, digital information displays, public USB charging stations, or wireless environmental sensors. A display screen could even show real-time energy generation, engaging the public.</li>
+                               </ul>
+                            </li>
+                        </ol>
+                        <div class="alert">This hybrid design is effective because it uses two different harvesting mechanisms to capture energy from different aspects of a single footstep: the large, low-frequency displacement (linear generator) and the high-frequency initial impact (piezoelectric).</div>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>4. Explain the role of sustainability in future global energy strategies. Support with examples.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>Sustainability is no longer a peripheral concern but the central organizing principle for future global energy strategies. Its role is to guide the world's transition from an unsustainable, fossil-fuel-based system to one that is environmentally sound, economically viable, and socially equitable. It shapes policy, investment, and technological innovation across the board.</p>
+                        <p><strong>Key Roles of Sustainability in Energy Strategy:</strong></p>
+                        <ol>
+                           <li><strong>Driving Decarbonization to Combat Climate Change:</strong>
+                              <ul>
+                                <li>The primary role of sustainability is to mitigate the climate crisis. This forces a strategic shift towards low-carbon and zero-carbon energy sources.</li>
+                                <li><strong>Example:</strong> The European Union's "Green Deal" is a comprehensive strategy aiming for carbon neutrality by 2050. It heavily incentivizes investment in renewable energy sources like wind and solar, phases out coal power, and promotes energy efficiency, all driven by the principle of environmental sustainability.</li>
+                              </ul>
+                           </li>
+                           <li><strong>Enhancing Energy Security and Resilience:</strong>
+                              <ul>
+                                <li>Over-reliance on fossil fuels, which are concentrated in a few geopolitical regions, is economically and politically unsustainable. Diversifying with locally available renewable resources enhances a nation's energy independence.</li>
+                                <li><strong>Example:</strong> In response to energy security concerns, Germany's *Energiewende* (Energy Transition) policy has aggressively promoted decentralized solar and wind power, reducing its dependence on imported gas and oil and making its grid more resilient.</li>
+                              </ul>
+                           </li>
+                           <li><strong>Promoting Economic Sustainability and Innovation:</strong>
+                              <ul>
+                                <li>Sustainability drives innovation in new technologies, creating new industries and jobs. While initial costs can be high, the long-term economics of renewables, with zero fuel cost, are more stable and predictable than volatile fossil fuel markets.</li>
+                                <li><strong>Example:</strong> China's massive state-led investment in solar panel and battery manufacturing has not only addressed its pollution problems but has also made it the dominant global leader in these technologies, creating a massive export market and millions of jobs.</li>
+                              </ul>
+                           </li>
+                            <li><strong>Ensuring Social Equity and Energy Access:</strong>
+                              <ul>
+                                <li>A sustainable strategy aims to provide affordable and clean energy for all, including remote and underserved communities. This contrasts with centralized systems that often bypass rural populations.</li>
+                                <li><strong>Example:</strong> In India and many parts of Africa, off-grid solar and micro-grid solutions are being deployed to bring electricity to millions of people for the first time. This improves health, education, and economic opportunities, fulfilling the social pillar of sustainability.</li>
+                              </ul>
+                           </li>
+                        </ol>
+                         <div class="alert">In conclusion, sustainability acts as a holistic framework, forcing future energy strategies to look beyond mere energy production and consider a complex web of environmental, economic, and social consequences for both present and future generations.</div>
+                    </div></div></div>
+                    <div class="question-box"><div class="question-header"><p>5. Write a complete overview of solid oxide fuel cells (SOFC), including working, materials used, advantages, and limitations.</p><i class="fas fa-chevron-down icon"></i></div><div class="answer-content"><div class="answer-content-inner">
+                        <p>A Solid Oxide Fuel Cell (SOFC) is a high-temperature electrochemical device that directly converts the chemical energy of a fuel into electricity with exceptional efficiency.</p>
+                        <p><strong>Working Principle:</strong></p>
+                        <p>An SOFC operates at very high temperatures (typically 800-1000°C). Its operation is based on the transport of oxide ions (O^2-) through a solid ceramic electrolyte.</p>
+                        <ol>
+                           <li><strong>At the Cathode (Air Side):</strong> Oxygen from the air is supplied. The high temperature causes oxygen molecules (O2) to gain electrons from the external circuit and split into oxide ions (O^2-). <br><em>Reaction: O2 + 4e− → 2O^2−</em></li>
+                           <li><strong>Ion Transport:</strong> These negatively charged oxide ions migrate through the dense, solid oxide electrolyte material, moving from the cathode towards the anode.</li>
+                           <li><strong>At the Anode (Fuel Side):</strong> Fuel, typically hydrogen (H2) or a hydrocarbon like natural gas (CH4), is continuously supplied. Here, the fuel reacts with the incoming oxide ions.</li>
+                           <li>This reaction oxidizes the fuel. For hydrogen fuel, the reaction is: H2 + O^2- → H2O + 2e-. This process releases electrons (e-).</li>
+                           <li><strong>Electricity Generation:</strong> The released electrons cannot pass through the ceramic electrolyte, so they travel through the external circuit, creating a direct electric current. This current can power a device before returning to the cathode to complete the cycle.</li>
+                        </ol>
+                        <p><strong>Materials Used:</strong></p>
+                        <ul>
+                            <li><strong>Electrolyte:</strong> A hard, non-porous ceramic that is an excellent conductor of oxide ions at high temperatures. The most common material is <strong>Yttria-Stabilized Zirconia (YSZ)</strong>.</li>
+                            <li><strong>Anode:</strong> A porous cermet (ceramic-metal composite) that must be stable in a reducing (fuel) environment. The standard material is a mix of <strong>Nickel and YSZ (Ni-YSZ)</strong>.</li>
+                            <li><strong>Cathode:</strong> A porous electrode that must be stable in an oxidizing (air) environment. A common material is <strong>Lanthanum Strontium Manganite (LSM)</strong>.</li>
+                        </ul>
+                         <p><strong>Advantages:</strong></p>
+                         <ul>
+                             <li><strong>High Efficiency:</strong> SOFCs have the highest efficiency among all fuel cell types (50-60% electrical). When their high-quality waste heat is used for heating or to drive a steam turbine (Combined Heat and Power), overall efficiency can exceed 85%.</li>
+                             <li><strong>Fuel Flexibility:</strong> The high operating temperature allows for internal reforming of various hydrocarbon fuels directly on the anode, eliminating the need for an external reformer to produce hydrogen.</li>
+                             <li><strong>Long-Term Stability:</strong> All-solid-state components prevent corrosion and electrolyte management issues found in liquid-electrolyte fuel cells.</li>
+                              <li><strong>Low Emissions:</strong> They produce virtually no SOx or NOx pollutants. If running on pure hydrogen, the only byproduct is water.</li>
+                         </ul>
+                          <p><strong>Limitations:</strong></p>
+                          <ul>
+                              <li><strong>High Operating Temperature:</strong> Requires expensive, heat-resistant materials and results in very long start-up and cool-down times, making SOFCs unsuitable for mobile or rapid-start applications.</li>
+                              <li><strong>Material Degradation & Cost:</strong> The extreme temperatures can cause mechanical and chemical degradation of components over time, limiting durability. The specialized materials are also costly.</li>
+                               <li><strong>Thermal Stress:</strong> The different thermal expansion rates of the components can lead to cracking and failure during repeated thermal cycling.</li>
+                      </ul>
+                    </div></div></div>
+                    <!-- All 8 marks questions... -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <footer><p>© 2025 Pratyush Swain. All Rights Reserved.</p></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace({ 'stroke-width': 1.5 });
+            
+            const accordionHeaders = document.querySelectorAll('.question-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    // Check if the click is on the button itself to prevent closing
+                    if (event.target.classList.contains('mcq-answer-btn')) return;
+
+                    const content = header.nextElementSibling;
+                    const isOpen = header.classList.contains('active');
+
+                    if (isOpen) {
+                        header.classList.remove('active');
+                        content.style.maxHeight = null;
+                    } else {
+                        // Optional: close all others
+                        // document.querySelectorAll('.question-header.active').forEach(activeHeader => {
+                        //     activeHeader.classList.remove('active');
+                        //     activeHeader.nextElementSibling.style.maxHeight = null;
+                        // });
+                        header.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Specific logic for MCQ reveal buttons
+            const mcqButtons = document.querySelectorAll('.mcq-answer-btn');
+            mcqButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerSpan = button.nextElementSibling;
+                    button.style.display = 'none';
+                    answerSpan.style.display = 'inline';
+                    // Recalculate accordion height if it's open
+                    const header = button.closest('.answer-content').previousElementSibling;
+                    if(header.classList.contains('active')){
+                         button.closest('.answer-content').style.maxHeight = button.closest('.answer-content').scrollHeight + 'px';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
