@@ -15,7 +15,9 @@
             --text-primary: #020617;
             --text-secondary: #475569;
             --accent: #0ea5e9;
-            --danger: #e53e3e;
+            --danger: #ef4444; 
+            --danger-glow: rgba(239, 68, 68, 0.5);
+            --danger-light-bg: rgba(255, 255, 255, 0.5);
             --social-bg: linear-gradient(45deg, #4f46e5, #0ea5e9);
         }
 
@@ -26,7 +28,9 @@
             --text-primary: #f0f2f5;
             --text-secondary: #a1a7b8;
             --accent: #0ea5e9;
-            --danger: #e53e3e;
+            --danger: #f87171;
+            --danger-glow: rgba(248, 113, 113, 0.6);
+            --danger-light-bg: rgba(17, 24, 39, 0.5);
             --social-bg: linear-gradient(45deg, #6366f1, #0ea5e9);
         }
 
@@ -52,15 +56,9 @@
 
         /* --- HEADER & CONTROLS --- */
         .app-header {
-            padding-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards;
+            padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeIn 0.8s ease forwards;
         }
         @keyframes fadeIn { to { opacity: 1; } }
-
         .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; }
         .logo h1 span { color: var(--accent); }
         .header-controls { display: flex; align-items: center; gap: 1.5rem; }
@@ -72,91 +70,99 @@
         #theme-toggle:checked + .slider { background-color: var(--accent); }
         #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
 
-        /* --- HERO BANNER & QUOTE SLIDER --- */
+        /* --- HERO BANNER --- */
         .hero-banner {
-            aspect-ratio: 16 / 7;
-            max-height: 350px;
-            border-radius: 1.25rem;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            padding: 2.5rem;
-            background-image:url('images/institutionm.jpg'); /* Placeholder Image */
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInAndUp 0.8s ease 0.2s forwards;
+            aspect-ratio: 16 / 7; max-height: 350px; border-radius: 1.25rem; position: relative; overflow: hidden; display: flex; padding: 2.5rem; 
+            background-image:url('images/institutionm.jpg'); /* <<< THIS LINE IS UPDATED */
+            background-size: cover; background-position: center; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.8s ease 0.2s forwards;
         }
         .hero-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%); }
         #quote-text { position: absolute; z-index: 1; bottom: 2.5rem; left: 2.5rem; right: 2.5rem; margin: 0; font-size: 1.5rem; font-weight: 600; color: #ffffff; text-align: left; text-shadow: 0 2px 15px rgba(0,0,0,0.6); opacity: 1; transition: opacity 0.5s ease; }
         #quote-text.fade-out { opacity: 0; }
         @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- NEW MARQUEE TIMELINE RUNNER --- */
+        /* --- ATTRACTIVE ALERT RUNNER --- */
         .timeline-runner {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            background-color: transparent;
-            border: 2px dashed var(--accent);
-            opacity: 0.8;
-            color: var(--accent);
-            padding: 0.7rem 1.5rem;
+            gap: 1.5rem;
+            background-color: var(--danger-light-bg);
+            color: var(--danger);
+            padding: 1rem 1.5rem;
             margin: 1.5rem 0 2.5rem 0;
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             text-decoration: none;
-            transition: all 0.3s ease;
-            overflow: hidden; /* Important for marquee */
+            overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInAndUp 0.8s ease 0.3s forwards;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+        }
+        .timeline-runner::before { /* Shimmering Gradient Border */
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px; /* Border thickness */
+            background: linear-gradient(90deg, transparent, var(--danger), transparent);
+            background-size: 200% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: shimmer-border 3s linear infinite;
+        }
+        @keyframes shimmer-border {
+            from { background-position: 200% 0; }
+            to { background-position: -200% 0; }
         }
 
         .timeline-runner:hover {
-            border-style: solid;
-            background-color: rgba(14, 165, 233, 0.05);
-            opacity: 1;
+            box-shadow: 0 0 30px var(--danger-glow);
+            transform: translateY(-2px) scale(1.01);
         }
-        .runner-icon {
+
+        .runner-icon-wrapper {
+            position: relative;
             flex-shrink: 0;
-            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .runner-track {
-            flex-grow: 1;
-            overflow: hidden; /* The clipping mask for the text */
+        .runner-icon { color: var(--danger); }
+        .runner-icon-wrapper::after { /* Pulse Animation */
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--danger);
+            animation: pulse-wave 1.8s ease-out infinite;
+            z-index: -1;
         }
+        @keyframes pulse-wave {
+            0% { transform: scale(0.5); opacity: 0.5; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .runner-track { flex-grow: 1; overflow: hidden; }
         .runner-text {
             display: inline-block;
-            white-space: nowrap; /* Keeps the duplicated text in one line */
+            white-space: nowrap;
             animation: scroll-left 15s linear infinite;
             font-weight: 600;
+            text-shadow: 0 0 10px var(--danger-glow);
         }
         @keyframes scroll-left {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        /* --- SEMESTER GRID --- */
-        .semester-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-        .semester-card {
-            background-color: var(--surface-bg);
-            border: 1px solid var(--surface-border);
-            border-radius: 1rem;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInAndUp 0.6s ease forwards;
-        }
+        /* --- SEMESTER GRID & OTHER STYLES --- */
+        .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .semester-card { background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 1rem; padding: 2rem; position: relative; overflow: hidden; text-decoration: none; transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.6s ease forwards; }
         .semester-card:nth-child(1) { animation-delay: 0.4s; } .semester-card:nth-child(2) { animation-delay: 0.5s; } .semester-card:nth-child(3) { animation-delay: 0.6s; } .semester-card:nth-child(4) { animation-delay: 0.7s; } .semester-card:nth-child(5) { animation-delay: 0.8s; } .semester-card:nth-child(6) { animation-delay: 0.9s; }
         .semester-card:not(.disabled-card):hover { transform: translateY(-5px); }
         body.dark-mode .semester-card:not(.disabled-card):hover { background-color: #151B2A; }
@@ -173,10 +179,7 @@
         .semester-card p { font-size: 1rem; line-height: 1.6; margin: 0; color: var(--text-secondary); transition: color 0.3s ease; }
         body.dark-mode .semester-card:not(.disabled-card):hover p { color: #e2e8f0; }
         .disabled-card { cursor: not-allowed; filter: grayscale(40%); opacity: 0.75 !important; }
-        .launch-soon-badge { display: inline-block; margin-top: 1rem; background-color: var(--danger); color: #ffffff; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; border-radius: 50px; animation: pulse-red 2s infinite; }
-        @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); } }
-
-        /* --- FOOTER STYLES --- */
+        .launch-soon-badge { display: inline-block; margin-top: 1rem; background-color: var(--accent); color: #ffffff; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; border-radius: 50px; }
         .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: 3rem; border-top: 1px solid var(--surface-border); }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; width: 90%; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; }
         .footer-column h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 1.25rem 0; }
@@ -192,15 +195,11 @@
         .footer-bottom p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
         .footer-bottom a { color: var(--text-secondary); font-weight: 500; }
         .footer-bottom a:hover { color: var(--accent); }
-        
-        /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 820px) { .footer-content { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) {
             .container { width: 95%; padding: 1rem 0; }
             .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
-            .header-controls { width: 100%; justify-content: space-between; }
-            .datetime { text-align: left; }
-            .hero-banner { aspect-ratio: 4 / 3; }
+            .header-controls { width: 100%; justify-content: space-between; } .datetime { text-align: left; } .hero-banner { aspect-ratio: 4 / 3; }
             #quote-text { font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
             .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .semester-card { padding: 1.5rem; } .semester-card h2 { font-size: 1.25rem; }
@@ -222,31 +221,32 @@
         <main>
             <section class="hero-banner"><h1 id="quote-text"></h1></section>
             
-            <!-- NEW MARQUEE TIMELINE RUNNER -->
             <a href="semtime.html" class="timeline-runner">
-                <i class="runner-icon" data-feather="bell"></i>
+                <div class="runner-icon-wrapper">
+                    <i class="runner-icon" data-feather="bell"></i>
+                </div>
                 <div class="runner-track">
                     <div class="runner-text">
-                        <span>Semester - 2 Timeline (Updated)</span>
+                        <span>ALERT: Semester - 2 Timeline Has Been Updated</span>
                         <span style="margin: 0 2rem;">•</span>
-                        <span>Click here for details</span>
+                        <span>Click here for exam dates and important deadlines</span>
                         <span style="margin: 0 2rem;">•</span>
                          <!-- Duplicated for seamless loop -->
-                        <span>Semester - 2 Timeline (Updated)</span>
+                        <span>ALERT: Semester - 2 Timeline Has Been Updated</span>
                         <span style="margin: 0 2rem;">•</span>
-                        <span>Click here for details</span>
+                        <span>Click here for exam dates and important deadlines</span>
                         <span style="margin: 0 2rem;">•</span>
                     </div>
                 </div>
             </a>
             
             <div class="semester-grid">
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
                 <a href="sem2.html" class="semester-card"><div class="card-header"><h2>Semester 2</h2><div class="card-icon"><i data-feather="book-open"></i></div></div><p>Click to view notes</p></a>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 3</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 4</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 5</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 6</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Launching Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 3</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 4</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 5</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 6</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
             </div>
         </main>
     </div>
@@ -280,18 +280,10 @@
             }
 
             if(quoteTextElement){
-                const quotes = [
-                    "The important thing is not to stop questioning. Curiosity has its own reason for existence.", 
-                    "Look deep into nature, and then you will understand everything better.", 
-                    "The science of today is the technology of tomorrow.",
-                    "Physics is the law of the universe, and we are all its humble citizens."
-                ];
+                const quotes = [ "The important thing is not to stop questioning. Curiosity has its own reason for existence.", "Look deep into nature, and then you will understand everything better.", "The science of today is the technology of tomorrow.", "Physics is the law of the universe, and we are all its humble citizens." ];
                 let currentQuoteIndex = 0;
                 quoteTextElement.textContent = quotes[currentQuoteIndex];
-                const changeQuote = () => {
-                    quoteTextElement.classList.add('fade-out');
-                    setTimeout(() => { currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length; quoteTextElement.textContent = quotes[currentQuoteIndex]; quoteTextElement.classList.remove('fade-out'); }, 500);
-                };
+                const changeQuote = () => { quoteTextElement.classList.add('fade-out'); setTimeout(() => { currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length; quoteTextElement.textContent = quotes[currentQuoteIndex]; quoteTextElement.classList.remove('fade-out'); }, 500); };
                 setInterval(changeQuote, 7000);
             }
         });
