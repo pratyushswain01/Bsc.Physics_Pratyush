@@ -10,10 +10,10 @@
     <style>
         /* --- THEME DEFINITIONS (CSS Variables) --- */
         :root {
-            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --warning-color: #dc3545;
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057;
         }
         body.dark-mode {
-            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --warning-color: #ef476f;
+            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb;
         }
         /* --- GENERAL STYLES --- */
         body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
@@ -23,9 +23,7 @@
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .title-container { display: flex; align-items: center; gap: 0.8rem; }
         .title-container .logo { font-size: 2em; color: var(--primary-accent); }
-        /* --- MODIFIED --- */
         header h1 { margin: 0; font-size: 1.4em; color: var(--text-primary); }
-        body.dark-mode header h1 { color: var(--text-primary); }
         .header-controls { display: flex; align-items: center; gap: 1rem; }
         .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); display: none; }
         @media (min-width: 768px) { .datetime { display: block; } .header-controls { gap: 1.5rem; } }
@@ -50,27 +48,6 @@
         .subject-box { display: block; text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .subject-box:hover { transform: translateY(-8px); border-color: var(--primary-accent); }
         .subject-box:hover .icon { color: var(--primary-accent); transform: scale(1.1); }
-        
-        /* --- **UPDATED** LOCKED BOX STYLES --- */
-        #iks-locked-box {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        #iks-locked-box:hover {
-            transform: none; /* Disable lift effect */
-            border-color: var(--border-color); /* Keep original border color on hover */
-        }
-        .locked-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: var(--warning-color);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.75em;
-            border-radius: 6px;
-            font-weight: 600;
-        }
         .subject-box h2 { margin-top: 0; color: var(--text-primary); font-size: 1.3em; }
         .subject-box p { color: var(--text-secondary); margin-bottom: 0; font-size: 0.9em; }
         .icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 2.5rem; color: var(--border-color); transition: all 0.3s ease; opacity: 0.7; }
@@ -151,15 +128,14 @@
                 <i class="fas fa-language icon"></i>
             </a>
             
-            <!-- **UPDATED** IKS Box (now soft-locked) -->
-            <div id="iks-locked-box" class="subject-box">
-                <span class="locked-badge">Locked</span>
+            <!-- **UNLOCKED** IKS Box -->
+            <a href="iks.html" class="subject-box">
                 <div>
                     <h2>Indian Knowledge System (IKS)</h2>
                     <p>Exploring traditional scientific heritage.</p>
                 </div>
-                <i class="fas fa-lock icon"></i>
-            </div>
+                <i class="fas fa-om icon"></i>
+            </a>
             
            <a href="re-eh.html" class="subject-box">
             <div>
@@ -219,11 +195,6 @@
         
         setInterval(updateDateTime, 1000);
         updateDateTime();
-
-        // **NOTE:** Password modal JavaScript has been removed. The box is now non-interactive.
-        // To re-enable the link later, change the HTML from a <div> to an <a> tag like this:
-        // <a href="iks.html" id="iks-box" class="subject-box"> ... </a>
-        // And remove the "iks-locked-box" ID and its specific CSS styles.
     });
     </script>
 </body>
