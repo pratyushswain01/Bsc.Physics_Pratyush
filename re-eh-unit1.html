@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: Fossil Fuels & Nuclear | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* --- THEME DEFINITIONS (CSS Variables) --- */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(149, 157, 165, 0.1);
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --accent1: #3b82f6; /* Blue */
+            --accent2: #7c3aed; /* Purple */
+            --back-btn-bg: #f1f5f9;
+            --back-btn-color: #475569;
+            --key-point-bg: #eff6ff;
+        }
+        body.dark-mode {
+            --bg-color: #020617;
+            --card-bg: #0f172a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --header-bg: rgba(15, 23, 42, 0.8);
+            --accent1: #60a5fa;
+            --accent2: #a78bfa;
+            --back-btn-bg: #1e293b;
+            --back-btn-color: #94a3b8;
+            --key-point-bg: #1e293b;
+        }
+
+        /* --- GENERAL STYLES & ANIMATIONS --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px; /* Optimal width for reading */
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
+        header { background-color: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .title-container { display: flex; align-items: center; gap: 0.8rem; }
+        .title-container .logo { font-size: 1.8em; color: var(--accent1); }
+        header h1 { margin: 0; font-size: 1.3em; font-weight: 600; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        
+        /* --- THEME SWITCHER --- */
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23f59e0b" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--accent1); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2393c5fd" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        
+        .page-header { margin-bottom: 1.5rem; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; }
+        .back-button:hover { background-color: var(--accent1); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        /* --- NOTES CONTENT STYLING --- */
+        .notes-title { text-align: center; margin-bottom: 2rem; opacity: 0; animation: fadeInAndUp 0.6s ease-out 0.2s forwards; }
+        .notes-title h1 { font-family: 'Lora', serif; font-size: 2.5rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+
+        .content-block { background-color: var(--card-bg); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; box-shadow: 0 8px 30px var(--shadow-color); opacity: 0; animation: fadeInAndUp 0.8s ease-out forwards; border: 1px solid var(--border-color); }
+        .content-block:nth-of-type(1) { animation-delay: 0.4s; } .content-block:nth-of-type(2) { animation-delay: 0.5s; } .content-block:nth-of-type(3) { animation-delay: 0.6s; }
+
+        .content-block h2 { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--accent1); padding-bottom: 0.5rem; margin: 0 0 1.5rem 0; }
+        .content-block h3 { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 1rem 0; color: var(--accent1); }
+        .content-block p, .content-block li { font-size: 1rem; line-height: 1.9; color: var(--text-secondary); text-align: justify; }
+        .content-block ul { list-style: none; padding-left: 0; }
+        .content-block li { position: relative; padding-left: 2rem; margin-bottom: 0.75rem; }
+        .content-block li::before { content: "\f138"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 5px; color: var(--accent2); font-size: 1.2em; }
+
+        /* Responsive Table */
+        .table-container { overflow-x: auto; margin: 2rem 0; border: 1px solid var(--border-color); border-radius: 8px; }
+        .comparison-table { width: 100%; min-width: 600px; border-collapse: collapse; }
+        .comparison-table th, .comparison-table td { border: 1px solid var(--border-color); padding: 1rem; text-align: left; }
+        .comparison-table th { background-color: var(--key-point-bg); font-weight: 600; }
+
+        /* Key Concept Box */
+        .key-concept { background-color: var(--key-point-bg); border-left: 4px solid var(--accent1); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; display: flex; gap: 1.5rem; align-items: flex-start; }
+        .key-concept i { font-size: 2rem; color: var(--accent1); margin-top: 5px; }
+        .key-concept-text h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; color: var(--text-primary); }
+        .key-concept-text p { margin: 0; line-height: 1.7; }
+        
+        footer { text-align: center; padding: 2rem 0 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        @media (max-width: 767px) {
+            .content-block { padding: 1.5rem; }
+            .notes-title h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <div class="header-content">
+            <div class="title-container">
+                <i class="fas fa-fire-alt logo"></i>
+                <h1>Unit 1: Fossil Fuels & Nuclear</h1>
+            </div>
+            <div class="header-controls">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <a href="re-eh.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Subject Page</a>
+        </div>
+        
+        <div class="notes-title">
+            <h1>Unit 1: Fossil Fuels & Nuclear Energy</h1>
+        </div>
+
+        <section class="content-block">
+            <h2>I. Fossil Fuels: The Conventional Powerhouse</h2>
+
+            <div class="key-concept">
+                <i class="fas fa-seedling"></i>
+                <div class="key-concept-text">
+                    <h3>Introduction and Origin of Fossil Fuels</h3>
+                    <p>Fossil fuels are hydrocarbon-based natural resources formed from the anaerobic decomposition of prehistoric organisms. Over millions of years, layers of sediment buried dead plants (forming coal) and marine microorganisms (forming oil and gas), subjecting them to immense heat and pressure. This geological process transformed the stored chemical energy in the organic matter into the concentrated energy we use today.</p>
+                </div>
+            </div>
+            
+            <h3>A. Coal: The Solid Carbon Store</h3>
+            <p><strong>Composition of Coal:</strong> Coal is a sedimentary rock composed primarily of carbon, along with hydrogen, sulfur, oxygen, and nitrogen. The quality or "rank" of coal depends on its carbon content and calorific value. The ranks, from lowest to highest, are: Lignite (low carbon, high moisture), Sub-bituminous, Bituminous, and Anthracite (high carbon, low moisture, highest energy content).</p>
+            <p><strong>Generation of Electrical Energy from Coal:</strong> This process occurs in a thermal power plant and is a cornerstone of global energy production.
+                <ol>
+                    <li><strong>Pulverization:</strong> Raw coal is crushed into a fine powder, increasing its surface area for efficient combustion.</li>
+                    <li><strong>Combustion:</strong> The coal powder is blown into a massive furnace, or boiler, and burned at extremely high temperatures, releasing thermal energy.</li>
+                    <li><strong>Steam Generation:</strong> The intense heat boils water flowing through a network of pipes inside the boiler, producing high-pressure, superheated steam.</li>
+                    <li><strong>Turbine Operation:</strong> The high-pressure steam is channeled to a turbine, a device with multiple blades. The force of the steam causes the turbine to rotate at high speed.</li>
+                    <li><strong>Electricity Generation:</strong> The rotating turbine is connected to a generator. This generator uses the principle of electromagnetic induction—spinning a large magnet within coils of copper wire—to convert mechanical energy into electrical energy.</li>
+                </ol>
+            </p>
+
+            <h3>B. Petroleum and Natural Gas: The Fluid Hydrocarbons</h3>
+            <p><strong>Petroleum (Crude Oil):</strong> A naturally occurring, viscous liquid mixture of hydrocarbons. It is formed predominantly from ancient marine life like algae and zooplankton. After extraction, crude oil is transported to a refinery for **petroleum processing**. The key process is **fractional distillation**, where the oil is heated and its components are separated based on their different boiling points. This yields various essential products, including gasoline (petrol), diesel, kerosene, jet fuel, lubricating oils, and raw materials for the plastics industry.</p>
+            <p><strong>Natural Gas:</strong> A gaseous fossil fuel consisting mainly of methane (CH₄). It is formed under higher temperatures and pressures than petroleum and is often found in the same reservoirs. For energy production, natural gas is considered cleaner than coal as it produces fewer emissions. It can be used in a steam cycle similar to coal or, more efficiently, in a gas turbine where the hot combustion gases directly drive the turbine blades.</p>
+            
+            <h3>C. Advantages and Disadvantages of Fossil Fuels</h3>
+            <ul>
+                <li><strong>Advantages:</strong> High energy density (a small volume yields large energy), relatively low cost (historically), well-established and reliable technology for extraction and conversion, easy to transport and store.</li>
+                <li><strong>Disadvantages:</strong> Non-renewable (finite resources), major contributors to greenhouse gas emissions (especially CO₂) and global warming, cause acid rain (SO₂ and NOx), significant environmental risks from extraction (mining, drilling) and transport (oil spills).</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>II. Nuclear Energy: The Power of the Atom</h2>
+            
+            <div class="key-concept">
+                <i class="fas fa-atom"></i>
+                <div class="key-concept-text">
+                    <h3>Introduction and Types of Nuclear Energy</h3>
+                    <p>Nuclear energy is the energy stored in the nucleus of an atom, held together by the strong nuclear force. This energy can be released in vast quantities through nuclear reactions. The two primary types of reactions are **Nuclear Fission** (splitting atoms) and **Nuclear Fusion** (joining atoms).</p>
+                </div>
+            </div>
+
+            <h3>A. Generation of Electricity from Nuclear Fission</h3>
+            <p>All current nuclear power plants utilize nuclear fission. The process is thermally driven, much like a coal plant, but the heat source is a controlled nuclear chain reaction within a reactor.
+            A neutron is fired at the nucleus of a heavy, unstable element, typically **Uranium-235**. The nucleus absorbs the neutron, becomes highly unstable, and splits into two smaller nuclei, releasing several new neutrons and an immense amount of energy as heat. These newly released neutrons can then strike other Uranium-235 nuclei, creating a self-sustaining **chain reaction**. Control rods are used to absorb excess neutrons and regulate the rate of reaction. The generated heat is used to create steam, which then drives turbines to produce electricity.</p>
+
+            <h3>B. Difference Between Nuclear Fusion and Fission</h3>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead><tr><th>Feature</th><th>Nuclear Fission</th><th>Nuclear Fusion</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Definition</strong></td><td>The splitting of one heavy, unstable nucleus into two or more lighter nuclei.</td><td>The process where two light atomic nuclei combine to form a single, heavier nucleus.</td></tr>
+                        <tr><td><strong>Natural Occurrence</strong></td><td>Does not occur naturally; it is an induced process.</td><td>The fundamental energy source of stars, including our Sun.</td></tr>
+                        <tr><td><strong>Fuel Required</strong></td><td>Heavy elements like Uranium-235 and Plutonium-239, which are rare and must be mined.</td><td>Light isotopes of hydrogen like Deuterium and Tritium, which are abundant in seawater.</td></tr>
+                        <tr><td><strong>Energy Output</strong></td><td>Releases a large amount of energy, but millions of times less than fusion per unit mass.</td><td>Releases an enormous amount of energy, 3-4 times greater than fission.</td></tr>
+                         <tr><td><strong>Radioactive Waste</strong></td><td>Produces long-lived, highly radioactive waste that requires secure, long-term storage.</td><td>Produces very little radioactive waste (e.g., neutron-activated components), with much shorter half-lives.</td></tr>
+                        <tr><td><strong>Current Status</strong></td><td>A mature, widely used technology for commercial electricity generation worldwide.</td><td>Highly experimental and technologically challenging; not yet commercially viable (e.g., ITER project).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>C. Advantages and Disadvantages of Nuclear Energy</h3>
+            <ul>
+                <li><strong>Advantages:</strong> No greenhouse gas emissions during operation, extremely high energy density (a small amount of fuel lasts for years), provides a reliable and continuous (baseload) power supply.</li>
+                <li><strong>Disadvantages:</strong> The issue of long-term storage for hazardous radioactive waste, extremely high costs for plant construction and decommissioning, risk of catastrophic accidents (e.g., Chernobyl, Fukushima) and radiation leaks, and the potential for misuse of nuclear materials.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>III. The Shift to Renewable Alternatives</h2>
+            <div class="key-concept">
+                <i class="fas fa-globe-americas"></i>
+                <div class="key-concept-text">
+                    <h3>The Imperative for Renewable Energy (Fossil Fuel Alternatives)</h3>
+                    <p>The clear environmental damage from fossil fuels and the inherent risks and waste problem of nuclear energy create a critical need for a global transition to clean, safe, and sustainable energy sources. This shift is driven by the need to mitigate climate change, ensure long-term energy security, and preserve the planet's ecosystems.</p>
+                </div>
+            </div>
+
+            <h3>A. Non-Conventional Energy Sources: Merits and Demerits</h3>
+            <p>Non-conventional, or renewable, energy sources are naturally replenished resources that provide sustainable power with minimal environmental impact. Key examples include solar, wind, geothermal, hydro, and biomass.</p>
+             <ul>
+                <li><strong>Merits:</strong> Environmentally sustainable with low-to-zero carbon emissions, inexhaustible and abundant, reduce dependence on volatile international fuel markets, and promote energy independence. They are also ideal for decentralized power generation in remote locations.</li>
+                <li><strong>Demerits:</strong> Many sources are intermittent (e.g., solar and wind depend on weather), they have a lower energy density, often requiring large land areas, and the initial investment for infrastructure can be very high.</li>
+            </ul>
+
+            <h3>B. Biomass Energy: Principles and Assessment</h3>
+            <p><strong>Principle:</strong> Biomass energy is derived from the chemical energy stored in organic matter. This energy originates from the sun through photosynthesis. It can be released either through direct combustion (burning wood, waste), thermochemical conversion (gasification), or biochemical conversion (fermentation to produce ethanol, anaerobic digestion to produce biogas).</p>
+            <ul>
+                <li><strong>Advantages:</strong> It is a renewable and widely available resource, can convert waste into energy (reducing landfills), and is generally considered carbon-neutral as the released CO₂ was recently captured from the atmosphere.</li>
+                <li><strong>Disadvantages:</strong> If not managed sustainably, it can lead to deforestation. The land used for energy crops can compete with food production. Combustion can also release other air pollutants like particulates.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Pratyush Swain. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            if (themeToggle) themeToggle.checked = (theme === 'dark');
+        };
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
