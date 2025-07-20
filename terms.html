@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use | BSc. Physics Database</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* --- THEME DEFINITIONS (Identical to index.html) --- */
+        :root {
+            --base-bg: #f0f2f5;
+            --surface-bg: #ffffff;
+            --surface-border: #e2e8f0;
+            --text-primary: #020617;
+            --text-secondary: #475569;
+            --accent: #0ea5e9;
+        }
+
+        body.dark-mode {
+            --base-bg: #05080F;
+            --surface-bg: #101522;
+            --surface-border: #23293A;
+            --text-primary: #f0f2f5;
+            --text-secondary: #a1a7b8;
+            --accent: #0ea5e9;
+        }
+
+        /* --- GLOBAL & LAYOUT --- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--base-bg);
+            color: var(--text-primary);
+            margin: 0;
+            transition: background-color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 960px; /* Narrower for better readability */
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* --- SHARED HEADER & FOOTER STYLES --- */
+        .app-header {
+            padding-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .logo h1 span { color: var(--accent); }
+        .collab-info { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .theme-switcher { position: relative; }
+        #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 26px; display: block; position: relative; transition: all 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background-color: var(--text-secondary); border-radius: 50%; transition: all 0.3s ease; }
+        #theme-toggle:checked + .slider { background-color: var(--accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* --- MAIN CONTENT STYLING for Policy Pages --- */
+        .page-hero {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAndUp 0.8s ease 0.2s forwards;
+        }
+        .page-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .page-hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--surface-border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInAndUp 0.6s ease forwards;
+        }
+        .content-section h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 1rem 0;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        .content-section p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .content-section a {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .content-section a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animation Delays */
+        .content-section:nth-of-type(1) { animation-delay: 0.4s; }
+        .content-section:nth-of-type(2) { animation-delay: 0.5s; }
+        .content-section:nth-of-type(3) { animation-delay: 0.6s; }
+        .content-section:nth-of-type(4) { animation-delay: 0.7s; }
+        .content-section:nth-of-type(5) { animation-delay: 0.8s; }
+
+        @keyframes fadeInAndUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- FOOTER (Identical to index.html) --- */
+        .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: 3rem; border-top: 1px solid var(--surface-border); }
+        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; width: 90%; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; }
+        .footer-column h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 1.25rem 0; }
+        .footer-column p, .footer-column a { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; text-decoration: none; }
+        .footer-column ul { list-style: none; padding: 0; margin: 0; }
+        .footer-column li { margin-bottom: 0.75rem; }
+        .footer-column a:hover { color: var(--accent); text-decoration: underline; }
+        .footer-logo { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; }
+        .footer-logo span { color: var(--accent); }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: linear-gradient(45deg, #6366f1, #0ea5e9); border-radius: 50%; color: #ffffff !important; transition: transform 0.3s ease; }
+        .social-links a:hover { transform: translateY(-3px); text-decoration: none; }
+        .footer-bottom { border-top: 1px solid var(--surface-border); text-align: center; padding: 1.5rem 0; }
+        .footer-bottom p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+        .footer-bottom a { color: var(--text-secondary); font-weight: 500; }
+        .footer-bottom a:hover { color: var(--accent); }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .container { width: 95%; }
+            .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
+            .header-controls { width: 100%; justify-content: space-between; }
+            .page-hero h1 { font-size: 2rem; }
+            .content-section { padding: 1.5rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <h1>BSc. <span>Physics</span></h1>
+                <div class="collab-info">Terms of Use</div>
+            </div>
+            <div class="header-controls">
+                <a href="index.html" class="back-link">
+                    <i data-feather="arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-toggle" checked>
+                    <label for="theme-toggle" class="slider"></label>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="page-hero">
+                <h1>Terms of Use</h1>
+                <p>By accessing this website, you agree to be bound by these terms. Last updated on October 26, 2023.</p>
+            </div>
+
+            <section class="content-section">
+                <h2>1. Acceptance of Terms</h2>
+                <p>Welcome to the BSc. Physics Database ("the Service"). By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. If you do not agree to these terms, please do not use this Service.</p>
+            </section>
+
+            <section class="content-section">
+                <h2>2. Use of Content</h2>
+                <p>All content provided on this website, including but not limited to text, notes, diagrams, and other materials, is for <strong>personal, non-commercial, and educational purposes only</strong>. You are granted a limited license to access and use the materials for your personal studies.</p>
+                <p>You may not copy, reproduce, distribute, sell, modify, or create derivative works from any content on this site without the express written permission of the owner, Pratyush Swain.</p>
+            </section>
+            
+            <section class="content-section">
+                <h2>3. Disclaimer of Warranties</h2>
+                <p>The Service is provided on an "as is" and "as available" basis. While we strive to provide accurate and up-to-date information, we make no warranties or representations of any kind, express or implied, as to the accuracy, completeness, or reliability of any content. Your use of the Service is at your sole risk. We are not responsible for any errors or omissions in the content.</p>
+            </section>
+
+            <section class="content-section">
+                <h2>4. Limitation of Liability</h2>
+                <p>In no event shall the owner or creator of the BSc. Physics Database be liable for any direct, indirect, incidental, or consequential damages resulting from the use or inability to use this Service. This includes, but is not limited to, reliance by a user on any information obtained from the Service, or damages that result from mistakes, interruptions, or any failure of performance.</p>
+            </section>
+            
+            <section class="content-section">
+                <h2>5. Changes to the Terms</h2>
+                <p>We reserve the right to modify these terms at any time. We will post the most current version of these terms on this page. By continuing to use the Service after changes have been made, you agree to be bound by the revised terms.</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- The footer is identical to the one on the main page -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">BSc. <span>Physics</span></div>
+                <p>Your central hub for BSc. Physics resources from SDVM, Neelakanthanagar. We provide structured notes and guides to help you succeed in your academic journey.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="index.html">Semester Notes</a></li>
+                    <li><a href="mailto:pratyushswain792@gmail.com">Contact Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Pratyush Swain. All Rights Reserved. • <a href="privacy.html">Privacy Policy</a> • <a href="terms.html">Terms of Use</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Use the same script as index.html to keep functionality consistent
+        feather.replace({ 'stroke-width': 1.5 });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // --- Theme Switcher ---
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light') {
+                document.body.classList.remove('dark-mode');
+                if(themeToggle) themeToggle.checked = false;
+            } else {
+                document.body.classList.add('dark-mode');
+                if(themeToggle) themeToggle.checked = true;
+            }
+
+            if(themeToggle){
+                themeToggle.addEventListener('change', () => {
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
