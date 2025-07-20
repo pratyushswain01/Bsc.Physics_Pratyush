@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 1: Introduction to Communication | AECC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --primary-accent: #c026d3;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --runner-bg: linear-gradient(45deg, #a855f7, #c026d3);
+            --back-btn-bg: #e5e7eb;
+            --back-btn-color: #4b5563;
+            --alert-bg: #f5d0fe;
+        }
+        body.dark-mode {
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --primary-accent: #d946ef;
+            --text-primary: #d1d5db;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --header-bg: rgba(17, 24, 39, 0.85);
+            --runner-bg: linear-gradient(45deg, #581c87, #1f2937);
+            --back-btn-bg: #374151;
+            --back-btn-color: #d1d5db;
+            --alert-bg: rgba(217, 70, 239, 0.1);
+        }
+        
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.8; }
+        .container { width: 90%; max-width: 850px; margin: 2rem auto; flex: 1; }
+        
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 1.5em; color: var(--primary-accent); }
+        .header-controls { display: flex; align-items: center; gap: 1.5rem; }
+        .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); }
+        @media (max-width: 768px) { header h1 { font-size: 1.1em; } .datetime { display: none; } }
+        
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="orange"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.061 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 01-1.06 0l-1.59-1.591a.75.75 0 111.06-1.06l1.59 1.59a.75.75 0 010 1.061zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.894a.75.75 0 010-1.06l1.59-1.59a.75.75 0 011.06 1.06l-1.59 1.59a.75.75 0 01-1.06 0zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM6.106 5.106a.75.75 0 011.06 0l1.59 1.591a.75.75 0 01-1.06 1.06l-1.59-1.59a.75.75 0 010-1.061z" /></svg>'); background-size: 16px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); }
+        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23f5d0fe" viewBox="0 0 24 24"><path d="M11.25 3.009c.342.016.68.034.996.058a.75.75 0 01.745.814 8.25 8.25 0 00-1.42 5.093c0 4.545 3.694 8.25 8.25 8.25.396 0 .788-.029 1.176-.086a.75.75 0 01.73.918 9.75 9.75 0 01-9.352 7.02c-5.385 0-9.75-4.365-9.75-9.75 0-4.594 3.14-8.487 7.218-9.542a.75.75 0 01.57.093z"/></svg>'); }
+        
+        .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 45s linear infinite; font-weight: 500; font-size: 0.9em; }
+        .runner-text em { font-style: normal; font-weight: 700; color: #f5d0fe;} .runner-text .separator { margin: 0 2em; opacity: 0.7;}
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 2rem; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        
+        .content-card { background-color: var(--card-bg); padding: 2rem 2.5rem; border-radius: 16px; box-shadow: 0 4px 20px var(--shadow-color); border: 1px solid var(--border-color); text-align: justify; }
+        .content-card h2 { color: var(--primary-accent); border-bottom: 2px solid var(--primary-accent); padding-bottom: 0.5rem; margin-top: 0; font-size: 2em; font-weight: 700; }
+        .content-card h3 { color: var(--text-primary); margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; font-size: 1.3em; font-weight: 600; }
+        
+        ul.key-points { list-style: none; padding-left: 0; }
+        ul.key-points li { position: relative; padding-left: 1.75em; margin-bottom: 0.8em; color: var(--text-secondary); }
+        ul.key-points li::before { content: "\f138"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 0.1em; font-size: 1.1em; }
+        ul.key-points strong { color: var(--text-primary); font-weight: 600; }
+        
+        .alert { background-color: var(--alert-bg); border-left: 5px solid var(--primary-accent); padding: 1.2rem; margin: 2rem 0; border-radius: 8px; font-weight: 500;}
+        body.dark-mode .alert { color: #e9d5ff; }
+
+        footer { text-align: center; padding: 1.5rem 0; margin-top: 2rem; font-size: 0.9em; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content"><h1>AECC: English Communication</h1><div class="header-controls"><div id="datetime" class="datetime"></div><div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div></div></div>
+    </header>
+
+    <div class="quote-runner">
+        <span class="runner-text">"The single biggest problem in communication is the <em>illusion</em> that it has taken place." - George Bernard Shaw <span class="separator">/ /</span> "To effectively communicate, we must realize that we are all different in the way we perceive the world and use this understanding as a guide to our communication with others." - Tony Robbins <span class="separator">/ /</span></span>
+    </div>
+
+    <main class="container">
+        <a href="english_syllabus.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Full Syllabus</a>
+        
+        <div class="content-card">
+            <h2>Unit 1: Introduction to Communication</h2>
+            <p>This foundational unit introduces the core concepts of human communication. It is designed to make students self-reflexive about the process of exchanging information and to understand that communication is far more than just speaking fluently. It is an activity-based, goal-oriented exploration of the mechanics and nuances that enable effective interaction in social, academic, and professional contexts.</p>
+
+            <h3>i. The Communication Process: Factors & Dynamics</h3>
+            <p>At its heart, communication is a dynamic process. We break it down into its essential components to analyze how messages are created, transmitted, and understood, and examine the forces that shape information exchange.</p>
+            <ul class="key-points">
+                <li><strong>Core Factors:</strong> The process involves a <strong>sender</strong> (source), a <strong>receiver</strong> (audience), a <strong>message</strong> (content), a <strong>channel</strong> (medium), a <strong>code</strong> (language/symbols), a <strong>topic</strong>, and the surrounding <strong>context</strong>.</li>
+                <li><strong>Feedback Loop:</strong> This crucial response from the receiver allows the sender to gauge understanding and adapt. The absence of effective feedback often leads to failure.</li>
+                <li><strong>Barriers to Communication:</strong> Identifying and overcoming "noise"—physical, psychological, or semantic obstacles that distort the message.</li>
+                <li><strong>Models of Communication:</strong> Visualizing the process through linear, interactive, and transactional models helps understand its complexity.</li>
+                <li><strong>Information Dynamics:</strong> We explore the <strong>information gap principle</strong> (the need to bridge known and unknown information) and the pitfalls of <strong>information overload</strong>, <strong>redundancy</strong>, and the use of ineffective <strong>clichés</strong>.</li>
+                 <li><strong>Audience and Purpose:</strong> Recognizing that every act of communication must be tailored to its specific <strong>audience</strong> and driven by a clear <strong>purpose</strong>.</li>
+            </ul>
+
+            <div class="alert">
+                <strong>Core Objective:</strong> This unit's goal is not just to define terms, but to equip students with the analytical tools to diagnose communication breakdowns and build more effective interaction strategies.
+            </div>
+
+            <h3>ii. Types of Communication</h3>
+            <p>Communication isn't monolithic; it adapts to the environment and the relationships between participants. We categorize these variations to understand information flow, particularly in organizational and group settings.</p>
+             <ul class="key-points">
+                <li><strong>Organizational Flow:</strong> Differentiating between <strong>horizontal</strong> (peer-to-peer), <strong>vertical</strong> (hierarchical, up and down the chain of command), and <strong>lateral</strong> (cross-departmental) communication.</li>
+                <li><strong>Interpersonal Communication:</strong> The direct, face-to-face (or mediated) exchange between two or more people, forming the basis of all relationships.</li>
+                <li><strong>The Grapevine:</strong> The unofficial, informal communication network that exists in any organization. While often fast, it is prone to rumor and inaccuracy.</li>
+            </ul>
+
+            <h3>iii. Verbal & Nonverbal Communication</h3>
+            <p>This section explores the two primary modes of sending messages, emphasizing that what we *don't* say can be as powerful as what we do.</p>
+             <ul class="key-points">
+                <li><strong>Verbal Communication:</strong> The use of spoken or written words to convey meaning.</li>
+                <li><strong>Nonverbal Communication:</strong> Includes all other forms of messaging, such as <strong>body language</strong> (posture, gestures, facial expressions), which often reveals true feelings and varies significantly across different <strong>cultures</strong>.</li>
+                <li><strong>Oral vs. Written:</strong> Understanding the distinct advantages and contexts for both spoken (e.g., meetings, presentations) and written (e.g., reports, emails) communication.</li>
+                <li><strong>Inclusivity in Language:</strong> Learning the importance of <strong>bias-free communication</strong> to avoid stereotypes and <strong>political correctness</strong> as a tool for creating a respectful and inclusive environment.</li>
+            </ul>
+
+            <h3>iv. Styles of Communication</h3>
+            <p>The "how" of communication is as important as the "what." An effective communicator consciously adapts their style to fit the situation and audience.</p>
+            <ul class="key-points">
+                <li><strong>Formal:</strong> Characterized by structured language, objective tone, and adherence to protocol. Used in official reports, academic papers, and formal presentations.</li>
+                <li><strong>Informal:</strong> Casual, spontaneous, and personal. Used in conversations with friends and close colleagues. Slang and colloquialisms are common.</li>
+                <li><strong>Semi-formal:</strong> A blend of the two, used in everyday professional contexts like team meetings, internal emails, and presentations to familiar audiences. It maintains professionalism without being overly rigid.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer><p>Detailed Notes Page | Adapted by Pratyush Swain </p></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle'); 
+            const datetimeElement = document.getElementById('datetime');
+            const runnerText = document.querySelector('.runner-text'); 
+            if (runnerText) { runnerText.innerHTML += runnerText.innerHTML; }
+            
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); themeToggle.checked = theme === 'dark'; };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
+            applyTheme(savedTheme);
+            
+            themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; document.body.classList.toggle('dark-mode', themeToggle.checked); localStorage.setItem('theme', newTheme); });
+            
+            const updateDateTime = () => { if (!datetimeElement) return; const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US', timeOptions)}`; };
+            setInterval(updateDateTime, 1000); 
+            updateDateTime();
+        });
+    </script>
+</body>
+</html>
