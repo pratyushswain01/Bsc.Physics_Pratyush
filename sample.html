@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student App Assignment</title>
+    <style>
+        /* --- Basic CSS Styling (CSS) --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1c1e21;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4b4f56;
+        }
+
+        #studentNameInput {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box; /* Important for padding */
+        }
+
+        #searchButton {
+            width: 100%;
+            padding: 12px;
+            background-color: #1877f2;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #searchButton:hover {
+            background-color: #166fe5;
+        }
+
+        #resultContainer {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f7f7f7;
+            text-align: left;
+            display: none; /* Hidden by default */
+            border: 1px solid #e0e0e0;
+        }
+
+        #resultContainer p {
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        #resultContainer .app-name {
+            font-weight: bold;
+            color: #d9534f;
+            font-size: 1.2em;
+        }
+        
+        .request-button {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background-color: #25D366; /* WhatsApp Green */
+            color: #ffffff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .request-button:hover {
+            background-color: #128C7E;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student App Finder</h1>
+        <div class="input-group">
+            <label for="studentNameInput">Enter Your Full Name:</label>
+            <input type="text" id="studentNameInput" placeholder="e.g. AUROLAL MANDAL">
+        </div>
+        <button id="searchButton">Find My App</button>
+
+        <div id="resultContainer">
+            <!-- Results will be displayed here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // --- JavaScript Logic (JS) ---
+
+        // 1. Store all student data in an array of objects.
+        // Names are stored in UPPERCASE to make searching case-insensitive.
+        const studentData = [
+            // Group 1
+            { name: "AUROLAL MANDAL", app: "App 1", department: "BSc Physics" },
+            { name: "DHIREN SEKHAR TAREI", app: "App 1", department: "BSc Physics" },
+            { name: "IPSITA BEHERA", app: "App 1", department: "BSc Physics" },
+            { name: "MANISHA PARIDA", app: "App 1", department: "BSc Physics" },
+            { name: "PRACHI PARIMITA HOTA", app: "App 1", department: "BSc Physics" },
+            { name: "PRATYUSH KUMAR SWAIN", app: "App 1", department: "BSc Physics" },
+            { name: "PRIYANKA DIWAN BEHERA", app: "App 1", department: "BSc Physics" },
+            { name: "RAKESH MOHANTY", app: "App 1", department: "BSc Physics" },
+            // Group 2
+            { name: "ROKKAM NAVYA", app: "App 2", department: "BSc Physics" },
+            { name: "S. PUJA REDDY", app: "App 2", department: "BSc Physics" },
+            { name: "SACHIDA NANDA SAHU", app: "App 2", department: "BSc Physics" },
+            { name: "SAHIL KUMAR GOUDA", app: "App 2", department: "BSc Physics" },
+            { name: "SANTOSH KUMAR PANDA", app: "App 2", department: "BSc Physics" },
+            { name: "SMRUTI RANJAN SWAIN", app: "App 2", department: "BSc Physics" },
+            { name: "SOHAM SANTOSH PATNAIK", app: "App 2", department: "BSc Physics" },
+            { name: "SOUMYARANJAN BEHERAMAJHI", app: "App 2", department: "BSc Physics" },
+            // Group 3
+            { name: "SUBASISH RAUTA", app: "App 3", department: "BSc Physics" },
+            { name: "SUBHAM HOTA", app: "App 3", department: "BSc Physics" },
+            { name: "SUBHAMBADA SAHU", app: "App 3", department: "BSc Physics" }, // <-- ADDED NAME
+            { name: "SUMAN SAHU", app: "App 3", department: "BSc Physics" },
+            { name: "SUPRIYA PRIYADARSHINI SAHOO", app: "App 3", department: "BSc Physics" },
+            { name: "SWETABARNALI PANDA", app: "App 3", department: "BSc Physics" }
+        ];
+
+        // 2. Get references to the HTML elements we need to work with.
+        const nameInput = document.getElementById('studentNameInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultContainer = document.getElementById('resultContainer');
+
+        // 3. The function that will perform the search.
+        function findStudentApp() {
+            // Get the name from the input box, remove extra spaces, and convert to uppercase.
+            const searchName = nameInput.value.trim().toUpperCase();
+
+            if (searchName === "") {
+                resultContainer.style.display = 'block';
+                resultContainer.innerHTML = `<p style="color: red;">Please enter a name.</p>`;
+                return;
+            }
+
+            // Find the student in our data array.
+            const foundStudent = studentData.find(student => student.name === searchName);
+
+            // Make the result container visible.
+            resultContainer.style.display = 'block';
+
+            // 4. Display the result based on whether a student was found.
+            if (foundStudent) {
+                // Student was found!
+                
+                // Your WhatsApp number (without '+', spaces, or dashes)
+                const adminWhatsAppNumber = "918658567727";
+                
+                // Create the message that will be pre-filled in WhatsApp.
+                const message = `Hello, this is ${foundStudent.name}. Please send me the link for my assigned app: ${foundStudent.app}. Thank you.`;
+                
+                // Encode the message to be safely used in a URL.
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Create the final WhatsApp link.
+                const whatsappLink = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
+                
+                // Create the HTML to show the user.
+                resultContainer.innerHTML = `
+                    <p>Hello, <strong>${foundStudent.name}</strong>!</p>
+                    <p>Your assigned application is:</p>
+                    <p class="app-name">${foundStudent.app}</p>
+                    <p>Click the button below to request the app from the admin via WhatsApp.</p>
+                    <a href="${whatsappLink}" target="_blank" class="request-button">Request App on WhatsApp</a>
+                `;
+
+            } else {
+                // Student was not found.
+                resultContainer.innerHTML = `
+                    <p style="color: red; font-weight: bold;">Student Not Found</p>
+                    <p>Please check the spelling of your name and try again. Make sure to enter your full name as per the official list.</p>
+                `;
+            }
+        }
+
+        // 5. Add event listeners to trigger the search.
+        
+        // When the button is clicked
+        searchButton.addEventListener('click', findStudentApp);
+        
+        // When the user presses "Enter" in the input box
+        nameInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                findStudentApp();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
