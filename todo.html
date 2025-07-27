@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project NEBULA: Syllabus-Complete Edition</title>
+    <title>Project NEBULA: Readability Enhanced Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
     <style>
@@ -22,43 +22,49 @@
         }
         
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: all 0.3s ease; font-size: 15px; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: all 0.3s ease; font-size: 16px; /* Increased base font size */ line-height: 1.6; }
         .nebula-container { display: grid; grid-template-rows: auto 1fr; grid-template-columns: 380px 1fr 380px; height: 100vh; gap: 1rem; padding: 1rem; }
 
         .nebula-header { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; }
-        .header-title h1 { font-family: 'Fira Code', monospace; font-size: 1.25rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-title h1 { font-family: 'Fira Code', monospace; font-size: 1.5rem; /* Increased */ background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .header-stats { display: flex; align-items: center; gap: 2rem; }
-        .stat-item { text-align: right; }
-        .stat-item .label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-item .value { font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: 500; }
+        .stat-item .label { font-size: 0.8rem; /* Increased */ color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-item .value { font-family: 'Fira Code', monospace; font-size: 1rem; /* Increased */ font-weight: 500; }
         .progress-bar { width: 150px; height: 8px; background-color: var(--border-color); border-radius: 4px; overflow: hidden; margin-top: 4px;}
         .progress-bar-fill { height: 100%; background: var(--accent-gradient); transition: width 0.5s ease-out; }
 
         .panel { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-        .panel-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); font-weight: 500; font-size: 0.9rem; flex-shrink: 0; }
-        .panel-content { padding: 1rem; overflow-y: auto; flex-grow: 1; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
+        .panel-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); font-weight: 500; font-size: 1rem; /* Increased */ flex-shrink: 0; }
+        .panel-content { padding: 1.25rem; overflow-y: auto; flex-grow: 1; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
         
         #task-navigator details { border-left: none; margin-left: 0; }
-        #task-navigator summary { padding: 0.6rem; list-style: none; cursor: pointer; border-radius: 6px; }
-        #task-navigator .unit > summary { font-weight: 700; font-size: 1rem; display:flex; align-items:center; }
+        #task-navigator summary { padding: 0.75rem 0.5rem; /* Increased padding */ list-style: none; cursor: pointer; border-radius: 6px; }
+        #task-navigator .unit > summary { font-weight: 700; font-size: 1.1rem; /* Increased */ display:flex; align-items:center; }
         #task-navigator summary i { margin-right: 0.75rem; color: var(--accent-primary); width: 20px; text-align: center;}
-        #task-navigator .topic { padding: 0.75rem 1rem 0.75rem 3rem; border-radius: 6px; transition: background-color 0.2s, color 0.2s; cursor: pointer; }
+        #task-navigator .topic { padding: 0.85rem 1rem 0.85rem 3rem; /* Increased padding */ border-radius: 6px; transition: background-color 0.2s, color 0.2s; cursor: pointer; font-size: 1rem; /* Increased */ }
         #task-navigator .topic:hover { background-color: var(--bg-card); }
         #task-navigator .topic.active { background: var(--accent-gradient); color: white; font-weight: 500; }
 
         #focus-view-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; gap: 1rem; color: var(--text-secondary); }
         .focus-content { display: none; animation: fadeIn 0.5s ease; }
         .focus-content.visible { display: block; }
-        .focus-content h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-        .focus-content h3 { font-size: 1rem; text-transform: uppercase; color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin: 2rem 0 1rem; }
+        .focus-content h2 { font-size: 2rem; /* Increased */ margin-bottom: 0.5rem; }
+        .focus-content .task-title { color: var(--text-secondary); margin-bottom: 2.5rem; /* Increased margin */ }
+        .focus-content h3 { font-size: 1.1rem; /* Increased */ text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; /* Increased */ margin: 2.5rem 0 1.25rem; /* Increased margin */ }
         .focus-content ul { padding-left: 0; list-style: none; }
-        .focus-content li { margin-bottom: 0.75rem; }
-        .focus-content .checkbox { transform: scale(1.1); margin-right: 1rem; accent-color: var(--accent-primary); margin-top: 4px; }
+        .focus-content li { margin-bottom: 1rem; /* Increased */ }
+        .focus-content .checkbox { transform: scale(1.2); margin-right: 1rem; accent-color: var(--accent-primary); margin-top: 4px; }
+        .focus-content label { font-size: 1rem; /* Increased */ }
         .focus-content label.completed { text-decoration: line-through; color: var(--text-secondary); }
-        .focus-content code { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
+        .focus-content code { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.95rem; /* Increased */ }
+        
+        .sidebar-section { padding: 1rem; }
+        .timer-controls button { width: 44px; height: 44px; border-radius: 50%; cursor: pointer; background:none; border:none; color: var(--text-secondary); }
+        #session-timer-display { font-size: 2.75rem; /* Increased */ }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 1300px) { .nebula-container { grid-template-columns: 360px 1fr; } .tools-panel { display: none; } }
+        @media (max-width: 1400px) { .nebula-container { grid-template-columns: 360px 1fr 360px; } }
+        @media (max-width: 1200px) { .nebula-container { grid-template-columns: 320px 1fr; } .tools-panel { display: none; } }
         @media (max-width: 900px) { .nebula-container { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; } .task-navigator-panel { max-height: 40vh; } .focus-view-panel { min-height: 50vh; } }
     </style>
 </head>
@@ -72,7 +78,7 @@
                 <div class="stat-item"><div class="label">Overall Progress</div>
                     <div class="progress-bar"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
                 </div>
-                <div class="stat-item"><div class="label">Sub-Tasks Done</div><div id="task-tally" class="value"></div></div>
+                <div class="stat-item"><div class="label">Objectives Met</div><div id="task-tally" class="value"></div></div>
             </div>
             <button id="theme-toggle" style="position:static;width:40px;height:40px;border-radius:50%; background-color:var(--bg-card);border:1px solid var(--border-color);color:var(--text-secondary);cursor:pointer;"><i class="fa-solid fa-sun"></i></button>
         </header>
@@ -87,14 +93,16 @@
         <aside class="panel tools-panel" style="padding:0">
             <div class="panel-header">Session Tools</div>
             <div class="panel-content" style="display:flex;flex-direction:column;gap:1.5rem;">
-                <div class="sidebar-section"><h3>Focus Timer</h3>
-                    <div id="focus-timer" style="text-align:center;">
-                        <div id="session-timer-display" style="font-size: 2.5rem;font-family:'Fira Code';color:var(--accent-primary)">25:00</div>
-                        <div class="timer-controls"><button id="start-pause-btn" style="border:none;"><i class="fa-solid fa-play"></i></button><button id="reset-btn" style="border:none"><i class="fa-solid fa-rotate-right"></i></button></div>
+                <div class="sidebar-section" style="background:transparent;border:none;padding:0;"><h3>Focus Timer</h3>
+                    <div id="focus-timer" style="text-align:center;padding:1rem;background:var(--bg-card);border-radius:8px;">
+                        <div id="session-timer-display" style="color:var(--accent-primary);font-family:'Fira Code'">25:00</div>
+                        <div class="timer-controls">
+                            <button id="start-pause-btn"><i class="fa-solid fa-play"></i></button><button id="reset-btn"><i class="fa-solid fa-rotate-right"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div class="sidebar-section" style="flex-grow:1;display:flex;flex-direction:column;">
-                    <h3>Live System Log</h3><div id="system-log-content" style="flex-grow:1; overflow-y:auto; font-family:'Fira Code';font-size:0.75rem;"></div>
+                <div class="sidebar-section" style="flex-grow:1;display:flex;flex-direction:column;background:transparent;border:none;padding:0;">
+                    <h3>Live System Log</h3><div id="system-log-content" style="flex-grow:1; overflow-y:auto;background:var(--bg-card);border-radius:8px;padding:1rem; font-family:'Fira Code';font-size:0.8rem;"></div>
                 </div>
             </div>
         </aside>
@@ -103,10 +111,11 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const App = {
-            init() { this.cacheDOM(); this.loadTheme(); this.renderTaskNavigator(); this.bindEvents(); this.loadProgress(); this.startTimers(); this.renderFocusView(null); this.log("System Initialized. NEBULA Syllabus-Complete Edition is online.", "success"); },
+            init() { this.cacheDOM(); this.loadTheme(); this.renderTaskNavigator(); this.bindEvents(); this.loadProgress(); this.startTimers(); this.renderFocusView(null); this.log("System Initialized. NEBULA Readability Enhanced Edition online.", "success"); },
             cacheDOM() { this.appContainer=document.getElementById('app-container'); this.themeToggle=document.getElementById('theme-toggle'); this.taskNavigator=document.getElementById('task-navigator'); this.focusView=document.getElementById('focus-view'); this.logContainer=document.getElementById('system-log-content'); },
             taskData: {
-                "U1":{i:"fa-bolt-lightning",t:"Unit 1: Electrostatics", T1A:{t:"Electric Field & Gauss's Law", s:[{i:"t1a1",l:"Derive E for Sphere (solid/shell)"},{i:"t1a2",l:"Derive E for Infinite Line & Plane Sheet"}],c:["Electric Flux & Field Lines","Symmetry Arguments"],f:["∮E⋅dA = Q_encl/ε₀"]},
+                "U1":{i:"fa-bolt-lightning",t:"Unit 1: Electrostatics",
+                    T1A:{t:"Electric Field & Gauss's Law", s:[{i:"t1a1",l:"Derive E for Sphere (solid/shell)"},{i:"t1a2",l:"Derive E for Infinite Line & Plane Sheet"}],c:["Electric Flux & Field Lines","Symmetry Arguments"],f:["∮E⋅dA = Q_encl/ε₀"]},
                     T1B:{t:"Potential & Dipoles", s:[{i:"t1b1",l:"Derive Potential of a dipole"},{i:"t1b2",l:"Calculate Torque on a dipole"}],c:["E = -∇V","Conservative nature of E-field"],f:["τ=p x E"]},
                     T1C:{t:"Conductors & Energy",s:[{i:"t1c1",l:"Calc. electrostatic energy of charged sphere"},{i:"t1c2",l:"Explain surface charge & force on conductor"}],c:["Properties of conductors in E-field"],f:["U = ½∫ε₀E² dV"]},
                     T1D:{t:"Advanced Topics", s:[{i:"t1d1",l:"Apply Method of Images for plane"},{i:"t1d2",l:"Apply Method of Images for sphere"}],c:["Laplace vs Poisson Eqns","Uniqueness Theorem"],f:["∇²V = 0", "∇²V = -ρ/ε₀"]}
@@ -125,14 +134,14 @@
                 }
             },
             renderTaskNavigator(){let h='';for(const[u,d]of Object.entries(this.taskData)){h+=`<details class="unit"data-unit-id="${u}"><summary><i class="fas ${d.i}"></i>${d.t}</summary>`;for(const[t,o]of Object.entries(d)){if(t==='i'||t==='t')continue;h+=`<div class="topic"data-topic-id="${t}">${o.t}</div>`}h+=`</details>`}this.taskNavigator.innerHTML=h},
-            renderFocusView(topicId){if(!topicId){this.focusView.innerHTML=`<div id="focus-view-placeholder"><div class="icon"><i class="fa-solid fa-compass-drafting"></i></div><h3>Welcome to NEBULA</h3><p>Select a topic to begin.</p></div>`;return}for(const u of Object.values(this.taskData)){if(u[topicId]){const o=u[topicId],p=u.t;let h=`<div class="focus-content visible"><h2>${o.t}</h2><p class="task-title" style="color:var(--text-secondary);margin-bottom:2rem">${p}</p><h3><i class="fa-solid fa-list-check"></i> Key Objectives</h3><ul>`;o.s.forEach(t=>{const n=this.progress[t.i];h+=`<li><input class="checkbox"type="checkbox"id="${t.i}"${n?'checked':''}><label for="${t.i}"class="${n?'completed':''}">${t.l}</label></li>`});h+=`</ul><h3><i class="fa-solid fa-brain"></i> Core Concepts</h3><ul>`;o.c.forEach(c=>h+=`<li>${c}</li>`);h+=`</ul><h3><i class="fa-solid fa-square-root-variable"></i> Crucial Formulas</h3><ul>`;o.f.forEach(f=>h+=`<li><code>${f}</code></li>`);h+=`</ul></div>`;this.focusView.innerHTML=h;return}}},
+            renderFocusView(topicId){if(!topicId){this.focusView.innerHTML=`<div id="focus-view-placeholder"><div class="icon"style="font-size:3rem;"><i class="fa-solid fa-compass-drafting"></i></div><h3>Welcome to NEBULA</h3><p style="color:var(--text-secondary)">Select a topic from the navigator to begin.</p></div>`;return}for(const u of Object.values(this.taskData)){if(u[topicId]){const o=u[topicId],p=u.t;let h=`<div class="focus-content visible"><h2>${o.t}</h2><p class="task-title"style="color:var(--text-secondary);margin-bottom:2rem">${p}</p><h3><i class="fa-solid fa-list-check"></i> Key Objectives</h3><ul>`;o.s.forEach(t=>{const n=this.progress[t.i];h+=`<li><input class="checkbox"type="checkbox"id="${t.i}"${n?'checked':''}><label for="${t.i}"class="${n?'completed':''}">${t.l}</label></li>`});h+=`</ul><h3><i class="fa-solid fa-brain"></i> Core Concepts</h3><ul>`;o.c.forEach(c=>h+=`<li>${c}</li>`);h+=`</ul><h3><i class="fa-solid fa-square-root-variable"></i> Crucial Formulas</h3><ul>`;o.f.forEach(f=>h+=`<li><code>${f}</code></li>`);h+=`</ul></div>`;this.focusView.innerHTML=h;return}}},
             bindEvents(){this.themeToggle.addEventListener('click',()=>this.toggleTheme());this.taskNavigator.addEventListener('click',e=>{const t=e.target.closest('.topic');if(!t)return;document.querySelectorAll('.topic.active').forEach(e=>e.classList.remove('active'));t.classList.add('active');this.renderFocusView(t.dataset.topicId)});this.focusView.addEventListener('change',e=>{if(e.target.matches('.checkbox')){this.log(`Objective '${e.target.id}' status updated.`);this.updateProgress()}});this.initTimerControls()},
             updateProgress(){let c=0;this.progress={};const t=Object.values(this.taskData).flatMap(u=>Object.values(u)).filter(t=>typeof t==='object'&&t.s).flatMap(t=>t.s);t.forEach(t=>{const n=document.getElementById(t.i);if(n&&n.checked){c++;this.progress[t.i]=true}});const n=t.length>0?Math.round(c/t.length*100):0;document.getElementById('progress-bar-fill').style.width=`${n}%`;document.getElementById('task-tally').textContent=`${c} / ${t.length}`;localStorage.setItem('nebulaFinalProgress',JSON.stringify(this.progress))},
             loadProgress(){this.progress=JSON.parse(localStorage.getItem('nebulaFinalProgress')||'{}');this.updateProgress()},
             initTimerControls(){const t=document.getElementById('session-timer-display'),e=document.getElementById('start-pause-btn'),n=document.getElementById('reset-btn');let s=1500,i=null;const o=()=>t.textContent=`${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;const r=()=>{clearInterval(i);i=null;s=1500;o();e.innerHTML='<i class="fa-solid fa-play"></i>';t.style.color='var(--accent-primary)'};e.addEventListener('click',()=>{if(i){clearInterval(i);i=null;this.log("Focus paused.","warn");e.innerHTML='<i class="fa-solid fa-play"></i>';t.style.color='var(--accent-primary)'}else{this.log("Focus started.","success");t.style.color='var(--accent-success)';e.innerHTML='<i class="fa-solid fa-pause"></i>';i=setInterval(()=>{s--;o();if(s<=0){alert('Session Complete!');r()}},1000)}});n.addEventListener('click',()=>{this.log("Timer reset.","warn");r()})},
-            toggleTheme(){this.appContainer.classList.toggle('light-mode');const t=this.appContainer.classList.contains('light-mode');this.log(`Theme set to ${t?'light':'dark'}.`);localStorage.setItem('nebulaFinalTheme',t?'light':'dark')},
+            toggleTheme(){this.appContainer.classList.toggle('light-mode');this.log(`Theme set to ${this.appContainer.classList.contains('light-mode')?'light':'dark'}.`);localStorage.setItem('nebulaFinalTheme',this.appContainer.classList.contains('light-mode')?'light':'dark');},
             loadTheme(){if(localStorage.getItem('nebulaFinalTheme')==='light')this.appContainer.classList.add('light-mode')},
-            startTimers(){const t=new Date('July 29, 2025 22:00:00').getTime();setInterval(()=>{const e=new Date,n=t-e.getTime(),s=Math.floor(n/864e5),o=Math.floor((n%864e5)/36e5),c=Math.floor((n%36e5)/6e4),i=Math.floor((n%6e4)/1e3);document.getElementById('countdown').textContent=n<0?'DEADLINE':`${s}d ${o}h ${c}m ${i}s`;},1000)},
+            startTimers(){const d=new Date('July 29, 2025 22:00:00').getTime();setInterval(()=>{const n=new Date(),t=d-n.getTime(),a=Math.floor(t/864e5),o=Math.floor((t%864e5)/36e5),s=Math.floor((t%36e5)/6e4),i=Math.floor((t%6e4)/1e3);document.getElementById('countdown').textContent=t<0?'DEADLINE':`${a}d ${o}h ${s}m ${i}s`;},1000)},
             log(msg,type='info'){const t=type==='success'?'var(--accent-success)':'var(--text-secondary)';this.logContainer.innerHTML=`<div><span style="color:var(--accent-primary);">${new Date().toLocaleTimeString()}</span><span style="color:${t}">> ${msg}</span></div>`+this.logContainer.innerHTML}
         };
         App.init();
