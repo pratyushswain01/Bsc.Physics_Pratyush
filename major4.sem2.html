@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSc. Physics - Comprehensive Semester Question Papers</title>
+    
+    <!-- KaTeX CDN Links for Math Rendering (Guaranteed to work) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --paper-bg: #ffffff;
+            --text-color: #333333;
+            --heading-color: #0056b3;
+            --border-color: #dddddd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --toggle-bg: #ccc;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --paper-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --heading-color: #66b2ff;
+            --border-color: #444444;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --toggle-bg: #66b2ff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--paper-bg);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        header .title h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.8em;
+            color: var(--heading-color); margin: 0;
+        }
+        
+        header .title p { font-size: 0.9em; color: var(--text-color); opacity: 0.8; }
+
+        /* === NEW CSS FOR THE THEME TOGGLE SWITCH === */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch-wrapper em {
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--toggle-bg);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .question-paper {
+            background-color: var(--paper-bg); margin: 30px 0;
+            padding: 30px; border-radius: 8px; border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .paper-title {
+            text-align: center; margin-bottom: 25px; padding-bottom: 15px;
+            border-bottom: 2px solid var(--heading-color);
+        }
+        .paper-title h2 { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--heading-color); margin-bottom: 10px; }
+        .paper-details { font-style: italic; opacity: 0.9; }
+
+        .part-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; font-size: 1.2em;
+            margin-top: 30px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid var(--border-color);
+        }
+        .part-instructions { font-style: italic; margin-bottom: 15px; opacity: 0.8; }
+        
+        ol { padding-left: 25px; list-style: decimal; }
+        li { margin-bottom: 20px; }
+        
+        footer {
+            text-align: center; padding: 20px; margin-top: 40px; border-top: 1px solid var(--border-color);
+            font-size: 0.9em; opacity: 0.7;
+        }
+        
+        .katex { font-size: 1.15em !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="title">
+            <h1>BSc. Physics</h1>
+            <p>Comprehensive Semester Examination Resources</p>
+        </div>
+        <!-- === NEW THEME TOGGLE SWITCH HTML === -->
+        <div class="theme-switch-wrapper">
+            <label class="switch" for="theme-checkbox">
+                <input type="checkbox" id="theme-checkbox" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- ==================== QUESTION PAPER SET 1 (Content is unchanged) ==================== -->
+        <article class="question-paper">
+            <div class="paper-title">
+                <h2>Predicted Question Paper - Set 1</h2>
+                <div class="paper-details">Subject: Physics (Mathematical Physics) | Total Marks: 100</div>
+            </div>
+            <section class="part">
+                <div class="part-title">Part A</div>
+                <div class="part-instructions">(Answer any NINE questions | 9 × 2 = 18 Marks)</div>
+                <ol>
+                    <li>Evaluate the Beta function \(\beta(3, 2.5)\).</li>
+                    <li>What is the value of the Associated Legendre Polynomial \(P_3^1(x)\)?</li>
+                    <li>Write the power series expansion for the error function, \(\text{erf}(x)\).</li>
+                    <li>Evaluate the integral \(\int_0^\infty x^4 e^{-x} \, dx\).</li>
+                    <li>What are Dirichlet's conditions for the convergence of a Fourier series?</li>
+                    <li>State the relationship between the error function (\(\text{erf}\)) and complementary error function (\(\text{erfc}\)).</li>
+                    <li>Find the value of the product \(\Gamma(\frac{1}{4}) \Gamma(\frac{3}{4})\).</li>
+                    <li>Write Laplace's equation in 3D Cylindrical Coordinates.</li>
+                    <li>What is the value of \(P_n'(1)\) for a Legendre polynomial?</li>
+                </ol>
+            </section>
+            <section class="part">
+                <div class="part-title">Part B</div>
+                <div class="part-instructions">(Answer any EIGHT questions | 8 × 5 = 40 Marks)</div>
+                <ol>
+                    <li>Convert the combination \(5H_3(x) + 2H_2(x) - 4H_1(x) + 2H_0(x)\) into a standard polynomial in powers of \(x\).</li>
+                    <li>Using the orthogonality of Legendre polynomials, evaluate: \(\int_{-1}^{1} (P_0(x) + 2P_2(x) + P_3(x)) P_2(x) \,dx\).</li>
+                    <li>Show the parity relation for Associated Legendre Polynomials: \(P_n^m(-x) = (-1)^{n+m} P_n^m(x)\).</li>
+                    <li>Find the Fourier series expansion for the function \(f(x) = x\) in the interval \(-\pi < x < \pi\).</li>
+                    <li>Prove the Hermite polynomial recurrence relation: \(H_n'(x) = 2nH_{n-1}(x)\).</li>
+                    <li>Find and classify the singular points of the differential equation \(x(x-1)^3 y'' + 2(x-1)^3 y' + 4y = 0\).</li>
+                    <li>Prove the recurrence relation for the Beta function: \(\beta(p, q+1) = \frac{q}{p+q} \beta(p, q)\).</li>
+                    <li>Using Rodrigues' formula, derive the expression for the Legendre polynomial \(P_3(x)\).</li>
+                </ol>
+            </section>
+            <section class="part">
+                <div class="part-title">Part C</div>
+                <div class="part-instructions">(Answer any FOUR questions | 4 × 8 = 32 Marks)</div>
+                <ol>
+                    <li>Obtain the Fourier series for \(f(x) = x+x^2\) over \(-\pi < x < \pi\). Hence, show that \(\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}\).</li>
+                    <li>Derive the expression for the electrostatic potential \(V\) of a conducting sphere of radius \(a\) in a uniform external electric field \(\vec{E_0}\). Hence, find the induced surface charge density.</li>
+                    <li>Solve the PDE \(2\frac{\partial u}{\partial t} = 4\frac{\partial u}{\partial x}\) by separation of variables, with initial condition \(u(x,0) = 9e^{-2x}\).</li>
+                    <li>Define Gamma and Beta functions and derive \(\beta(m,n) = \frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}\). Using this, prove: \[\int_0^{\pi/2} \sin^p\theta \cos^q\theta \, d\theta = \frac{\Gamma(\frac{p+1}{2})\Gamma(\frac{q+1}{2})}{2\Gamma(\frac{p+q+2}{2})}\]</li>
+                </ol>
+            </section>
+        </article>
+
+        <!-- ==================== QUESTION PAPER SET 2 (Content is unchanged) ==================== -->
+        <article class="question-paper">
+            <div class="paper-title">
+                <h2>Predicted Question Paper - Set 2</h2>
+                 <div class="paper-details">Subject: Physics (Mathematical Physics) | Total Marks: 100</div>
+            </div>
+            <section class="part">
+                <div class="part-title">Part A</div>
+                <div class="part-instructions">(Answer any NINE questions | 9 × 2 = 18 Marks)</div>
+                <ol>
+                    <li>What is the value of \(\Gamma(-\frac{1}{2})\)?</li>
+                    <li>Write down the generating function for Hermite polynomials, \(H_n(x)\).</li>
+                    <li>If a function \(f(x)\) is even, what can you say about its Fourier sine coefficients (\(b_n\))?</li>
+                    <li>Define a regular singular point for a second-order linear differential equation.</li>
+                    <li>Evaluate the integral \(\int_{-1}^{1} x^3 P_3(x) \,dx\) using properties of Legendre polynomials.</li>
+                    <li>State Parseval's identity for Fourier series.</li>
+                    <li>What is the value of the Legendre polynomial \(P_n(-1)\)?</li>
+                    <li>State the one-dimensional heat conduction equation.</li>
+                    <li>Show that \(\Gamma(n) = \int_0^1 \left(\log \frac{1}{y}\right)^{n-1} \, dy\).</li>
+                </ol>
+            </section>
+            <section class="part">
+                <div class="part-title">Part B</div>
+                <div class="part-instructions">(Answer any EIGHT questions | 8 × 5 = 40 Marks)</div>
+                <ol>
+                    <li>Express the polynomial \(f(x) = 4x^3 - 2x^2 - 3x + 8\) in terms of Legendre polynomials.</li>
+                    <li>Using the Frobenius method, obtain the indicial equation for the differential equation \(x^2y'' - y = 0\).</li>
+                    <li>Prove the Legendre polynomial recurrence relation: \((n+1)P_{n+1}(x) = (2n+1)xP_n(x) - nP_{n-1}(x)\).</li>
+                    <li>Find the half-range sine and cosine series for the function \[f(x) = \begin{cases} 0, & -\pi < x < 0 \\ x, & \;\; 0 \le x < \pi \end{cases}\]</li>
+                    <li>Show that for Bessel functions, \(J_{1/2}(x) = \sqrt{\frac{2}{\pi x}}\sin x\).</li>
+                    <li>Using the generating function for Legendre polynomials, prove: \((2n+1)P_n(x) = P'_{n+1}(x) - P'_{n-1}(x)\).</li>
+                    <li>Evaluate \(\int_{-1}^1 x P_n(x) P_{n-1}(x) \,dx\) using a recurrence relation.</li>
+                    <li>Derive the solution to Laplace's equation \(\nabla^2 u = 0\) in a 2D rectangular region \(0 \le x \le a, 0 \le y \le b\).</li>
+                </ol>
+            </section>
+            <section class="part">
+                <div class="part-title">Part C</div>
+                <div class="part-instructions">(Answer any FOUR questions | 4 × 8 = 32 Marks)</div>
+                <ol>
+                    <li>Solve the 1D wave equation \(\frac{\partial^2 y}{\partial t^2} = c^2 \frac{\partial^2 y}{\partial x^2}\) with boundary conditions \(y(0,t)=0, \ y(L,t)=0\) and initial conditions \(y(x,0) = f(x)\) and \(\frac{\partial y}{\partial t}\Big|_{(x,0)} = g(x)\).</li>
+                    <li>State and prove the orthogonality property for Hermite polynomials: \[\int_{-\infty}^{\infty} e^{-x^2} H_m(x) H_n(x) \,dx = 2^n n! \sqrt{\pi} \, \delta_{mn}\]</li>
+                    <li>Derive the formulas for the Fourier coefficients \(a_0, a_n, b_n\) for a function \(f(x)\) in the interval \([-L, L]\).</li>
+                    <li>Using the Frobenius method, find the complete polynomial solution of the Legendre equation \((1-x^2)y'' - 2xy' + \lambda y = 0\), where \(\lambda = n(n+1)\) and n is an integer.</li>
+                </ol>
+            </section>
+        </article>
+
+    </div>
+
+    <footer>
+        <p>© 2025 Pratyush Swain | All Rights Reserved. </p>
+    </footer>
+    
+    <script>
+        // === UPDATED JAVASCRIPT FOR THE TOGGLE SWITCH ===
+        const themeCheckbox = document.getElementById('theme-checkbox');
+        
+        // Function to apply the theme to the body
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+        };
+
+        // Event listener for when the switch is clicked
+        themeCheckbox.addEventListener('change', (event) => {
+            const newTheme = event.target.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Function to run when the page first loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set the initial state of the switch based on saved preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            themeCheckbox.checked = savedTheme === 'dark';
+            applyTheme(savedTheme);
+
+            // Render all math on the page
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false}
+                ],
+                throwOnError : false
+            });
+        });
+    </script>
+</body>
+</html>
