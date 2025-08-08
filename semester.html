@@ -102,6 +102,10 @@
 
         /* ===== START: REFINED "PENDING" CARD FOR SEM 3 ===== */
         .pending-card { cursor: pointer; }
+        /* MODIFIED: Increased padding-bottom to create space for the status runner */
+        .pending-card .card-content {
+            padding-bottom: 3.8rem; 
+        }
         .pending-card:hover { transform: translateY(-5px); background-color: var(--surface-bg); }
         .pending-card .card-icon { color: var(--accent); filter: drop-shadow(0 0 3px var(--accent-glow)); animation: breathe 4s infinite ease-in-out; }
         @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--accent-glow)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--accent-glow)); } }
