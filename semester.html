@@ -77,7 +77,6 @@
         /* --- SEMESTER GRID & CARDS --- */
         .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
         .semester-card { background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 1rem; position: relative; overflow: hidden; text-decoration: none; transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.6s ease forwards; }
-        /* Adjusted padding for all cards, base padding now handles the card content */
         .semester-card .card-content { padding: 2rem; }
         /* Animation delays */
         .semester-card:nth-child(1) { animation-delay: 0.4s; } .semester-card:nth-child(2) { animation-delay: 0.5s; } .semester-card:nth-child(3) { animation-delay: 0.6s; } .semester-card:nth-child(4) { animation-delay: 0.7s; } .semester-card:nth-child(5) { animation-delay: 0.8s; } .semester-card:nth-child(6) { animation-delay: 0.9s; }
@@ -98,14 +97,10 @@
         body.dark-mode .semester-card:not(.disabled-card):not(.pending-card):hover p { color: #e2e8f0; }
         /* Disabled & Soon Badges */
         .disabled-card { cursor: not-allowed; filter: grayscale(40%); opacity: 0.75 !important; }
-        .launch-soon-badge { display: inline-block; margin-top: 1rem; background-color: var(--accent); color: #ffffff; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; border-radius: 50px; }
 
         /* ===== START: REFINED "PENDING" CARD FOR SEM 3 ===== */
         .pending-card { cursor: pointer; }
-        /* MODIFIED: Increased padding-bottom to create space for the status runner */
-        .pending-card .card-content {
-            padding-bottom: 3.8rem; 
-        }
+        .pending-card .card-content { padding-bottom: 3.8rem; }
         .pending-card:hover { transform: translateY(-5px); background-color: var(--surface-bg); }
         .pending-card .card-icon { color: var(--accent); filter: drop-shadow(0 0 3px var(--accent-glow)); animation: breathe 4s infinite ease-in-out; }
         @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--accent-glow)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--accent-glow)); } }
@@ -137,6 +132,14 @@
             .header-controls { width: 100%; justify-content: space-between; } .datetime { text-align: left; } .hero-banner { aspect-ratio: 4 / 3; }
             #quote-text { font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; } .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .semester-card .card-content { padding: 1.5rem; } .semester-card h2 { font-size: 1.25rem; }
+            
+            /* --- MOBILE FIX FOR PENDING CARD --- */
+            /* This rule specifically adds more bottom padding to the pending card on mobile,
+               overriding the general rule above to prevent the runner text from overlapping. */
+            .pending-card .card-content {
+                padding-bottom: 3.5rem;
+            }
+
             .footer-content { grid-template-columns: 1fr; gap: 2.5rem; } .app-footer { padding-top: 3rem; }
         }
 
