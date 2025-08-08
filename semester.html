@@ -9,177 +9,110 @@
     <style>
         /* --- THEME DEFINITIONS --- */
         :root {
-            --base-bg: #f0f2f5;
-            --surface-bg: #ffffff;
-            --surface-border: #e2e8f0;
-            --text-primary: #020617;
-            --text-secondary: #475569;
-            --accent: #0ea5e9;
-            --danger: #ef4444; 
-            --danger-glow: rgba(239, 68, 68, 0.5);
-            --danger-light-bg: rgba(255, 255, 255, 0.5);
-            --social-bg: linear-gradient(45deg, #4f46e5, #0ea5e9);
+            --base-bg: #f0f2f5; --surface-bg: #ffffff; --surface-border: #e2e8f0; --text-primary: #020617; --text-secondary: #475569;
+            --accent: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.4); --danger: #ef4444; --danger-glow: rgba(239, 68, 68, 0.5); 
+            --light-bg-overlay: rgba(255, 255, 255, 0.5); --social-bg: linear-gradient(45deg, #4f46e5, #0ea5e9);
         }
 
         body.dark-mode {
-            --base-bg: #05080F;
-            --surface-bg: #101522;
-            --surface-border: #23293A;
-            --text-primary: #f0f2f5;
-            --text-secondary: #a1a7b8;
-            --accent: #0ea5e9;
-            --danger: #f87171;
-            --danger-glow: rgba(248, 113, 113, 0.6);
-            --danger-light-bg: rgba(17, 24, 39, 0.5);
-            --social-bg: linear-gradient(45deg, #6366f1, #0ea5e9);
+            --base-bg: #05080F; --surface-bg: #101522; --surface-border: #23293A; --text-primary: #f0f2f5; --text-secondary: #a1a7b8;
+            --accent: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.4); --danger: #f87171; --danger-glow: rgba(248, 113, 113, 0.6); 
+            --light-bg-overlay: rgba(17, 24, 39, 0.5); --social-bg: linear-gradient(45deg, #6366f1, #0ea5e9);
         }
 
         /* --- GLOBAL & LAYOUT --- */
         *, *::before, *::after { box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--base-bg);
-            color: var(--text-primary);
-            margin: 0;
-            transition: background-color 0.4s ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 0;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--base-bg); color: var(--text-primary); margin: 0; transition: background-color 0.4s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 2rem 0; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- HEADER & CONTROLS --- */
-        .app-header {
-            padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeIn 0.8s ease forwards;
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
-        .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; }
-        .logo h1 span { color: var(--accent); }
+        .app-header { padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeIn 0.8s ease forwards; }
+        .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; } .logo h1 span { color: var(--accent); }
         .header-controls { display: flex; align-items: center; gap: 1.5rem; }
         .datetime { text-align: right; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; }
         .collab-info { border-left: 2px solid var(--surface-border); padding-left: 1rem; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
         .theme-switcher { position: relative; } #theme-toggle { display: none; }
         .slider { cursor: pointer; width: 50px; height: 26px; background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 26px; display: block; position: relative; transition: all 0.3s ease; }
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background-color: var(--text-secondary); border-radius: 50%; transition: all 0.3s ease; }
-        #theme-toggle:checked + .slider { background-color: var(--accent); }
-        #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
+        #theme-toggle:checked + .slider { background-color: var(--accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
 
         /* --- HERO BANNER --- */
-        .hero-banner {
-            aspect-ratio: 16 / 7; max-height: 350px; border-radius: 1.25rem; position: relative; overflow: hidden; display: flex; padding: 2.5rem; 
-            background-image:url('images/institutionm.jpg'); /* <<< THIS LINE IS UPDATED */
-            background-size: cover; background-position: center; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.8s ease 0.2s forwards;
-        }
+        .hero-banner { aspect-ratio: 16 / 7; max-height: 350px; border-radius: 1.25rem; position: relative; overflow: hidden; display: flex; padding: 2.5rem; background-image:url('images/institutionm.jpg'); background-size: cover; background-position: center; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.8s ease 0.2s forwards; }
         .hero-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5, 8, 15, 0.2) 0%, rgba(5, 8, 15, 0.9) 100%); }
         #quote-text { position: absolute; z-index: 1; bottom: 2.5rem; left: 2.5rem; right: 2.5rem; margin: 0; font-size: 1.5rem; font-weight: 600; color: #ffffff; text-align: left; text-shadow: 0 2px 15px rgba(0,0,0,0.6); opacity: 1; transition: opacity 0.5s ease; }
         #quote-text.fade-out { opacity: 0; }
-        @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- ATTRACTIVE ALERT RUNNER --- */
-        .timeline-runner {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            background-color: var(--danger-light-bg);
-            color: var(--danger);
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0 2.5rem 0;
-            border-radius: 1rem;
-            text-decoration: none;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInAndUp 0.8s ease 0.3s forwards;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        /* --- TOP UPDATE RUNNER --- */
+        .update-runner {
+            position: relative; display: flex; align-items: center; gap: 1.5rem;
+            background-color: var(--light-bg-overlay);
+            color: var(--accent);
+            padding: 1rem 1.5rem; margin: 1.5rem 0 2.5rem 0; border-radius: 1rem;
+            text-decoration: none; overflow: hidden; opacity: 0; transform: translateY(30px);
+            animation: fadeInAndUp 0.8s ease 0.3s forwards; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             transition: all 0.4s ease;
         }
-        .timeline-runner::before { /* Shimmering Gradient Border */
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px; /* Border thickness */
-            background: linear-gradient(90deg, transparent, var(--danger), transparent);
-            background-size: 200% 100%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: shimmer-border 3s linear infinite;
+        .update-runner::before { /* Shimmering Border */
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            background-size: 200% 100%; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; animation: shimmer-border 4s linear infinite;
         }
-        @keyframes shimmer-border {
-            from { background-position: 200% 0; }
-            to { background-position: -200% 0; }
-        }
-
-        .timeline-runner:hover {
-            box-shadow: 0 0 30px var(--danger-glow);
-            transform: translateY(-2px) scale(1.01);
-        }
-
-        .runner-icon-wrapper {
-            position: relative;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .runner-icon { color: var(--danger); }
+        @keyframes shimmer-border { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+        .update-runner:hover { box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-2px) scale(1.01); }
+        .runner-icon-wrapper { position: relative; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .runner-icon { color: var(--accent); }
         .runner-icon-wrapper::after { /* Pulse Animation */
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: var(--danger);
-            animation: pulse-wave 1.8s ease-out infinite;
-            z-index: -1;
+            content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            background-color: var(--accent); animation: pulse-wave 2s ease-out infinite; z-index: -1;
         }
-        @keyframes pulse-wave {
-            0% { transform: scale(0.5); opacity: 0.5; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-
+        @keyframes pulse-wave { 0% { transform: scale(0.5); opacity: 0.5; } 100% { transform: scale(2.5); opacity: 0; } }
         .runner-track { flex-grow: 1; overflow: hidden; }
-        .runner-text {
-            display: inline-block;
-            white-space: nowrap;
-            animation: scroll-left 15s linear infinite;
-            font-weight: 600;
-            text-shadow: 0 0 10px var(--danger-glow);
-        }
-        @keyframes scroll-left {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        .runner-text-wrapper { display: flex; }
+        .runner-text { display: inline-block; white-space: nowrap; animation: scroll-left 25s linear infinite; font-weight: 600; text-shadow: 0 0 10px var(--accent-glow); }
 
-        /* --- SEMESTER GRID & OTHER STYLES --- */
+        /* --- SEMESTER GRID & CARDS --- */
         .semester-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-        .semester-card { background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 1rem; padding: 2rem; position: relative; overflow: hidden; text-decoration: none; transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.6s ease forwards; }
+        .semester-card { background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 1rem; position: relative; overflow: hidden; text-decoration: none; transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.6s ease forwards; }
+        /* Adjusted padding for all cards, base padding now handles the card content */
+        .semester-card .card-content { padding: 2rem; }
+        /* Animation delays */
         .semester-card:nth-child(1) { animation-delay: 0.4s; } .semester-card:nth-child(2) { animation-delay: 0.5s; } .semester-card:nth-child(3) { animation-delay: 0.6s; } .semester-card:nth-child(4) { animation-delay: 0.7s; } .semester-card:nth-child(5) { animation-delay: 0.8s; } .semester-card:nth-child(6) { animation-delay: 0.9s; }
+        /* Standard Hover Effects */
         .semester-card:not(.disabled-card):hover { transform: translateY(-5px); }
-        body.dark-mode .semester-card:not(.disabled-card):hover { background-color: #151B2A; }
+        body.dark-mode .semester-card:not(.disabled-card):not(.pending-card):hover { background-color: #151B2A; }
         .semester-card::before, .semester-card::after { content: ''; position: absolute; background-color: var(--accent); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
         .semester-card::before { width: 100%; height: 2px; top: 0; left: 0; transform-origin: left; transform: scaleX(0); }
         .semester-card::after { height: 100%; width: 2px; top: 0; left: 0; transform-origin: top; transform: scaleY(0); }
-        .semester-card:not(.disabled-card):hover::before { transform: scaleX(1); }
-        .semester-card:not(.disabled-card):hover::after { transform: scaleY(1); }
+        .semester-card:not(.disabled-card):not(.pending-card):hover::before { transform: scaleX(1); }
+        .semester-card:not(.disabled-card):not(.pending-card):hover::after { transform: scaleY(1); }
         .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
         .semester-card h2 { font-size: 1.5rem; font-weight: 600; margin: 0; color: var(--text-primary); transition: color 0.3s ease; }
-        .card-icon { color: var(--text-secondary); transition: color 0.3s ease; }
-        .semester-card:not(.disabled-card):hover .card-icon,
-        .semester-card:not(.disabled-card):hover h2 { color: var(--accent); }
+        .card-icon { color: var(--text-secondary); transition: all 0.3s ease; }
+        .semester-card:not(.disabled-card):not(.pending-card):hover .card-icon,
+        .semester-card:not(.disabled-card):not(.pending-card):hover h2 { color: var(--accent); }
         .semester-card p { font-size: 1rem; line-height: 1.6; margin: 0; color: var(--text-secondary); transition: color 0.3s ease; }
-        body.dark-mode .semester-card:not(.disabled-card):hover p { color: #e2e8f0; }
+        body.dark-mode .semester-card:not(.disabled-card):not(.pending-card):hover p { color: #e2e8f0; }
+        /* Disabled & Soon Badges */
         .disabled-card { cursor: not-allowed; filter: grayscale(40%); opacity: 0.75 !important; }
         .launch-soon-badge { display: inline-block; margin-top: 1rem; background-color: var(--accent); color: #ffffff; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; border-radius: 50px; }
+
+        /* ===== START: REFINED "PENDING" CARD FOR SEM 3 ===== */
+        .pending-card { cursor: pointer; }
+        .pending-card:hover { transform: translateY(-5px); background-color: var(--surface-bg); }
+        .pending-card .card-icon { color: var(--accent); filter: drop-shadow(0 0 3px var(--accent-glow)); animation: breathe 4s infinite ease-in-out; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--accent-glow)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--accent-glow)); } }
+        .status-runner-container { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.6rem 0; border-top: 1px solid var(--surface-border); background: linear-gradient(to top, rgba(0,0,0,0.03), transparent); pointer-events: none; }
+        body.dark-mode .status-runner-container { background: linear-gradient(to top, rgba(0,0,0,0.15), transparent); }
+        .status-runner-track { overflow: hidden; }
+        .status-runner-wrapper { display: flex; }
+        .status-runner-text { display: inline-block; white-space: nowrap; animation: scroll-left 30s linear infinite; color: var(--accent); font-size: 0.85rem; font-weight: 500; }
+        .status-runner-text span { margin: 0 1.5rem; }
+
+        /* --- FOOTER --- */
         .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: 3rem; border-top: 1px solid var(--surface-border); }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; width: 90%; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; }
         .footer-column h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 1.25rem 0; }
@@ -193,18 +126,16 @@
         .social-links a:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-decoration: none; }
         .footer-bottom { border-top: 1px solid var(--surface-border); text-align: center; padding: 1.5rem 0; }
         .footer-bottom p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
-        .footer-bottom a { color: var(--text-secondary); font-weight: 500; }
-        .footer-bottom a:hover { color: var(--accent); }
-        @media (max-width: 820px) { .footer-content { grid-template-columns: 1fr 1fr; } }
+        .footer-notice { opacity: 0.8; font-weight: 500; }
+        
         @media (max-width: 768px) {
-            .container { width: 95%; padding: 1rem 0; }
-            .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
+            .container { width: 95%; padding: 1rem 0; } .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
             .header-controls { width: 100%; justify-content: space-between; } .datetime { text-align: left; } .hero-banner { aspect-ratio: 4 / 3; }
-            #quote-text { font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
-            .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .semester-card { padding: 1.5rem; } .semester-card h2 { font-size: 1.25rem; }
+            #quote-text { font-size: 1.2rem; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; } .semester-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .semester-card .card-content { padding: 1.5rem; } .semester-card h2 { font-size: 1.25rem; }
             .footer-content { grid-template-columns: 1fr; gap: 2.5rem; } .app-footer { padding-top: 3rem; }
         }
+
     </style>
 </head>
 <body class="dark-mode">
@@ -221,32 +152,51 @@
         <main>
             <section class="hero-banner"><h1 id="quote-text"></h1></section>
             
-            <a href="semtime.html" class="timeline-runner">
-                <div class="runner-icon-wrapper">
-                    <i class="runner-icon" data-feather="bell"></i>
-                </div>
+            <a href="#" class="update-runner">
+                <div class="runner-icon-wrapper"><i class="runner-icon" data-feather="hard-drive"></i></div>
                 <div class="runner-track">
-                    <div class="runner-text">
-                        <span>ALERT: Semester - 2 Timeline Has Been Updated</span>
-                        <span style="margin: 0 2rem;">•</span>
-                        <span>Click here for exam dates and important deadlines</span>
-                        <span style="margin: 0 2rem;">•</span>
-                         <!-- Duplicated for seamless loop -->
-                        <span>ALERT: Semester - 2 Timeline Has Been Updated</span>
-                        <span style="margin: 0 2rem;">•</span>
-                        <span>Click here for exam dates and important deadlines</span>
-                        <span style="margin: 0 2rem;">•</span>
+                    <div class="runner-text-wrapper">
+                         <div class="runner-text">
+                            <span>Semester 3 Content is Currently Uploading... Stay Updated!</span><span style="margin: 0 3rem;">•</span>
+                            <span>New Resources and Advanced Notes Are On The Way.</span><span style="margin: 0 3rem;">•</span>
+                            <!-- Duplicated for continuous loop -->
+                            <span>Semester 3 Content is Currently Uploading... Stay Updated!</span><span style="margin: 0 3rem;">•</span>
+                            <span>New Resources and Advanced Notes Are On The Way.</span><span style="margin: 0 3rem;">•</span>
+                        </div>
                     </div>
                 </div>
             </a>
             
             <div class="semester-grid">
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
-                <a href="sem2.html" class="semester-card"><div class="card-header"><h2>Semester 2</h2><div class="card-icon"><i data-feather="book-open"></i></div></div><p>Click to view notes</p></a>
-                <a href="sem3.html" class="semester-card"><div class="card-header"><h2>Semester 3</h2><div class="card-icon"><i data-feather="book-open"></i></div></div><p>Click to view notes</p></a>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 4</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 5</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
-                <div class="semester-card disabled-card"><div class="card-header"><h2>Semester 6</h2><div class="card-icon"><i data-feather="lock"></i></div></div><div class="launch-soon-badge">Available Soon</div></div>
+                <div class="semester-card disabled-card"><div class="card-content"><div class="card-header"><h2>Semester 1</h2><div class="card-icon"><i data-feather="lock"></i></div></div><p>Coming Soon</p></div></div>
+                <a href="sem2.html" class="semester-card"><div class="card-content"><div class="card-header"><h2>Semester 2</h2><div class="card-icon"><i data-feather="book-open"></i></div></div><p>Click to view notes</p></div></a>
+                
+                <!-- START: REFINED "PENDING" CARD FOR SEM 3 -->
+                <a href="sem3.html" class="semester-card pending-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h2>Semester 3</h2>
+                            <div class="card-icon"><i data-feather="clock"></i></div>
+                        </div>
+                        <p>The next chapter is being prepared and will be available soon.</p>
+                    </div>
+                    <div class="status-runner-container">
+                        <div class="status-runner-track">
+                            <div class="status-runner-wrapper">
+                                 <div class="status-runner-text">
+                                     Starting Soon <span>•</span> Check back for updates <span>•</span> 
+                                     <!-- Duplicated for continuous loop -->
+                                     Starting Soon <span>•</span> Check back for updates <span>•</span> 
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- END: "PENDING" CARD -->
+
+                <div class="semester-card disabled-card"><div class="card-content"><div class="card-header"><h2>Semester 4</h2><div class="card-icon"><i data-feather="lock"></i></div></div><p>Coming Soon</p></div></div>
+                <div class="semester-card disabled-card"><div class="card-content"><div class="card-header"><h2>Semester 5</h2><div class="card-icon"><i data-feather="lock"></i></div></div><p>Coming Soon</p></div></div>
+                <div class="semester-card disabled-card"><div class="card-content"><div class="card-header"><h2>Semester 6</h2><div class="card-icon"><i data-feather="lock"></i></div></div><p>Coming Soon</p></div></div>
             </div>
         </main>
     </div>
@@ -257,7 +207,7 @@
             <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="about.html">About Us</a></li><li><a href="sem2.html">Semester Notes</a></li><li><a href="pratyushkumarswain2005@gmail.com">Contact Support</a></li></ul></div>
             <div class="footer-column"><h3>Connect With Us</h3><div class="social-links"><a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a><a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a><a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a></div></div>
         </div>
-        <div class="footer-bottom"><p>© 2025 Pratyush Swain. All Rights Reserved. • <a href="privacy.html">Privacy Policy</a> • <a href="terms.html">Terms of Use</a></p></div>
+        <div class="footer-bottom"><p>© 2025 Pratyush Swain. All Rights Reserved. <span class="footer-notice">Unauthorized distribution of content is prohibited.</span></p></div>
     </footer>
 
     <script>
@@ -267,43 +217,31 @@
             const themeToggle = document.getElementById('theme-toggle');
             const datetimeElement = document.getElementById('datetime');
             const quoteTextElement = document.getElementById('quote-text');
-            
             const currentTheme = localStorage.getItem('theme');
             if (currentTheme === 'light') { document.body.classList.remove('dark-mode'); if(themeToggle) themeToggle.checked = false; } 
             else { document.body.classList.add('dark-mode'); if(themeToggle) themeToggle.checked = true; }
             if(themeToggle){ themeToggle.addEventListener('change', () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light'); }); }
-
             if(datetimeElement){
                 const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`; };
-                setInterval(updateDateTime, 1000);
-                updateDateTime();
+                setInterval(updateDateTime, 1000); updateDateTime();
+            }
+            if(quoteTextElement){
+                const quotes = ["Saraswati Degree Vidya Mandir, Neelakanthanagar, Berhampur","A Central Hub for B.Sc. Physics Notes & Academic Resources.","The universe is under no obligation to make sense to you.","Everything is energy and that’s all there is to it. Match the frequency of the reality you want.","Science is a way of thinking much more than it is a body of knowledge.","Physics is the poetry of reality.","Somewhere, something incredible is waiting to be known.","The important thing is not to stop questioning. Curiosity has its own reason for existence.","Look deep into nature, and then you will understand everything better.","The science of today is the technology of tomorrow."];
+                let i=0; quoteTextElement.textContent=quotes[i];
+                setInterval(()=> { quoteTextElement.classList.add('fade-out'); setTimeout(()=>{ i=(i+1)%quotes.length; quoteTextElement.textContent=quotes[i]; quoteTextElement.classList.remove('fade-out'); },500); },6000);
             }
 
-                      if(quoteTextElement){
-                const quotes = [ 
-                    "Saraswati Degree Vidya Mandir, Neelakanthanagar, Berhampur",
-                    "A Central Hub for B.Sc. Physics Notes & Academic Resources.",
-                    "The universe is under no obligation to make sense to you.",
-                    "Everything is energy and that’s all there is to it. Match the frequency of the reality you want.",
-                    "Science is a way of thinking much more than it is a body of knowledge.",
-                    "Physics is the poetry of reality.",
-                    "Somewhere, something incredible is waiting to be known.",
-                    "The important thing is not to stop questioning. Curiosity has its own reason for existence.",
-                    "Look deep into nature, and then you will understand everything better.",
-                    "The science of today is the technology of tomorrow."
-                ];
-                let currentQuoteIndex = 0;
-                quoteTextElement.textContent = quotes[currentQuoteIndex];
-                const changeQuote = () => {
-                    quoteTextElement.classList.add('fade-out');
-                    setTimeout(() => {
-                        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-                        quoteTextElement.textContent = quotes[currentQuoteIndex];
-                        quoteTextElement.classList.remove('fade-out');
-                    }, 500);
-                };
-                setInterval(changeQuote, 6000); // Adjusted interval slightly for better reading of more quotes
+            // Continuous runner text duplication
+            function setupContinuousRunner(selector) {
+                const runnerText = document.querySelector(selector);
+                if (runnerText) {
+                    const content = runnerText.innerHTML;
+                    runnerText.innerHTML += content; // Duplicate content for a seamless loop
+                }
             }
+
+            setupContinuousRunner('.update-runner .runner-text');
+            setupContinuousRunner('.pending-card .status-runner-text');
         });
     </script>
 </body>
