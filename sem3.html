@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +14,6 @@
             --primary-accent-hover: #0b5ed7;
             --minor-card-inner-bg: #f1f3f5;
             --announcement-bg: linear-gradient(90deg, #4c66ff, #7f3fff);
-            --announcement-height: 45px; /* Define height as a variable */
         }
         body.dark-mode {
             --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --divine-bg: linear-gradient(90deg, #2c1e0b, #4b1a1f); --divine-text: #FFD700; --divine-shadow: rgba(255,215,0,0.2);
@@ -25,61 +22,34 @@
             --announcement-bg: linear-gradient(90deg, #4f46e5, #7c3aed);
         }
 
-        /* --- NEW: HANGING ANNOUNCEMENT SYSTEM --- */
-        .announcement-container {
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-        }
-        .announcement-bar {
+        /* --- NEW: INLINE NOTIFICATION BANNER --- */
+        .notification-container {
             background: var(--announcement-bg);
             color: white;
-            padding: 0.75rem 1rem;
+            width: 100%;
+            overflow: hidden;
+            /* Start collapsed */
+            max-height: 0;
+            transition: max-height 0.6s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        /* State when visible */
+        .notification-container.visible {
+            /* Expand to a height large enough to contain the content */
+            max-height: 100px;
+        }
+        .notification-bar {
+            padding: 0.8rem 1.5rem;
             text-align: center;
             font-size: 0.9em;
             font-weight: 500;
-            position: relative;
-            transform: translateY(0);
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            height: calc(var(--announcement-height) - 1.5rem); /* height - padding */
         }
-        .announcement-bar .close-btn {
-            position: absolute;
-            top: 50%; right: 1.5rem; transform: translateY(-50%);
-            background: none; border: none; color: white;
-            font-size: 1.2rem; cursor: pointer; opacity: 0.8;
-            transition: opacity 0.2s ease;
-        }
-        .announcement-bar .close-btn:hover { opacity: 1; }
-
-        .reopen-handle {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translate(-50%, -120%);
-            background: var(--announcement-bg);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600; font-size: 0.85em;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-
-        /* State when closed */
-        .announcement-container.closed .announcement-bar {
-            transform: translateY(-120%);
-        }
-        .announcement-container.closed .reopen-handle {
-            transform: translate(-50%, 0);
+        .notification-bar p {
+            margin: 0;
         }
 
         /* --- PREVIOUS STYLES (HEADER, CARDS, ETC.) --- */
@@ -87,10 +57,6 @@
         .container { width: 90%; max-width: 1200px; margin: 2rem auto; flex: 1; display: flex; flex-direction: column; }
         .divine-header { background: var(--divine-bg); color: var(--divine-text); text-align: center; padding: 0.75rem 0; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; text-shadow: 1px 1px 3px var(--divine-shadow); transition: all 0.3s ease; }
         header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: top 0.4s ease-out; }
-        body.announcement-visible header {
-            /* Pushes header down when announcement is visible */
-            top: var(--announcement-height);
-        }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto;}
         .title-container { display: flex; align-items: center; gap: 0.8rem; }
         .title-container .logo { font-size: 2em; color: var(--primary-accent); }
@@ -152,17 +118,12 @@
 </head>
 <body>
     
-    <!-- HANGING ANNOUNCEMENT SYSTEM -->
-    <div class="announcement-container" id="announcement-container">
-        <div class="announcement-bar">
+    <!-- INLINE NOTIFICATION BANNER -->
+    <div class="notification-container" id="page-notification">
+        <div class="notification-bar">
             <i class="fas fa-info-circle"></i>
             <p>This site was created recently & all contents will be updated regularly.</p>
-            <button class="close-btn" id="close-announcement" aria-label="Close announcement">&times;</button>
         </div>
-        <button class="reopen-handle" id="reopen-announcement" aria-label="Show announcement">
-            <i class="fas fa-bullhorn"></i>
-            <span>Updates</span>
-        </button>
     </div>
 
     <div class="divine-header">ॐ श्री गणेशाय नमः</div>
@@ -199,7 +160,8 @@
         <a href="semester.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
         
         <div class="course-grid">
-            <!-- Major 5 Card -->
+            <!-- All card content remains the same... -->
+             <!-- Major 5 Card -->
             <div class="course-card">
                 <div class="card-header"><div class="card-icon"><i class="fas fa-wave-square"></i></div><div class="card-title-group"><h2 class="card-title">Major-5</h2><span class="card-category">Core Physics Paper</span></div></div>
                 <p class="card-description">Exploring advanced concepts in mechanics, waves, and optics.</p>
@@ -249,7 +211,7 @@
             </div>
             <!-- AEC Card -->
             <div class="course-card">
-                 <div class="card-header"><div class="card-icon"><i class="fas fa-gavel"></i></div><div class="card-title-group"><h2 class="card-title">MDC: Ethics</h2><span class="card-category">Ability Enhancement Course</span></div></div>
+                 <div class="card-header"><div class="card-icon"><i class="fas fa-gavel"></i></div><div class="card-title-group"><h2 class="card-title">MDC: Ethics</h2><span class="card-category">Skill Enhancement Course </span></div></div>
                 <p class="card-description">An introduction to ethical principles and values in personal and professional life.</p>
                 <div class="card-footer"><a href="syllabus/mdc-ethics.pdf" target="_blank" class="btn btn-syllabus"><i class="fas fa-file-alt"></i> Syllabus</a><a href="mdc-ethics.html" class="btn btn-explore">Explore Course <i class="fas fa-arrow-right"></i></a></div>
             </div>
@@ -283,37 +245,29 @@
     <!-- FULL JAVASCRIPT FOR THIS PAGE -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- HANGING ANNOUNCEMENT LOGIC ---
-        const announcementContainer = document.getElementById('announcement-container');
-        const closeBtn = document.getElementById('close-announcement');
-        const reopenBtn = document.getElementById('reopen-announcement');
+        // --- INLINE NOTIFICATION BANNER LOGIC ---
+        const notification = document.getElementById('page-notification');
+        if (notification) {
+            const VISIBLE_DURATION_MS = 6000; // Visible for 6 seconds
+            const REAPPEAR_INTERVAL_MS = 120000; // Reappears every 2 minutes (120 * 1000 ms)
 
-        // Function to set the state
-        const setAnnouncementState = (isClosed) => {
-            if (isClosed) {
-                announcementContainer.classList.add('closed');
-                document.body.classList.remove('announcement-visible');
-                sessionStorage.setItem('announcementState', 'closed');
-            } else {
-                announcementContainer.classList.remove('closed');
-                document.body.classList.add('announcement-visible');
-                sessionStorage.setItem('announcementState', 'open');
-            }
-        };
+            const showNotification = () => {
+                // Check if it's already visible to prevent overlapping timeouts
+                if (notification.classList.contains('visible')) return;
+                
+                notification.classList.add('visible');
+                
+                // Set a timeout to hide the notification
+                setTimeout(() => {
+                    notification.classList.remove('visible');
+                }, VISIBLE_DURATION_MS);
+            };
 
-        // Check session storage on page load. If not set, default to open.
-        if (sessionStorage.getItem('announcementState') === 'closed') {
-            setAnnouncementState(true);
-        } else {
-            setAnnouncementState(false);
-        }
+            // Show the notification for the first time shortly after the page loads
+            setTimeout(showNotification, 500);
 
-        // Add event listeners
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => setAnnouncementState(true));
-        }
-        if (reopenBtn) {
-            reopenBtn.addEventListener('click', () => setAnnouncementState(false));
+            // Set an interval to show the notification periodically
+            setInterval(showNotification, REAPPEAR_INTERVAL_MS);
         }
 
         // --- ALL PREVIOUS JAVASCRIPT REMAINS THE SAME ---
