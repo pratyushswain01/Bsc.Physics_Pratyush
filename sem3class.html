@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSc. Physics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --chrome-bg: #161b22;
+            --card-bg: rgba(22, 27, 34, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --text-highlight: #ffffff;
+            --accent-glow: #58a6ff;
+            --live-glow: #3fb950;
+            --next-glow: #f778ba;
+            --break-glow: #ffc107;
+            
+            --c5: #ef476f; --c6: #118ab2; --c8: #ffd166;
+            --ethics: #7209b7; --minor: #06d6a0; --ee: #f78c6b;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        @keyframes aurora-bg { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        #particle-canvas, body::before { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -2; width: 100%; height: 100%; }
+        body::before {
+            content: ''; z-index: -1;
+            background: linear-gradient(235deg, var(--accent-glow), var(--bg-dark), var(--next-glow));
+            background-size: 300% 300%;
+            animation: aurora-bg 18s ease infinite; filter: blur(100px); opacity: 0.15;
+        }
+        
+        /* New: Fixed time display in the top right corner */
+        .fixed-time-display {
+            position: fixed;
+            top: 1rem;
+            right: 1.5rem;
+            z-index: 100;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-align: right;
+            backdrop-filter: blur(10px);
+        }
+        #live-date { font-weight: 600; color: var(--text-highlight); font-size: 0.9rem; }
+        #live-clock { color: var(--text-secondary); font-size: 1.1rem; font-weight: 500;}
+
+        .page-header {
+            background-color: var(--chrome-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem clamp(1rem, 5vw, 2.5rem);
+            flex-shrink: 0;
+        }
+        .header-title h1 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; font-weight: 800; color: var(--text-highlight); }
+        .header-title p { margin: 2px 0 0; color: var(--text-secondary); }
+        
+        .page-footer {
+            background-color: var(--chrome-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem clamp(1rem, 5vw, 2.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .footer-link { color: var(--text-primary); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+        .footer-link:hover { color: var(--accent-glow); }
+
+        .aurora-container {
+            width: 100%; max-width: 1400px; padding: clamp(1.5rem, 5vw, 2.5rem);
+            animation: fadeInUp 0.8s ease-out; margin: 0 auto; flex-grow: 1;
+        }
+        
+        .dashboard { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; }
+        .status-panel h2 { font-size: 1.2rem; color: var(--text-secondary); margin: 0 0 1rem; padding-left: 0.2rem; }
+        .status-card {
+            background-color: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1.25rem; margin-bottom: 1.5rem; transition: all 0.3s ease;
+        }
+        .status-card h3 { font-size: 1rem; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .status-card .subject { font-size: 1.4rem; font-weight: 700; color: var(--text-highlight); }
+        .status-card .details { color: var(--text-secondary); }
+        .status-card.live-card { border-left: 4px solid var(--live-glow); box-shadow: 0 0 20px rgba(63, 185, 80, 0.2); }
+        .status-card.break-card { border-left: 4px solid var(--break-glow); box-shadow: 0 0 20px rgba(255, 193, 7, 0.2); }
+        .status-card.next-card { border-left: 4px solid var(--next-glow); box-shadow: 0 0 20px rgba(247, 120, 186, 0.15); }
+        .status-card.idle-card .message { font-style: italic; color: var(--text-secondary); }
+        .progress-bar-container { margin-top: 1.2rem; }
+        .progress-bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
+        .progress-bar { width: 100%; height: 8px; background-color: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0; border-radius: 4px; transition: width 1s linear; }
+        .live-card .progress-bar-fill { background: var(--live-glow); }
+        .break-card .progress-bar-fill { background: var(--break-glow); }
+        
+        .timetable-panel .controls { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .search-bar input {
+            width: 100%; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary);
+            padding: 0.75rem 1rem; border-radius: 8px; font-size: 1rem; font-family: 'Manrope';
+        }
+        
+        .day-switcher { display: none; } .day-content { display: block; }
+        .day-card-header { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .class-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .class-item, .break-item {
+            display: flex; align-items: center; padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color);
+            border-left-width: 4px; border-radius: 8px; transition: all 0.2s ease-in-out; animation: fadeInUp 0.5s ease-out both;
+        }
+        .class-item:hover, .break-item:hover { transform: translateY(-3px); border-color: var(--accent-glow); box-shadow: 0 4px 15px rgba(88, 166, 255, 0.1); }
+        .class-item.hidden, .break-item.hidden { display: none; }
+        .class-item.live, .break-item.live { border-color: var(--live-glow); box-shadow: 0 0 15px rgba(63, 185, 80, 0.3); transform: scale(1.02); }
+        .class-item.next, .break-item.next { border-color: var(--next-glow); }
+        .class-time { font-weight: 700; width: 110px; flex-shrink: 0; color: var(--text-secondary); }
+        .class-details .subject { font-weight: 700; font-size: 1.1rem; color: var(--text-highlight); }
+        .class-details .faculty { color: var(--text-secondary); font-size: 0.9rem; }
+        .subject-C5 { border-left-color: var(--c5); } .subject-C6 { border-left-color: var(--c6); } .subject-C8 { border-left-color: var(--c8); }
+        .subject-ETHICS { border-left-color: var(--ethics); } .subject-MINOR { border-left-color: var(--minor); } .subject-EE { border-left-color: var(--ee); }
+        .break-item { border-left-color: var(--break-glow); border-style: dashed; }
+        .break-item.live { border-style: solid; }
+        .break-item .details { font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .no-class-message { text-align: center; padding: 3rem; color: var(--text-secondary); font-style: italic; }
+        
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000; display: none; align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            position: relative; background: var(--chrome-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 2rem; max-width: 600px; width: 90%; animation: fadeInUp 0.3s ease-out;
+        }
+        .modal-content h2 { margin-top: 0; color: var(--accent-glow); }
+        .modal-content p { color: var(--text-secondary); line-height: 1.6; }
+        .close-btn { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; color: var(--text-secondary); font-size: 2rem; cursor: pointer; }
+        
+        @media (max-width: 1024px) { .dashboard { grid-template-columns: 1fr; } .status-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; } .status-panel h2 { display: none; } }
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .fixed-time-display { top: 0.5rem; right: 1rem; padding: 0.3rem 0.8rem; }
+            #live-date { font-size: 0.75rem; } #live-clock { font-size: 1rem; }
+            .page-header { padding: 0.8rem 1rem; }
+            .aurora-container { padding: 1.5rem 1rem; }
+            .status-panel { grid-template-columns: 1fr; }
+            .day-switcher {
+                display: flex; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            }
+            .day-switcher::-webkit-scrollbar { display: none; }
+            .day-switcher-btn {
+                padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary);
+                font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+            }
+            .day-switcher-btn.active { background: var(--accent-glow); color: white; border-color: var(--accent-glow); }
+            .timetable-content, .day-content.active { display: block; } .day-content { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+<div class="fixed-time-display">
+    <div id="live-date"></div>
+    <div id="live-clock"></div>
+</div>
+
+<header class="page-header">
+    <div class="header-title">
+        <h1>BSc. Physics Dashboard</h1>
+        <p>Saraswati Degree Vidya Mandir, Berhampur</p>
+    </div>
+</header>
+
+<main class="aurora-container">
+    <div class="dashboard">
+        <aside class="status-panel">
+            <h2 class="status-panel-title">Current Status</h2>
+            <div id="status-card-live" class="status-card"></div>
+            <div id="status-card-next" class="status-card"></div>
+        </aside>
+
+        <div class="timetable-panel">
+            <div class="controls"><div class="search-bar"><input type="text" id="search-input" placeholder="Search for a class..."></div></div>
+            <div class="day-switcher" id="day-switcher"></div>
+            <div class="timetable-content" id="timetable-content"></div>
+        </div>
+    </div>
+</main>
+
+<footer class="page-footer">
+    <div id="copyright-text"></div>
+    <div class="footer-links"><a id="terms-link" class="footer-link">Terms of Use</a></div>
+</footer>
+
+<div class="modal" id="terms-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+        <button class="close-btn">&times;</button>
+        <h2>Terms of Use</h2>
+        <p>This timetable is provided as a personal convenience tool for students of Saraswati Degree Vidya Mandir. The schedule is based on the official data from w.e.f: 13-08-2025 but is subject to change. Always confirm with the department for official notices.</p>
+        <p><strong>Data & Privacy:</strong> This application runs entirely in your browser. No personal data, usage information, or schedule details are collected, stored, or transmitted to any server.</p>
+        <p><strong>Disclaimer:</strong> The developer is not liable for any discrepancies, missed classes, or other issues arising from the use of this tool. Use at your own discretion.</p>
+    </div>
+</div>
+
+<script>
+const timetableData = { 0: { name: 'Sunday', classes: [] }, 1: { name: 'Monday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-6', faculty: 'AP', code: 'C6' }, { type: 'class', start: '09:30', end: '10:40', subject: 'Ethics', faculty: '', code: 'ETHICS' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'Minor', faculty: 'PN', code: 'MINOR' }, { type: 'class', start: '12:00', end: '13:10', subject: 'EE', faculty: '', code: 'EE' } ]}, 2: { name: 'Tuesday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-6', faculty: 'AP', code: 'C6' }, { type: 'class', start: '09:30', end: '10:40', subject: 'Ethics', faculty: '', code: 'ETHICS' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'Minor', faculty: 'PN', code: 'MINOR' }, { type: 'class', start: '12:00', end: '13:10', subject: 'EE', faculty: '', code: 'EE' } ]}, 3: { name: 'Wednesday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-6', faculty: 'AP', code: 'C6' }, { type: 'class', start: '09:30', end: '10:40', subject: 'Ethics', faculty: '', code: 'ETHICS' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'Minor', faculty: 'PN', code: 'MINOR' }, { type: 'class', start: '12:00', end: '13:10', subject: 'C-8', faculty: 'RP', code: 'C8' } ]}, 4: { name: 'Thursday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-6', faculty: 'AP', code: 'C6' }, { type: 'class', start: '09:30', end: '10:40', subject: 'C-8', faculty: 'BP', code: 'C8' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'Minor', faculty: 'PN', code: 'MINOR' }, { type: 'class', start: '12:00', end: '13:10', subject: 'C-8', faculty: 'RP', code: 'C8' } ]}, 5: { name: 'Friday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-5', faculty: 'RP', code: 'C5' }, { type: 'class', start: '09:30', end: '10:40', subject: 'C-8', faculty: 'BP', code: 'C8' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'EE', faculty: '', code: 'EE' }, { type: 'class', start: '12:00', end: '13:10', subject: 'C-5', faculty: 'BP', code: 'C5' } ]}, 6: { name: 'Saturday', classes: [ { type: 'class', start: '08:20', end: '09:30', subject: 'C-5', faculty: 'RP', code: 'C5' }, { type: 'class', start: '09:30', end: '10:40', subject: 'Ethics', faculty: '', code: 'ETHICS' }, { type: 'break', start: '10:40', end: '10:50', subject: 'Short Break' }, { type: 'class', start: '10:50', end: '12:00', subject: 'EE', faculty: '', code: 'EE' }, { type: 'class', start: '12:00', end: '13:10', subject: 'C-5', faculty: 'BP', code: 'C5' } ]},};
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- PARTICLE BACKGROUND EFFECT ---
+    const canvas = document.getElementById('particle-canvas'); const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let particles = [];
+    const createParticles = () => { particles = []; let n = (canvas.width * canvas.height) / 9000; for (let i = 0; i < n; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 1, vx: Math.random() - 0.5, vy: Math.random() - 0.5 }); };
+    const animateParticles = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); for(let p of particles){ p.x += p.vx * 0.2; p.y += p.vy * 0.2; if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255, 255, 255, 0.4)'; ctx.fill(); } requestAnimationFrame(animateParticles); };
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; createParticles(); });
+    createParticles(); animateParticles();
+
+    // --- RENDER INITIAL UI ---
+    const daySwitcher = document.getElementById('day-switcher'); const timetableContent = document.getElementById('timetable-content');
+    Object.entries(timetableData).forEach(([day, data]) => { if(day > 0) { const btn = document.createElement('button'); btn.className = 'day-switcher-btn'; btn.dataset.day = day; btn.textContent = data.name.substring(0, 3); daySwitcher.appendChild(btn); } const contentDiv = document.createElement('div'); contentDiv.className = 'day-content'; contentDiv.dataset.day = day; let innerHTML = `<div class="day-card-header">${data.name}</div>`; if (data.classes.length === 0) { innerHTML += `<div class="no-class-message">No classes scheduled. Enjoy your day!</div>`; } else { let listHTML = '<div class="class-list">'; data.classes.forEach((c, index) => { const itemClass = c.type === 'class' ? `class-item subject-${c.code}` : 'break-item'; listHTML += `<div class="${itemClass}" data-day="${day}" data-start="${c.start}" data-end="${c.end}" style="animation-delay: ${index * 50}ms;"><div class="class-time">${c.start.replace(/^0/, '')} - ${c.end.replace(/^0/, '').replace('13:10','1:10')}</div><div class="class-details">${c.type === 'class' ? `<div class="subject">${c.subject}</div><div class="faculty">${c.faculty ? `(${c.faculty})` : ''}</div>` : `<div class="details"><i class="fas fa-coffee"></i> &nbsp; ${c.subject}</div>`}</div></div>`; }); listHTML += `</div>`; innerHTML += listHTML; } contentDiv.innerHTML = innerHTML; timetableContent.appendChild(contentDiv); });
+    
+    // --- HELPER & LIVE UPDATE LOGIC ---
+    const parseTime = (timeStr, date) => { const d = new Date(date); d.setHours(...timeStr.split(':').map(Number), 0, 0); return d; };
+    const activateDay = (dayIndex) => { document.querySelectorAll('.day-switcher-btn').forEach(b => b.classList.toggle('active', b.dataset.day == dayIndex)); document.querySelectorAll('.day-content').forEach(c => c.classList.toggle('active', c.dataset.day == dayIndex)); };
+    const updateUI = () => {
+        const now = new Date();
+        document.getElementById('live-clock').textContent = now.toLocaleTimeString('en-US');
+        document.getElementById('live-date').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric' });
+        const currentDayIndex = now.getDay(); const currentTime = now.getTime(); let currentEvent = null, nextEvent = null; const upcomingEvents = [];
+        Object.entries(timetableData).forEach(([day, data]) => { const dateOffset = parseInt(day) - currentDayIndex; data.classes.forEach(c => { if(dateOffset < 0) return; const start = parseTime(c.start, now); start.setDate(start.getDate() + dateOffset); const end = parseTime(c.end, start); if (currentTime >= start.getTime() && currentTime < end.getTime()) { currentEvent = { ...c, day, startTime: start, endTime: end }; } else if (start.getTime() > currentTime) { upcomingEvents.push({ ...c, day, startTime: start, endTime: end }); } }); });
+        if(upcomingEvents.length > 0) nextEvent = upcomingEvents[0];
+        
+        document.querySelectorAll('.live, .next').forEach(el => el.classList.remove('live', 'next'));
+        if(currentEvent) document.querySelector(`[data-day="${currentEvent.day}"][data-start="${currentEvent.start}"]`)?.classList.add('live');
+        if(nextEvent) document.querySelector(`[data-day="${nextEvent.day}"][data-start="${nextEvent.start}"]`)?.classList.add('next');
+
+        const liveCard = document.getElementById('status-card-live');
+        if (currentEvent) {
+            const duration = currentEvent.endTime.getTime() - currentEvent.startTime.getTime(); const elapsed = currentTime - currentEvent.startTime.getTime(); const progress = Math.min((elapsed / duration) * 100, 100);
+            liveCard.className = `status-card ${currentEvent.type === 'class' ? 'live-card' : 'break-card'}`; liveCard.innerHTML = `<h3>${currentEvent.type === 'class' ? '<i class="fas fa-book-open" style="color:var(--live-glow)"></i> LIVE NOW' : '<i class="fas fa-mug-hot" style="color:var(--break-glow)"></i> ON A BREAK'}</h3><div class="subject">${currentEvent.subject}</div><div class="details">${currentEvent.faculty ? `(${currentEvent.faculty})` : ''}</div><div class="progress-bar-container"><div class="progress-bar-label"><span>${currentEvent.start.replace(/^0/,'')}</span><span>${currentEvent.end.replace(/^0/,'').replace('13:10','1:10')}</span></div><div class="progress-bar"><div class="progress-bar-fill" style="width: ${progress}%"></div></div></div>`;
+        } else {
+            liveCard.className = 'status-card idle-card'; liveCard.innerHTML = `<h3><i class="far fa-circle"></i> NO LIVE EVENT</h3><div class="message">${currentDayIndex > 0 && currentDayIndex < 6 ? 'You are free for now.' : 'Enjoy your weekend!'}</div>`;
+        }
+        
+        const nextCard = document.getElementById('status-card-next');
+        if (nextEvent) {
+            const dayName = nextEvent.day != currentDayIndex ? `${timetableData[nextEvent.day].name} at ` : '';
+            nextCard.className = 'status-card next-card'; nextCard.innerHTML = `<h3><i class="fas fa-forward" style="color:var(--next-glow)"></i> UP NEXT</h3><div class="subject">${nextEvent.subject}</div><div class="details">${dayName}${nextEvent.start.replace(/^0/,'')} ${nextEvent.faculty ? `(${nextEvent.faculty})` : ''}</div>`;
+        } else {
+            nextCard.className = 'status-card idle-card'; nextCard.innerHTML = `<h3><i class="far fa-circle"></i> UP NEXT</h3><div class="message">That's all for the week!</div>`;
+        }
+        
+        const activeTab = daySwitcher.querySelector('.active');
+        if (window.innerWidth <= 768 && !activeTab) activateDay(currentDayIndex === 0 ? 1 : currentDayIndex);
+    };
+
+    // --- SETUP EVENT LISTENERS & INITIALIZE ---
+    document.getElementById('search-input').addEventListener('input', e => { const query = e.target.value.toLowerCase(); document.querySelectorAll('.class-item, .break-item').forEach(item => item.classList.toggle('hidden', !item.textContent.toLowerCase().includes(query))); });
+    daySwitcher.addEventListener('click', e => { if (e.target.classList.contains('day-switcher-btn')) activateDay(e.target.dataset.day); });
+    const termsModal = document.getElementById('terms-modal');
+    document.getElementById('terms-link').addEventListener('click', () => termsModal.classList.add('active'));
+    termsModal.querySelector('.close-btn').addEventListener('click', () => termsModal.classList.remove('active'));
+    termsModal.querySelector('.modal-overlay').addEventListener('click', () => termsModal.classList.remove('active'));
+    document.getElementById('copyright-text').innerHTML = `&copy; ${new Date().getFullYear()} BSc. Physics Dashboard. All Rights Reserved.`;
+
+    updateUI(); setInterval(updateUI, 1000);
+    if (window.innerWidth > 768) document.querySelectorAll('.day-content').forEach(c => c.classList.add('active'));
+});
+</script>
+</body>
+</html>
