@@ -72,40 +72,58 @@
         .resource-card:hover .icon { transform: scale(1.1) rotate(-5deg); }
         .resource-card .text h5 { margin: 0 0 0.25rem 0; font-size: 1em; color: var(--text-primary); }
         .resource-card .text p { margin: 0; font-size: 0.85em; color: var(--text-secondary); }
-
-        /* --- NOTES VIEWER STYLES --- */
-        .btn-view-notes {
-            background-color: var(--primary-accent); color: white; border: none;
-            border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em;
-            font-weight: 500; cursor: pointer; display: inline-flex; align-items: center;
-            gap: 0.75rem; transition: all 0.2s ease;
-        }
-        .btn-view-notes:hover {
-            background-color: var(--primary-accent-hover);
-            transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color);
-        }
+        .btn-view-notes { background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; }
+        .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
+        
+        /* --- NOTES VIEWER STYLES (NEW & IMPROVED) --- */
         .notes-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); z-index: 3000; display: none;
+            background: rgba(0, 0, 0, 0.9); z-index: 3000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s;
             backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease;
         }
-        .notes-viewer.visible { display: block; }
+        .notes-viewer.visible { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+        .notes-viewer-content { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; }
         .close-notes-btn {
             position: fixed; top: 20px; right: 30px; font-size: 2.5rem;
             font-weight: 300; background: none; border: none;
             color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1;
-            transition: color 0.2s ease, transform 0.2s ease;
+            transition: color 0.2s ease, transform 0.2s ease; z-index: 10;
         }
         .close-notes-btn:hover { color: white; transform: scale(1.1); }
-        .notes-content-area {
-            width: 100%; height: 100%; overflow-y: auto;
-            padding: 4rem 1rem; box-sizing: border-box; text-align: center;
+        .notes-image-container {
+            position: relative; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center; padding: 2rem 5rem; box-sizing: border-box;
         }
-        .notes-content-area img {
-            display: block; max-width: 800px; width: 95%; margin: 0 auto 1rem auto;
-            border-radius: 5px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        .notes-image-container img {
+            display: block; max-width: 100%; max-height: 100%;
+            object-fit: contain; border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
         }
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1); color: white;
+            border: none; border-radius: 50%; width: 50px; height: 50px;
+            font-size: 1.5rem; cursor: pointer; z-index: 5;
+            display: flex; justify-content: center; align-items: center;
+            transition: background 0.2s ease;
+        }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .prev-btn { left: 15px; }
+        .next-btn { right: 15px; }
+        .notes-controls {
+            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5); color: white;
+            border-radius: 20px; padding: 0.5rem 1rem;
+            display: flex; align-items: center; gap: 1.5rem;
+            backdrop-filter: blur(5px); user-select: none;
+        }
+        #page-indicator { font-weight: 500; font-size: 0.9em; }
+        #fullscreen-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0.5rem; transition: transform 0.2s; }
+        #fullscreen-btn:hover { transform: scale(1.15); }
     </style>
 </head>
 <body>
@@ -161,20 +179,17 @@
                     <div id="tab-1-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                            <!-- ADD YOUR NOTE IMAGES HERE for Unit 1 -->
                             <img src="notes/unit1/page1.jpg" alt="Unit 1, Page 1">
-<img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
-<img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
-<img src="notes/unit1/page4.jpg" alt="Unit 1, Page 4">
-<img src="notes/unit1/page5.jpg" alt="Unit 1, Page 5">
-<img src="notes/unit1/page6.jpg" alt="Unit 1, Page 6">
-
-                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Placeholder+Note+3" alt="Unit 1, Page 3">
+                            <img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
+                            <img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
+                            <img src="notes/unit1/page4.jpg" alt="Unit 1, Page 4">
+                            <img src="notes/unit1/page5.jpg" alt="Unit 1, Page 5">
+                            <img src="notes/unit1/page6.jpg" alt="Unit 1, Page 6">
+                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Placeholder+Note+3" alt="Unit 1, Page 7 Placeholder">
                         </div>
                     </div>
                     <div id="tab-1-3" class="tab-pane">
                         <div class="resources-grid">
-                            <!-- UPDATE RESOURCE LINKS HERE for Unit 1 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 1 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
                             <a href="https://www.youtube.com/watch?v=CzgaHLaWO_M" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Matrix Methods in Optics</h5><p>Watch a video lecture on YouTube.</p></div></a>
                             <a href="https://phet.colorado.edu/en/simulations/geometric-optics" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Lens Simulation</h5><p>Interactive PhET simulation.</p></div></a>
@@ -196,14 +211,12 @@
                     <div id="tab-2-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="2"><i class="fas fa-book-open"></i> View Unit II Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 2 -->
-                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Placeholder+Note+1" alt="Unit 2, Page 1">
-                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Placeholder+Note+2" alt="Unit 2, Page 2">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+1" alt="Unit 2, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+2" alt="Unit 2, Page 2">
                         </div>
                     </div>
                     <div id="tab-2-3" class="tab-pane">
                          <div class="resources-grid">
-                            <!-- UPDATE RESOURCE LINKS HERE for Unit 2 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 2 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
                             <a href="https://www.youtube.com/watch?v=tI8g4-4_p3A" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Lissajous Figures Visualized</h5><p>An intuitive video explanation.</p></div></a>
                         </div>
@@ -224,13 +237,11 @@
                     <div id="tab-3-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="3"><i class="fas fa-book-open"></i> View Unit III Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 3 -->
-                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Placeholder+Note+1" alt="Unit 3, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Note+1" alt="Unit 3, Page 1">
                         </div>
                     </div>
                     <div id="tab-3-3" class="tab-pane">
                          <div class="resources-grid">
-                            <!-- UPDATE RESOURCE LINKS HERE for Unit 3 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 3 Problem Set</h5><p>Practice questions on interference.</p></div></a>
                             <a href="https://phet.colorado.edu/en/simulations/wave-interference" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Wave Interference Sim</h5><p>Interactive PhET simulation.</p></div></a>
                          </div>
@@ -251,14 +262,12 @@
                     <div id="tab-4-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="4"><i class="fas fa-book-open"></i> View Unit IV Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 4 -->
-                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Placeholder+Note+1" alt="Unit 4, Page 1">
-                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Placeholder+Note+2" alt="Unit 4, Page 2">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+1" alt="Unit 4, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+2" alt="Unit 4, Page 2">
                         </div>
                     </div>
                     <div id="tab-4-3" class="tab-pane">
                          <div class="resources-grid">
-                            <!-- UPDATE RESOURCE LINKS HERE for Unit 4 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 4 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
                             <a href="https://www.youtube.com/watch?v=F6s9v_24Ohc" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Resolving Power</h5><p>Excellent visual explanation on YouTube.</p></div></a>
                          </div>
@@ -269,12 +278,22 @@
         </div>
     </main>
 
+    <!-- NEW NOTES VIEWER MODAL STRUCTURE -->
     <div id="notes-viewer-modal" class="notes-viewer">
-        <button class="close-notes-btn">&times;</button>
-        <div class="notes-content-area">
-            <!-- Note images will be injected here by JS -->
+        <div class="notes-viewer-content">
+            <button class="close-notes-btn">&times;</button>
+            <button class="nav-btn prev-btn" title="Previous Page (Left Arrow)"><i class="fas fa-chevron-left"></i></button>
+            <div class="notes-image-container">
+                <img src="" alt="Note page viewer" id="note-image">
+            </div>
+            <button class="nav-btn next-btn" title="Next Page (Right Arrow)"><i class="fas fa-chevron-right"></i></button>
+            <div class="notes-controls">
+                <span id="page-indicator"></span>
+                <button id="fullscreen-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
+            </div>
         </div>
     </div>
+
 
     <footer><p>&copy; <span id="current-year"></span> Created & Designed by Pratyush Swain.</p></footer>
 
@@ -284,11 +303,23 @@
         const progressBar = document.getElementById('scroll-progress-bar');
         const accordionToggles = document.querySelectorAll('.accordion-toggle');
         const allTabContainers = document.querySelectorAll('.accordion-panel');
-        const notesViewer = document.getElementById('notes-viewer-modal');
-        const notesContentArea = notesViewer.querySelector('.notes-content-area');
-        const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
         const viewNotesButtons = document.querySelectorAll('.btn-view-notes');
         const canvas = document.getElementById('particle-canvas');
+
+        // --- NEW NOTES VIEWER ELEMENTS ---
+        const notesViewer = document.getElementById('notes-viewer-modal');
+        const noteImage = document.getElementById('note-image');
+        const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
+        const prevBtn = notesViewer.querySelector('.prev-btn');
+        const nextBtn = notesViewer.querySelector('.next-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const notesViewerContent = notesViewer.querySelector('.notes-viewer-content');
+        
+        // --- NEW NOTES VIEWER STATE ---
+        let currentNoteImages = [];
+        let currentPageIndex = 0;
+
 
         // --- THEME LOGIC ---
         const applyTheme = (theme) => {
@@ -361,29 +392,104 @@
                     if (!toggle.classList.contains('active')) { toggle.click(); }
                     setTimeout(() => {
                         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300); // Small delay to allow accordion to open
+                    }, 300);
                 }
             });
         });
         
-        // --- NOTES VIEWER LOGIC ---
+        // --- NOTES VIEWER LOGIC (COMPLETELY REWRITTEN) ---
+
+        const updateNoteView = () => {
+            if (currentNoteImages.length === 0) return;
+
+            const currentImage = currentNoteImages[currentPageIndex];
+            noteImage.src = currentImage.src;
+            noteImage.alt = currentImage.alt;
+
+            pageIndicator.textContent = `Page ${currentPageIndex + 1} of ${currentNoteImages.length}`;
+            
+            prevBtn.disabled = (currentPageIndex === 0);
+            nextBtn.disabled = (currentPageIndex === currentNoteImages.length - 1);
+        };
+
         const openNotesViewer = (button) => {
             const imageListContainer = button.nextElementSibling;
             if (imageListContainer) {
-                notesContentArea.innerHTML = imageListContainer.innerHTML;
+                const images = Array.from(imageListContainer.querySelectorAll('img'));
+                if (images.length === 0) {
+                    alert('No notes available for this unit.');
+                    return;
+                }
+                currentNoteImages = images.map(img => ({ src: img.src, alt: img.alt }));
+                currentPageIndex = 0;
+                
+                updateNoteView();
+
                 notesViewer.classList.add('visible');
                 document.body.style.overflow = 'hidden';
             }
         };
+
         const closeNotesViewer = () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
             notesViewer.classList.remove('visible');
             document.body.style.overflow = '';
-            notesContentArea.innerHTML = '';
+            currentNoteImages = []; // Clear the array
         };
+        
+        const goToNextPage = () => {
+            if (currentPageIndex < currentNoteImages.length - 1) {
+                currentPageIndex++;
+                updateNoteView();
+            }
+        };
+
+        const goToPrevPage = () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updateNoteView();
+            }
+        };
+
+        const toggleFullscreen = () => {
+            if (!document.fullscreenElement) {
+                notesViewerContent.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        };
+        
+        const updateFullscreenIcon = () => {
+            if (document.fullscreenElement) {
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        };
+
         viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
         closeNotesBtn.addEventListener('click', closeNotesViewer);
-        notesViewer.addEventListener('click', (e) => { if (e.target === notesViewer) closeNotesViewer(); });
-        document.addEventListener('keydown', (e) => { if (e.key === "Escape" && notesViewer.classList.contains('visible')) closeNotesViewer(); });
+        nextBtn.addEventListener('click', goToNextPage);
+        prevBtn.addEventListener('click', goToPrevPage);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        document.addEventListener('fullscreenchange', updateFullscreenIcon);
+
+        notesViewer.addEventListener('click', (e) => { 
+            if (e.target === notesViewer) closeNotesViewer(); 
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!notesViewer.classList.contains('visible')) return;
+            if (e.key === "Escape") closeNotesViewer();
+            if (e.key === "ArrowRight") goToNextPage();
+            if (e.key === "ArrowLeft") goToPrevPage();
+            if (e.key.toLowerCase() === "f") toggleFullscreen();
+        });
+
 
         // --- PARTICLE BACKGROUND LOGIC ---
         if (canvas) {
