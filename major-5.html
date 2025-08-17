@@ -34,59 +34,37 @@
         .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
-        footer { text-align: center; padding: 2rem 1rem; margin-top: auto; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        footer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
 
-        /* --- NEW: SCROLL PROGRESS BAR --- */
+        /* --- ANIMATIONS & ADVANCED UI --- */
         #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--hero-gradient); width: 0%; z-index: 2000; transition: width 0.1s linear; }
-        
-        /* --- NEW: ANIMATED PARTICLE BACKGROUND --- */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        
-        /* --- ADVANCED COURSE PAGE STYLES --- */
-        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; }
         .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
-
-        /* NEW: Animated Hero Header */
         .course-header { text-align: center; padding: 4rem 1rem; margin-bottom: 2rem; }
-        .course-header h1 { font-size: 3.5em; font-weight: 700; margin: 0 0 0.5rem 0; background: var(--hero-gradient); color: transparent; -webkit-background-clip: text; background-clip: text; background-size: 200% auto; animation: gradient-text 10s linear infinite; }
+        .course-header h1 { font-size: clamp(2.5em, 5vw, 3.5em); font-weight: 700; margin: 0 0 0.5rem 0; background: var(--hero-gradient); color: transparent; -webkit-background-clip: text; background-clip: text; background-size: 200% auto; animation: gradient-text 10s linear infinite; }
         @keyframes gradient-text { to { background-position: 200% center; } }
-        .course-header p { font-size: 1.2em; color: var(--text-secondary); margin: 0; max-width: 800px; margin-left: auto; margin-right: auto; }
-
-        /* NEW: Quick Links Navigation */
+        .course-header p { font-size: clamp(1em, 2.5vw, 1.2em); color: var(--text-secondary); margin: 0; max-width: 800px; margin-left: auto; margin-right: auto; }
         .quick-links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; }
         .quick-link { text-decoration: none; background-color: var(--resource-card-bg); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid var(--border-color); }
         .quick-link:hover { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); transform: translateY(-2px); }
         .quick-link .fa-fw { margin-right: 0.5rem; }
-
         .course-outcomes { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
         .course-outcomes h2 { margin-top: 0; font-size: 1.5em; } .course-outcomes ul { list-style-type: none; padding-left: 0; }
-        .course-outcomes li { padding-left: 2rem; position: relative; margin-bottom: 0.75rem; color: var(--text-secondary); }
+        .course-outcomes li { padding-left: 2rem; position: relative; margin-bottom: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
         .course-outcomes li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 2px; font-size: 1.2em; }
-
-        /* Accordion Styles */
         .accordion-item { background: var(--card-bg); border-radius: 12px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
         .accordion-toggle { background: transparent; color: var(--text-primary); cursor: pointer; padding: 1.5rem; width: 100%; border: none; text-align: left; outline: none; font-size: 1.2em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
         .accordion-toggle .unit-title { color: var(--primary-accent); margin-right: 1rem; }
         .accordion-toggle .fas { transition: transform 0.3s ease-in-out; } .accordion-toggle.active .fas { transform: rotate(180deg); }
         .accordion-panel { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.7s cubic-bezier(0.25, 1, 0.5, 1), padding 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
         .accordion-panel.open { padding-bottom: 1.5rem; }
-
-        /* NEW: Tabs within Accordion */
         .tab-container { display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 1.5rem; }
         .tab-link { font-size: 1em; font-weight: 500; color: var(--text-secondary); background: none; border: none; padding: 0.75rem 1.5rem; cursor: pointer; position: relative; transition: color 0.3s ease; }
         .tab-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background-color: var(--primary-accent); transform: scaleX(0); transition: transform 0.3s ease; }
         .tab-link.active { color: var(--primary-accent); } .tab-link.active::after { transform: scaleX(1); }
         .tab-pane { display: none; animation: fadeIn 0.5s ease; }
-        .tab-pane.active { display: block; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        /* Notes Gallery Styles */
-        .notes-gallery-container { margin-top: 1rem; } .notes-gallery { display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
-        .notes-gallery img { max-height: 400px; border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; scroll-snap-align: start; }
-        .notes-gallery img:hover { transform: scale(1.03); box-shadow: 0 8px 25px var(--shadow-color); }
-        .notes-gallery::-webkit-scrollbar { height: 8px; } .notes-gallery::-webkit-scrollbar-track { background: var(--resource-card-bg); border-radius: 4px; }
-        .notes-gallery::-webkit-scrollbar-thumb { background-color: var(--primary-accent); border-radius: 4px; }
-
-        /* Resources Grid */
+        .tab-pane.active { display: block; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
         .resource-card { background-color: var(--resource-card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.5rem; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
         .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); border-color: var(--primary-accent); }
@@ -95,10 +73,39 @@
         .resource-card .text h5 { margin: 0 0 0.25rem 0; font-size: 1em; color: var(--text-primary); }
         .resource-card .text p { margin: 0; font-size: 0.85em; color: var(--text-secondary); }
 
-        /* Lightbox for Image Viewing */
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
-        .lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-        .lightbox.visible { display: flex; }
+        /* --- NOTES VIEWER STYLES --- */
+        .btn-view-notes {
+            background-color: var(--primary-accent); color: white; border: none;
+            border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em;
+            font-weight: 500; cursor: pointer; display: inline-flex; align-items: center;
+            gap: 0.75rem; transition: all 0.2s ease;
+        }
+        .btn-view-notes:hover {
+            background-color: var(--primary-accent-hover);
+            transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .notes-viewer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 3000; display: none;
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        .notes-viewer.visible { display: block; }
+        .close-notes-btn {
+            position: fixed; top: 20px; right: 30px; font-size: 2.5rem;
+            font-weight: 300; background: none; border: none;
+            color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .close-notes-btn:hover { color: white; transform: scale(1.1); }
+        .notes-content-area {
+            width: 100%; height: 100%; overflow-y: auto;
+            padding: 4rem 1rem; box-sizing: border-box; text-align: center;
+        }
+        .notes-content-area img {
+            display: block; max-width: 800px; width: 95%; margin: 0 auto 1rem auto;
+            border-radius: 5px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
@@ -114,7 +121,7 @@
     </header>
 
     <main class="container">
-        <a href="sem3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to All Subjects</a>
+        <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to All Subjects</a>
         
         <div class="course-header">
             <h1>Waves and Optics</h1>
@@ -131,10 +138,11 @@
         <div class="course-outcomes">
             <h2><i class="fas fa-bullseye"></i> Course Outcomes</h2>
             <ul>
-                <li>Basic understanding of propagation of light, its application and wave nature.</li>
-                <li>To Understand the concepts of wave motion & interference.</li>
-                <li>To Understand the concepts of diffraction and its application.</li>
-                <li>To Apply the acquired knowledge of optics in Experiment.</li>
+                <li>Develop a fundamental understanding of light propagation, its applications, and its dual wave-particle nature.</li>
+                <li>Analyze and describe various concepts of wave motion, including superposition and energy transport.</li>
+                <li>Understand and apply the principles of interference to phenomena like thin films and interferometers.</li>
+                <li>Grasp the concepts of diffraction and its role in the resolving power of optical instruments.</li>
+                <li>Apply the acquired knowledge of optics in practical experiments and problem-solving.</li>
             </ul>
         </div>
 
@@ -142,25 +150,29 @@
 
             <!-- UNIT I -->
             <div class="accordion-item" id="unit1">
-                <button class="accordion-toggle"><div><span class="unit-title">Unit I</span> Geometrical and Wave Optics</div><i class="fas fa-chevron-down"></i></button>
+                <button class="accordion-toggle"><div><span class="unit-title">Unit I</span> Geometrical & Wave Optics</div><i class="fas fa-chevron-down"></i></button>
                 <div class="accordion-panel">
                     <div class="tab-container">
                         <button class="tab-link active" data-tab="1-1">Syllabus</button>
                         <button class="tab-link" data-tab="1-2">Class Notes</button>
                         <button class="tab-link" data-tab="1-3">Resources</button>
                     </div>
-                    <div id="tab-1-1" class="tab-pane active"><p>Fermat’s principle, Matrix formulation, Cardinal points/planes, Dispersion, Thick/Thin Lens, Eyepieces, EM nature of light, Huygens Principle, Temporal/Spatial Coherence.</p></div>
+                    <div id="tab-1-1" class="tab-pane active"><p><strong>Geometrical Optics:</strong> Fermat’s principle, reflection and refraction at plane interface, Matrix formulation of geometrical Optics, Cardinal points and Cardinal planes of an optical system, Idea of dispersion, Application to thick Lens and thin Lens, Ramsden and Huygens eyepiece. <br><strong>Wave Optics:</strong> Electromagnetic nature of light. Definition and properties of wave front Huygens Principle. Temporal and Spatial Coherence.</p></div>
                     <div id="tab-1-2" class="tab-pane">
-                        <div class="notes-gallery">
-                            <img src="https://via.placeholder.com/600x800.png?text=Unit+1+Page+1" alt="Unit 1, Page 1">
-                            <img src="https://via.placeholder.com/600x800.png?text=Unit+1+Page+2" alt="Unit 1, Page 2">
+                        <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                            <!-- ADD YOUR NOTE IMAGES HERE for Unit 1 -->
+                            <img src="notes/unit1/page1.jpg" alt="Unit 1, Page 1">
+                            <img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
+                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Placeholder+Note+3" alt="Unit 1, Page 3">
                         </div>
                     </div>
                     <div id="tab-1-3" class="tab-pane">
                         <div class="resources-grid">
+                            <!-- UPDATE RESOURCE LINKS HERE for Unit 1 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 1 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
-                            <a href="#" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Fermat's Principle</h5><p>Watch a video lecture on YouTube.</p></div></a>
-                            <a href="#" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Lens Simulation</h5><p>Interactive PhET simulation.</p></div></a>
+                            <a href="https://www.youtube.com/watch?v=CzgaHLaWO_M" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Matrix Methods in Optics</h5><p>Watch a video lecture on YouTube.</p></div></a>
+                            <a href="https://phet.colorado.edu/en/simulations/geometric-optics" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Lens Simulation</h5><p>Interactive PhET simulation.</p></div></a>
                         </div>
                     </div>
                 </div>
@@ -175,21 +187,25 @@
                         <button class="tab-link" data-tab="2-2">Class Notes</button>
                         <button class="tab-link" data-tab="2-3">Resources</button>
                     </div>
-                    <div id="tab-2-1" class="tab-pane active"><p>Plane/Spherical Waves, Wave Equation, Particle/Wave Velocities, Energy Transport, Intensity, Superposition of perpendicular Harmonic Oscillations, Lissajous Figures.</p></div>
+                    <div id="tab-2-1" class="tab-pane active"><p><strong>Wave Motion:</strong> Plane and Spherical Waves, Longitudinal and Transverse Waves, Plane Progressive (Traveling) Waves, Wave Equation, Particle and Wave Velocities, Differential Equation, Pressure of a Longitudinal Wave, Energy Transport, Intensity of Wave. <br><strong>Superposition:</strong> Superposition of two perpendicular Harmonic Oscillations (Graphical and Analytical Methods), Lissajous Figures (1:1 and 1:2) and their uses, Superposition of Harmonic waves.</p></div>
                     <div id="tab-2-2" class="tab-pane">
-                        <div class="notes-gallery">
-                            <img src="https://via.placeholder.com/600x800.png?text=Unit+2+Page+1" alt="Unit 2, Page 1">
+                        <button class="btn-view-notes" data-unit="2"><i class="fas fa-book-open"></i> View Unit II Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 2 -->
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Placeholder+Note+1" alt="Unit 2, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Placeholder+Note+2" alt="Unit 2, Page 2">
                         </div>
                     </div>
                     <div id="tab-2-3" class="tab-pane">
                          <div class="resources-grid">
+                            <!-- UPDATE RESOURCE LINKS HERE for Unit 2 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 2 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
-                            <a href="#" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Lissajous Figures</h5><p>Watch a video lecture on YouTube.</p></div></a>
+                            <a href="https://www.youtube.com/watch?v=tI8g4-4_p3A" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Lissajous Figures Visualized</h5><p>An intuitive video explanation.</p></div></a>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             <!-- UNIT III -->
             <div class="accordion-item" id="unit3">
                 <button class="accordion-toggle"><div><span class="unit-title">Unit III</span> Interference</div><i class="fas fa-chevron-down"></i></button>
@@ -199,17 +215,20 @@
                         <button class="tab-link" data-tab="3-2">Class Notes</button>
                         <button class="tab-link" data-tab="3-3">Resources</button>
                     </div>
-                    <div id="tab-3-1" class="tab-pane active"><p>Young’s double slit, Lloyds Mirror, Fresnel's Bi-prism, Interference in Thin Films, Newton’s Rings, Michelson’s Interferometer, Fabry-Perot interferometer.</p></div>
+                    <div id="tab-3-1" class="tab-pane active"><p><strong>Fundamentals:</strong> Division of amplitude and wave front, Young’s double slit experiment, Lloyds Mirror and Fresnels Bi-prism, Phase change on reflection: Stokes treatment. <br><strong>Applications:</strong> Interference in Thin Films (parallel and wedge-shaped films), Fringes of equal inclination (Haidinger) and equal thickness (Fizeau), Newton’s Rings. <br><strong>Interferometers:</strong> Michelson’s Interferometer (fringe forms, wavelength determination, refractive index), Fabry-Perot interferometer.</p></div>
                     <div id="tab-3-2" class="tab-pane">
-                        <div class="notes-gallery">
-                            <img src="https://via.placeholder.com/600x800.png?text=Unit+3+Page+1" alt="Unit 3, Page 1">
+                        <button class="btn-view-notes" data-unit="3"><i class="fas fa-book-open"></i> View Unit III Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 3 -->
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Placeholder+Note+1" alt="Unit 3, Page 1">
                         </div>
                     </div>
                     <div id="tab-3-3" class="tab-pane">
                          <div class="resources-grid">
-                           <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 3 Problem Set</h5><p>Practice questions on interference.</p></div></a>
-                           <a href="#" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Newton's Rings Sim</h5><p>Interactive simulation.</p></div></a>
-                        </div>
+                            <!-- UPDATE RESOURCE LINKS HERE for Unit 3 -->
+                            <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 3 Problem Set</h5><p>Practice questions on interference.</p></div></a>
+                            <a href="https://phet.colorado.edu/en/simulations/wave-interference" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Wave Interference Sim</h5><p>Interactive PhET simulation.</p></div></a>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -223,17 +242,21 @@
                         <button class="tab-link" data-tab="4-2">Class Notes</button>
                         <button class="tab-link" data-tab="4-3">Resources</button>
                     </div>
-                    <div id="tab-4-1" class="tab-pane active"><p>Fraunhoffer diffraction (single/double/multiple slit, circular aperture), Resolving Power, Diffraction grating, Fresnel Diffraction, Half-Period Zones, Zone Plate, Fresnel’s Integral.</p></div>
+                    <div id="tab-4-1" class="tab-pane active"><p><strong>Fraunhoffer Diffraction:</strong> Single slit, Circular aperture, Resolving Power of a telescope, Double slit, Multiple slits, Diffraction grating, Resolving power of grating. <br><strong>Fresnel Diffraction:</strong> Fresnel’s Assumptions, Fresnel’s Half-Period Zones for Plane Wave, Rectilinear Propagation of Light, Theory of a Zone Plate, Fresnel’s Integral, Fresnel diffraction pattern of a straight edge, a slit and a wire.</p></div>
                     <div id="tab-4-2" class="tab-pane">
-                        <div class="notes-gallery">
-                             <img src="https://via.placeholder.com/600x800.png?text=Unit+4+Page+1" alt="Unit 4, Page 1">
+                        <button class="btn-view-notes" data-unit="4"><i class="fas fa-book-open"></i> View Unit IV Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 4 -->
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Placeholder+Note+1" alt="Unit 4, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Placeholder+Note+2" alt="Unit 4, Page 2">
                         </div>
                     </div>
                     <div id="tab-4-3" class="tab-pane">
-                        <div class="resources-grid">
+                         <div class="resources-grid">
+                            <!-- UPDATE RESOURCE LINKS HERE for Unit 4 -->
                             <a href="#" class="resource-card"><span class="icon"><i class="fas fa-file-pdf"></i></span><div class="text"><h5>Unit 4 Full PDF</h5><p>Download all notes for offline reading.</p></div></a>
-                            <a href="#" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Resolving Power</h5><p>Watch a video lecture on YouTube.</p></div></a>
-                        </div>
+                            <a href="https://www.youtube.com/watch?v=F6s9v_24Ohc" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Resolving Power</h5><p>Excellent visual explanation on YouTube.</p></div></a>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -241,61 +264,67 @@
         </div>
     </main>
 
-    <div id="lightbox" class="lightbox"><img src="" alt="Full-screen note image"></div>
+    <div id="notes-viewer-modal" class="notes-viewer">
+        <button class="close-notes-btn">&times;</button>
+        <div class="notes-content-area">
+            <!-- Note images will be injected here by JS -->
+        </div>
+    </div>
 
     <footer><p>&copy; <span id="current-year"></span> Created & Designed by Pratyush Swain.</p></footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Theme Switcher Logic ---
         const themeToggle = document.getElementById('theme-toggle');
+        const progressBar = document.getElementById('scroll-progress-bar');
+        const accordionToggles = document.querySelectorAll('.accordion-toggle');
+        const allTabContainers = document.querySelectorAll('.accordion-panel');
+        const notesViewer = document.getElementById('notes-viewer-modal');
+        const notesContentArea = notesViewer.querySelector('.notes-content-area');
+        const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
+        const viewNotesButtons = document.querySelectorAll('.btn-view-notes');
+        const canvas = document.getElementById('particle-canvas');
+
+        // --- THEME LOGIC ---
         const applyTheme = (theme) => {
             document.body.classList.toggle('dark-mode', theme === 'dark');
             if (themeToggle) { themeToggle.checked = (theme === 'dark'); }
         };
         const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         applyTheme(savedTheme);
-        if (themeToggle) {
-            themeToggle.addEventListener('change', () => {
-                const newTheme = themeToggle.checked ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-                applyTheme(newTheme);
-            });
-        }
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
         if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
 
-        // --- Scroll Progress Bar Logic ---
-        const progressBar = document.getElementById('scroll-progress-bar');
+        // --- SCROLL PROGRESS BAR LOGIC ---
         window.addEventListener('scroll', () => {
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrolled = (window.scrollY / scrollableHeight) * 100;
             if (progressBar) { progressBar.style.width = scrolled + '%'; }
         });
 
-        // --- Accordion Logic ---
-        const accordionToggles = document.querySelectorAll('.accordion-toggle');
+        // --- ACCORDION LOGIC ---
         accordionToggles.forEach(toggle => {
             toggle.addEventListener('click', () => {
                 const panel = toggle.nextElementSibling;
                 const isOpen = panel.style.maxHeight;
                 
-                // Close all other accordions
                 document.querySelectorAll('.accordion-panel').forEach(p => p.style.maxHeight = null);
                 document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('open'));
 
-                // Open the clicked one if it was closed
                 if (!isOpen) {
                     toggle.classList.add('active');
-                    panel.style.maxHeight = panel.scrollHeight + "px";
                     panel.classList.add('open');
-                } else {
-                     panel.classList.remove('open');
+                    panel.style.maxHeight = panel.scrollHeight + "px";
                 }
             });
         });
-
-        // --- Tab Logic ---
-        const allTabContainers = document.querySelectorAll('.accordion-panel');
+        
+        // --- TABS LOGIC ---
         allTabContainers.forEach(container => {
             const tabLinks = container.querySelectorAll('.tab-link');
             const tabPanes = container.querySelectorAll('.tab-pane');
@@ -309,7 +338,6 @@
                     link.classList.add('active');
                     container.querySelector('#tab-' + tabId).classList.add('active');
 
-                    // Recalculate accordion height
                     const openAccordionPanel = document.querySelector('.accordion-panel.open');
                     if (openAccordionPanel) {
                         openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
@@ -317,95 +345,66 @@
                 });
             });
         });
-
-        // --- Quick Links Smooth Scroll ---
+        
+        // --- QUICK LINKS SCROLL LOGIC ---
         document.querySelectorAll('.quick-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                const targetElement = document.querySelector(this.getAttribute('href'));
                 if (targetElement) {
-                    // Open the accordion if it's not already
                     const toggle = targetElement.querySelector('.accordion-toggle');
-                    const panel = targetElement.querySelector('.accordion-panel');
-                    if (!panel.style.maxHeight) {
-                        toggle.click();
-                    }
-                    // Scroll to the element
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (!toggle.classList.contains('active')) { toggle.click(); }
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300); // Small delay to allow accordion to open
                 }
             });
         });
+        
+        // --- NOTES VIEWER LOGIC ---
+        const openNotesViewer = (button) => {
+            const imageListContainer = button.nextElementSibling;
+            if (imageListContainer) {
+                notesContentArea.innerHTML = imageListContainer.innerHTML;
+                notesViewer.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+        const closeNotesViewer = () => {
+            notesViewer.classList.remove('visible');
+            document.body.style.overflow = '';
+            notesContentArea.innerHTML = '';
+        };
+        viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
+        closeNotesBtn.addEventListener('click', closeNotesViewer);
+        notesViewer.addEventListener('click', (e) => { if (e.target === notesViewer) closeNotesViewer(); });
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape" && notesViewer.classList.contains('visible')) closeNotesViewer(); });
 
-        // --- Lightbox Logic ---
-        const lightbox = document.getElementById('lightbox');
-        if (lightbox) {
-            const lightboxImage = lightbox.querySelector('img');
-            const galleryImages = document.querySelectorAll('.notes-gallery img');
-
-            galleryImages.forEach(image => {
-                image.addEventListener('click', () => {
-                    lightboxImage.src = image.src;
-                    lightbox.classList.add('visible');
-                });
-            });
-            lightbox.addEventListener('click', () => lightbox.classList.remove('visible'));
-        }
-
-        // --- Animated Particle Background Logic ---
-        const canvas = document.getElementById('particle-canvas');
+        // --- PARTICLE BACKGROUND LOGIC ---
         if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            const setCanvasSize = () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-
+            const ctx = canvas.getContext('2d'); let particles = [];
+            const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = document.documentElement.scrollHeight; };
             const createParticles = () => {
                 particles = [];
-                const particleCount = (canvas.width * canvas.height) / 10000;
+                const particleCount = (canvas.width * canvas.height) / 15000;
                 for (let i = 0; i < particleCount; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        vx: Math.random() * 0.5 - 0.25,
-                        vy: Math.random() * 0.5 - 0.25,
-                        radius: Math.random() * 1.5 + 0.5,
-                    });
+                    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2, radius: Math.random() * 1.5 + 0.5 });
                 }
             };
-
-            const animate = () => {
+            const animateParticles = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const particleColor = getComputedStyle(document.body).getPropertyValue('--text-secondary') + '66'; // with opacity
+                const particleColor = getComputedStyle(document.body).getPropertyValue('--text-secondary') + '66';
                 ctx.fillStyle = particleColor;
-                ctx.strokeStyle = particleColor;
-
-                for (let i = 0; i < particles.length; i++) {
-                    let p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
                     if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                requestAnimationFrame(animate);
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                });
+                requestAnimationFrame(animateParticles);
             };
-            
-            setCanvasSize();
-            createParticles();
-            animate();
-            
-            window.addEventListener('resize', () => {
-                setCanvasSize();
-                createParticles();
-            });
+            setCanvasSize(); createParticles(); animateParticles();
+            window.addEventListener('resize', () => { setCanvasSize(); createParticles(); });
         }
     });
     </script>
