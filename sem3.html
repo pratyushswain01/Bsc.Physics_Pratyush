@@ -26,7 +26,7 @@
             --next-accent: #a78bfa; --next-accent-bg: rgba(167, 139, 250, 0.1);
         }
 
-        /* --- NOTIFICATION BANNER (Corrected & Enhanced) --- */
+        /* --- NOTIFICATION BANNER --- */
         .notification-container {
             background: var(--announcement-bg); color: white; width: 100%;
             overflow: hidden; max-height: 0;
@@ -72,7 +72,45 @@
             padding: 0.5rem 0.8rem;
         }
         .minor-card-container.course-card:hover { transform: none; box-shadow: 0 5px 15px var(--shadow-color); } .minor-options { margin-top: auto; display: flex; flex-direction: column; gap: 1rem; } .minor-subject-option { background-color: var(--minor-card-inner-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; transition: all 0.2s ease; } .minor-subject-option:hover { transform: translateY(-3px); border-color: var(--primary-accent); box-shadow: 0 6px 15px var(--shadow-color); } .minor-subject-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.1em; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; } .minor-subject-header i { color: var(--primary-accent); font-size: 1.2em; } .minor-subject-actions { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; } .minor-subject-actions .btn { flex-grow: 1; padding: 0.5rem; font-size: 0.8rem; } .portal-link-card { display: block; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-top: 3rem; text-decoration: none; box-shadow: 0 5px 15px var(--shadow-color); transition: all 0.2s ease-in-out; display: flex; align-items: center; gap: 1.5rem; } .portal-link-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px var(--shadow-color); border-color: var(--primary-accent); } .portal-link-icon { font-size: 2.5em; color: var(--primary-accent); } .portal-link-text h2 { margin: 0 0 0.25rem 0; font-size: 1.5em; color: var(--text-primary); } .portal-link-text p { margin: 0; color: var(--text-secondary); } .portal-link-arrow { margin-left: auto; font-size: 1.5em; color: var(--text-secondary); transition: transform 0.2s ease, color 0.2s ease; } .portal-link-card:hover .portal-link-arrow { transform: translateX(5px); color: var(--primary-accent); } footer { text-align: center; padding: 2rem 1rem; margin-top: auto; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); } .footer-content-wrapper { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; } .creator-text { margin: 0; font-weight: 600; color: var(--text-primary); font-size: 1em; } .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.9em; } .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; } .footer-links a:hover { color: var(--primary-accent); text-decoration: underline; } .footer-separator { opacity: 0.6; }
-
+        
+        /* --- NEW: STYLES FOR PDF VIEWER MODAL --- */
+        .pdf-viewer-modal {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .pdf-viewer-content {
+            width: 90%; height: 90%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .close-pdf-btn {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 2.5rem;
+            font-weight: 300;
+            background: none; border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            line-height: 1;
+        }
+        .dark-mode .close-pdf-btn { color: var(--text-secondary-dark); }
+        #pdf-iframe {
+            flex-grow: 1; /* Take all available space */
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -112,32 +150,51 @@
         <a href="assignments.html" class="portal-link-card"><i class="fas fa-tasks portal-link-icon"></i><div class="portal-link-text"><h2>Assignment Portal</h2><p>Find and download all your course assignments here.</p></div><i class="fas fa-chevron-right portal-link-arrow"></i></a>
     </main>
 
+    <!-- NEW: PDF Viewer Modal (Place before the footer) -->
+    <div id="pdf-modal" class="pdf-viewer-modal" style="display: none;">
+        <div class="pdf-viewer-content">
+            <button class="close-pdf-btn" onclick="closePDFModal()">&times;</button>
+            <iframe id="pdf-iframe" src="" title="PDF Viewer"></iframe>
+        </div>
+    </div>
+
     <footer><div class="footer-content-wrapper"><p class="creator-text">Created & Designed by Pratyush Swain</p><div class="footer-links"><span>&copy; <span id="current-year"></span> All Rights Reserved</span><span class="footer-separator">&middot;</span><a href="privacy.html">Privacy Policy</a><span class="footer-separator">&middot;</span><a href="terms.html">Terms of Service</a></div></div></footer>
     
     <script>
-    // --- UTILITY FUNCTIONS FOR PDF HANDLING (NEW) ---
-    // This function handles VIEWING the PDF in a new tab.
+    // --- UTILITY FUNCTIONS FOR PDF HANDLING (UPDATED) ---
+    // This function shows the PDF in a popup viewer on the page.
     function viewPDF(filePath) {
-        window.open(filePath, '_blank');
+        const modal = document.getElementById('pdf-modal');
+        const iframe = document.getElementById('pdf-iframe');
+        iframe.src = filePath;
+        modal.style.display = 'flex';
     }
 
-    // This function handles FORCING a DOWNLOAD of the PDF.
+    // This function closes the popup viewer.
+    function closePDFModal() {
+        const modal = document.getElementById('pdf-modal');
+        const iframe = document.getElementById('pdf-iframe');
+        iframe.src = ''; // Important: Stop loading the PDF to save resources.
+        modal.style.display = 'none';
+    }
+
+    // This function handles FORCING a DOWNLOAD of the PDF. It's robust and reliable.
     function downloadPDF(filePath) {
         const link = document.createElement('a');
         link.href = filePath;
-        const fileName = filePath.split('/').pop(); // Extracts filename from path
-        link.download = fileName; // This attribute tells the browser to download.
+        const fileName = filePath.split('/').pop(); // Extracts filename from the path
+        link.download = fileName; // This attribute is the key to forcing a download
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     }
-        
-    // --- LIVE SCHEDULE CARD DATA AND LOGIC ---
+
+    // --- LIVE SCHEDULE CARD DATA AND LOGIC (Unchanged) ---
     const timetableData = { 1: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 2: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 3: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 4: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 5: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}, 6: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}};
 
     const updateLiveSchedule = () => {
+        // This function is correct and requires no changes.
         const now = new Date(); const today = now.getDay(); const liveNowContent = document.getElementById('live-now-content'); const upNextContent = document.getElementById('up-next-content'); const todaysSchedule = timetableData[today] ? timetableData[today].classes : []; let currentEvent = null, nextEvent = null;
-        // The rest of this function is correct and unchanged
         for (const event of todaysSchedule) { const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.start.split(':')); const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.end.split(':')); if (now >= start && now < end) { currentEvent = { ...event, start: start, end: end }; } else if (now < start && !nextEvent) { nextEvent = { ...event, start: start, end: end }; }}
         if(currentEvent) { const isBreak = currentEvent.type === 'break'; const subject = isBreak ? "Coffee Break" : currentEvent.subject; const icon = isBreak ? `<i class="fas fa-mug-hot"></i>` : `<i class="fas fa-book-open"></i>`; const timeElapsed = now.getTime() - currentEvent.start.getTime(); const duration = currentEvent.end.getTime() - currentEvent.start.getTime(); const progress = (timeElapsed / duration) * 100; liveNowContent.innerHTML = `<p class="subject">${icon} ${subject}</p><p class="time">${currentEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${currentEvent.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p><div class="progress-bar-container"><div class="progress-bar"><div class="progress-bar-fill" style="width: ${progress}%;"></div></div></div>`; } else { liveNowContent.innerHTML = `<p class="idle-message">You're free! No classes right now.</p>`; }
         if(nextEvent) { const isBreak = nextEvent.type === 'break'; const subject = isBreak ? "Coffee Break" : nextEvent.subject; const icon = isBreak ? `<i class="fas fa-mug-hot"></i>` : `<i class="fas fa-book-open"></i>`; upNextContent.innerHTML = `<p class="subject">${icon} ${subject}</p><p class="details">Starts at ${nextEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>`; } else { upNextContent.innerHTML = `<p class="idle-message">All classes for today are done!</p>`; }
@@ -146,18 +203,18 @@
     // Wrapped all script logic inside a single DOMContentLoaded for safety.
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- INLINE NOTIFICATION BANNER (Corrected & Enhanced) ---
+        // --- INLINE NOTIFICATION BANNER (Unchanged) ---
         const notification = document.getElementById('page-notification');
         const closeBtn = document.getElementById('close-notification');
         if (notification && closeBtn) {
             let hideTimeout;
             let showInterval;
 
-            const HIDE_DELAY = 7000; // 7 seconds
-            const REAPPEAR_INTERVAL = 180000; // 3 minutes
+            const HIDE_DELAY = 7000;
+            const REAPPEAR_INTERVAL = 180000;
 
             const showNotification = () => {
-                clearTimeout(hideTimeout); // Prevent multiple hide timers
+                clearTimeout(hideTimeout);
                 notification.classList.add('visible');
                 hideTimeout = setTimeout(() => {
                     notification.classList.remove('visible');
@@ -166,16 +223,17 @@
 
             const closeNotificationPermanently = () => {
                 clearTimeout(hideTimeout);
-                clearInterval(showInterval); // Stop it from reappearing
+                clearInterval(showInterval);
                 notification.classList.remove('visible');
             };
             
             closeBtn.addEventListener('click', closeNotificationPermanently);
 
-            setTimeout(showNotification, 1000); // Initial show
-            showInterval = setInterval(showNotification, REAPPEAR_INTERVAL); // Periodic show
+            setTimeout(showNotification, 1000);
+            showInterval = setInterval(showNotification, REAPPEAR_INTERVAL);
         }
 
+        // --- All other initialization logic remains the same ---
         const themeToggle = document.getElementById('theme-toggle');
         const datetimeElement = document.getElementById('datetime');
         const runnerText = document.querySelector('.runner-text');
