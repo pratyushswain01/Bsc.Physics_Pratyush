@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -512,7 +512,7 @@
             currentPageIndex = index;
             updatePageIndicator();
 
-            setTimeout(() => { isNavigating = false; }, 400); // Debounce time
+            setTimeout(() => { isNavigating = false; }, 400); // Debounce time for scroll/keyboard
         };
 
         const handlePageJump = () => {
@@ -526,7 +526,21 @@
         };
 
         // --- DOWNLOAD LOGIC ---
-        const downloadCurrentImage = async () => { /* ... unchanged ... */ };
+        const downloadCurrentImage = async () => {
+            const currentNote = currentNoteImages[currentPageIndex];
+            if (!currentNote) return;
+            try {
+                const response = await fetch(currentNote.src);
+                const blob = await response.blob();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `WavesOptics-Unit-${currentNote.unit}-Page-${currentNote.page}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            } catch (error) { console.error('Download failed:', error); alert('Could not download image.'); }
+        };
 
         // --- EVENT LISTENERS ---
         viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
@@ -553,11 +567,9 @@
             if (e.ctrlKey && isMouseOverImage) {
                  applyZoom(zoomLevel + (e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP), e.clientX, e.clientY);
             } else if (zoomLevel > 1.05 && isMouseOverImage) {
-                // Pan with wheel when zoomed
                 activePage.scrollTop += e.deltaY;
                 activePage.scrollLeft += e.deltaX;
             } else {
-                // Navigate pages
                 if (isNavigating) return;
                 const scrollDirection = Math.sign(e.deltaY) || Math.sign(e.deltaX);
                 if (scrollDirection > 0) goToPage(currentPageIndex + 1);
@@ -565,51 +577,47 @@
             }
         }, { passive: false });
 
-        // Mouse Drag to Scroll Carousel
-        notesCarousel.addEventListener('mousedown', e => {
-            if (zoomLevel > 1.05) return; // Disable carousel drag when zoomed
+        // --- MOUSE & TOUCH DRAG/SWIPE LOGIC ---
+        const handlePointerDown = (clientX) => {
+            if (zoomLevel > 1.05) return;
             isPointerDown = true;
             notesCarousel.classList.add('grabbing');
-            startX = e.pageX - notesCarousel.offsetLeft;
+            startX = clientX - notesCarousel.offsetLeft;
             scrollLeftStart = notesCarousel.scrollLeft;
-        });
+        };
 
-        notesCarousel.addEventListener('mouseleave', () => {
-            if (zoomLevel > 1.05) return;
-            if (isPointerDown) {
-                isPointerDown = false;
-                notesCarousel.classList.remove('grabbing');
-                const targetPage = Math.round(notesCarousel.scrollLeft / notesCarousel.offsetWidth);
-                goToPage(targetPage);
-            }
-        });
-
-        notesCarousel.addEventListener('mouseup', e => {
-            if (zoomLevel > 1.05) return;
-            if (isPointerDown) {
-                isPointerDown = false;
-                notesCarousel.classList.remove('grabbing');
-                const moved = Math.abs((e.pageX - notesCarousel.offsetLeft) - startX);
-                // Snap to page only on significant drag, allowing clicks
-                if (moved > 50) {
-                     const targetPage = Math.round(notesCarousel.scrollLeft / notesCarousel.offsetWidth);
-                     goToPage(targetPage);
-                } else {
-                    // It was likely a click, snap back
-                    goToPage(currentPageIndex);
-                }
-            }
-        });
-
-        notesCarousel.addEventListener('mousemove', e => {
+        const handlePointerMove = (clientX) => {
             if (!isPointerDown || zoomLevel > 1.05) return;
-            e.preventDefault();
-            const x = e.pageX - notesCarousel.offsetLeft;
+            const x = clientX - notesCarousel.offsetLeft;
             const walk = (x - startX) * 2;
             notesCarousel.scrollLeft = scrollLeftStart - walk;
-        });
+        };
 
-        // Touch Gestures (Pinch zoom)
+        const handlePointerUp = () => {
+            if (!isPointerDown || zoomLevel > 1.05) return;
+            isPointerDown = false;
+            notesCarousel.classList.remove('grabbing');
+            const scrollEnd = notesCarousel.scrollLeft;
+            const scrollDelta = scrollEnd - scrollLeftStart;
+            const snapThreshold = notesCarousel.offsetWidth / 4;
+
+            if (Math.abs(scrollDelta) > snapThreshold) {
+                if (scrollDelta > 0) goToPage(currentPageIndex + 1);
+                else goToPage(currentPageIndex - 1);
+            } else {
+                goToPage(currentPageIndex);
+            }
+        };
+
+        notesCarousel.addEventListener('mousedown', e => handlePointerDown(e.pageX));
+        notesCarousel.addEventListener('mousemove', e => { e.preventDefault(); handlePointerMove(e.pageX); });
+        notesCarousel.addEventListener('mouseup', handlePointerUp);
+        notesCarousel.addEventListener('mouseleave', handlePointerUp);
+        notesCarousel.addEventListener('touchstart', e => { if (e.touches.length === 1) handlePointerDown(e.touches[0].pageX); }, { passive: true });
+        notesCarousel.addEventListener('touchmove', e => { if (e.touches.length === 1 && isPointerDown) { e.preventDefault(); handlePointerMove(e.touches[0].pageX); } }, { passive: false });
+        notesCarousel.addEventListener('touchend', handlePointerUp);
+
+        // --- PINCH ZOOM LOGIC ---
         notesCarousel.addEventListener('touchstart', e => {
             if (e.touches.length === 2) {
                 e.preventDefault();
@@ -623,10 +631,8 @@
                 e.preventDefault();
                 const newPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
                 const pinchRatio = newPinchDistance / initialPinchDistance;
-                
                 const midX = (e.touches[0].pageX + e.touches[1].pageX) / 2;
                 const midY = (e.touches[0].pageY + e.touches[1].pageY) / 2;
-                
                 applyZoom(initialZoom * pinchRatio, midX, midY);
             }
         }, { passive: false });
@@ -637,6 +643,7 @@
             }
         });
 
+        // --- KEYBOARD SHORTCUTS ---
         document.addEventListener('keydown', e => {
             if (!notesViewer.classList.contains('visible') || e.target.id === 'page-input') return;
             e.preventDefault();
