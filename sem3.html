@@ -84,7 +84,7 @@
         .portal-link-card { display: block; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-top: 3rem; text-decoration: none; box-shadow: 0 5px 15px var(--shadow-color); transition: all 0.2s ease-in-out; display: flex; align-items: center; gap: 1.5rem; } .portal-link-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px var(--shadow-color); border-color: var(--primary-accent); } .portal-link-icon { font-size: 2.5em; color: var(--primary-accent); } .portal-link-text h2 { margin: 0 0 0.25rem 0; font-size: 1.5em; color: var(--text-primary); } .portal-link-text p { margin: 0; color: var(--text-secondary); } .portal-link-arrow { margin-left: auto; font-size: 1.5em; color: var(--text-secondary); transition: transform 0.2s ease, color 0.2s ease; } .portal-link-card:hover .portal-link-arrow { transform: translateX(5px); color: var(--primary-accent); }
         footer { text-align: center; padding: 2rem 1rem; margin-top: auto; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); } .footer-content-wrapper { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; } .creator-text { margin: 0; font-weight: 600; color: var(--text-primary); font-size: 1em; } .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.9em; } .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; } .footer-links a:hover { color: var(--primary-accent); text-decoration: underline; } .footer-separator { opacity: 0.6; }
 
-        /* --- PDF VIEWER MODAL STYLES (Added from other file) --- */
+        /* --- PDF VIEWER MODAL STYLES --- */
         .pdf-viewer-modal {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -97,24 +97,15 @@
             -webkit-backdrop-filter: blur(5px);
         }
         .pdf-viewer-content {
-            width: 95%;
-            height: 95%;
-            max-width: 1400px;
+            width: 95%; height: 95%; max-width: 1400px;
             background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative; display: flex; flex-direction: column; overflow: hidden;
         }
         .close-pdf-btn {
             position: absolute; top: 10px; right: 15px;
-            font-size: 2.5rem; font-weight: 300;
-            background: none; border: none;
-            color: var(--text-secondary);
-            cursor: pointer; line-height: 1;
-            z-index: 2001;
+            font-size: 2.5rem; font-weight: 300; background: none; border: none;
+            color: var(--text-secondary); cursor: pointer; line-height: 1; z-index: 2001;
         }
         .close-pdf-btn:hover { color: var(--text-primary); }
         #pdf-iframe { flex-grow: 1; width: 100%; height: 100%; border: none; }
@@ -142,12 +133,11 @@
         
         <div class="live-schedule-card">
             <div class="schedule-card-header"><h2>Today's Schedule</h2><p>A quick glance at your day. Stay on track!</p></div>
-          
+            
             <div class="schedule-card-footer"><a href="sem3class.html" class="btn btn-explore"><i class="fas fa-calendar-alt"></i> View Full Timetable</a></div>
         </div>
 
         <div class="course-grid">
-             <!-- All course cards now use onclick for PDF viewing -->
              <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-wave-square"></i></div><div class="card-title-group"><h2 class="card-title">Major-5</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Exploring advanced concepts in mechanics, waves, and optics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-5.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-5.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-5.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
              <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-bolt"></i></div><div class="card-title-group"><h2 class="card-title">Major-6</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">In-depth study of electromagnetism and Maxwell's equations.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-6.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-6.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-6.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
              <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-thermometer-half"></i></div><div class="card-title-group"><h2 class="card-title">Major-7</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Understanding the principles of thermal physics and statistical mechanics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-7.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-7.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-7.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
@@ -158,7 +148,6 @@
         <a href="assignments.html" class="portal-link-card"><i class="fas fa-tasks portal-link-icon"></i><div class="portal-link-text"><h2>Assignment Portal</h2><p>Find and download all your course assignments here.</p></div><i class="fas fa-chevron-right portal-link-arrow"></i></a>
     </main>
 
-    <!-- PDF Viewer Modal (Added from other file) -->
     <div id="pdf-modal" class="pdf-viewer-modal">
         <div class="pdf-viewer-content">
             <button class="close-pdf-btn" onclick="closePDFModal()">&times;</button>
@@ -169,7 +158,7 @@
     <footer><div class="footer-content-wrapper"><p class="creator-text">Created & Designed by Pratyush Swain</p><div class="footer-links"><span>&copy; <span id="current-year"></span> All Rights Reserved</span><span class="footer-separator">&middot;</span><a href="privacy.html">Privacy Policy</a><span class="footer-separator">&middot;</span><a href="terms.html">Terms of Service</a></div></div></footer>
     
     <script>
-    // --- PDF HANDLING FUNCTIONS (Added from other file) ---
+    // --- PDF HANDLING FUNCTIONS ---
     function viewPDF(filePath) {
         const modal = document.getElementById('pdf-modal');
         const iframe = document.getElementById('pdf-iframe');
@@ -201,7 +190,7 @@
 
     const updateLiveSchedule = () => {
         const now = new Date(); const today = now.getDay(); const liveNowContent = document.getElementById('live-now-content'); const upNextContent = document.getElementById('up-next-content');
-        if (!liveNowContent || !upNextContent) return; // Exit if elements aren't on the page
+        if (!liveNowContent || !upNextContent) return;
         const todaysSchedule = timetableData[today] ? timetableData[today].classes : []; let currentEvent = null, nextEvent = null;
         for (const event of todaysSchedule) { const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.start.split(':')); const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.end.split(':')); if (now >= start && now < end) { currentEvent = { ...event, start: start, end: end }; } else if (now < start && !nextEvent) { nextEvent = { ...event, start: start, end: end }; }}
         if(currentEvent) { const isBreak = currentEvent.type === 'break'; const subject = isBreak ? "Coffee Break" : currentEvent.subject; const icon = isBreak ? `<i class="fas fa-mug-hot"></i>` : `<i class="fas fa-book-open"></i>`; const timeElapsed = now.getTime() - currentEvent.start.getTime(); const duration = currentEvent.end.getTime() - currentEvent.start.getTime(); const progress = (timeElapsed / duration) * 100; liveNowContent.innerHTML = `<p class="subject">${icon} ${subject}</p><p class="time">${currentEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${currentEvent.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p><div class="progress-bar-container"><div class="progress-bar"><div class="progress-bar-fill" style="width: ${progress}%;"></div></div></div>`; } else { liveNowContent.innerHTML = `<p class="idle-message">You're free! No classes right now.</p>`; }
@@ -211,14 +200,46 @@
     // --- MAIN SCRIPT EXECUTION ---
     document.addEventListener('DOMContentLoaded', () => {
         
-        // Notification Banner Logic
+        // --- UPDATED NOTIFICATION BANNER LOGIC ---
         const notification = document.getElementById('page-notification');
         const closeBtn = document.getElementById('close-notification');
+
         if (notification && closeBtn) {
-            setTimeout(() => notification.classList.add('visible'), 1000);
-            closeBtn.addEventListener('click', () => notification.style.display = 'none');
+            let hideTimeout;
+            let showInterval;
+
+            // --- Configuration ---
+            const HIDE_DELAY = 8000; // Stays visible for 8 seconds
+            const REAPPEAR_INTERVAL = 60000; // Reappears every 1 minute (60 * 1000 ms)
+
+            // Function to show the notification and set a timer to hide it
+            const showNotification = () => {
+                clearTimeout(hideTimeout); // Prevent multiple hide timers from running
+                notification.classList.add('visible');
+                
+                // Set a timer to automatically hide it after HIDE_DELAY
+                hideTimeout = setTimeout(() => {
+                    notification.classList.remove('visible');
+                }, HIDE_DELAY);
+            };
+
+            // Function to permanently close the notification for the session
+            const closeNotificationPermanently = () => {
+                clearTimeout(hideTimeout); // Stop the auto-hide timer
+                clearInterval(showInterval); // Stop the banner from reappearing
+                notification.classList.remove('visible'); // Hide it immediately
+            };
+            
+            // Attach the permanent close function to the button click
+            closeBtn.addEventListener('click', closeNotificationPermanently);
+
+            // Initial setup
+            setTimeout(showNotification, 1500); // Show for the first time after 1.5 seconds
+            showInterval = setInterval(showNotification, REAPPEAR_INTERVAL); // Set it to reappear every minute
         }
 
+
+        // --- ALL OTHER PAGE LOGIC (UNCHANGED) ---
         const themeToggle = document.getElementById('theme-toggle');
         const datetimeElement = document.getElementById('datetime');
         const runnerText = document.querySelector('.runner-text');
