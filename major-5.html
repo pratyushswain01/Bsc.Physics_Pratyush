@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Core V: Waves and Optics | BSc. Physics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <style>
         /* --- THEME DEFINITIONS --- */
@@ -23,6 +23,7 @@
         }
 
         /* --- BASIC STYLES --- */
+        html { scroll-behavior: smooth; }
         body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; }
         .container { width: 90%; max-width: 1200px; margin: 2rem auto; position: relative; z-index: 2; }
         header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
@@ -75,55 +76,75 @@
         .btn-view-notes { background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; }
         .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
         
-        /* --- NOTES VIEWER STYLES (NEW & IMPROVED) --- */
+        /* --- NOTES VIEWER STYLES (HORIZONTAL SCROLL) --- */
         .notes-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); z-index: 3000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s;
+            display: flex; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s;
             backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
         }
         .notes-viewer.visible { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
-        .notes-viewer-content { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; }
+        .notes-viewer-content { width: 100%; height: 100%; position: relative; }
         .close-notes-btn {
             position: fixed; top: 20px; right: 30px; font-size: 2.5rem;
-            font-weight: 300; background: none; border: none;
-            color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1;
-            transition: color 0.2s ease, transform 0.2s ease; z-index: 10;
+            background: none; border: none; color: rgba(255, 255, 255, 0.7);
+            cursor: pointer; line-height: 1; transition: all 0.2s ease; z-index: 10;
         }
         .close-notes-btn:hover { color: white; transform: scale(1.1); }
-        .notes-image-container {
-            position: relative; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center; padding: 2rem 5rem; box-sizing: border-box;
+        
+        #notes-carousel {
+            width: 100%; height: 100%; display: flex; overflow-x: auto;
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; cursor: grab;
         }
-        .notes-image-container img {
+        #notes-carousel:active { cursor: grabbing; }
+        #notes-carousel::-webkit-scrollbar { display: none; }
+        #notes-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .note-page {
+            width: 100%; height: 100%; flex: 0 0 100%; scroll-snap-align: center;
+            display: flex; justify-content: center; align-items: center;
+            padding: 2rem; box-sizing: border-box; transition: padding 0.3s ease;
+        }
+        .note-page img {
             display: block; max-width: 100%; max-height: 100%;
             object-fit: contain; border-radius: 5px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+            transition: border-radius 0.3s ease;
+            user-select: none; pointer-events: none; /* Prevents image drag interference */
         }
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1); color: white;
-            border: none; border-radius: 50%; width: 50px; height: 50px;
-            font-size: 1.5rem; cursor: pointer; z-index: 5;
-            display: flex; justify-content: center; align-items: center;
-            transition: background 0.2s ease;
-        }
-        .nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
-        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .prev-btn { left: 15px; }
-        .next-btn { right: 15px; }
+
         .notes-controls {
-            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5); color: white;
-            border-radius: 20px; padding: 0.5rem 1rem;
-            display: flex; align-items: center; gap: 1.5rem;
-            backdrop-filter: blur(5px); user-select: none;
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5); color: white; border-radius: 25px; padding: 0.5rem 1rem;
+            display: flex; align-items: center; gap: 1.25rem;
+            backdrop-filter: blur(5px); user-select: none; transition: opacity 0.3s ease;
         }
-        #page-indicator { font-weight: 500; font-size: 0.9em; }
-        #fullscreen-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0.5rem; transition: transform 0.2s; }
-        #fullscreen-btn:hover { transform: scale(1.15); }
+        .control-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0.5rem; transition: transform 0.2s; }
+        .control-btn:hover { transform: scale(1.15); }
+        #page-indicator { font-weight: 500; font-size: 0.9em; min-width: 80px; text-align: center; }
+
+        #fullscreen-footer {
+            position: absolute; bottom: 10px; left: 0; right: 0;
+            text-align: center; font-size: 0.8em; color: rgba(255, 255, 255, 0.5);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+
+        /* --- FULLSCREEN-SPECIFIC STYLES --- */
+        .notes-viewer-content:fullscreen { background-color: #000; }
+        .notes-viewer-content:fullscreen .note-page { padding: 0; }
+        .notes-viewer-content:fullscreen .note-page img { border-radius: 0; }
+        .notes-viewer-content:fullscreen .notes-controls,
+        .notes-viewer-content:fullscreen .close-notes-btn {
+            opacity: 0; pointer-events: none;
+        }
+        .notes-viewer-content:fullscreen:hover .notes-controls,
+        .notes-viewer-content:fullscreen:hover .close-notes-btn {
+            opacity: 1; pointer-events: auto;
+        }
+        .notes-viewer-content:fullscreen #fullscreen-footer {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -179,13 +200,10 @@
                     <div id="tab-1-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
                         <div class="notes-image-list" style="display:none;">
+                            <!-- ADD YOUR NOTE IMAGES HERE for Unit 1 -->
                             <img src="notes/unit1/page1.jpg" alt="Unit 1, Page 1">
                             <img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
                             <img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
-                            <img src="notes/unit1/page4.jpg" alt="Unit 1, Page 4">
-                            <img src="notes/unit1/page5.jpg" alt="Unit 1, Page 5">
-                            <img src="notes/unit1/page6.jpg" alt="Unit 1, Page 6">
-                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Placeholder+Note+3" alt="Unit 1, Page 7 Placeholder">
                         </div>
                     </div>
                     <div id="tab-1-3" class="tab-pane">
@@ -211,6 +229,7 @@
                     <div id="tab-2-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="2"><i class="fas fa-book-open"></i> View Unit II Notes</button>
                         <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 2 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+1" alt="Unit 2, Page 1">
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+2" alt="Unit 2, Page 2">
                         </div>
@@ -237,6 +256,7 @@
                     <div id="tab-3-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="3"><i class="fas fa-book-open"></i> View Unit III Notes</button>
                         <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 3 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Note+1" alt="Unit 3, Page 1">
                         </div>
                     </div>
@@ -262,6 +282,7 @@
                     <div id="tab-4-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="4"><i class="fas fa-book-open"></i> View Unit IV Notes</button>
                         <div class="notes-image-list" style="display:none;">
+                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 4 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+1" alt="Unit 4, Page 1">
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+2" alt="Unit 4, Page 2">
                         </div>
@@ -278,22 +299,20 @@
         </div>
     </main>
 
-    <!-- NEW NOTES VIEWER MODAL STRUCTURE -->
     <div id="notes-viewer-modal" class="notes-viewer">
         <div class="notes-viewer-content">
             <button class="close-notes-btn">&times;</button>
-            <button class="nav-btn prev-btn" title="Previous Page (Left Arrow)"><i class="fas fa-chevron-left"></i></button>
-            <div class="notes-image-container">
-                <img src="" alt="Note page viewer" id="note-image">
+            <div id="notes-carousel">
+                <!-- Note pages will be dynamically injected here by JavaScript -->
             </div>
-            <button class="nav-btn next-btn" title="Next Page (Right Arrow)"><i class="fas fa-chevron-right"></i></button>
             <div class="notes-controls">
+                <button id="download-btn" class="control-btn" title="Download Page (D)"><i class="fas fa-download"></i></button>
                 <span id="page-indicator"></span>
-                <button id="fullscreen-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
+                <button id="fullscreen-btn" class="control-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
             </div>
+            <div id="fullscreen-footer">Updated by Pratyush Swain</div>
         </div>
     </div>
-
 
     <footer><p>&copy; <span id="current-year"></span> Created & Designed by Pratyush Swain.</p></footer>
 
@@ -305,23 +324,23 @@
         const allTabContainers = document.querySelectorAll('.accordion-panel');
         const viewNotesButtons = document.querySelectorAll('.btn-view-notes');
         const canvas = document.getElementById('particle-canvas');
-
-        // --- NEW NOTES VIEWER ELEMENTS ---
+        
         const notesViewer = document.getElementById('notes-viewer-modal');
-        const noteImage = document.getElementById('note-image');
+        const notesViewerContent = notesViewer.querySelector('.notes-viewer-content');
+        const notesCarousel = document.getElementById('notes-carousel');
         const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
-        const prevBtn = notesViewer.querySelector('.prev-btn');
-        const nextBtn = notesViewer.querySelector('.next-btn');
         const pageIndicator = document.getElementById('page-indicator');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
-        const notesViewerContent = notesViewer.querySelector('.notes-viewer-content');
+        const downloadBtn = document.getElementById('download-btn');
         
-        // --- NEW NOTES VIEWER STATE ---
         let currentNoteImages = [];
         let currentPageIndex = 0;
+        let intersectionObserver;
+        let isDown = false;
+        let startX;
+        let scrollLeft;
 
-
-        // --- THEME LOGIC ---
+        // --- THEME & BASIC UI LOGIC ---
         const applyTheme = (theme) => {
             document.body.classList.toggle('dark-mode', theme === 'dark');
             if (themeToggle) { themeToggle.checked = (theme === 'dark'); }
@@ -335,23 +354,19 @@
         });
         if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
 
-        // --- SCROLL PROGRESS BAR LOGIC ---
         window.addEventListener('scroll', () => {
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrolled = (window.scrollY / scrollableHeight) * 100;
             if (progressBar) { progressBar.style.width = scrolled + '%'; }
         });
 
-        // --- ACCORDION LOGIC ---
         accordionToggles.forEach(toggle => {
             toggle.addEventListener('click', () => {
                 const panel = toggle.nextElementSibling;
                 const isOpen = panel.style.maxHeight;
-                
                 document.querySelectorAll('.accordion-panel').forEach(p => p.style.maxHeight = null);
                 document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('open'));
-
                 if (!isOpen) {
                     toggle.classList.add('active');
                     panel.classList.add('open');
@@ -359,21 +374,17 @@
                 }
             });
         });
-        
-        // --- TABS LOGIC ---
+
         allTabContainers.forEach(container => {
             const tabLinks = container.querySelectorAll('.tab-link');
             const tabPanes = container.querySelectorAll('.tab-pane');
             tabLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     const tabId = link.getAttribute('data-tab');
-                    
                     tabLinks.forEach(l => l.classList.remove('active'));
                     tabPanes.forEach(p => p.classList.remove('active'));
-                    
                     link.classList.add('active');
                     container.querySelector('#tab-' + tabId).classList.add('active');
-
                     const openAccordionPanel = document.querySelector('.accordion-panel.open');
                     if (openAccordionPanel) {
                         openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
@@ -381,8 +392,7 @@
                 });
             });
         });
-        
-        // --- QUICK LINKS SCROLL LOGIC ---
+
         document.querySelectorAll('.quick-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -396,100 +406,121 @@
                 }
             });
         });
+
+        // --- NOTES VIEWER LOGIC ---
+        const setupIntersectionObserver = () => {
+            const options = { root: notesCarousel, rootMargin: '0px', threshold: 0.6 };
+            intersectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const pages = Array.from(notesCarousel.children);
+                        currentPageIndex = pages.indexOf(entry.target);
+                        updatePageIndicator();
+                    }
+                });
+            }, options);
+            document.querySelectorAll('.note-page').forEach(page => intersectionObserver.observe(page));
+        };
         
-        // --- NOTES VIEWER LOGIC (COMPLETELY REWRITTEN) ---
-
-        const updateNoteView = () => {
-            if (currentNoteImages.length === 0) return;
-
-            const currentImage = currentNoteImages[currentPageIndex];
-            noteImage.src = currentImage.src;
-            noteImage.alt = currentImage.alt;
-
+        const updatePageIndicator = () => {
             pageIndicator.textContent = `Page ${currentPageIndex + 1} of ${currentNoteImages.length}`;
-            
-            prevBtn.disabled = (currentPageIndex === 0);
-            nextBtn.disabled = (currentPageIndex === currentNoteImages.length - 1);
         };
 
         const openNotesViewer = (button) => {
             const imageListContainer = button.nextElementSibling;
-            if (imageListContainer) {
-                const images = Array.from(imageListContainer.querySelectorAll('img'));
-                if (images.length === 0) {
-                    alert('No notes available for this unit.');
-                    return;
-                }
-                currentNoteImages = images.map(img => ({ src: img.src, alt: img.alt }));
-                currentPageIndex = 0;
-                
-                updateNoteView();
+            if (!imageListContainer) return;
 
-                notesViewer.classList.add('visible');
-                document.body.style.overflow = 'hidden';
+            const images = Array.from(imageListContainer.querySelectorAll('img'));
+            if (images.length === 0) {
+                alert('No notes available for this unit.');
+                return;
             }
+
+            currentNoteImages = images.map((img, index) => ({ 
+                src: img.src, alt: img.alt, unit: button.dataset.unit || 'unknown', page: index + 1
+            }));
+            
+            notesCarousel.innerHTML = '';
+            currentNoteImages.forEach(data => {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'note-page';
+                const img = document.createElement('img');
+                img.src = data.src;
+                img.alt = data.alt;
+                pageDiv.appendChild(img);
+                notesCarousel.appendChild(pageDiv);
+            });
+            
+            currentPageIndex = 0;
+            updatePageIndicator();
+            setupIntersectionObserver();
+
+            notesViewer.classList.add('visible');
+            document.body.style.overflow = 'hidden';
         };
 
         const closeNotesViewer = () => {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            }
+            if (document.fullscreenElement) document.exitFullscreen();
             notesViewer.classList.remove('visible');
             document.body.style.overflow = '';
-            currentNoteImages = []; // Clear the array
-        };
-        
-        const goToNextPage = () => {
-            if (currentPageIndex < currentNoteImages.length - 1) {
-                currentPageIndex++;
-                updateNoteView();
-            }
+            if (intersectionObserver) intersectionObserver.disconnect();
+            notesCarousel.innerHTML = '';
+            currentNoteImages = [];
         };
 
-        const goToPrevPage = () => {
-            if (currentPageIndex > 0) {
-                currentPageIndex--;
-                updateNoteView();
+        const downloadCurrentImage = async () => {
+            const currentNote = currentNoteImages[currentPageIndex];
+            if (!currentNote) return;
+            try {
+                const response = await fetch(currentNote.src);
+                const blob = await response.blob();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `WavesOptics-Unit-${currentNote.unit}-Page-${currentNote.page}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            } catch (error) {
+                console.error('Download failed:', error);
+                alert('Could not download the image.');
             }
         };
 
         const toggleFullscreen = () => {
             if (!document.fullscreenElement) {
-                notesViewerContent.requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                });
+                notesViewerContent.requestFullscreen().catch(err => alert(`Fullscreen error: ${err.message}`));
             } else {
                 document.exitFullscreen();
             }
         };
         
         const updateFullscreenIcon = () => {
-            if (document.fullscreenElement) {
-                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-            } else {
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-            }
+            fullscreenBtn.innerHTML = document.fullscreenElement ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
         };
 
+        // --- EVENT LISTENERS ---
         viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
         closeNotesBtn.addEventListener('click', closeNotesViewer);
-        nextBtn.addEventListener('click', goToNextPage);
-        prevBtn.addEventListener('click', goToPrevPage);
         fullscreenBtn.addEventListener('click', toggleFullscreen);
+        downloadBtn.addEventListener('click', downloadCurrentImage);
         document.addEventListener('fullscreenchange', updateFullscreenIcon);
+        notesViewer.addEventListener('click', e => { if (e.target === notesViewer) closeNotesViewer(); });
 
-        notesViewer.addEventListener('click', (e) => { 
-            if (e.target === notesViewer) closeNotesViewer(); 
-        });
-
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', e => {
             if (!notesViewer.classList.contains('visible')) return;
             if (e.key === "Escape") closeNotesViewer();
-            if (e.key === "ArrowRight") goToNextPage();
-            if (e.key === "ArrowLeft") goToPrevPage();
             if (e.key.toLowerCase() === "f") toggleFullscreen();
+            if (e.key.toLowerCase() === "d") downloadCurrentImage();
+            if (e.key === "ArrowRight") notesCarousel.scrollBy({ left: notesCarousel.clientWidth, behavior: 'smooth' });
+            if (e.key === "ArrowLeft") notesCarousel.scrollBy({ left: -notesCarousel.clientWidth, behavior: 'smooth' });
         });
-
+        
+        // Mouse drag-to-scroll for carousel
+        notesCarousel.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - notesCarousel.offsetLeft; scrollLeft = notesCarousel.scrollLeft; });
+        notesCarousel.addEventListener('mouseleave', () => { isDown = false; });
+        notesCarousel.addEventListener('mouseup', () => { isDown = false; });
+        notesCarousel.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - notesCarousel.offsetLeft; const walk = (x - startX) * 2; notesCarousel.scrollLeft = scrollLeft - walk; });
 
         // --- PARTICLE BACKGROUND LOGIC ---
         if (canvas) {
