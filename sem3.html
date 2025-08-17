@@ -26,10 +26,10 @@
             --next-accent: #a78bfa; --next-accent-bg: rgba(167, 139, 250, 0.1);
         }
 
-        /* --- BASIC STYLES --- */
+        /* --- BASIC STYLES (Unchanged) --- */
         body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); display: flex; flex-direction: column; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; } .container { width: 90%; max-width: 1200px; margin: 2rem auto; flex: 1; display: flex; flex-direction: column; } .divine-header { background: var(--divine-bg); color: var(--divine-text); text-align: center; padding: 0.75rem 0; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; text-shadow: 1px 1px 3px var(--divine-shadow); transition: all 0.3s ease; } header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; transition: top 0.4s ease-out; } .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto;} .title-container { display: flex; align-items: center; gap: 0.8rem; } .title-container .logo { font-size: 2em; color: var(--primary-accent); } header h1 { margin: 0; font-size: 1.4em; color: var(--text-primary); } .header-controls { display: flex; align-items: center; gap: 1rem; } .datetime { font-size: 0.9em; text-align: right; color: var(--text-secondary); display: none; } @media (min-width: 768px) { .datetime { display: block; } .header-controls { gap: 1.5rem; } } .theme-switcher { position: relative; } #theme-toggle { display: none; } .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; } .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; } #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
         
-        /* --- ALL OTHER COMPONENT STYLES --- */
+        /* --- ALL OTHER COMPONENT STYLES (Unchanged) --- */
         .quote-runner { background: var(--runner-bg); color: white; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); } .runner-text { display: inline-block; padding-left: 100%; animation: scroll-left 40s linear infinite; } .runner-text em { font-style: normal; font-weight: 600; } .runner-text .separator { margin: 0 2em; } @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } } .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; } .course-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; box-shadow: 0 5px 15px var(--shadow-color); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; } .course-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px var(--shadow-color); } .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; } .card-icon { font-size: 2em; color: var(--primary-accent); background-color: color-mix(in srgb, var(--primary-accent) 15%, transparent); height: 50px; width: 50px; display: grid; place-items: center; border-radius: 10px; } .card-title-group { flex: 1; } .card-title { font-size: 1.25em; font-weight: 600; color: var(--text-primary); margin: 0; } .card-category { font-size: 0.85em; color: var(--text-secondary); font-weight: 300; } .card-description { color: var(--text-secondary); font-size: 0.95em; line-height: 1.6; flex-grow: 1; margin-bottom: 1.5rem; } .card-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 1rem; } .btn { text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.85em; text-align: center; transition: all 0.2s ease; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; } .btn-explore { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); margin-left: auto; } .btn-explore:hover { background-color: var(--primary-accent-hover); transform: scale(1.05); } .btn-syllabus { background-color: transparent; color: var(--primary-accent); border-color: var(--primary-accent); } .btn-syllabus:hover { background-color: var(--primary-accent); color: white; transform: scale(1.05); } 
         .syllabus-actions { display: flex; align-items: center; gap: 0.5rem; }
         .btn-download-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 8px; text-decoration: none; font-size: 1em; transition: all 0.2s ease; cursor: pointer; }
@@ -37,45 +37,54 @@
         .minor-options { margin-top: auto; display: flex; flex-direction: column; gap: 1rem; } .minor-subject-option { background-color: var(--minor-card-inner-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; transition: all 0.2s ease; } .minor-subject-option:hover { transform: translateY(-3px); border-color: var(--primary-accent); box-shadow: 0 6px 15px var(--shadow-color); } .minor-subject-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.1em; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; } .minor-subject-header i { color: var(--primary-accent); font-size: 1.2em; } .minor-subject-actions { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
         footer { text-align: center; padding: 2rem 1rem; margin-top: auto; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); }
         
-        /* --- NEW: STYLES FOR PDF VIEWER MODAL --- */
+        /* --- ADDED: STYLES FOR PDF VIEWER MODAL --- */
         .pdf-viewer-modal {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
+            position: fixed; /* Stay in place even when scrolling */
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
+            z-index: 2000; /* Sit on top of everything else */
             display: none; /* Hidden by default */
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
+            align-items: center; /* Center the content vertically */
+            justify-content: center; /* Center the content horizontally */
+            backdrop-filter: blur(5px); /* Nice blurry background effect */
             -webkit-backdrop-filter: blur(5px);
         }
         .pdf-viewer-content {
-            width: 90%; height: 90%;
+            width: 90%;
+            height: 90%;
             max-width: 1200px;
-            background-color: var(--card-bg);
+            background-color: var(--card-bg); /* Respects light/dark mode */
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: relative;
+            position: relative; /* Needed for positioning the close button */
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow: hidden; /* Ensures the iframe respects the border-radius */
         }
         .close-pdf-btn {
-            position: absolute; top: 10px; right: 15px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
             font-size: 2.5rem;
             font-weight: 300;
-            background: none; border: none;
+            background: none;
+            border: none;
             color: var(--text-secondary);
             cursor: pointer;
             line-height: 1;
-            z-index: 2001;
+            z-index: 2001; /* Make sure it's above the iframe */
         }
-        body.dark-mode .close-pdf-btn { color: var(--text-secondary); }
+        .close-pdf-btn:hover {
+            color: var(--text-primary);
+        }
         #pdf-iframe {
-            flex-grow: 1;
+            flex-grow: 1; /* Take up all available space in the flex container */
             width: 100%;
             height: 100%;
-            border: none;
+            border: none; /* Remove default iframe border */
         }
     </style>
 </head>
@@ -87,16 +96,16 @@
         <!-- Main content of the page is unchanged, but now buttons will call JS functions -->
         <div class="course-grid">
              <!-- Course Card Example -->
-             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-wave-square"></i></div><div class="card-title-group"><h2 class="card-title">Major-5</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Exploring advanced concepts in mechanics, waves, and optics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-5.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-5.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-5.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
-             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-bolt"></i></div><div class="card-title-group"><h2 class="card-title">Major-6</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">In-depth study of electromagnetism and Maxwell's equations.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-6.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-6.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-6.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
-             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-thermometer-half"></i></div><div class="card-title-group"><h2 class="card-title">Major-7</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Understanding the principles of thermal physics and statistical mechanics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-7.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/major-7.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="major-7.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
-             <div class="course-card minor-card-container"><div class="card-header"><div class="card-icon"><i class="fas fa-stream"></i></div><div class="card-title-group"><h2 class="card-title">Minor-3</h2><span class="card-category">Interdisciplinary Subject</span></div></div><p class="card-description">Choose your minor specialization to complement your physics studies.</p><div class="minor-options"><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-calculator"></i><span>Mathematics</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-maths.pdf')" class="btn btn-syllabus">Syllabus</button><button onclick="downloadPDF('syllabus/minor-maths.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="minor-maths.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-laptop-code"></i><span>Computer Science</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-cs.pdf')" class="btn btn-syllabus">Syllabus</button><button onclick="downloadPDF('syllabus/minor-cs.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="minor-cs.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-atom"></i><span>Physics</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-physics.pdf')" class="btn btn-syllabus">Syllabus</button><button onclick="downloadPDF('syllabus/minor-physics.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="minor-physics.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div></div></div>
-             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-leaf"></i></div><div class="card-title-group"><h2 class="card-title">SEC: Environmental Ed.</h2><span class="card-category">Skill Enhancement Course</span></div></div><p class="card-description">A foundational course on environmental science and sustainability practices.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/sec-env.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/sec-env.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="sec-env.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
-             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-gavel"></i></div><div class="card-title-group"><h2 class="card-title">MDC: Ethics</h2><span class="card-category">Multi-Disciplinary Course </span></div></div><p class="card-description">An introduction to ethical principles and values in personal and professional life.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/mdc-ethics.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/mdc-ethics.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="mdc-ethics.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
+             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-wave-square"></i></div><div class="card-title-group"><h2 class="card-title">Major-5</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Exploring advanced concepts in mechanics, waves, and optics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-5.pdf')" class="btn btn-syllabus">View Syllabus</button><a href="syllabus/major-5.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="major-5.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
+             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-bolt"></i></div><div class="card-title-group"><h2 class="card-title">Major-6</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">In-depth study of electromagnetism and Maxwell's equations.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-6.pdf')" class="btn btn-syllabus">View Syllabus</button><a href="syllabus/major-6.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="major-6.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
+             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-thermometer-half"></i></div><div class="card-title-group"><h2 class="card-title">Major-7</h2><span class="card-category">Core Physics Paper</span></div></div><p class="card-description">Understanding the principles of thermal physics and statistical mechanics.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/major-7.pdf')" class="btn btn-syllabus">View Syllabus</button><a href="syllabus/major-7.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="major-7.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
+             <div class="course-card minor-card-container"><div class="card-header"><div class="card-icon"><i class="fas fa-stream"></i></div><div class="card-title-group"><h2 class="card-title">Minor-3</h2><span class="card-category">Interdisciplinary Subject</span></div></div><p class="card-description">Choose your minor specialization to complement your physics studies.</p><div class="minor-options"><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-calculator"></i><span>Mathematics</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-maths.pdf')" class="btn btn-syllabus">Syllabus</button><a href="syllabus/minor-maths.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="minor-maths.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-laptop-code"></i><span>Computer Science</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-cs.pdf')" class="btn btn-syllabus">Syllabus</button><a href="syllabus/minor-cs.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="minor-cs.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div><div class="minor-subject-option"><div class="minor-subject-header"><i class="fas fa-atom"></i><span>Physics</span></div><div class="minor-subject-actions"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/minor-physics.pdf')" class="btn btn-syllabus">Syllabus</button><a href="syllabus/minor-physics.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="minor-physics.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div></div></div>
+             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-leaf"></i></div><div class="card-title-group"><h2 class="card-title">SEC: Environmental Ed.</h2><span class="card-category">Skill Enhancement Course</span></div></div><p class="card-description">A foundational course on environmental science and sustainability practices.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/sec-env.pdf')" class="btn btn-syllabus">View Syllabus</button><a href="syllabus/sec-env.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="sec-env.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
+             <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-gavel"></i></div><div class="card-title-group"><h2 class="card-title">MDC: Ethics</h2><span class="card-category">Multi-Disciplinary Course </span></div></div><p class="card-description">An introduction to ethical principles and values in personal and professional life.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/mdc-ethics.pdf')" class="btn btn-syllabus">View Syllabus</button><a href="syllabus/mdc-ethics.pdf" download class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></a></div><a href="mdc-ethics.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
         </div>
     </main>
 
-    <!-- NEW: PDF Viewer Modal (Place before the footer) -->
+    <!-- PDF Viewer Modal -->
     <div id="pdf-modal" class="pdf-viewer-modal">
         <div class="pdf-viewer-content">
             <button class="close-pdf-btn" onclick="closePDFModal()">&times;</button>
@@ -104,37 +113,36 @@
         </div>
     </div>
 
-    <footer><div class="footer-content-wrapper"><p class="creator-text">Created & Designed by Pratyush Swain</p><div class="footer-links"><span>&copy; <span id="current-year"></span> All Rights Reserved</span><span class="footer-separator">&middot;</span><a href="#">Privacy Policy</a><span class="footer-separator">&middot;</span><a href="#">Terms of Service</a></div></div></footer>
+    <footer>
+        <p>&copy; <span id="current-year"></span> Created & Designed by Pratyush Swain. All Rights Reserved.</p>
+    </footer>
     
     <script>
-    // --- UPDATED: UTILITY FUNCTIONS FOR PDF HANDLING ---
+    // --- UTILITY FUNCTIONS FOR PDF HANDLING ---
     function viewPDF(filePath) {
         const modal = document.getElementById('pdf-modal');
         const iframe = document.getElementById('pdf-iframe');
+        // Set the source for the iframe and show the modal
         iframe.src = filePath;
-        modal.style.display = 'flex'; // Use 'flex' to show it
+        modal.style.display = 'flex'; 
     }
 
     function closePDFModal() {
         const modal = document.getElementById('pdf-modal');
         const iframe = document.getElementById('pdf-iframe');
-        iframe.src = ''; // Stop loading the PDF
-        modal.style.display = 'none'; // Hide it
+        // Hide the modal and clear the iframe's source to stop loading
+        modal.style.display = 'none';
+        iframe.src = ''; 
     }
 
-    function downloadPDF(filePath) {
-        const link = document.createElement('a');
-        link.href = filePath;
-        const fileName = filePath.split('/').pop();
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+    // --- Note on Download ---
+    // The downloadPDF function is no longer needed because we can do it directly in HTML.
+    // I've updated the download buttons to be <a> tags with the `download` attribute.
+    // This is a cleaner and more direct method.
+    // function downloadPDF(filePath) { ... } // This can be removed.
     
-    // Wrapped all other script logic inside a single DOMContentLoaded for safety.
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Theme Switcher and other page logic ---
+        // --- Theme Switcher and other page logic (Unchanged) ---
         const themeToggle = document.getElementById('theme-toggle');
         const datetimeElement = document.getElementById('datetime');
         if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
@@ -158,6 +166,13 @@
             }
         };
         updateDateTime(); setInterval(updateDateTime, 1000);
+
+        // --- Bonus: Close modal with Escape key ---
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closePDFModal();
+            }
+        });
     });
     </script>
 </body>
