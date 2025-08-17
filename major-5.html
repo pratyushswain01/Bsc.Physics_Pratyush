@@ -74,7 +74,7 @@
         .btn-view-notes { background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; }
         .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
 
-        /* --- NOTES VIEWER STYLES (ADVANCED & SMALLER BUTTONS) --- */
+        /* --- NOTES VIEWER STYLES (RE-ENGINEERED) --- */
         .notes-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); z-index: 3000;
@@ -96,6 +96,7 @@
             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         #notes-carousel.grabbing { cursor: grabbing; }
+        #notes-carousel.panning { cursor: all-scroll; }
         
         .note-page {
             width: 100%; height: 100%; flex: 0 0 100%;
@@ -103,6 +104,7 @@
             padding: 2rem; box-sizing: border-box; transition: padding 0.3s ease;
             overflow: auto; 
         }
+        /* Hide scrollbars for a cleaner look */
         .note-page::-webkit-scrollbar { display: none; }
         .note-page { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -110,7 +112,7 @@
             display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
             object-fit: contain; border-radius: 5px;
             transition: transform 0.2s ease, border-radius 0.3s ease;
-            pointer-events: none;
+            pointer-events: none; /* Let the container handle events */
         }
         
         .notes-controls {
@@ -194,7 +196,6 @@
 
         <div class="accordion-container">
 
-            <!-- UNIT I -->
             <div class="accordion-item" id="unit1">
                 <button class="accordion-toggle"><div><span class="unit-title">Unit I</span> Geometrical & Wave Optics</div><i class="fas fa-chevron-down"></i></button>
                 <div class="accordion-panel">
@@ -207,12 +208,12 @@
                     <div id="tab-1-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                            <img src="notes/unit1/page1.jpg" alt="Unit 1, Page 1">
-                            <img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
-                            <img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
-                            <img src="notes/unit1/page4.jpg" alt="Unit 1, Page 4">
-                            <img src="notes/unit1/page5.jpg" alt="Unit 1, Page 5">
-                            <img src="notes/unit1/page6.jpg" alt="Unit 1, Page 6">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 1">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 2">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 3">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 4">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 5">
+                            <img src="https://i.imgur.com/kYqf2Q6.jpeg" alt="Unit 1, Page 6">
                         </div>
                     </div>
                     <div id="tab-1-3" class="tab-pane">
@@ -225,7 +226,6 @@
                 </div>
             </div>
 
-            <!-- UNIT II -->
             <div class="accordion-item" id="unit2">
                 <button class="accordion-toggle"><div><span class="unit-title">Unit II</span> Wave Motion & Superposition</div><i class="fas fa-chevron-down"></i></button>
                 <div class="accordion-panel">
@@ -251,7 +251,6 @@
                 </div>
             </div>
             
-            <!-- UNIT III -->
             <div class="accordion-item" id="unit3">
                 <button class="accordion-toggle"><div><span class="unit-title">Unit III</span> Interference</div><i class="fas fa-chevron-down"></i></button>
                 <div class="accordion-panel">
@@ -276,7 +275,6 @@
                 </div>
             </div>
 
-            <!-- UNIT IV -->
             <div class="accordion-item" id="unit4">
                 <button class="accordion-toggle"><div><span class="unit-title">Unit IV</span> Diffraction</div><i class="fas fa-chevron-down"></i></button>
                 <div class="accordion-panel">
@@ -309,8 +307,7 @@
         <div class="notes-viewer-content">
             <button class="close-notes-btn">&times;</button>
             <div id="notes-carousel">
-                <!-- Note pages will be dynamically injected here -->
-            </div>
+                </div>
             <div class="notes-controls">
                 <button id="download-btn" class="control-btn" title="Download Page (D)"><i class="fas fa-download"></i></button>
                 <button id="fullscreen-btn" class="control-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
@@ -366,10 +363,16 @@
         const MAX_ZOOM = 5.0;
         const MIN_ZOOM = 0.5;
         
-        let isPointerDown = false;
-        let startX, currentTranslateX;
-        let initialPinchDistance = null;
-        let lastZoomLevel = 1.0;
+        // Pointer/touch state
+        let pointer = {
+            isDown: false,
+            isPanning: false,
+            startX: 0,
+            startY: 0,
+            lastX: 0,
+            lastY: 0,
+            initialPinchDistance: null
+        };
 
         // --- BASIC UI SETUP (UNCHANGED) ---
         (function setupBasicUI(){
@@ -447,7 +450,7 @@
             });
             
             pageInput.max = currentNoteImages.length;
-            goToPage(0, false); // Go to first page instantly, no animation
+            goToPage(0, false); 
             notesViewer.classList.add('visible');
             document.body.style.overflow = 'hidden';
         };
@@ -473,8 +476,7 @@
             const oldZoom = zoomLevel;
             zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
             
-            const rect = activeImg.getBoundingClientRect();
-            // Default origin to center if not provided
+            const rect = activePage.getBoundingClientRect();
             const originX = origin?.x ?? (rect.left + rect.width / 2);
             const originY = origin?.y ?? (rect.top + rect.height / 2);
             
@@ -484,9 +486,9 @@
             activeImg.style.transformOrigin = `${relativeX * 100}% ${relativeY * 100}%`;
             activeImg.style.transform = `scale(${zoomLevel})`;
             
-            // Adjust scroll to keep the zoom point under the cursor/fingers
-            const dx = (originX - rect.left) * (zoomLevel / oldZoom - 1);
-            const dy = (originY - rect.top) * (zoomLevel / oldZoom - 1);
+            const dx = (originX - rect.left - activePage.scrollLeft) * (zoomLevel / oldZoom - 1);
+            const dy = (originY - rect.top - activePage.scrollTop) * (zoomLevel / oldZoom - 1);
+            
             activePage.scrollLeft += dx;
             activePage.scrollTop += dy;
 
@@ -496,17 +498,22 @@
         };
         
         const resetZoom = () => {
+            if (zoomLevel === 1.0) return;
             const allPages = notesCarousel.querySelectorAll('.note-page');
             allPages.forEach(page => {
                 const img = page.querySelector('img');
-                if(img) img.style.transform = 'scale(1.0)';
+                if(img) {
+                    img.style.transform = 'scale(1.0)';
+                    img.style.transformOrigin = '50% 50%';
+                }
                 page.scrollTop = 0;
                 page.scrollLeft = 0;
             });
+            zoomLevel = 1.0;
             applyZoom(1.0);
         };
         
-        // --- NAVIGATION LOGIC (USING TRANSFORM) ---
+        // --- NAVIGATION LOGIC ---
         const goToPage = (index, animate = true) => {
             if (isNavigating || index < 0 || index >= currentNoteImages.length) return;
             isNavigating = true;
@@ -519,7 +526,7 @@
             currentPageIndex = index;
             updatePageIndicator();
 
-            setTimeout(() => { isNavigating = false; }, 400); // Debounce time
+            setTimeout(() => { isNavigating = false; }, 400); 
         };
 
         const handlePageJump = () => {
@@ -533,9 +540,27 @@
         };
 
         // --- DOWNLOAD LOGIC ---
-        const downloadCurrentImage = async () => { /* ... unchanged ... */ };
+        const downloadCurrentImage = async () => {
+            if (currentNoteImages.length === 0) return;
+            const currentImage = currentNoteImages[currentPageIndex];
+            try {
+                const response = await fetch(currentImage.src);
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Unit-${currentImage.unit}-Page-${currentImage.page}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error("Download failed:", error);
+                alert("Could not download image. It may be due to cross-origin restrictions. Please try saving the image directly.");
+            }
+        };
 
-        // --- EVENT LISTENERS ---
+        // --- EVENT LISTENERS (SETUP) ---
         viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
         closeNotesBtn.addEventListener('click', closeNotesViewer);
         fullscreenBtn.addEventListener('click', () => !document.fullscreenElement ? notesViewerContent.requestFullscreen() : document.exitFullscreen());
@@ -555,94 +580,121 @@
         notesViewer.addEventListener('wheel', e => {
             e.preventDefault();
             const activePage = notesCarousel.children[currentPageIndex];
-            const isMouseOverImage = e.target.tagName === 'IMG' || e.target.classList.contains('note-page');
-
-            if (e.ctrlKey && isMouseOverImage) {
+            
+            if (e.ctrlKey) { // Zoom with Ctrl + Scroll
                  applyZoom(zoomLevel + (e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP), {x: e.clientX, y: e.clientY});
-            } else if (zoomLevel > 1.05 && isMouseOverImage) {
+            } else if (zoomLevel > 1.0) { // Pan with scroll wheel if zoomed
                 activePage.scrollTop += e.deltaY;
                 activePage.scrollLeft += e.deltaX;
-            } else {
+            } else { // Navigate pages if not zoomed
                 if (isNavigating) return;
-                const scrollDirection = Math.sign(e.deltaY) || Math.sign(e.deltaX);
+                const scrollDirection = Math.sign(e.deltaY);
                 if (scrollDirection > 0) goToPage(currentPageIndex + 1);
                 else if (scrollDirection < 0) goToPage(currentPageIndex - 1);
             }
         }, { passive: false });
         
-        // --- MOUSE & TOUCH DRAG/SWIPE LOGIC (RE-ENGINEERED) ---
-        const pointerDown = (clientX) => {
-            if (zoomLevel > 1.05) return;
-            isPointerDown = true;
-            notesCarousel.classList.add('grabbing');
-            notesCarousel.style.transition = 'none'; // Disable transition while dragging
-            startX = clientX;
-            currentTranslateX = -currentPageIndex * notesCarousel.offsetWidth;
-        };
+        // --- POINTER & TOUCH GESTURES (RE-ENGINEERED) ---
+        const getPointerXY = (e) => ({ x: e.touches?.[0].clientX ?? e.clientX, y: e.touches?.[0].clientY ?? e.clientY });
 
-        const pointerMove = (clientX) => {
-            if (!isPointerDown || zoomLevel > 1.05) return;
-            const walk = clientX - startX;
-            notesCarousel.style.transform = `translateX(${currentTranslateX + walk}px)`;
-        };
+        const onPointerDown = (e) => {
+            if (e.touches && e.touches.length > 1) { // Handle pinch start
+                onPinchStart(e);
+                return;
+            }
+            pointer.isDown = true;
+            const { x, y } = getPointerXY(e);
+            pointer.startX = x;
+            pointer.startY = y;
+            pointer.lastX = x;
+            pointer.lastY = y;
 
-        const pointerUp = (clientX) => {
-            if (!isPointerDown || zoomLevel > 1.05) return;
-            isPointerDown = false;
-            notesCarousel.classList.remove('grabbing');
-            
-            const movedBy = clientX - startX;
-            const snapThreshold = notesCarousel.offsetWidth / 4;
-
-            if (movedBy < -snapThreshold) {
-                goToPage(currentPageIndex + 1);
-            } else if (movedBy > snapThreshold) {
-                goToPage(currentPageIndex - 1);
+            if (zoomLevel > 1.0) {
+                pointer.isPanning = true;
+                notesCarousel.classList.add('panning');
             } else {
-                goToPage(currentPageIndex); // Snap back
+                notesCarousel.classList.add('grabbing');
+                notesCarousel.style.transition = 'none';
             }
         };
 
-        notesCarousel.addEventListener('mousedown', e => pointerDown(e.pageX));
-        notesCarousel.addEventListener('mousemove', e => { if(isPointerDown) { e.preventDefault(); pointerMove(e.pageX); } });
-        notesCarousel.addEventListener('mouseup', e => pointerUp(e.pageX));
-        notesCarousel.addEventListener('mouseleave', e => { if(isPointerDown) pointerUp(e.pageX); });
+        const onPointerMove = (e) => {
+            if (!pointer.isDown) return;
+            e.preventDefault();
 
-        notesCarousel.addEventListener('touchstart', e => { if (e.touches.length === 1) pointerDown(e.touches[0].pageX); }, { passive: true });
-        notesCarousel.addEventListener('touchmove', e => { if (e.touches.length === 1 && isPointerDown) { e.preventDefault(); pointerMove(e.touches[0].pageX); } }, { passive: false });
-        notesCarousel.addEventListener('touchend', e => { if (e.changedTouches.length === 1) pointerUp(e.changedTouches[0].pageX); });
-
-        // --- PINCH ZOOM LOGIC (RE-ENGINEERED) ---
-        notesCarousel.addEventListener('touchstart', e => {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                initialPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                lastZoomLevel = zoomLevel;
+            if (e.touches && e.touches.length > 1) { // Handle pinch move
+                onPinchMove(e);
+                return;
             }
-        }, { passive: false });
+            
+            const { x, y } = getPointerXY(e);
 
-        notesCarousel.addEventListener('touchmove', e => {
-            if (e.touches.length === 2 && initialPinchDistance) {
-                e.preventDefault();
-                const newPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                const pinchRatio = newPinchDistance / initialPinchDistance;
-                const midPoint = {
-                    x: (e.touches[0].pageX + e.touches[1].pageX) / 2,
-                    y: (e.touches[0].pageY + e.touches[1].pageY) / 2
-                };
-                applyZoom(lastZoomLevel * pinchRatio, midPoint);
+            if (pointer.isPanning) {
+                const activePage = notesCarousel.children[currentPageIndex];
+                activePage.scrollLeft -= x - pointer.lastX;
+                activePage.scrollTop -= y - pointer.lastY;
+            } else { // Swipe to navigate
+                const walk = x - pointer.startX;
+                const currentTranslateX = -currentPageIndex * notesCarousel.offsetWidth;
+                notesCarousel.style.transform = `translateX(${currentTranslateX + walk}px)`;
             }
-        }, { passive: false });
+            pointer.lastX = x;
+            pointer.lastY = y;
+        };
+        
+        const onPointerUp = (e) => {
+            if (e.touches && e.touches.length > 0) return; // Still pinching
+            
+            pointer.isDown = false;
+            
+            if (pointer.isPanning) {
+                pointer.isPanning = false;
+                notesCarousel.classList.remove('panning');
+            } else {
+                notesCarousel.classList.remove('grabbing');
+                const movedBy = pointer.lastX - pointer.startX;
+                const snapThreshold = notesCarousel.offsetWidth / 4;
 
-        notesCarousel.addEventListener('touchend', e => {
-            if (e.touches.length < 2) {
-                initialPinchDistance = null;
+                if (movedBy < -snapThreshold) goToPage(currentPageIndex + 1);
+                else if (movedBy > snapThreshold) goToPage(currentPageIndex - 1);
+                else goToPage(currentPageIndex); // Snap back
             }
-        });
+            pointer.initialPinchDistance = null;
+        };
+
+        const onPinchStart = (e) => {
+            pointer.initialPinchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        };
+        
+        const onPinchMove = (e) => {
+             if (pointer.initialPinchDistance === null) return;
+             const newPinchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+             const pinchRatio = newPinchDistance / pointer.initialPinchDistance;
+             const midPoint = {
+                 x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+                 y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+             };
+             applyZoom(zoomLevel * pinchRatio, midPoint);
+             pointer.initialPinchDistance = newPinchDistance; // Update distance for smooth continuous zoom
+        };
+
+        // Attach pointer/touch events
+        notesCarousel.addEventListener('mousedown', onPointerDown);
+        notesCarousel.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('mouseup', onPointerUp); // Use window to catch mouse up events outside the carousel
+
+        notesCarousel.addEventListener('touchstart', onPointerDown, { passive: false });
+        notesCarousel.addEventListener('touchmove', onPointerMove, { passive: false });
+        notesCarousel.addEventListener('touchend', onPointerUp);
+        notesCarousel.addEventListener('touchcancel', onPointerUp);
 
         // --- KEYBOARD SHORTCUTS ---
         document.addEventListener('keydown', e => {
             if (!notesViewer.classList.contains('visible') || e.target.id === 'page-input') return;
+            
+            // Allow default browser zoom
+            if (e.ctrlKey && (e.key === '+' || e.key === '-')) return;
+
             e.preventDefault();
             switch(e.key) {
                 case 'Escape': closeNotesViewer(); break;
@@ -650,12 +702,13 @@
                 case 'd': downloadBtn.click(); break;
                 case '+': case '=': applyZoom(zoomLevel + ZOOM_STEP); break;
                 case '-': applyZoom(zoomLevel - ZOOM_STEP); break;
+                case '0': resetZoom(); break;
                 case 'ArrowRight': goToPage(currentPageIndex + 1); break;
                 case 'ArrowLeft': goToPage(currentPageIndex - 1); break;
             }
         });
 
-        // --- PARTICLE BACKGROUND LOGIC ---
+        // --- PARTICLE BACKGROUND LOGIC (UNCHANGED) ---
         if (canvas) {
             const ctx = canvas.getContext('2d'); let particles = [];
             const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = document.documentElement.scrollHeight; };
