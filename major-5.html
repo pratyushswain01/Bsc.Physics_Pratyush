@@ -36,8 +36,6 @@
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
         #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
         footer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
-
-        /* --- ANIMATIONS & ADVANCED UI --- */
         #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--hero-gradient); width: 0%; z-index: 2000; transition: width 0.1s linear; }
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; }
@@ -75,8 +73,8 @@
         .resource-card .text p { margin: 0; font-size: 0.85em; color: var(--text-secondary); }
         .btn-view-notes { background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; }
         .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
-        
-        /* --- NOTES VIEWER STYLES (HORIZONTAL SCROLL) --- */
+
+        /* --- NOTES VIEWER STYLES (ADVANCED) --- */
         .notes-viewer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); z-index: 3000;
@@ -93,36 +91,48 @@
         .close-notes-btn:hover { color: white; transform: scale(1.1); }
         
         #notes-carousel {
-            width: 100%; height: 100%; display: flex; overflow-x: auto;
+            width: 100%; height: 100%; display: flex; overflow: hidden;
             scroll-snap-type: x mandatory; scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch; cursor: grab;
         }
-        #notes-carousel:active { cursor: grabbing; }
-        #notes-carousel::-webkit-scrollbar { display: none; }
-        #notes-carousel { -ms-overflow-style: none; scrollbar-width: none; }
-
         .note-page {
             width: 100%; height: 100%; flex: 0 0 100%; scroll-snap-align: center;
             display: flex; justify-content: center; align-items: center;
             padding: 2rem; box-sizing: border-box; transition: padding 0.3s ease;
+            overflow: auto; 
         }
+        .note-page::-webkit-scrollbar { display: none; }
+        .note-page { -ms-overflow-style: none; scrollbar-width: none; }
+
         .note-page img {
-            display: block; max-width: 100%; max-height: 100%;
+            display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
             object-fit: contain; border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: border-radius 0.3s ease;
-            user-select: none; pointer-events: none; /* Prevents image drag interference */
+            transition: transform 0.2s ease, border-radius 0.3s ease;
+            cursor: grab;
         }
+        .note-page img.panning { cursor: grabbing; }
 
         .notes-controls {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5); color: white; border-radius: 25px; padding: 0.5rem 1rem;
-            display: flex; align-items: center; gap: 1.25rem;
+            background: rgba(0, 0, 0, 0.6); color: white; border-radius: 25px; padding: 0.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
             backdrop-filter: blur(5px); user-select: none; transition: opacity 0.3s ease;
         }
-        .control-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0.5rem; transition: transform 0.2s; }
-        .control-btn:hover { transform: scale(1.15); }
-        #page-indicator { font-weight: 500; font-size: 0.9em; min-width: 80px; text-align: center; }
+        .control-btn { background: none; border: none; color: white; font-size: 1.1rem; cursor: pointer; padding: 0.5rem 0.8rem; transition: background-color 0.2s, transform 0.2s; border-radius: 20px; }
+        .control-btn:hover { background-color: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
+        .control-btn:disabled { opacity: 0.4; cursor: not-allowed; background-color: transparent; transform: none; }
+        .control-group { display: flex; align-items: center; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 0.5rem; margin-left: 0.5rem; }
+        
+        .page-indicator-container { position: relative; padding: 0.5rem 0.8rem; cursor: pointer; border-radius: 20px; transition: background-color 0.2s; }
+        .page-indicator-container:hover { background-color: rgba(255, 255, 255, 0.1); }
+        #page-indicator-text { font-weight: 500; font-size: 0.9em; min-width: 80px; text-align: center; }
+        #page-input {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); color: white; border: 1px solid var(--primary-accent);
+            border-radius: 20px; text-align: center; font-family: 'Poppins', sans-serif;
+            font-size: 0.9em; display: none; box-sizing: border-box;
+        }
+        #page-input::-webkit-outer-spin-button, #page-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        #page-input[type=number] { -moz-appearance: textfield; }
 
         #fullscreen-footer {
             position: absolute; bottom: 10px; left: 0; right: 0;
@@ -135,16 +145,10 @@
         .notes-viewer-content:fullscreen .note-page { padding: 0; }
         .notes-viewer-content:fullscreen .note-page img { border-radius: 0; }
         .notes-viewer-content:fullscreen .notes-controls,
-        .notes-viewer-content:fullscreen .close-notes-btn {
-            opacity: 0; pointer-events: none;
-        }
+        .notes-viewer-content:fullscreen .close-notes-btn { opacity: 0; pointer-events: none; }
         .notes-viewer-content:fullscreen:hover .notes-controls,
-        .notes-viewer-content:fullscreen:hover .close-notes-btn {
-            opacity: 1; pointer-events: auto;
-        }
-        .notes-viewer-content:fullscreen #fullscreen-footer {
-            opacity: 1;
-        }
+        .notes-viewer-content:fullscreen:hover .close-notes-btn { opacity: 1; pointer-events: auto; }
+        .notes-viewer-content:fullscreen #fullscreen-footer { opacity: 1; }
     </style>
 </head>
 <body>
@@ -200,10 +204,13 @@
                     <div id="tab-1-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                            <!-- ADD YOUR NOTE IMAGES HERE for Unit 1 -->
                             <img src="notes/unit1/page1.jpg" alt="Unit 1, Page 1">
-                            <img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
-                            <img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
+<img src="notes/unit1/page2.jpg" alt="Unit 1, Page 2">
+<img src="notes/unit1/page3.jpg" alt="Unit 1, Page 3">
+<img src="notes/unit1/page4.jpg" alt="Unit 1, Page 4">
+<img src="notes/unit1/page5.jpg" alt="Unit 1, Page 5">
+<img src="notes/unit1/page6.jpg" alt="Unit 1, Page 6">
+
                         </div>
                     </div>
                     <div id="tab-1-3" class="tab-pane">
@@ -229,7 +236,6 @@
                     <div id="tab-2-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="2"><i class="fas fa-book-open"></i> View Unit II Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 2 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+1" alt="Unit 2, Page 1">
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+2" alt="Unit 2, Page 2">
                         </div>
@@ -256,7 +262,6 @@
                     <div id="tab-3-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="3"><i class="fas fa-book-open"></i> View Unit III Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 3 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Note+1" alt="Unit 3, Page 1">
                         </div>
                     </div>
@@ -282,7 +287,6 @@
                     <div id="tab-4-2" class="tab-pane">
                         <button class="btn-view-notes" data-unit="4"><i class="fas fa-book-open"></i> View Unit IV Notes</button>
                         <div class="notes-image-list" style="display:none;">
-                             <!-- ADD YOUR NOTE IMAGES HERE for Unit 4 -->
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+1" alt="Unit 4, Page 1">
                              <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+2" alt="Unit 4, Page 2">
                         </div>
@@ -303,12 +307,24 @@
         <div class="notes-viewer-content">
             <button class="close-notes-btn">&times;</button>
             <div id="notes-carousel">
-                <!-- Note pages will be dynamically injected here by JavaScript -->
+                <!-- Note pages will be dynamically injected here -->
             </div>
             <div class="notes-controls">
                 <button id="download-btn" class="control-btn" title="Download Page (D)"><i class="fas fa-download"></i></button>
-                <span id="page-indicator"></span>
                 <button id="fullscreen-btn" class="control-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
+
+                <div class="control-group">
+                    <button id="zoom-out-btn" class="control-btn" title="Zoom Out (-)"><i class="fas fa-search-minus"></i></button>
+                    <span id="zoom-level" class="page-indicator-container" title="Zoom Level">100%</span>
+                    <button id="zoom-in-btn" class="control-btn" title="Zoom In (+)"><i class="fas fa-search-plus"></i></button>
+                </div>
+                
+                <div class="control-group">
+                    <div class="page-indicator-container" title="Click to enter page number">
+                        <span id="page-indicator-text"></span>
+                        <input type="number" id="page-input" min="1">
+                    </div>
+                </div>
             </div>
             <div id="fullscreen-footer">Updated by Pratyush Swain</div>
         </div>
@@ -318,6 +334,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- ELEMENT SELECTORS ---
         const themeToggle = document.getElementById('theme-toggle');
         const progressBar = document.getElementById('scroll-progress-bar');
         const accordionToggles = document.querySelectorAll('.accordion-toggle');
@@ -329,116 +346,90 @@
         const notesViewerContent = notesViewer.querySelector('.notes-viewer-content');
         const notesCarousel = document.getElementById('notes-carousel');
         const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
-        const pageIndicator = document.getElementById('page-indicator');
+        const pageIndicatorContainer = document.querySelector('.page-indicator-container');
+        const pageIndicatorText = document.getElementById('page-indicator-text');
+        const pageInput = document.getElementById('page-input');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
         const downloadBtn = document.getElementById('download-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomLevelIndicator = document.getElementById('zoom-level');
         
+        // --- STATE MANAGEMENT ---
         let currentNoteImages = [];
         let currentPageIndex = 0;
-        let intersectionObserver;
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        // --- THEME & BASIC UI LOGIC ---
-        const applyTheme = (theme) => {
-            document.body.classList.toggle('dark-mode', theme === 'dark');
-            if (themeToggle) { themeToggle.checked = (theme === 'dark'); }
-        };
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(savedTheme);
-        themeToggle.addEventListener('change', () => {
-            const newTheme = themeToggle.checked ? 'dark' : 'light';
-            localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
-        });
-        if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
-
-        window.addEventListener('scroll', () => {
-            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrolled = (window.scrollY / scrollableHeight) * 100;
-            if (progressBar) { progressBar.style.width = scrolled + '%'; }
-        });
-
-        accordionToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const panel = toggle.nextElementSibling;
-                const isOpen = panel.style.maxHeight;
-                document.querySelectorAll('.accordion-panel').forEach(p => p.style.maxHeight = null);
-                document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('open'));
-                if (!isOpen) {
-                    toggle.classList.add('active');
-                    panel.classList.add('open');
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        });
-
-        allTabContainers.forEach(container => {
-            const tabLinks = container.querySelectorAll('.tab-link');
-            const tabPanes = container.querySelectorAll('.tab-pane');
-            tabLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const tabId = link.getAttribute('data-tab');
-                    tabLinks.forEach(l => l.classList.remove('active'));
-                    tabPanes.forEach(p => p.classList.remove('active'));
-                    link.classList.add('active');
-                    container.querySelector('#tab-' + tabId).classList.add('active');
-                    const openAccordionPanel = document.querySelector('.accordion-panel.open');
-                    if (openAccordionPanel) {
-                        openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
-                    }
-                });
-            });
-        });
-
-        document.querySelectorAll('.quick-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if (targetElement) {
-                    const toggle = targetElement.querySelector('.accordion-toggle');
-                    if (!toggle.classList.contains('active')) { toggle.click(); }
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                }
-            });
-        });
-
-        // --- NOTES VIEWER LOGIC ---
-        const setupIntersectionObserver = () => {
-            const options = { root: notesCarousel, rootMargin: '0px', threshold: 0.6 };
-            intersectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const pages = Array.from(notesCarousel.children);
-                        currentPageIndex = pages.indexOf(entry.target);
-                        updatePageIndicator();
-                    }
-                });
-            }, options);
-            document.querySelectorAll('.note-page').forEach(page => intersectionObserver.observe(page));
-        };
+        let isNavigating = false;
+        let zoomLevel = 1.0;
+        const ZOOM_STEP = 0.2;
+        const MAX_ZOOM = 3.0;
+        const MIN_ZOOM = 0.6;
+        let isPanning = false;
+        let panStart = { x: 0, y: 0 };
+        let pageStart = { x: 0, y: 0 };
         
-        const updatePageIndicator = () => {
-            pageIndicator.textContent = `Page ${currentPageIndex + 1} of ${currentNoteImages.length}`;
-        };
+        // --- BASIC UI SETUP ---
+        (function setupBasicUI(){
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); if(themeToggle) themeToggle.checked = (theme === 'dark'); };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+            if(themeToggle) themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+            if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
+            window.addEventListener('scroll', () => {
+                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.scrollY / scrollableHeight) * 100;
+                if (progressBar) { progressBar.style.width = scrolled + '%'; }
+            });
+            accordionToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const panel = toggle.nextElementSibling;
+                    const isOpen = panel.style.maxHeight;
+                    document.querySelectorAll('.accordion-panel').forEach(p => { p.style.maxHeight = null; p.classList.remove('open'); });
+                    document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
+                    if (!isOpen) {
+                        toggle.classList.add('active');
+                        panel.classList.add('open');
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            });
+            allTabContainers.forEach(container => {
+                const tabLinks = container.querySelectorAll('.tab-link');
+                const tabPanes = container.querySelectorAll('.tab-pane');
+                tabLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        const tabId = link.getAttribute('data-tab');
+                        tabLinks.forEach(l => l.classList.remove('active'));
+                        tabPanes.forEach(p => p.classList.remove('active'));
+                        link.classList.add('active');
+                        container.querySelector('#tab-' + tabId).classList.add('active');
+                        const openAccordionPanel = document.querySelector('.accordion-panel.open');
+                        if (openAccordionPanel) {
+                            openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
+                        }
+                    });
+                });
+            });
+            document.querySelectorAll('.quick-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        const toggle = targetElement.querySelector('.accordion-toggle');
+                        if (!toggle.classList.contains('active')) { toggle.click(); }
+                        setTimeout(() => targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                    }
+                });
+            });
+        })();
 
+        // --- CORE VIEWER FUNCTIONS ---
         const openNotesViewer = (button) => {
             const imageListContainer = button.nextElementSibling;
             if (!imageListContainer) return;
-
             const images = Array.from(imageListContainer.querySelectorAll('img'));
-            if (images.length === 0) {
-                alert('No notes available for this unit.');
-                return;
-            }
+            if (images.length === 0) { alert('No notes available for this unit.'); return; }
 
-            currentNoteImages = images.map((img, index) => ({ 
-                src: img.src, alt: img.alt, unit: button.dataset.unit || 'unknown', page: index + 1
-            }));
+            currentNoteImages = images.map((img, index) => ({ src: img.src, alt: img.alt, unit: button.dataset.unit || 'unknown', page: index + 1 }));
             
             notesCarousel.innerHTML = '';
             currentNoteImages.forEach(data => {
@@ -451,10 +442,8 @@
                 notesCarousel.appendChild(pageDiv);
             });
             
-            currentPageIndex = 0;
-            updatePageIndicator();
-            setupIntersectionObserver();
-
+            pageInput.max = currentNoteImages.length;
+            goToPage(0, 'instant');
             notesViewer.classList.add('visible');
             document.body.style.overflow = 'hidden';
         };
@@ -463,11 +452,71 @@
             if (document.fullscreenElement) document.exitFullscreen();
             notesViewer.classList.remove('visible');
             document.body.style.overflow = '';
-            if (intersectionObserver) intersectionObserver.disconnect();
             notesCarousel.innerHTML = '';
             currentNoteImages = [];
         };
 
+        const updatePageIndicator = () => {
+            pageIndicatorText.textContent = `Page ${currentPageIndex + 1} of ${currentNoteImages.length}`;
+        };
+
+        // --- ZOOM & PAN LOGIC ---
+        const applyZoom = () => {
+            const activeImg = notesCarousel.children[currentPageIndex]?.querySelector('img');
+            if (!activeImg) return;
+            activeImg.style.transformOrigin = 'center center';
+            activeImg.style.transform = `scale(${zoomLevel})`;
+            zoomLevelIndicator.textContent = `${Math.round(zoomLevel * 100)}%`;
+            zoomInBtn.disabled = zoomLevel >= MAX_ZOOM;
+            zoomOutBtn.disabled = zoomLevel <= MIN_ZOOM;
+        };
+
+        const resetZoom = () => {
+            zoomLevel = 1.0;
+            const allPages = notesCarousel.querySelectorAll('.note-page');
+            allPages.forEach(page => {
+                const img = page.querySelector('img');
+                if(img) img.style.transform = 'scale(1.0)';
+                page.scrollTop = 0;
+                page.scrollLeft = 0;
+            });
+            applyZoom();
+        };
+
+        const changeZoom = (amount) => {
+            const newZoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomLevel + amount));
+            if (newZoomLevel !== zoomLevel) {
+                zoomLevel = newZoomLevel;
+                applyZoom();
+            }
+        };
+        
+        // --- NAVIGATION LOGIC ---
+        const goToPage = (index, behavior = 'smooth') => {
+            if (isNavigating || index < 0 || index >= currentNoteImages.length) return;
+            isNavigating = true;
+            
+            const targetScrollLeft = notesCarousel.children[index].offsetLeft;
+            notesCarousel.scrollTo({ left: targetScrollLeft, behavior });
+            
+            if(currentPageIndex !== index) resetZoom();
+            currentPageIndex = index;
+            updatePageIndicator();
+
+            setTimeout(() => { isNavigating = false; }, 500);
+        };
+
+        const handlePageJump = () => {
+            const pageNum = parseInt(pageInput.value);
+            if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= currentNoteImages.length) {
+                goToPage(pageNum - 1);
+            }
+            pageInput.style.display = 'none';
+            pageIndicatorText.style.display = 'block';
+            pageInput.value = '';
+        };
+
+        // --- DOWNLOAD LOGIC ---
         const downloadCurrentImage = async () => {
             const currentNote = currentNoteImages[currentPageIndex];
             if (!currentNote) return;
@@ -481,46 +530,76 @@
                 link.click();
                 document.body.removeChild(link);
                 URL.revokeObjectURL(link.href);
-            } catch (error) {
-                console.error('Download failed:', error);
-                alert('Could not download the image.');
-            }
-        };
-
-        const toggleFullscreen = () => {
-            if (!document.fullscreenElement) {
-                notesViewerContent.requestFullscreen().catch(err => alert(`Fullscreen error: ${err.message}`));
-            } else {
-                document.exitFullscreen();
-            }
-        };
-        
-        const updateFullscreenIcon = () => {
-            fullscreenBtn.innerHTML = document.fullscreenElement ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+            } catch (error) { console.error('Download failed:', error); alert('Could not download image.'); }
         };
 
         // --- EVENT LISTENERS ---
         viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
         closeNotesBtn.addEventListener('click', closeNotesViewer);
-        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        fullscreenBtn.addEventListener('click', () => !document.fullscreenElement ? notesViewerContent.requestFullscreen() : document.exitFullscreen());
+        document.addEventListener('fullscreenchange', () => fullscreenBtn.innerHTML = document.fullscreenElement ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>');
         downloadBtn.addEventListener('click', downloadCurrentImage);
-        document.addEventListener('fullscreenchange', updateFullscreenIcon);
-        notesViewer.addEventListener('click', e => { if (e.target === notesViewer) closeNotesViewer(); });
+        zoomInBtn.addEventListener('click', () => changeZoom(ZOOM_STEP));
+        zoomOutBtn.addEventListener('click', () => changeZoom(-ZOOM_STEP));
+        pageIndicatorContainer.addEventListener('click', () => {
+            if(pageInput.style.display === 'block') return;
+            pageIndicatorText.style.display = 'none';
+            pageInput.style.display = 'block';
+            pageInput.focus();
+        });
+        pageInput.addEventListener('blur', handlePageJump);
+        pageInput.addEventListener('keydown', e => { if (e.key === 'Enter') handlePageJump(); });
+        
+        notesCarousel.addEventListener('wheel', e => {
+            e.preventDefault();
+            if (e.ctrlKey) {
+                changeZoom(e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP);
+            } else {
+                if (isNavigating) return;
+                const scrollDirection = Math.sign(e.deltaY) || Math.sign(e.deltaX);
+                if (scrollDirection > 0) goToPage(currentPageIndex + 1);
+                else if (scrollDirection < 0) goToPage(currentPageIndex - 1);
+            }
+        }, { passive: false });
+
+        notesCarousel.addEventListener('mousedown', e => {
+            const img = e.target;
+            if (img.tagName === 'IMG' && zoomLevel > 1) {
+                isPanning = true;
+                img.classList.add('panning');
+                const page = img.parentElement;
+                panStart = { x: e.clientX, y: e.clientY };
+                pageStart = { x: page.scrollLeft, y: page.scrollTop };
+                e.preventDefault();
+            }
+        });
+        window.addEventListener('mouseup', () => {
+            isPanning = false;
+            notesCarousel.querySelector('img.panning')?.classList.remove('panning');
+        });
+        window.addEventListener('mousemove', e => {
+            if (!isPanning) return;
+            e.preventDefault();
+            const page = notesCarousel.children[currentPageIndex];
+            const dx = e.clientX - panStart.x;
+            const dy = e.clientY - panStart.y;
+            page.scrollLeft = pageStart.x - dx;
+            page.scrollTop = pageStart.y - dy;
+        });
 
         document.addEventListener('keydown', e => {
-            if (!notesViewer.classList.contains('visible')) return;
-            if (e.key === "Escape") closeNotesViewer();
-            if (e.key.toLowerCase() === "f") toggleFullscreen();
-            if (e.key.toLowerCase() === "d") downloadCurrentImage();
-            if (e.key === "ArrowRight") notesCarousel.scrollBy({ left: notesCarousel.clientWidth, behavior: 'smooth' });
-            if (e.key === "ArrowLeft") notesCarousel.scrollBy({ left: -notesCarousel.clientWidth, behavior: 'smooth' });
+            if (!notesViewer.classList.contains('visible') || e.target.id === 'page-input') return;
+            e.preventDefault();
+            switch(e.key) {
+                case 'Escape': closeNotesViewer(); break;
+                case 'f': fullscreenBtn.click(); break;
+                case 'd': downloadBtn.click(); break;
+                case '+': case '=': zoomInBtn.click(); break;
+                case '-': zoomOutBtn.click(); break;
+                case 'ArrowRight': goToPage(currentPageIndex + 1); break;
+                case 'ArrowLeft': goToPage(currentPageIndex - 1); break;
+            }
         });
-        
-        // Mouse drag-to-scroll for carousel
-        notesCarousel.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - notesCarousel.offsetLeft; scrollLeft = notesCarousel.scrollLeft; });
-        notesCarousel.addEventListener('mouseleave', () => { isDown = false; });
-        notesCarousel.addEventListener('mouseup', () => { isDown = false; });
-        notesCarousel.addEventListener('mousemove', (e) => { if (!isDown) return; e.preventDefault(); const x = e.pageX - notesCarousel.offsetLeft; const walk = (x - startX) * 2; notesCarousel.scrollLeft = scrollLeft - walk; });
 
         // --- PARTICLE BACKGROUND LOGIC ---
         if (canvas) {
