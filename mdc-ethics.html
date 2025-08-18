@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ethics & Values | Value Added Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        /* --- THEME DEFINITIONS --- */
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #8e44ad; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --back-btn-bg: #e9ecef; --back-btn-color: #495057;
+            --primary-accent-hover: #7b2c9e;
+            --resource-card-bg: #f1f3f5;
+            --hero-gradient: linear-gradient(90deg, #1abc9c, #3498db, #9b59b6, #e74c3c);
+        }
+        body.dark-mode {
+            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #a066c3; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --back-btn-bg: #374151; --back-btn-color: #e5e7eb;
+            --primary-accent-hover: #b179d4;
+            --resource-card-bg: #2a2a2e;
+            --hero-gradient: linear-gradient(90deg, #63d4b5, #85b8e0, #be99d4, #f09a93);
+        }
+
+        /* --- BASIC STYLES --- */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; }
+        .container { width: 90%; max-width: 1200px; margin: 2rem auto; position: relative; z-index: 2; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto;}
+        .title-container { display: flex; align-items: center; gap: 0.8rem; } .title-container .logo { font-size: 2em; color: var(--primary-accent); }
+        header h1 { margin: 0; font-size: 1.4em; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1rem; }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        footer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--hero-gradient); width: 0%; z-index: 2000; transition: width 0.1s linear; }
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .course-header { text-align: center; padding: 4rem 1rem; margin-bottom: 2rem; }
+        .course-header h1 { font-size: clamp(2.5em, 5vw, 3.5em); font-weight: 700; margin: 0 0 0.5rem 0; background: var(--hero-gradient); color: transparent; -webkit-background-clip: text; background-clip: text; background-size: 200% auto; animation: gradient-text 10s linear infinite; }
+        @keyframes gradient-text { to { background-position: 200% center; } }
+        .course-header p { font-size: clamp(1em, 2.5vw, 1.2em); color: var(--text-secondary); margin: 0; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .quick-links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; }
+        .quick-link { text-decoration: none; background-color: var(--resource-card-bg); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid var(--border-color); }
+        .quick-link:hover { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); transform: translateY(-2px); }
+        .quick-link .fa-fw { margin-right: 0.5rem; }
+        .course-outcomes { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+        .course-outcomes h2 { margin-top: 0; font-size: 1.5em; } .course-outcomes ul { list-style-type: none; padding-left: 0; }
+        .course-outcomes li { padding-left: 2rem; position: relative; margin-bottom: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+        .course-outcomes li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 2px; font-size: 1.2em; }
+        .accordion-item { background: var(--card-bg); border-radius: 12px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
+        .accordion-toggle { background: transparent; color: var(--text-primary); cursor: pointer; padding: 1.5rem; width: 100%; border: none; text-align: left; outline: none; font-size: 1.2em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .accordion-toggle .unit-title { color: var(--primary-accent); margin-right: 1rem; }
+        .accordion-toggle .fas { transition: transform 0.3s ease-in-out; } .accordion-toggle.active .fas { transform: rotate(180deg); }
+        .accordion-panel { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.7s cubic-bezier(0.25, 1, 0.5, 1), padding 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        .accordion-panel.open { padding-bottom: 1.5rem; }
+        .tab-container { display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 1.5rem; margin-top: 1.5rem;}
+        .tab-link { font-size: 1em; font-weight: 500; color: var(--text-secondary); background: none; border: none; padding: 0.75rem 1.5rem; cursor: pointer; position: relative; transition: color 0.3s ease; }
+        .tab-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background-color: var(--primary-accent); transform: scaleX(0); transition: transform 0.3s ease; }
+        .tab-link.active { color: var(--primary-accent); } .tab-link.active::after { transform: scaleX(1); }
+        .tab-pane { display: none; animation: fadeIn 0.5s ease; }
+        .tab-pane.active { display: block; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .resource-card { background-color: var(--resource-card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.5rem; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); border-color: var(--primary-accent); }
+        .resource-card .icon { font-size: 2em; color: var(--primary-accent); transition: transform 0.3s ease; }
+        .resource-card:hover .icon { transform: scale(1.1) rotate(-5deg); }
+        .resource-card .text h5 { margin: 0 0 0.25rem 0; font-size: 1em; color: var(--text-primary); }
+        .resource-card .text p { margin: 0; font-size: 0.85em; color: var(--text-secondary); }
+        .btn-view-notes { text-decoration: none; background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; margin-bottom: 1.5rem;}
+        .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
+        .questions-section { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-color); margin-top: 2rem; }
+        .questions-section h2 { margin-top: 0; }
+        .question-card { border: 1px solid var(--border-color); border-left: 4px solid var(--primary-accent); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1rem; background-color: var(--resource-card-bg); }
+        .question-card p { margin: 0; }
+        .question-card span { font-size: 0.8em; font-weight: 600; color: var(--text-secondary); }
+        .course-info { background-color: var(--resource-card-bg); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; margin-top: 2rem; color: var(--text-secondary); font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    
+    <div id="scroll-progress-bar"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <header>
+        <div class="header-content">
+            <div class="title-container"><i class="fas fa-balance-scale-left logo"></i><h1>Value Added Course</h1></div>
+            <div class="header-controls"><div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="#" class="back-button"><i class="fas fa-arrow-left"></i> Back to All Subjects</a>
+        
+        <div class="course-header">
+            <h1>Ethics & Values</h1>
+            <p>An exploration of human values, ethical principles in society, and the development of responsible citizenship.</p>
+        </div>
+
+        <div class="quick-links">
+            <a href="#unit1" class="quick-link"><i class="fa-fw fas fa-users"></i> Unit I</a>
+            <a href="#unit2" class="quick-link"><i class="fa-fw fas fa-gopuram"></i> Unit II</a>
+            <a href="#unit3" class="quick-link"><i class="fa-fw fas fa-landmark-dome"></i> Unit III</a>
+            <a href="#unit4" class="quick-link"><i class="fa-fw fas fa-briefcase"></i> Unit IV</a>
+            <a href="#unit5" class="quick-link"><i class="fa-fw fas fa-robot"></i> Unit V</a>
+            <a href="#unit6" class="quick-link"><i class="fa-fw fas fa-hands-holding-child"></i> Unit VI</a>
+        </div>
+
+        <div class="course-outcomes">
+            <h2><i class="fas fa-bullseye"></i> Course Outcomes</h2>
+            <ul>
+                <li>Development of a good human being and a responsible citizen[cite: 7, 8].</li>
+                <li>Developing a sense of right and wrong leading to ethically correct behavior[cite: 10].</li>
+                <li>Inculcating a positive attitude and healthy work culture[cite: 11].</li>
+                <li>To equip students for national and state level civil service and other competitive examinations[cite: 12, 13].</li>
+            </ul>
+        </div>
+
+        <div class="accordion-container">
+
+            <div class="accordion-item" id="unit1">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit I</span> Ethics and Human Interface</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit1_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="1-1">Syllabus</button>
+                        <button class="tab-link" data-tab="1-2">Resources</button>
+                    </div>
+                    <div id="tab-1-1" class="tab-pane active"><p><strong>Ethics and Human Interface:</strong> Essence, Determinants and consequence of ethics and human action[cite: 19]. <br><strong>Dimensions of Ethics:</strong> in private and public relationship[cite: 20]. <br><strong>Human Values:</strong> Tolerance, Compassion, Rationality, Objectivity, Scientific Attitude, Integrity, Respecting conscience and Empathy etc[cite: 21]. <br><strong>Mahatma Gandhi and Ethical Practices:</strong> Non-Violence, Truth, Non-hatred and love for all, concern for the poorest, objective Nationalism and Education for man making. Relation between Ends and Means[cite: 22, 23].</p></div>
+                    <div id="tab-1-2" class="tab-pane">
+                        <div class="resources-grid">
+                           <a href="https://www.youtube.com/watch?v=VW_d_Rakb4I" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Ethics vs. Morals</h5><p>A clear distinction explained visually.</p></div></a>
+                           <a href="https://plato.stanford.edu/entries/gandhi/" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-book-open"></i></span><div class="text"><h5>Gandhi's Philosophy</h5><p>Stanford Encyclopedia of Philosophy.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit2">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit II</span> Ethics in Religions & Civilizations</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit2_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="2-1">Syllabus</button>
+                        <button class="tab-link" data-tab="2-2">Resources</button>
+                    </div>
+                    <div id="tab-2-1" class="tab-pane active"><p><strong>Hinduism:</strong> Dharma and Mokhya, Concept of Purusartha, Nisakama Karma, Concept of Basudev Kutumba and Peace[cite: 31]. <br><strong>Ten Commandments:</strong> Christianity and Judaism Tradition[cite: 32]. <br><strong>Islamic Ethics:</strong> Justice, Goodness, Kindness, Forgiveness, Honesty, Purity and Piety[cite: 33]. <br><strong>Egyptian & Mesopotamian Ethics:</strong> Core values from ancient civilizations[cite: 33, 34]. <br><strong>Buddhism:</strong> Arya Astangika Marg (The Eightfold Path)[cite: 35]. <br><strong>Jainism:</strong> Right faith, knowledge and conduct (Triratna)[cite: 36]. <br><strong>Chinese Philosophy:</strong> Confucianism and Taoism[cite: 38].</p></div>
+                    <div id="tab-2-2" class="tab-pane">
+                        <div class="resources-grid">
+                           <a href="https://www.youtube.com/watch?v=_3gK4gQy1d8" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>The Eightfold Path</h5><p>An animated explanation of Buddhist ethics.</p></div></a>
+                           <a href="https://www.britannica.com/topic/Hinduism/The-four-ashramas" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-book"></i></span><div class="text"><h5>Four Goals of Life in Hinduism</h5><p>Encyclopedia Britannica article.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit3">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit III</span> Constitutional Values & Citizenship</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit3_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="3-1">Syllabus</button>
+                        <button class="tab-link" data-tab="3-2">Resources</button>
+                    </div>
+                    <div id="tab-3-1" class="tab-pane active"><p><strong>Salient Values of Indian Constitution:</strong> Sovereign, Socialist, Secular, Democratic, Republic, Justice, Liberty, Equality and Fraternity[cite: 43]. <br><strong>Patriotic values:</strong> Ingredients of National Building, and examples of great Patriots[cite: 44]. <br><strong>Citizenship:</strong> Law abiding citizenship and the concept of Global citizenship[cite: 45, 46]. <br><strong>Volunteerism:</strong> Concept and facts, building a better society, Blood Donation, Social work, Helping the Aged, and Environment protection[cite: 47].</p></div>
+                    <div id="tab-3-2" class="tab-pane">
+                         <div class="resources-grid">
+                           <a href="https://www.youtube.com/watch?v=6h5-s2_b6R0" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Preamble of Indian Constitution</h5><p>A detailed breakdown of the core values.</p></div></a>
+                           <a href="https://www.un.org/en/global-issues/citizenship" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-globe"></i></span><div class="text"><h5>Global Citizenship</h5><p>Information from the United Nations.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit4">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit IV</span> Work Ethics</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit4_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="4-1">Syllabus</button>
+                        <button class="tab-link" data-tab="4-2">Resources</button>
+                    </div>
+                    <div id="tab-4-1" class="tab-pane active"><p><strong>Professionalism:</strong> The concept of professionalism and ethics at the work place[cite: 54, 55]. <br><strong>Core values for professionals:</strong> Reliability, Dedication, Discipline, Productivity, Co-operation, Integrity, Responsibility, Efficiency, Honesty, Time Management, Accountability, Gender Sensitivity, and more[cite: 56]. <br><strong>Conduct:</strong> Diligence, cleanliness and Environment Consciousness. Codes of conduct for Students, Teachers, Doctors, Lawyers, Scientists, etc[cite: 57, 58]. Practical ethics in day to day life[cite: 59].</p></div>
+                    <div id="tab-4-2" class="tab-pane">
+                         <div class="resources-grid">
+                           <a href="https://www.youtube.com/watch?v=DxWDtTIW3-M" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Developing Professionalism</h5><p>Tips and best practices for the workplace.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="accordion-item" id="unit5">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit V</span> Ethics and Science & Technology</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit5_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="5-1">Syllabus</button>
+                        <button class="tab-link" data-tab="5-2">Resources</button>
+                    </div>
+                    <div id="tab-5-1" class="tab-pane active"><p><strong>Ethics of Science and Technology:</strong> Are science and Technology ethically neutral? Are Science and Technology Value Free? [cite: 65, 66] <br><strong>Research Ethics:</strong> Ethics of scientific Research, Innovation and Technology[cite: 67]. <br><strong>Digital Ethics:</strong> Ethics of Social Media and Modern Gadgets[cite: 68]. <br><strong>AI and Ethics</strong>[cite: 69].</p></div>
+                    <div id="tab-5-2" class="tab-pane">
+                         <div class="resources-grid">
+                            <a href="https://www.youtube.com/watch?v=S0dDB-x9gWc" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>The Ethical Dilemma of AI</h5><p>A short documentary on modern AI ethics.</p></div></a>
+                            <a href="https://www.weforum.org/agenda/2021/01/davos-agenda-digital-media-ethics/" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-newspaper"></i></span><div class="text"><h5>Ethics of Social Media</h5><p>Article from the World Economic Forum.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit6">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit VI</span> Ethics and Vulnerable Sections</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <a href="unit6_ethics_notes.html" class="btn-view-notes"><i class="fas fa-book-reader"></i> Read Detailed Notes</a>
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="6-1">Syllabus</button>
+                        <button class="tab-link" data-tab="6-2">Resources</button>
+                    </div>
+                    <div id="tab-6-1" class="tab-pane active"><p><strong>Women's Issues:</strong> Gendered practices in family and marriage (dowry, child marriage). Women's work, pay gap, harassment at workplace, and role conflict. Gender sensitive language, property rights, and violence against women[cite: 76, 77, 78]. <br><strong>Children's Issues:</strong> Nutrition, health, and exploitation (child labour, trafficking, sexual exploitation)[cite: 79]. <br><strong>Elderly Persons' Issues:</strong> Abuse, financial/social insecurity, and health care[cite: 80, 81]. <br><strong>Persons with Disability (PWD):</strong> Rights of PWD, affirmative action, prevention of discrimination, and equal opportunity[cite: 82]. <br><strong>Third Gender Issues:</strong> Understanding LGBTQ, social justice, removal of discrimination, and acceptance[cite: 83].</p></div>
+                    <div id="tab-6-2" class="tab-pane">
+                         <div class="resources-grid">
+                            <a href="https://www.unwomen.org/en/what-we-do/ending-violence-against-women" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-globe"></i></span><div class="text"><h5>Violence Against Women</h5><p>Facts and figures from UN Women.</p></div></a>
+                             <a href="https://www.ilo.org/global/topics/child-labour/lang--en/index.htm" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-book"></i></span><div class="text"><h5>Child Labour Facts</h5><p>From the International Labour Organization.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="questions-section">
+            <h2><i class="fas fa-question-circle"></i> Sample Questions</h2>
+            <div class="question-card">
+                <p>Birsa Munda belongs to which state of India? [cite: 85]</p>
+                <span>[1 mark] [cite: 85]</span>
+            </div>
+            <div class="question-card">
+                <p>Recall at least 4 constitutional values from the preamble to India's constitution. [cite: 86]</p>
+                <span>[2 marks] [cite: 86]</span>
+            </div>
+             <div class="question-card">
+                <p>What is "Nisakama Karma" as described in Hindu philosophy? [cite: 31]</p>
+                <span>[2 marks]</span>
+            </div>
+            <div class="question-card">
+                <p>Explain the utility of being Punctual. [cite: 87]</p>
+                <span>[5 marks] [cite: 87]</span>
+            </div>
+             <div class="question-card">
+                <p>Briefly describe the rights of Persons with Disability (PWD) as a social justice issue. [cite: 82]</p>
+                <span>[5 marks]</span>
+            </div>
+            <div class="question-card">
+                <p>Explain the ethical principles a scientist should follow. [cite: 88]</p>
+                <span>[8 marks] [cite: 88]</span>
+            </div>
+        </div>
+
+        <div class="course-info">
+            <p><strong>Note:</strong> There is no internal examination for this course[cite: 92]. The Term End Examination will be conducted by the respective Universities[cite: 92]. Students should engage in self-study, and colleges will conduct at least 4 doubt clearing sessions for each unit[cite: 93]. Course material and video lectures are to be developed by OSHEC and DDCE, Utkal University[cite: 90, 91].</p>
+        </div>
+
+    </main>
+
+    <footer><p>&copy; <span id="current-year">2025</span> Created by Pratyush Swain.</p></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- ELEMENT SELECTORS ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const progressBar = document.getElementById('scroll-progress-bar');
+        const accordionToggles = document.querySelectorAll('.accordion-toggle');
+        const allTabContainers = document.querySelectorAll('.accordion-panel');
+        const canvas = document.getElementById('particle-canvas');
+
+        // --- BASIC UI SETUP ---
+        (function setupBasicUI(){
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); if(themeToggle) themeToggle.checked = (theme === 'dark'); };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+            if(themeToggle) themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+            
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            window.addEventListener('scroll', () => {
+                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (scrollableHeight > 0) {
+                    const scrolled = (window.scrollY / scrollableHeight) * 100;
+                    if (progressBar) { progressBar.style.width = scrolled + '%'; }
+                } else {
+                     if (progressBar) { progressBar.style.width = '100%'; }
+                }
+            });
+            accordionToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const panel = toggle.nextElementSibling;
+                    const isOpen = panel.style.maxHeight;
+                    document.querySelectorAll('.accordion-panel').forEach(p => { p.style.maxHeight = null; p.classList.remove('open'); });
+                    document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
+                    if (!isOpen) {
+                        toggle.classList.add('active');
+                        panel.classList.add('open');
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            });
+            allTabContainers.forEach(container => {
+                const tabLinks = container.querySelectorAll('.tab-link');
+                const tabPanes = container.querySelectorAll('.tab-pane');
+                tabLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        const tabId = link.getAttribute('data-tab');
+                        tabLinks.forEach(l => l.classList.remove('active'));
+                        tabPanes.forEach(p => p.classList.remove('active'));
+                        link.classList.add('active');
+                        container.querySelector('#tab-' + tabId).classList.add('active');
+                        const openAccordionPanel = document.querySelector('.accordion-panel.open');
+                        if (openAccordionPanel) {
+                            openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
+                        }
+                    });
+                });
+            });
+            document.querySelectorAll('.quick-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        const toggle = targetElement.querySelector('.accordion-toggle');
+                        if (!toggle.classList.contains('active')) { toggle.click(); }
+                        setTimeout(() => targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                    }
+                });
+            });
+        })();
+
+        // --- PARTICLE BACKGROUND LOGIC ---
+        if (canvas) {
+            const ctx = canvas.getContext('2d'); let particles = [];
+            const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = document.documentElement.scrollHeight; };
+            const createParticles = () => {
+                particles = [];
+                const particleCount = (canvas.width * canvas.height) / 15000;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2, radius: Math.random() * 1.5 + 0.5 });
+                }
+            };
+            const animateParticles = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const particleColor = getComputedStyle(document.body).getPropertyValue('--text-secondary') + '66';
+                ctx.fillStyle = particleColor;
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                });
+                requestAnimationFrame(animateParticles);
+            };
+            setCanvasSize(); createParticles(); animateParticles();
+            
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    setCanvasSize();
+                    createParticles();
+                }, 250);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
