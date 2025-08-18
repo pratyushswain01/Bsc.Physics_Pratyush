@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Core VII: Thermal Physics | BSc. Physics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        /* --- THEME DEFINITIONS --- */
+        :root {
+            --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --back-btn-bg: #e9ecef; --back-btn-color: #495057;
+            --primary-accent-hover: #0b5ed7;
+            --resource-card-bg: #f1f3f5;
+            --hero-gradient: linear-gradient(90deg, #d90429, #ef233c, #ff8c00, #ffc300);
+        }
+        body.dark-mode {
+            --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --back-btn-bg: #374151; --back-btn-color: #e5e7eb;
+            --primary-accent-hover: #2563eb;
+            --resource-card-bg: #2a2a2e;
+            --hero-gradient: linear-gradient(90deg, #f25471, #ff6c83, #ffae57, #ffda57);
+        }
+
+        /* --- BASIC STYLES --- */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease; }
+        .container { width: 90%; max-width: 1200px; margin: 2rem auto; position: relative; z-index: 2; }
+        header { background-color: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto;}
+        .title-container { display: flex; align-items: center; gap: 0.8rem; } .title-container .logo { font-size: 2em; color: var(--primary-accent); }
+        header h1 { margin: 0; font-size: 1.4em; color: var(--text-primary); }
+        .header-controls { display: flex; align-items: center; gap: 1rem; }
+        .theme-switcher { position: relative; } #theme-toggle { display: none; }
+        .slider { cursor: pointer; width: 50px; height: 26px; background-color: #ccc; border-radius: 26px; display: block; position: relative; transition: background-color 0.3s ease; }
+        .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 3px; top: 3px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707z"/></svg>'); background-size: 14px; background-repeat: no-repeat; background-position: center; }
+        #theme-toggle:checked + .slider { background-color: var(--primary-accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="lightblue" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>'); }
+        footer { text-align: center; padding: 2rem 1rem; margin-top: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+        #scroll-progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--hero-gradient); width: 0%; z-index: 2000; transition: width 0.1s linear; }
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; }
+        .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .course-header { text-align: center; padding: 4rem 1rem; margin-bottom: 2rem; }
+        .course-header h1 { font-size: clamp(2.5em, 5vw, 3.5em); font-weight: 700; margin: 0 0 0.5rem 0; background: var(--hero-gradient); color: transparent; -webkit-background-clip: text; background-clip: text; background-size: 200% auto; animation: gradient-text 10s linear infinite; }
+        @keyframes gradient-text { to { background-position: 200% center; } }
+        .course-header p { font-size: clamp(1em, 2.5vw, 1.2em); color: var(--text-secondary); margin: 0; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .quick-links { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; }
+        .quick-link { text-decoration: none; background-color: var(--resource-card-bg); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid var(--border-color); }
+        .quick-link:hover { background-color: var(--primary-accent); color: white; border-color: var(--primary-accent); transform: translateY(-2px); }
+        .quick-link .fa-fw { margin-right: 0.5rem; }
+        .course-outcomes { background-color: var(--card-bg); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+        .course-outcomes h2 { margin-top: 0; font-size: 1.5em; } .course-outcomes ul { list-style-type: none; padding-left: 0; }
+        .course-outcomes li { padding-left: 2rem; position: relative; margin-bottom: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+        .course-outcomes li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-accent); position: absolute; left: 0; top: 2px; font-size: 1.2em; }
+        .accordion-item { background: var(--card-bg); border-radius: 12px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
+        .accordion-toggle { background: transparent; color: var(--text-primary); cursor: pointer; padding: 1.5rem; width: 100%; border: none; text-align: left; outline: none; font-size: 1.2em; font-weight: 600; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .accordion-toggle .unit-title { color: var(--primary-accent); margin-right: 1rem; }
+        .accordion-toggle .fas { transition: transform 0.3s ease-in-out; } .accordion-toggle.active .fas { transform: rotate(180deg); }
+        .accordion-panel { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.7s cubic-bezier(0.25, 1, 0.5, 1), padding 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        .accordion-panel.open { padding-bottom: 1.5rem; }
+        .tab-container { display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 1.5rem; }
+        .tab-link { font-size: 1em; font-weight: 500; color: var(--text-secondary); background: none; border: none; padding: 0.75rem 1.5rem; cursor: pointer; position: relative; transition: color 0.3s ease; }
+        .tab-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background-color: var(--primary-accent); transform: scaleX(0); transition: transform 0.3s ease; }
+        .tab-link.active { color: var(--primary-accent); } .tab-link.active::after { transform: scaleX(1); }
+        .tab-pane { display: none; animation: fadeIn 0.5s ease; }
+        .tab-pane.active { display: block; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .resource-card { background-color: var(--resource-card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.5rem; text-decoration: none; display: flex; align-items: center; gap: 1rem; transition: all 0.2s ease; }
+        .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); border-color: var(--primary-accent); }
+        .resource-card .icon { font-size: 2em; color: var(--primary-accent); transition: transform 0.3s ease; }
+        .resource-card:hover .icon { transform: scale(1.1) rotate(-5deg); }
+        .resource-card .text h5 { margin: 0 0 0.25rem 0; font-size: 1em; color: var(--text-primary); }
+        .resource-card .text p { margin: 0; font-size: 0.85em; color: var(--text-secondary); }
+        .btn-view-notes { background-color: var(--primary-accent); color: white; border: none; border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1em; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 0.75rem; transition: all 0.2s ease; }
+        .btn-view-notes:hover { background-color: var(--primary-accent-hover); transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
+
+        /* --- NOTES VIEWER STYLES (UNCHANGED) --- */
+        .notes-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 3000; display: flex; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .notes-viewer.visible { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+        .notes-viewer-content { width: 100%; height: 100%; position: relative; touch-action: none; overflow: hidden; }
+        .close-notes-btn { position: fixed; top: 20px; right: 30px; font-size: 2.5rem; background: none; border: none; color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1; transition: all 0.2s ease; z-index: 10; }
+        .close-notes-btn:hover { color: white; transform: scale(1.1); }
+        #notes-carousel { width: 100%; height: 100%; display: flex; cursor: grab; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        #notes-carousel.grabbing { cursor: grabbing; }
+        #notes-carousel.panning { cursor: all-scroll; }
+        .note-page { width: 100%; height: 100%; flex: 0 0 100%; display: flex; justify-content: center; align-items: center; padding: 2rem; box-sizing: border-box; transition: padding 0.3s ease; overflow: auto; }
+        .note-page::-webkit-scrollbar { display: none; }
+        .note-page { -ms-overflow-style: none; scrollbar-width: none; }
+        .note-page img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px; transition: transform 0.2s ease, border-radius 0.3s ease; pointer-events: none; }
+        .notes-controls { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.6); color: white; border-radius: 25px; padding: 0.4rem; display: flex; align-items: center; gap: 0.4rem; backdrop-filter: blur(5px); user-select: none; transition: opacity 0.3s ease; }
+        .control-btn { background: none; border: none; color: white; font-size: 1rem; cursor: pointer; padding: 0.4rem 0.7rem; transition: background-color 0.2s, transform 0.2s; border-radius: 20px; }
+        .control-btn:hover { background-color: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
+        .control-btn:disabled { opacity: 0.4; cursor: not-allowed; background-color: transparent; transform: none; }
+        .control-group { display: flex; align-items: center; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 0.4rem; margin-left: 0.4rem; }
+        #zoom-level-indicator { padding: 0.4rem 0.7rem; font-size: 0.85em; font-weight: 500; min-width: 40px; text-align: center; }
+        .page-indicator-container { position: relative; padding: 0.4rem 0.7rem; cursor: pointer; border-radius: 20px; transition: background-color 0.2s; }
+        .page-indicator-container:hover { background-color: rgba(255, 255, 255, 0.1); }
+        #page-indicator-text { font-weight: 500; font-size: 0.85em; min-width: 70px; text-align: center; }
+        #page-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); color: white; border: 1px solid var(--primary-accent); border-radius: 20px; text-align: center; font-family: 'Poppins', sans-serif; font-size: 0.85em; display: none; box-sizing: border-box; }
+        #page-input::-webkit-outer-spin-button, #page-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        #page-input[type=number] { -moz-appearance: textfield; }
+        #fullscreen-footer { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 0.8em; color: rgba(255, 255, 255, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .notes-viewer-content:fullscreen { background-color: #000; }
+        .notes-viewer-content:fullscreen .note-page { padding: 0; }
+        .notes-viewer-content:fullscreen .note-page img { border-radius: 0; }
+        .notes-viewer-content:fullscreen .notes-controls,
+        .notes-viewer-content:fullscreen .close-notes-btn { opacity: 0; pointer-events: none; }
+        .notes-viewer-content:fullscreen:hover .notes-controls,
+        .notes-viewer-content:fullscreen:hover .close-notes-btn { opacity: 1; pointer-events: auto; }
+        .notes-viewer-content:fullscreen #fullscreen-footer { opacity: 1; }
+    </style>
+</head>
+<body>
+    
+    <div id="scroll-progress-bar"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <header>
+        <div class="header-content">
+            <div class="title-container"><i class="fas fa-atom logo"></i><h1>BSc. Physics</h1></div>
+            <div class="header-controls"><div class="theme-switcher"><input type="checkbox" id="theme-toggle"><label for="theme-toggle" class="slider"></label></div></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="sem3.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Sem 3</a>
+        
+        <div class="course-header">
+            <h1>Thermal Physics</h1>
+            <p>A comprehensive study of the laws of thermodynamics, kinetic theory, and the behavior of ideal and real gases.</p>
+        </div>
+
+        <div class="quick-links">
+            <a href="#unit1" class="quick-link"><i class="fa-fw fas fa-balance-scale"></i> Unit I</a>
+            <a href="#unit2" class="quick-link"><i class="fa-fw fas fa-battery-half"></i> Unit II</a>
+            <a href="#unit3" class="quick-link"><i class="fa-fw fas fa-atom"></i> Unit III</a>
+            <a href="#unit4" class="quick-link"><i class="fa-fw fas fa-cloud"></i> Unit IV</a>
+        </div>
+
+        <div class="course-outcomes">
+            <h2><i class="fas fa-bullseye"></i> Course Outcomes</h2>
+            <ul>
+                <li>Basic understanding of thermodynamics and various thermal variables.</li>
+                <li>Understanding various thermodynamics potential applications and their properties.</li>
+                <li>To Understand the concepts of ideal gas and its thermal properties.</li>
+                <li>To Understand the concepts of real gas and its thermal properties.</li>
+                <li>To Apply the acquired knowledge of thermodynamics in Experiments.</li>
+            </ul>
+        </div>
+
+        <div class="accordion-container">
+
+            <div class="accordion-item" id="unit1">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit I</span> Laws of Thermodynamics & Entropy</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                    <div class="tab-container">
+                        <button class="tab-link active" data-tab="1-1">Syllabus</button>
+                        <button class="tab-link" data-tab="1-2">Class Notes</button>
+                        <button class="tab-link" data-tab="1-3">Resources</button>
+                    </div>
+                    <div id="tab-1-1" class="tab-pane active"><p><strong>Introduction to Thermodynamics:</strong> Recapitulation of Zeroth and First law of thermodynamics.<br><strong>Second Law of Thermodynamics:</strong> Reversible and Irreversible process with examples, Kelvin-Planck and Clausius Statements and their Equivalence, Carnot’s Theorem, Applications of Second Law of Thermodynamics: Thermodynamic Scale of Temperature and its Equivalence to Perfect Gas Scale.<br><strong>Entropy:</strong> Concept of Entropy, Clausius Theorem. Clausius Inequality, Second Law of Thermodynamics in terms of Entropy, Entropy of a perfect gas, Principle of increase of Entropy, Entropy Changes in Reversible and Irreversible processes with examples, Temperature-Entropy diagrams for Carnot’s Cycle, Third Law of Thermodynamics, Unattainability of Absolute Zero.</p></div>
+                    <div id="tab-1-2" class="tab-pane">
+                        <button class="btn-view-notes" data-unit="1"><i class="fas fa-book-open"></i> View Unit I Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Note+1" alt="Unit 1, Page 1">
+                            <img src="https://via.placeholder.com/800x1100.png?text=Unit+1+Note+2" alt="Unit 1, Page 2">
+                        </div>
+                    </div>
+                    <div id="tab-1-3" class="tab-pane">
+                        <div class="resources-grid">
+                            <a href="https://www.youtube.com/watch?v=k_Tr_K_jG-c" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Laws of Thermodynamics</h5><p>A concise video by Crash Course Physics.</p></div></a>
+                            <a href="https://phet.colorado.edu/en/simulations/gas-properties" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Gas Properties Simulation</h5><p>Interactive PhET simulation for P, V, T.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit2">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit II</span> Thermodynamic Potentials & Phase Transitions</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                     <div class="tab-container">
+                        <button class="tab-link active" data-tab="2-1">Syllabus</button>
+                        <button class="tab-link" data-tab="2-2">Class Notes</button>
+                        <button class="tab-link" data-tab="2-3">Resources</button>
+                    </div>
+                    <div id="tab-2-1" class="tab-pane active"><p><strong>Thermodynamic Potentials:</strong> Extensive and Intensive Thermodynamic Variables. Internal Energy, Enthalpy, Helmholtz Free Energy, Gibbs Free Energy, Their Definitions, Properties and Applications, Surface Films and Variation of Surface Tension with Temperature, Magnetic Work, Cooling due to adiabatic demagnetization.<br><strong>Phase Transitions:</strong> First and second order Phase Transitions with examples, Clausius Clapeyron Equation and Ehrenfest equations.<br><strong>Maxwell's Thermodynamic Relations:</strong> Derivations and applications of Maxwells Relations: (1) Clausius Clapeyron equation (2) Relation between $C_p$ and $C_v$ (3) TdS Equations, (4) Joule-Kelvin coefficient for Ideal and Van der Waal Gases (5) Energy equations (6) Change of Temperature during Adiabatic Process.</p></div>
+                    <div id="tab-2-2" class="tab-pane">
+                        <button class="btn-view-notes" data-unit="2"><i class="fas fa-book-open"></i> View Unit II Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+1" alt="Unit 2, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+2+Note+2" alt="Unit 2, Page 2">
+                        </div>
+                    </div>
+                    <div id="tab-2-3" class="tab-pane">
+                         <div class="resources-grid">
+                            <a href="https://www.youtube.com/watch?v=gperC-p2pAU" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Gibbs Free Energy</h5><p>Clear explanation by Bozeman Science.</p></div></a>
+                            <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Thermodynamics/Thermodynamic_Cycles/Maxwell_Relations" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-book-open"></i></span><div class="text"><h5>Maxwell's Relations</h5><p>Detailed derivations from Chem LibreTexts.</p></div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item" id="unit3">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit III</span> Kinetic Theory of Gases</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                     <div class="tab-container">
+                        <button class="tab-link active" data-tab="3-1">Syllabus</button>
+                        <button class="tab-link" data-tab="3-2">Class Notes</button>
+                        <button class="tab-link" data-tab="3-3">Resources</button>
+                    </div>
+                    <div id="tab-3-1" class="tab-pane active"><p><strong>Distribution of Velocities:</strong> Maxwell-Boltzmann Law of Distribution of Velocities in an Ideal Gas and its Experimental Verification, Stern's Experiment, Mean, RMS and Most Probable Speeds, Degrees of Freedom, Law of Equipartition of Energy (No proof required), Specific heats of Gases.<br><strong>Molecular Collisions:</strong> Mean Free Path, Collision Probability, Estimates of Mean Free Path.<br><strong>Transport Phenomenon in Ideal Gases:</strong> (1) Viscosity, (2) Thermal Conductivity and (3) Diffusion. Brownian Motion and its Significance.</p></div>
+                    <div id="tab-3-2" class="tab-pane">
+                        <button class="btn-view-notes" data-unit="3"><i class="fas fa-book-open"></i> View Unit III Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+3+Note+1" alt="Unit 3, Page 1">
+                        </div>
+                    </div>
+                    <div id="tab-3-3" class="tab-pane">
+                         <div class="resources-grid">
+                            <a href="https://www.youtube.com/watch?v=R135K4nS9-Y" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Maxwell-Boltzmann Distribution</h5><p>Excellent visual explanation from A-level Physics.</p></div></a>
+                            <a href="https://phet.colorado.edu/sims/html/diffusion/latest/diffusion_en.html" target="_blank" class="resource-card"><span class="icon"><i class="fas fa-flask"></i></span><div class="text"><h5>Diffusion Simulation</h5><p>Interactive PhET simulation of diffusion.</p></div></a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="unit4">
+                <button class="accordion-toggle"><div><span class="unit-title">Unit IV</span> Real Gases</div><i class="fas fa-chevron-down"></i></button>
+                <div class="accordion-panel">
+                     <div class="tab-container">
+                        <button class="tab-link active" data-tab="4-1">Syllabus</button>
+                        <button class="tab-link" data-tab="4-2">Class Notes</button>
+                        <button class="tab-link" data-tab="4-3">Resources</button>
+                    </div>
+                    <div id="tab-4-1" class="tab-pane active"><p><strong>Behavior of Real Gases:</strong> Deviations from the Ideal Gas Equation, The Virial Equation, Andrews' Experiments on $CO_2$ Gas. Critical Constants, Continuity of Liquid and Gaseous State. Vapour and Gas, Boyle Temperature, Van der Waals Equation of State for Real Gases, Values of Critical Constants, Law of Corresponding States, Comparison with Experimental Curves, P-V Diagrams.<br><strong>Joule's Experiment:</strong> Free Adiabatic Expansion of a Perfect Gas, Joule-Thomson Porous Plug Experiment, Joule-Thomson Effect for Real and Van der Waal Gases, Temperature of Inversion, Joule-Thomson Cooling.</p></div>
+                    <div id="tab-4-2" class="tab-pane">
+                        <button class="btn-view-notes" data-unit="4"><i class="fas fa-book-open"></i> View Unit IV Notes</button>
+                        <div class="notes-image-list" style="display:none;">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+1" alt="Unit 4, Page 1">
+                             <img src="https://via.placeholder.com/800x1100.png?text=Unit+4+Note+2" alt="Unit 4, Page 2">
+                        </div>
+                    </div>
+                    <div id="tab-4-3" class="tab-pane">
+                         <div class="resources-grid">
+                            <a href="https://www.youtube.com/watch?v=SE-at2t026E" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Van der Waals Equation</h5><p>Detailed explanation from The Organic Chemistry Tutor.</p></div></a>
+                            <a href="https://www.youtube.com/watch?v=A_2b-i44-4s" target="_blank" class="resource-card"><span class="icon"><i class="fab fa-youtube"></i></span><div class="text"><h5>Joule-Thomson Effect</h5><p>A good conceptual video.</p></div></a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="notes-viewer-modal" class="notes-viewer">
+        <div class="notes-viewer-content">
+            <button class="close-notes-btn">&times;</button>
+            <div id="notes-carousel">
+                </div>
+            <div class="notes-controls">
+                <button id="download-btn" class="control-btn" title="Download Page (D)"><i class="fas fa-download"></i></button>
+                <button id="fullscreen-btn" class="control-btn" title="Toggle Fullscreen (F)"><i class="fas fa-expand"></i></button>
+                <div class="control-group">
+                    <button id="zoom-out-btn" class="control-btn" title="Zoom Out (-)"><i class="fas fa-search-minus"></i></button>
+                    <span id="zoom-level-indicator" title="Zoom Level">100%</span>
+                    <button id="zoom-in-btn" class="control-btn" title="Zoom In (+)"><i class="fas fa-search-plus"></i></button>
+                </div>
+                <div class="control-group">
+                    <div class="page-indicator-container" title="Click to enter page number">
+                        <span id="page-indicator-text"></span>
+                        <input type="number" id="page-input" min="1">
+                    </div>
+                </div>
+            </div>
+            <div id="fullscreen-footer">Created by Pratyush Swain</div>
+        </div>
+    </div>
+
+    <footer><p>&copy; <span id="current-year"></span> Created & Designed by Pratyush Swain.</p></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- ELEMENT SELECTORS ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const progressBar = document.getElementById('scroll-progress-bar');
+        const accordionToggles = document.querySelectorAll('.accordion-toggle');
+        const allTabContainers = document.querySelectorAll('.accordion-panel');
+        const viewNotesButtons = document.querySelectorAll('.btn-view-notes');
+        const canvas = document.getElementById('particle-canvas');
+        const notesViewer = document.getElementById('notes-viewer-modal');
+        const notesViewerContent = notesViewer.querySelector('.notes-viewer-content');
+        const notesCarousel = document.getElementById('notes-carousel');
+        const closeNotesBtn = notesViewer.querySelector('.close-notes-btn');
+        const pageIndicatorContainer = document.querySelector('.page-indicator-container');
+        const pageIndicatorText = document.getElementById('page-indicator-text');
+        const pageInput = document.getElementById('page-input');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomLevelIndicator = document.getElementById('zoom-level-indicator');
+        
+        // --- STATE MANAGEMENT ---
+        let currentNoteImages = [];
+        let currentPageIndex = 0;
+        let isNavigating = false;
+        let zoomLevel = 1.0;
+        const ZOOM_STEP = 0.2;
+        const MAX_ZOOM = 5.0;
+        const MIN_ZOOM = 0.5;
+        let pointer = { isDown: false, isPanning: false, startX: 0, startY: 0, lastX: 0, lastY: 0, initialPinchDistance: null };
+
+        // --- BASIC UI SETUP ---
+        (function setupBasicUI(){
+            const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); if(themeToggle) themeToggle.checked = (theme === 'dark'); };
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+            if(themeToggle) themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+            if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
+            window.addEventListener('scroll', () => {
+                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.scrollY / scrollableHeight) * 100;
+                if (progressBar) { progressBar.style.width = scrolled + '%'; }
+            });
+            accordionToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const panel = toggle.nextElementSibling;
+                    const isOpen = panel.style.maxHeight;
+                    document.querySelectorAll('.accordion-panel').forEach(p => { p.style.maxHeight = null; p.classList.remove('open'); });
+                    document.querySelectorAll('.accordion-toggle').forEach(t => t.classList.remove('active'));
+                    if (!isOpen) {
+                        toggle.classList.add('active');
+                        panel.classList.add('open');
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            });
+            allTabContainers.forEach(container => {
+                const tabLinks = container.querySelectorAll('.tab-link');
+                const tabPanes = container.querySelectorAll('.tab-pane');
+                tabLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        const tabId = link.getAttribute('data-tab');
+                        tabLinks.forEach(l => l.classList.remove('active'));
+                        tabPanes.forEach(p => p.classList.remove('active'));
+                        link.classList.add('active');
+                        container.querySelector('#tab-' + tabId).classList.add('active');
+                        const openAccordionPanel = document.querySelector('.accordion-panel.open');
+                        if (openAccordionPanel) {
+                            openAccordionPanel.style.maxHeight = openAccordionPanel.scrollHeight + 'px';
+                        }
+                    });
+                });
+            });
+            document.querySelectorAll('.quick-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        const toggle = targetElement.querySelector('.accordion-toggle');
+                        if (!toggle.classList.contains('active')) { toggle.click(); }
+                        setTimeout(() => targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                    }
+                });
+            });
+        })();
+
+        // --- CORE VIEWER FUNCTIONS ---
+        const openNotesViewer = (button) => {
+            const imageListContainer = button.nextElementSibling;
+            if (!imageListContainer) return;
+            const images = Array.from(imageListContainer.querySelectorAll('img'));
+            if (images.length === 0) { alert('No notes available for this unit.'); return; }
+            currentNoteImages = images.map((img, index) => ({ src: img.src, alt: img.alt, unit: button.dataset.unit || 'unknown', page: index + 1 }));
+            notesCarousel.innerHTML = '';
+            currentNoteImages.forEach(data => {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'note-page';
+                const img = document.createElement('img');
+                img.src = data.src;
+                img.alt = data.alt;
+                pageDiv.appendChild(img);
+                notesCarousel.appendChild(pageDiv);
+            });
+            pageInput.max = currentNoteImages.length;
+            goToPage(0, false); 
+            notesViewer.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeNotesViewer = () => {
+            if (document.fullscreenElement) document.exitFullscreen();
+            notesViewer.classList.remove('visible');
+            document.body.style.overflow = '';
+            notesCarousel.innerHTML = '';
+            currentNoteImages = [];
+        };
+
+        const updatePageIndicator = () => {
+            pageIndicatorText.textContent = `Page ${currentPageIndex + 1} of ${currentNoteImages.length}`;
+        };
+
+        const applyZoom = (newZoom, origin) => {
+            const activePage = notesCarousel.children[currentPageIndex];
+            const activeImg = activePage?.querySelector('img');
+            if (!activeImg) return;
+            const oldZoom = zoomLevel;
+            zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
+            const rect = activePage.getBoundingClientRect();
+            const originX = origin?.x ?? (rect.left + rect.width / 2);
+            const originY = origin?.y ?? (rect.top + rect.height / 2);
+            const relativeX = (originX - rect.left) / rect.width;
+            const relativeY = (originY - rect.top) / rect.height;
+            activeImg.style.transformOrigin = `${relativeX * 100}% ${relativeY * 100}%`;
+            activeImg.style.transform = `scale(${zoomLevel})`;
+            const dx = (originX - rect.left - activePage.scrollLeft) * (zoomLevel / oldZoom - 1);
+            const dy = (originY - rect.top - activePage.scrollTop) * (zoomLevel / oldZoom - 1);
+            activePage.scrollLeft += dx;
+            activePage.scrollTop += dy;
+            zoomLevelIndicator.textContent = `${Math.round(zoomLevel * 100)}%`;
+            zoomInBtn.disabled = zoomLevel >= MAX_ZOOM;
+            zoomOutBtn.disabled = zoomLevel <= MIN_ZOOM;
+        };
+        
+        const resetZoom = () => {
+            if (zoomLevel === 1.0) return;
+            const allPages = notesCarousel.querySelectorAll('.note-page');
+            allPages.forEach(page => {
+                const img = page.querySelector('img');
+                if(img) {
+                    img.style.transform = 'scale(1.0)';
+                    img.style.transformOrigin = '50% 50%';
+                }
+                page.scrollTop = 0;
+                page.scrollLeft = 0;
+            });
+            zoomLevel = 1.0;
+            applyZoom(1.0);
+        };
+        
+        const goToPage = (index, animate = true) => {
+            if (isNavigating || index < 0 || index >= currentNoteImages.length) return;
+            isNavigating = true;
+            const newTranslateX = -index * 100;
+            notesCarousel.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' : 'none';
+            notesCarousel.style.transform = `translateX(${newTranslateX}%)`;
+            if(currentPageIndex !== index) resetZoom();
+            currentPageIndex = index;
+            updatePageIndicator();
+            setTimeout(() => { isNavigating = false; }, 400); 
+        };
+
+        const handlePageJump = () => {
+            const pageNum = parseInt(pageInput.value);
+            if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= currentNoteImages.length) {
+                goToPage(pageNum - 1);
+            }
+            pageInput.style.display = 'none';
+            pageIndicatorText.style.display = 'block';
+            pageInput.value = '';
+        };
+
+        const downloadCurrentImage = async () => { /* ... download logic ... */ };
+
+        // --- EVENT LISTENERS (SETUP) ---
+        viewNotesButtons.forEach(button => button.addEventListener('click', () => openNotesViewer(button)));
+        closeNotesBtn.addEventListener('click', closeNotesViewer);
+        fullscreenBtn.addEventListener('click', () => !document.fullscreenElement ? notesViewerContent.requestFullscreen() : document.exitFullscreen());
+        document.addEventListener('fullscreenchange', () => fullscreenBtn.innerHTML = document.fullscreenElement ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>');
+        downloadBtn.addEventListener('click', downloadCurrentImage);
+        zoomInBtn.addEventListener('click', () => applyZoom(zoomLevel + ZOOM_STEP));
+        zoomOutBtn.addEventListener('click', () => applyZoom(zoomLevel - ZOOM_STEP));
+        pageIndicatorContainer.addEventListener('click', () => {
+            if(pageInput.style.display === 'block') return;
+            pageIndicatorText.style.display = 'none';
+            pageInput.style.display = 'block';
+            pageInput.focus();
+        });
+        pageInput.addEventListener('blur', handlePageJump);
+        pageInput.addEventListener('keydown', e => { if (e.key === 'Enter') handlePageJump(); });
+        
+        notesViewer.addEventListener('wheel', e => {
+            e.preventDefault();
+            const activePage = notesCarousel.children[currentPageIndex];
+            if (e.ctrlKey) {
+                 applyZoom(zoomLevel + (e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP), {x: e.clientX, y: e.clientY});
+            } else if (zoomLevel > 1.0) {
+                activePage.scrollTop += e.deltaY;
+                activePage.scrollLeft += e.deltaX;
+            } else {
+                if (isNavigating) return;
+                const scrollDirection = Math.sign(e.deltaY);
+                if (scrollDirection > 0) goToPage(currentPageIndex + 1);
+                else if (scrollDirection < 0) goToPage(currentPageIndex - 1);
+            }
+        }, { passive: false });
+        
+        // --- POINTER & TOUCH GESTURES ---
+        const getPointerXY = (e) => ({ x: e.touches?.[0].clientX ?? e.clientX, y: e.touches?.[0].clientY ?? e.clientY });
+
+        const onPointerDown = (e) => {
+            if (e.touches && e.touches.length > 1) { onPinchStart(e); return; }
+            pointer.isDown = true;
+            const { x, y } = getPointerXY(e);
+            pointer.startX = x; pointer.startY = y; pointer.lastX = x; pointer.lastY = y;
+            if (zoomLevel > 1.0) {
+                pointer.isPanning = true;
+                notesCarousel.classList.add('panning');
+            } else {
+                notesCarousel.classList.add('grabbing');
+                notesCarousel.style.transition = 'none';
+            }
+        };
+
+        const onPointerMove = (e) => {
+            if (!pointer.isDown) return;
+            e.preventDefault();
+            if (e.touches && e.touches.length > 1) { onPinchMove(e); return; }
+            const { x, y } = getPointerXY(e);
+            if (pointer.isPanning) {
+                const activePage = notesCarousel.children[currentPageIndex];
+                activePage.scrollLeft -= x - pointer.lastX;
+                activePage.scrollTop -= y - pointer.lastY;
+            } else {
+                const walk = x - pointer.startX;
+                const currentTranslateX = -currentPageIndex * notesCarousel.offsetWidth;
+                notesCarousel.style.transform = `translateX(${currentTranslateX + walk}px)`;
+            }
+            pointer.lastX = x; pointer.lastY = y;
+        };
+        
+        const onPointerUp = (e) => {
+            if (e.touches && e.touches.length > 0) return;
+            pointer.isDown = false;
+            if (pointer.isPanning) {
+                pointer.isPanning = false;
+                notesCarousel.classList.remove('panning');
+            } else {
+                notesCarousel.classList.remove('grabbing');
+                const movedBy = pointer.lastX - pointer.startX;
+                const snapThreshold = notesCarousel.offsetWidth / 4;
+                if (movedBy < -snapThreshold) goToPage(currentPageIndex + 1);
+                else if (movedBy > snapThreshold) goToPage(currentPageIndex - 1);
+                else goToPage(currentPageIndex);
+            }
+            pointer.initialPinchDistance = null;
+        };
+
+        const onPinchStart = (e) => { pointer.initialPinchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); };
+        const onPinchMove = (e) => {
+             if (pointer.initialPinchDistance === null) return;
+             const newPinchDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+             const pinchRatio = newPinchDistance / pointer.initialPinchDistance;
+             const midPoint = { x: (e.touches[0].clientX + e.touches[1].clientX) / 2, y: (e.touches[0].clientY + e.touches[1].clientY) / 2 };
+             applyZoom(zoomLevel * pinchRatio, midPoint);
+             pointer.initialPinchDistance = newPinchDistance;
+        };
+
+        notesCarousel.addEventListener('mousedown', onPointerDown);
+        notesCarousel.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('mouseup', onPointerUp);
+        notesCarousel.addEventListener('touchstart', onPointerDown, { passive: false });
+        notesCarousel.addEventListener('touchmove', onPointerMove, { passive: false });
+        notesCarousel.addEventListener('touchend', onPointerUp);
+        notesCarousel.addEventListener('touchcancel', onPointerUp);
+
+        // --- KEYBOARD SHORTCUTS ---
+        document.addEventListener('keydown', e => {
+            if (!notesViewer.classList.contains('visible') || e.target.id === 'page-input') return;
+            if (e.ctrlKey && (e.key === '+' || e.key === '-')) return;
+            e.preventDefault();
+            switch(e.key) {
+                case 'Escape': closeNotesViewer(); break;
+                case 'f': fullscreenBtn.click(); break;
+                case 'd': downloadBtn.click(); break;
+                case '+': case '=': applyZoom(zoomLevel + ZOOM_STEP); break;
+                case '-': applyZoom(zoomLevel - ZOOM_STEP); break;
+                case '0': resetZoom(); break;
+                case 'ArrowRight': goToPage(currentPageIndex + 1); break;
+                case 'ArrowLeft': goToPage(currentPageIndex - 1); break;
+            }
+        });
+
+        // --- PARTICLE BACKGROUND LOGIC ---
+        if (canvas) {
+            const ctx = canvas.getContext('2d'); let particles = [];
+            const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = document.documentElement.scrollHeight; };
+            const createParticles = () => {
+                particles = [];
+                const particleCount = (canvas.width * canvas.height) / 15000;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2, radius: Math.random() * 1.5 + 0.5 });
+                }
+            };
+            const animateParticles = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const particleColor = getComputedStyle(document.body).getPropertyValue('--text-secondary') + '66';
+                ctx.fillStyle = particleColor;
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                });
+                requestAnimationFrame(animateParticles);
+            };
+            setCanvasSize(); createParticles(); animateParticles();
+            window.addEventListener('resize', () => { setCanvasSize(); createParticles(); });
+        }
+    });
+    </script>
+</body>
+</html>
