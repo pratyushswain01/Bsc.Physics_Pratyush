@@ -16,6 +16,10 @@
             --announcement-bg: linear-gradient(90deg, #4c66ff, #7f3fff);
             --live-accent: #28a745; --live-accent-bg: rgba(40, 167, 69, 0.1);
             --next-accent: #6f42c1; --next-accent-bg: rgba(111, 66, 193, 0.1);
+            --issue-card-bg: linear-gradient(135deg, #fef2f2, #f3f4f6);
+            --issue-btn-bg: #ef4444;
+            --issue-btn-hover-bg: #dc2626;
+            --issue-btn-shadow: rgba(239, 68, 68, 0.4);
         }
         body.dark-mode {
             --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --divine-bg: linear-gradient(90deg, #2c1e0b, #4b1a1f); --divine-text: #FFD700; --divine-shadow: rgba(255,215,0,0.2);
@@ -24,6 +28,10 @@
             --announcement-bg: linear-gradient(90deg, #4f46e5, #7c3aed);
             --live-accent: #4ade80; --live-accent-bg: rgba(74, 222, 128, 0.1);
             --next-accent: #a78bfa; --next-accent-bg: rgba(167, 139, 250, 0.1);
+            --issue-card-bg: linear-gradient(135deg, #2a2a2e, #1e1e1e);
+            --issue-btn-bg: #f87171;
+            --issue-btn-hover-bg: #ef4444;
+            --issue-btn-shadow: rgba(248, 113, 113, 0.5);
         }
 
         /* --- NOTIFICATION BANNER --- */
@@ -109,6 +117,56 @@
         }
         .close-pdf-btn:hover { color: var(--text-primary); }
         #pdf-iframe { flex-grow: 1; width: 100%; height: 100%; border: none; }
+
+        /* --- NEW: ISSUE REPORTER CARD STYLES --- */
+        .issue-reporter-card {
+            background: var(--issue-card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+        }
+        .issue-reporter-card h2 {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .issue-reporter-card p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0;
+        }
+        .btn-report {
+            background-color: var(--issue-btn-bg);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            box-shadow: 0 4px 15px var(--issue-btn-shadow);
+            animation: pulse-shadow 2s infinite;
+        }
+        .btn-report:hover {
+            background-color: var(--issue-btn-hover-bg);
+            transform: scale(1.05) translateY(-2px);
+        }
+        .btn-report .blinker {
+            margin-right: 0.5rem;
+            animation: blinker 1.5s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+        @keyframes pulse-shadow {
+            0% { box-shadow: 0 4px 15px var(--issue-btn-shadow); }
+            50% { box-shadow: 0 4px 25px var(--issue-btn-shadow); }
+            100% { box-shadow: 0 4px 15px var(--issue-btn-shadow); }
+        }
     </style>
 </head>
 <body>
@@ -130,6 +188,15 @@
     <main class="container">
         
         <a href="semester.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+        <!-- NEW: Issue Reporter Card -->
+        <div class="issue-reporter-card">
+            <h2>Help Us Improve!</h2>
+            <p>Found a mistake, a broken link, or have a suggestion for new content? Your feedback is valuable. Please report any issues to help us make this resource better for everyone.</p>
+            <a href="issues.html" class="btn btn-report">
+                <i class="fas fa-bug blinker"></i> Report an Issue
+            </a>
+        </div>
         
         <div class="live-schedule-card">
             <div class="schedule-card-header"><h2>Today's Schedule</h2><p>A quick glance at your day. Stay on track!</p></div>
@@ -146,6 +213,7 @@
              <div class="course-card"><div class="card-header"><div class="card-icon"><i class="fas fa-gavel"></i></div><div class="card-title-group"><h2 class="card-title">VAC: Ethics</h2><span class="card-category">Multi-Disciplinary Course </span></div></div><p class="card-description">An introduction to ethical principles and values in personal and professional life.</p><div class="card-footer"><div class="syllabus-actions"><button onclick="viewPDF('syllabus/vac-ethics.pdf')" class="btn btn-syllabus">View Syllabus</button><button onclick="downloadPDF('syllabus/vac-ethics.pdf')" class="btn-download-icon" title="Download Syllabus"><i class="fas fa-download"></i></button></div><a href="vac-ethics.html" class="btn btn-explore">Explore <i class="fas fa-arrow-right"></i></a></div></div>
         </div>
         <a href="assignments.html" class="portal-link-card"><i class="fas fa-tasks portal-link-icon"></i><div class="portal-link-text"><h2>Assignment Portal</h2><p>Find and download all your course assignments here.</p></div><i class="fas fa-chevron-right portal-link-arrow"></i></a>
+
     </main>
 
     <div id="pdf-modal" class="pdf-viewer-modal">
