@@ -186,6 +186,7 @@
 
             // --- INITIALIZE EMAILJS WITH YOUR KEYS ---
             (function(){
+                // Paste your Public Key from EmailJS > Account
                 emailjs.init("oNmOic7bTkN3qWU1g"); 
             })();
 
@@ -262,6 +263,7 @@
                 }
 
                 // --- SEND EMAIL USING EMAILJS ---
+                // Paste your Service ID and Template ID
                 emailjs.send('service_pb2tv2l', 'template_z3rwxsj', templateParams)
                     .then(function(response) {
                        showNotification("Issue report sent successfully!", "success");
