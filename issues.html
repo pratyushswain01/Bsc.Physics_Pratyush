@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSc. Physics - Issues Tracker and Solver</title>
+    <title>BSc. Physics - Issue Submission</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
         /* --- THEME DEFINITIONS --- */
         :root {
             --base-bg: #f0f2f5; --surface-bg: #ffffff; --surface-border: #e2e8f0; --text-primary: #020617; --text-secondary: #475569;
-            --accent: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.4); --danger: #ef4444; --danger-glow: rgba(239, 68, 68, 0.5);
+            --accent: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.4); --danger: #ef4444;
             --green: #22c55e; --purple: #8b5cf6; --orange: #f97316; --blue: #3b82f6;
             --modal-overlay-bg: rgba(10, 10, 15, 0.5); --modal-surface-bg: rgba(255, 255, 255, 0.8);
             --social-bg: linear-gradient(45deg, #4f46e5, #0ea5e9);
@@ -18,7 +18,7 @@
 
         body.dark-mode {
             --base-bg: #05080F; --surface-bg: #101522; --surface-border: #23293A; --text-primary: #f0f2f5; --text-secondary: #a1a7b8;
-            --accent: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.4); --danger: #f87171; --danger-glow: rgba(248, 113, 113, 0.6);
+            --accent: #0ea5e9; --danger: #f87171;
             --green: #4ade80; --purple: #a78bfa; --orange: #fb923c; --blue: #60a5fa;
             --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-surface-bg: rgba(30, 35, 50, 0.8);
             --social-bg: linear-gradient(45deg, #6366f1, #0ea5e9);
@@ -28,11 +28,10 @@
         *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: var(--base-bg); color: var(--text-primary); margin: 0; transition: background-color 0.4s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 2rem 0; }
-        @keyframes fadeIn { to { opacity: 1; } }
         @keyframes fadeInAndUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- HEADER & CONTROLS --- */
-        .app-header { padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; opacity: 0; animation: fadeIn 0.8s ease forwards; }
+        .app-header { padding-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
         .logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin: 0; } .logo h1 span { color: var(--accent); }
         .header-controls { display: flex; align-items: center; gap: 1.5rem; }
         .datetime { text-align: right; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; }
@@ -42,40 +41,14 @@
         .slider::before { content: ''; position: absolute; height: 20px; width: 20px; left: 2px; top: 2px; background-color: var(--text-secondary); border-radius: 50%; transition: all 0.3s ease; }
         #theme-toggle:checked + .slider { background-color: var(--accent); } #theme-toggle:checked + .slider::before { transform: translateX(24px); background-color: white; }
 
-        /* --- PAGE INTRO HEADER --- */
-        .page-intro { text-align: center; padding: 2rem 0; opacity: 0; animation: fadeInAndUp 0.8s ease 0.2s forwards; }
-        .page-intro h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
-        .page-intro h1 span { color: var(--accent); }
-        .page-intro p { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
-
-        /* --- ISSUE TRACKER STYLES --- */
-        .issue-container { background-color: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: 1rem; margin-top: 2.5rem; opacity: 0; transform: translateY(30px); animation: fadeInAndUp 0.8s ease forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .issue-container.open-issues { animation-delay: 0.4s; }
-        .issue-container.solved-issues { animation-delay: 0.6s; }
-        .issue-container-header { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
-        .issue-container-title { display: flex; align-items: center; gap: 0.75rem; font-size: 1.35rem; font-weight: 700; color: var(--text-primary); }
-        .issue-container-title i { color: var(--accent); }
-        .solved-issues .issue-container-title i { color: var(--green); }
-        
-        /* Issue List Styles */
-        .issues-list-container ul { list-style: none; padding: 0; margin: 0; }
-        .issue-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--surface-border); transition: all 0.3s ease; }
-        .issue-item:last-child { border-bottom: none; }
-        .issue-item:hover { background-color: var(--base-bg); transform: scale(1.01); }
-        .issue-status-icon i { margin-top: 2px; }
-        .issue-content { flex-grow: 1; }
-        .issue-title { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); text-decoration: none; }
-        .issue-title:hover { color: var(--accent); text-decoration: underline; }
-        .issue-meta { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
-        .issue-label { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; margin-left: 0.75rem; }
-        .label-bug { background-color: rgba(239, 68, 68, 0.1); color: var(--danger); }
-        .label-enhancement { background-color: rgba(139, 92, 246, 0.1); color: var(--purple); }
-        .label-urgent { background-color: rgba(249, 115, 22, 0.1); color: var(--orange); }
-        .label-question { background-color: rgba(59, 130, 246, 0.1); color: var(--blue); }
-        .no-issues-message { text-align: center; padding: 4rem 1.5rem; color: var(--text-secondary); }
-        .no-issues-message i { margin-bottom: 1rem; }
-        .issue-item.solved { opacity: 0.7; }
-        .issue-item.solved .issue-title, .issue-item.solved .issue-meta { text-decoration: line-through; }
+        /* --- PAGE INTRO & EMPTY STATE --- */
+        .page-content { text-align: center; padding: 4rem 1rem; background-color: var(--surface-bg); border-radius: 1rem; border: 1px solid var(--surface-border); animation: fadeInAndUp 0.8s ease 0.2s forwards; opacity: 0; transform: translateY(30px); }
+        .page-content i { color: var(--accent); margin-bottom: 1.5rem; }
+        .page-content h1 { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .page-content h1 span { color: var(--accent); }
+        .page-content p { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 1.5rem auto; }
+        .btn-primary { border: none; padding: 0.8rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; background: var(--social-bg); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
 
         /* --- FLOATING ACTION BUTTON (FAB) --- */
         .fab { position: fixed; bottom: 2rem; right: 2rem; width: 56px; height: 56px; background: var(--social-bg); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.2); cursor: pointer; transition: all 0.3s ease; z-index: 1000; }
@@ -96,8 +69,14 @@
         .btn-submit { background-color: var(--green); color: white; } .btn-submit:hover { background-color: #1ca352; }
         .btn-cancel { background-color: var(--surface-bg); color: var(--text-primary); border: 1px solid var(--surface-border); } .btn-cancel:hover { background-color: var(--base-bg); }
 
+        /* --- NOTIFICATION TOAST --- */
+        .toast { position: fixed; top: 2rem; right: 2rem; background-color: var(--surface-bg); color: var(--text-primary); border: 1px solid var(--surface-border); border-left-width: 5px; border-radius: 0.5rem; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 3000; opacity: 0; transform: translateX(100%); visibility: hidden; transition: all 0.4s cubic-bezier(0.215, 0.610, 0.355, 1); }
+        .toast.visible { opacity: 1; transform: translateX(0); visibility: visible; }
+        .toast.success { border-left-color: var(--green); } .toast.success i { color: var(--green); }
+        .toast.error { border-left-color: var(--danger); } .toast.error i { color: var(--danger); }
+
         /* --- FOOTER --- */
-        .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: 3rem; border-top: 1px solid var(--surface-border); }
+        .app-footer { background-color: var(--surface-bg); padding: 4rem 0 0 0; margin-top: auto; border-top: 1px solid var(--surface-border); }
         .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; width: 90%; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; }
         .footer-column h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 1.25rem 0; }
         .footer-column p, .footer-column a { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; text-decoration: none; }
@@ -114,7 +93,7 @@
         @media (max-width: 768px) {
             .container { width: 95%; padding: 1rem 0; } .app-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-bottom: 1.5rem; }
             .header-controls { width: 100%; justify-content: space-between; } .datetime { text-align: left; }
-            .page-intro h1 { font-size: 2rem; } .page-intro p { font-size: 1rem; }
+            .page-content h1 { font-size: 2rem; } .page-content p { font-size: 1rem; }
             .footer-content { grid-template-columns: 1fr; gap: 2.5rem; } .app-footer { padding-top: 3rem; }
             .fab { bottom: 1.5rem; right: 1.5rem; }
         }
@@ -132,44 +111,15 @@
         </header>
 
         <main>
-            <section class="page-intro">
-                <h1>BSc. Physics <span>Issue Resolution Center</span></h1>
-                <p>Welcome to our dedicated issue tracker. Report bugs, suggest enhancements, or ask questions to help us improve the platform for everyone.</p>
+            <section class="page-content">
+                <i data-feather="mail" style="width: 48px; height: 48px; margin-inline: auto;"></i>
+                <h1>Issue <span>Submission Center</span></h1>
+                <p>Found a bug, have a suggestion, or want to ask a question? Use the button below to open the submission form and send your feedback directly to us.</p>
+                <button id="main-create-issue-btn" class="btn-primary">
+                    <i data-feather="plus-circle" style="width: 16px; height: 16px; margin-right: 8px;"></i>
+                    Create New Issue Report
+                </button>
             </section>
-            
-            <div class="issue-container open-issues">
-                <div class="issue-container-header">
-                    <div class="issue-container-title">
-                        <i data-feather="alert-circle"></i>
-                        <span>Open Issues</span>
-                    </div>
-                </div>
-                <div id="open-issues-list-container" class="issues-list-container">
-                    <!-- JS will populate this -->
-                </div>
-                <div id="no-open-issues-message" class="no-issues-message" style="display: none;">
-                    <i data-feather="check-circle" style="width: 48px; height: 48px; margin-inline: auto;"></i>
-                    <h3>All clear!</h3>
-                    <p>There are no open issues. Create one to get started.</p>
-                </div>
-            </div>
-
-            <div class="issue-container solved-issues">
-                <div class="issue-container-header">
-                    <div class="issue-container-title">
-                        <i data-feather="archive"></i>
-                        <span>Recently Solved by Admin</span>
-                    </div>
-                </div>
-                <div id="solved-issues-list-container" class="issues-list-container">
-                    <!-- JS will populate this -->
-                </div>
-                <div id="no-solved-issues-message" class="no-issues-message" style="display: none;">
-                    <i data-feather="inbox" style="width: 48px; height: 48px; margin-inline: auto;"></i>
-                    <h3>No solved issues yet.</h3>
-                    <p>Issues marked as solved by an admin will appear here.</p>
-                </div>
-            </div>
         </main>
     </div>
 
@@ -182,15 +132,13 @@
         <div class="footer-bottom"><p>© 2025 Pratyush Swain. All Rights Reserved.</p></div>
     </footer>
 
-    <!-- Floating Action Button -->
     <button id="fab-create-issue" class="fab" aria-label="Create new issue">
         <i data-feather="plus"></i>
     </button>
 
-    <!-- Modal for New Issue Form -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
-            <div class="modal-header">Create a New Issue</div>
+            <div class="modal-header">Create a New Issue Report</div>
             <form id="issue-form">
                 <div>
                     <label for="issue-title">Title</label>
@@ -199,10 +147,10 @@
                  <div>
                     <label for="issue-label">Label</label>
                     <select id="issue-label" name="issue-label">
-                        <option value="bug">Bug</option>
-                        <option value="enhancement">Enhancement</option>
-                        <option value="urgent">Urgent</option>
-                        <option value="question">Question</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Enhancement">Enhancement</option>
+                        <option value="Urgent">Urgent</option>
+                        <option value="Question">Question</option>
                     </select>
                 </div>
                 <div>
@@ -212,188 +160,105 @@
             </form>
             <div class="form-actions">
                 <button type="button" id="cancel-issue-btn" class="form-btn btn-cancel">Cancel</button>
-                <button type="submit" form="issue-form" class="form-btn btn-submit">Submit New Issue</button>
+                <button type="submit" form="issue-form" class="form-btn btn-submit">Submit via Email</button>
             </div>
         </div>
     </div>
 
+    <div id="notification-toast" class="toast">
+        <i id="toast-icon" data-feather="check-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Feather Icons ---
             feather.replace({ 'stroke-width': 1.5 });
 
-            // --- Theme & Date/Time ---
+            // --- Element Selectors ---
             const themeToggle = document.getElementById('theme-toggle');
             const datetimeElement = document.getElementById('datetime');
-            const currentTheme = localStorage.getItem('theme');
-            if (currentTheme === 'light') { document.body.classList.remove('dark-mode'); if(themeToggle) themeToggle.checked = false; }
-            else { document.body.classList.add('dark-mode'); if(themeToggle) themeToggle.checked = true; }
-            if(themeToggle){ themeToggle.addEventListener('change', () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light'); }); }
-            if(datetimeElement){
-                const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`; };
-                setInterval(updateDateTime, 1000); updateDateTime();
-            }
-
-            // --- Issue Tracker Logic ---
             const fab = document.getElementById('fab-create-issue');
+            const mainCreateBtn = document.getElementById('main-create-issue-btn');
             const modalOverlay = document.getElementById('modal-overlay');
             const cancelIssueBtn = document.getElementById('cancel-issue-btn');
             const issueForm = document.getElementById('issue-form');
-            const openIssuesListContainer = document.getElementById('open-issues-list-container');
-            const solvedIssuesListContainer = document.getElementById('solved-issues-list-container');
-            const noOpenIssuesMessage = document.getElementById('no-open-issues-message');
-            const noSolvedIssuesMessage = document.getElementById('no-solved-issues-message');
-            let issues = [];
+            const notificationToast = document.getElementById('notification-toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
 
-            const labelConfig = {
-                bug: 'label-bug',
-                enhancement: 'label-enhancement',
-                urgent: 'label-urgent',
-                question: 'label-question'
+            // --- Theme & Date/Time ---
+            const applyTheme = (theme) => {
+                if (theme === 'dark') { document.body.classList.add('dark-mode'); if(themeToggle) themeToggle.checked = true; } 
+                else { document.body.classList.remove('dark-mode'); if(themeToggle) themeToggle.checked = false; }
             };
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+            if(themeToggle){ themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); }); }
+            if(datetimeElement){ const updateDateTime = () => { const now = new Date(); const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' }; datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', dateOptions)}<br>${now.toLocaleTimeString('en-US')}`; }; setInterval(updateDateTime, 1000); updateDateTime(); }
 
-            const statusIcons = {
-                open: `<i data-feather="alert-circle" style="color: var(--orange);"></i>`,
-                closed: `<i data-feather="check-circle" style="color: var(--green);"></i>`
-            };
+            // --- Modal & Form Logic ---
+            function showModal() { modalOverlay.classList.add('visible'); document.getElementById('issue-title').focus(); }
+            function hideModal() { modalOverlay.classList.remove('visible'); issueForm.reset(); }
             
-            function formatTimeAgo(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const seconds = Math.round((now - date) / 1000);
-                const minutes = Math.round(seconds / 60);
-                const hours = Math.round(minutes / 60);
-                const days = Math.round(hours / 24);
-
-                if (seconds < 5) return "just now";
-                if (minutes < 60) return `${minutes} minutes ago`;
-                if (hours < 24) return `${hours} hours ago`;
-                if (days < 7) return `${days} days ago`;
-                return `on ${date.toLocaleDateString()}`;
-            }
-            
-            function renderAllIssues() {
-                const openIssues = issues.filter(issue => issue.status === 'open');
-                const closedIssues = issues.filter(issue => issue.status === 'closed');
-
-                // Render Open Issues
-                if (openIssues.length === 0) {
-                    openIssuesListContainer.innerHTML = '';
-                    noOpenIssuesMessage.style.display = 'block';
-                } else {
-                    noOpenIssuesMessage.style.display = 'none';
-                    const openIssuesHTML = openIssues.map(issue => {
-                        const labelClass = labelConfig[issue.label] || '';
-                        return `
-                            <li class="issue-item">
-                                <div class="issue-status-icon">${statusIcons.open}</div>
-                                <div class="issue-content">
-                                    <div>
-                                        <a href="#" class="issue-title">${escapeHTML(issue.title)}</a>
-                                        <span class="issue-label ${labelClass}">${issue.label}</span>
-                                    </div>
-                                    <div class="issue-meta">#${issue.id} opened ${formatTimeAgo(issue.createdAt)}</div>
-                                </div>
-                            </li>
-                        `;
-                    }).join('');
-                    openIssuesListContainer.innerHTML = `<ul>${openIssuesHTML}</ul>`;
-                }
-
-                // Render Solved Issues
-                if (closedIssues.length === 0) {
-                    solvedIssuesListContainer.innerHTML = '';
-                    noSolvedIssuesMessage.style.display = 'block';
-                } else {
-                    noSolvedIssuesMessage.style.display = 'none';
-                    const closedIssuesHTML = closedIssues.map(issue => {
-                        const labelClass = labelConfig[issue.label] || '';
-                        return `
-                             <li class="issue-item solved">
-                                <div class="issue-status-icon">${statusIcons.closed}</div>
-                                <div class="issue-content">
-                                    <div>
-                                        <a href="#" class="issue-title">${escapeHTML(issue.title)}</a>
-                                        <span class="issue-label ${labelClass}">${issue.label}</span>
-                                    </div>
-                                    <div class="issue-meta">#${issue.id} solved by Admin ${formatTimeAgo(issue.solvedAt)}</div>
-                                </div>
-                            </li>
-                        `;
-                    }).join('');
-                    solvedIssuesListContainer.innerHTML = `<ul>${closedIssuesHTML}</ul>`;
-                }
-
+            function showNotification(message, type = 'success') {
+                toastMessage.textContent = message;
+                notificationToast.className = 'toast';
+                notificationToast.classList.add(type);
+                const iconName = type === 'success' ? 'check-circle' : 'alert-triangle';
+                toastIcon.setAttribute('data-feather', iconName);
                 feather.replace({ 'stroke-width': 1.5 });
-            }
-
-            function saveIssues() {
-                localStorage.setItem('bscPhysicsIssues', JSON.stringify(issues));
-            }
-
-            function loadIssues() {
-                const savedIssues = localStorage.getItem('bscPhysicsIssues');
-                if (savedIssues) {
-                    issues = JSON.parse(savedIssues);
-                } else {
-                    issues = [
-                        { id: 1, title: 'Incorrect formula for kinetic energy', label: 'bug', comment: '', createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), status: 'open' },
-                        { id: 2, title: 'App crashes on older Android versions', label: 'urgent', comment: '', createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), status: 'closed', solvedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() }
-                    ];
-                }
-                issues.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            }
-
-            function showModal() {
-                modalOverlay.classList.add('visible');
-                document.getElementById('issue-title').focus();
-            }
-
-            function hideModal() {
-                modalOverlay.classList.remove('visible');
-                issueForm.reset();
-            }
-
-            function escapeHTML(str) {
-                const p = document.createElement('p');
-                p.textContent = str;
-                return p.innerHTML;
+                notificationToast.classList.add('visible');
+                setTimeout(() => { notificationToast.classList.remove('visible'); }, 4000);
             }
 
             fab.addEventListener('click', showModal);
+            if (mainCreateBtn) mainCreateBtn.addEventListener('click', showModal);
             cancelIssueBtn.addEventListener('click', hideModal);
-            modalOverlay.addEventListener('click', (e) => {
-                if (e.target === modalOverlay) {
-                    hideModal();
-                }
-            });
+            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
 
             issueForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+                
                 const title = document.getElementById('issue-title').value.trim();
-                if (!title) return;
+                const label = document.getElementById('issue-label').value;
+                const comment = document.getElementById('issue-comment').value.trim();
 
-                const newIssue = {
-                    id: Date.now(),
-                    title: title,
-                    label: document.getElementById('issue-label').value,
-                    comment: document.getElementById('issue-comment').value.trim(),
-                    createdAt: new Date().toISOString(),
-                    status: 'open'
-                };
+                if (!title) {
+                    showNotification("Title is required.", "error");
+                    return;
+                }
 
-                issues.unshift(newIssue);
-                saveIssues();
-                renderAllIssues();
+                // --- Construct the mailto link ---
+                const recipientEmail = "pratyushkumarswain01@gmail.com";
+                const subject = `[${label}] BSc. Physics App Issue: ${title}`;
+                
+                const body = `
+--- BSc. Physics Issue Report ---
+
+Title:
+${title}
+
+Label:
+${label}
+
+Details:
+--------------------
+${comment || 'No additional details provided.'}
+--------------------
+
+This email was auto-generated by the Issue Submission Portal.
+                `;
+
+                const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
                 hideModal();
-            });
-            
-            function initTracker() {
-                loadIssues();
-                renderAllIssues();
-            }
+                showNotification("Redirecting to your email app...", "success");
 
-            initTracker();
+                // Redirect to email client after a short delay
+                setTimeout(() => {
+                    window.location.href = mailtoLink;
+                }, 500);
+            });
         });
     </script>
 </body>
