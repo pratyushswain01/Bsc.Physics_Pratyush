@@ -146,7 +146,7 @@
             <div class="modal-header">
                 <h2 class="modal-title">Create a New Issue Report</h2>
             </div>
-           <form id="issue-form">
+            <form id="issue-form">
                 <div>
                     <label for="issue-title">Title</label>
                     <input type="text" id="issue-title" name="issue-title" required placeholder="A brief, descriptive title">
@@ -190,7 +190,6 @@
 
             // --- INITIALIZE EMAILJS WITH YOUR KEYS ---
             (function(){
-                // Paste your Public Key from EmailJS > Account
                 emailjs.init("oNmOic7bTkN3qWU1g"); 
             })();
 
@@ -253,13 +252,14 @@
 
                 const templateParams = {
                     title: document.getElementById('issue-title').value.trim(),
+                    user_email: document.getElementById('user-email').value.trim(),
                     label: document.getElementById('issue-label').value,
                     comment: document.getElementById('issue-comment').value.trim() || 'No additional details provided by the user.',
                     submission_time: new Date().toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'long' })
                 };
 
-                if (!templateParams.title) {
-                    showNotification("Title is required.", "error");
+                if (!templateParams.title || !templateParams.user_email) {
+                    showNotification("Title and Email are required.", "error");
                     submitBtn.disabled = false;
                     submitText.style.display = 'inline';
                     spinner.style.display = 'none';
@@ -267,13 +267,11 @@
                 }
 
                 // --- SEND EMAIL USING EMAILJS ---
-                // Paste your Service ID and Template ID
                 emailjs.send('service_pb2tv2l', 'template_z3rwxsj', templateParams)
                     .then(function(response) {
                        showNotification("Issue report sent successfully!", "success");
                        hideModal();
                     }, function(error) {
-                       // --- NEW: Display the specific error from EmailJS ---
                        const errorMessage = error.text || 'An unknown error occurred. Please check your EmailJS setup.';
                        showNotification(`Failed to send report: ${errorMessage}`, "error");
                        console.log('FAILED...', error);
