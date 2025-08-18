@@ -269,7 +269,9 @@
                        showNotification("Issue report sent successfully!", "success");
                        hideModal();
                     }, function(error) {
-                       showNotification("Failed to send report. Please try again.", "error");
+                       // --- NEW: Display the specific error from EmailJS ---
+                       const errorMessage = error.text || 'An unknown error occurred. Please check your EmailJS setup.';
+                       showNotification(`Failed to send report: ${errorMessage}`, "error");
                        console.log('FAILED...', error);
                     })
                     .finally(() => {
