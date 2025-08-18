@@ -20,6 +20,7 @@
             --issue-btn-bg: #ef4444;
             --issue-btn-hover-bg: #dc2626;
             --issue-btn-shadow: rgba(239, 68, 68, 0.4);
+            --issue-icon-color: #ef4444;
         }
         body.dark-mode {
             --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --divine-bg: linear-gradient(90deg, #2c1e0b, #4b1a1f); --divine-text: #FFD700; --divine-shadow: rgba(255,215,0,0.2);
@@ -32,30 +33,15 @@
             --issue-btn-bg: #f87171;
             --issue-btn-hover-bg: #ef4444;
             --issue-btn-shadow: rgba(248, 113, 113, 0.5);
+            --issue-icon-color: #f87171;
         }
 
         /* --- NOTIFICATION BANNER --- */
-        .notification-container {
-            background: var(--announcement-bg); color: white; width: 100%;
-            overflow: hidden; max-height: 0;
-            transition: max-height 0.6s ease-in-out, padding 0.6s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative;
-        }
-        .notification-container.visible {
-            max-height: 100px; padding-top: 0.8rem; padding-bottom: 0.8rem;
-        }
-        .notification-bar {
-            text-align: center; font-size: 0.9em; font-weight: 500; display: flex;
-            align-items: center; justify-content: center; gap: 0.75rem; padding: 0 2.5rem; /* Padding for close button */
-        }
+        .notification-container { background: var(--announcement-bg); color: white; width: 100%; overflow: hidden; max-height: 0; transition: max-height 0.6s ease-in-out, padding 0.6s ease-in-out; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
+        .notification-container.visible { max-height: 100px; padding-top: 0.8rem; padding-bottom: 0.8rem; }
+        .notification-bar { text-align: center; font-size: 0.9em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0 2.5rem; }
         .notification-bar p { margin: 0; }
-        .close-notification-btn {
-            position: absolute; top: 50%; right: 1rem;
-            transform: translateY(-50%);
-            background: none; border: none; font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1; padding: 0.2rem;
-            transition: color 0.2s ease;
-        }
+        .close-notification-btn { position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); background: none; border: none; font-size: 1.5rem; color: rgba(255, 255, 255, 0.7); cursor: pointer; line-height: 1; padding: 0.2rem; transition: color 0.2s ease; }
         .close-notification-btn:hover { color: white; }
 
         /* --- GENERAL & LAYOUT STYLES --- */
@@ -93,80 +79,25 @@
         footer { text-align: center; padding: 2rem 1rem; margin-top: auto; color: var(--text-secondary); background-color: transparent; border-top: 1px solid var(--border-color); } .footer-content-wrapper { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; } .creator-text { margin: 0; font-weight: 600; color: var(--text-primary); font-size: 1em; } .footer-links { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.9em; } .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; } .footer-links a:hover { color: var(--primary-accent); text-decoration: underline; } .footer-separator { opacity: 0.6; }
 
         /* --- PDF VIEWER MODAL STYLES --- */
-        .pdf-viewer-modal {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        .pdf-viewer-content {
-            width: 95%; height: 95%; max-width: 1400px;
-            background-color: var(--card-bg);
-            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: relative; display: flex; flex-direction: column; overflow: hidden;
-        }
-        .close-pdf-btn {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 2.5rem; font-weight: 300; background: none; border: none;
-            color: var(--text-secondary); cursor: pointer; line-height: 1; z-index: 2001;
-        }
+        .pdf-viewer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .pdf-viewer-content { width: 95%; height: 95%; max-width: 1400px; background-color: var(--card-bg); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .close-pdf-btn { position: absolute; top: 10px; right: 15px; font-size: 2.5rem; font-weight: 300; background: none; border: none; color: var(--text-secondary); cursor: pointer; line-height: 1; z-index: 2001; }
         .close-pdf-btn:hover { color: var(--text-primary); }
         #pdf-iframe { flex-grow: 1; width: 100%; height: 100%; border: none; }
 
-        /* --- NEW: ISSUE REPORTER CARD STYLES --- */
+        /* --- UPDATED: COMPACT ISSUE REPORTER CARD --- */
         .issue-reporter-card {
-            background: var(--issue-card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 30px var(--shadow-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1rem;
+            background: var(--issue-card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1.25rem 1.5rem; margin-bottom: 2rem; box-shadow: 0 8px 30px var(--shadow-color);
+            display: flex; align-items: center; gap: 1rem;
         }
-        .issue-reporter-card h2 {
-            font-size: 1.6em;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin: 0;
-        }
-        .issue-reporter-card p {
-            font-size: 1em;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0;
-        }
-        .btn-report {
-            background-color: var(--issue-btn-bg);
-            color: white;
-            padding: 0.8rem 1.8rem;
-            box-shadow: 0 4px 15px var(--issue-btn-shadow);
-            animation: pulse-shadow 2s infinite;
-        }
-        .btn-report:hover {
-            background-color: var(--issue-btn-hover-bg);
-            transform: scale(1.05) translateY(-2px);
-        }
-        .btn-report .blinker {
-            margin-right: 0.5rem;
-            animation: blinker 1.5s linear infinite;
-        }
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
-        @keyframes pulse-shadow {
-            0% { box-shadow: 0 4px 15px var(--issue-btn-shadow); }
-            50% { box-shadow: 0 4px 25px var(--issue-btn-shadow); }
-            100% { box-shadow: 0 4px 15px var(--issue-btn-shadow); }
-        }
+        .issue-reporter-card .icon-container { color: var(--issue-icon-color); font-size: 1.8em; flex-shrink: 0; animation: blinker 2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.3; } }
+        .issue-reporter-card .text-container { flex-grow: 1; text-align: left; }
+        .issue-reporter-card h2 { font-size: 1.2em; font-weight: 600; color: var(--text-primary); margin: 0; line-height: 1.3; }
+        .issue-reporter-card p { font-size: 0.9em; color: var(--text-secondary); margin: 0; }
+        .btn-report { background-color: var(--issue-btn-bg); color: white; padding: 0.6rem 1.2rem; box-shadow: 0 4px 15px var(--issue-btn-shadow); flex-shrink: 0; }
+        .btn-report:hover { background-color: var(--issue-btn-hover-bg); transform: scale(1.05) translateY(-1px); }
     </style>
 </head>
 <body>
@@ -189,17 +120,22 @@
         
         <a href="semester.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
 
-        <!-- NEW: Issue Reporter Card -->
         <div class="issue-reporter-card">
-            <h2>Help Us Improve!</h2>
-            <p>Found a mistake, a broken link, or have a suggestion for new content? Your feedback is valuable. Please report any issues to help us make this resource better for everyone.</p>
+            <div class="icon-container">
+                <i class="fas fa-bug"></i>
+            </div>
+            <div class="text-container">
+                <h2>Help Us Improve!</h2>
+                <p>Found an issue, a broken link, or have a suggestion? Please let us know.</p>
+            </div>
             <a href="issues.html" class="btn btn-report">
-                <i class="fas fa-bug blinker"></i> Report an Issue
+                Report Issue
             </a>
         </div>
         
         <div class="live-schedule-card">
             <div class="schedule-card-header"><h2>Today's Schedule</h2><p>A quick glance at your day. Stay on track!</p></div>
+           
             
             <div class="schedule-card-footer"><a href="sem3class.html" class="btn btn-explore"><i class="fas fa-calendar-alt"></i> View Full Timetable</a></div>
         </div>
@@ -227,31 +163,9 @@
     
     <script>
     // --- PDF HANDLING FUNCTIONS ---
-    function viewPDF(filePath) {
-        const modal = document.getElementById('pdf-modal');
-        const iframe = document.getElementById('pdf-iframe');
-        const absolutePdfUrl = new URL(filePath, window.location.href).href;
-        const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(absolutePdfUrl)}&embedded=true`;
-        iframe.src = googleViewerUrl;
-        modal.style.display = 'flex';
-    }
-
-    function closePDFModal() {
-        const modal = document.getElementById('pdf-modal');
-        const iframe = document.getElementById('pdf-iframe');
-        iframe.src = '';
-        modal.style.display = 'none';
-    }
-
-    function downloadPDF(filePath) {
-        const link = document.createElement('a');
-        link.href = filePath;
-        const fileName = filePath.split('/').pop();
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+    function viewPDF(filePath) { const modal = document.getElementById('pdf-modal'); const iframe = document.getElementById('pdf-iframe'); const absolutePdfUrl = new URL(filePath, window.location.href).href; const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(absolutePdfUrl)}&embedded=true`; iframe.src = googleViewerUrl; modal.style.display = 'flex'; }
+    function closePDFModal() { const modal = document.getElementById('pdf-modal'); const iframe = document.getElementById('pdf-iframe'); iframe.src = ''; modal.style.display = 'none'; }
+    function downloadPDF(filePath) { const link = document.createElement('a'); link.href = filePath; const fileName = filePath.split('/').pop(); link.download = fileName; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
 
     // --- LIVE SCHEDULE CARD DATA AND LOGIC ---
     const timetableData = { 1: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 2: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 3: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 4: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 5: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}, 6: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}};
@@ -268,81 +182,26 @@
     // --- MAIN SCRIPT EXECUTION ---
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- UPDATED NOTIFICATION BANNER LOGIC ---
-        const notification = document.getElementById('page-notification');
-        const closeBtn = document.getElementById('close-notification');
+        // --- NOTIFICATION BANNER LOGIC ---
+        const notification = document.getElementById('page-notification'); const closeBtn = document.getElementById('close-notification');
+        if (notification && closeBtn) { let hideTimeout; let showInterval; const HIDE_DELAY = 8000; const REAPPEAR_INTERVAL = 60000; const showNotification = () => { clearTimeout(hideTimeout); notification.classList.add('visible'); hideTimeout = setTimeout(() => { notification.classList.remove('visible'); }, HIDE_DELAY); }; const closeNotificationPermanently = () => { clearTimeout(hideTimeout); clearInterval(showInterval); notification.classList.remove('visible'); }; closeBtn.addEventListener('click', closeNotificationPermanently); setTimeout(showNotification, 1500); showInterval = setInterval(showNotification, REAPPEAR_INTERVAL); }
 
-        if (notification && closeBtn) {
-            let hideTimeout;
-            let showInterval;
-
-            // --- Configuration ---
-            const HIDE_DELAY = 8000; // Stays visible for 8 seconds
-            const REAPPEAR_INTERVAL = 60000; // Reappears every 1 minute (60 * 1000 ms)
-
-            // Function to show the notification and set a timer to hide it
-            const showNotification = () => {
-                clearTimeout(hideTimeout); // Prevent multiple hide timers from running
-                notification.classList.add('visible');
-                
-                // Set a timer to automatically hide it after HIDE_DELAY
-                hideTimeout = setTimeout(() => {
-                    notification.classList.remove('visible');
-                }, HIDE_DELAY);
-            };
-
-            // Function to permanently close the notification for the session
-            const closeNotificationPermanently = () => {
-                clearTimeout(hideTimeout); // Stop the auto-hide timer
-                clearInterval(showInterval); // Stop the banner from reappearing
-                notification.classList.remove('visible'); // Hide it immediately
-            };
-            
-            // Attach the permanent close function to the button click
-            closeBtn.addEventListener('click', closeNotificationPermanently);
-
-            // Initial setup
-            setTimeout(showNotification, 1500); // Show for the first time after 1.5 seconds
-            showInterval = setInterval(showNotification, REAPPEAR_INTERVAL); // Set it to reappear every minute
-        }
-
-
-        // --- ALL OTHER PAGE LOGIC (UNCHANGED) ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const datetimeElement = document.getElementById('datetime');
-        const runnerText = document.querySelector('.runner-text');
+        // --- ALL OTHER PAGE LOGIC ---
+        const themeToggle = document.getElementById('theme-toggle'); const datetimeElement = document.getElementById('datetime'); const runnerText = document.querySelector('.runner-text');
         
         if (document.getElementById('current-year')) { document.getElementById('current-year').textContent = new Date().getFullYear(); }
         if(runnerText) { runnerText.innerHTML += runnerText.innerHTML; }
 
-        const applyTheme = (theme) => {
-            document.body.classList.toggle('dark-mode', theme === 'dark');
-            if (themeToggle) { themeToggle.checked = (theme === 'dark'); }
-        };
-
+        const applyTheme = (theme) => { document.body.classList.toggle('dark-mode', theme === 'dark'); if (themeToggle) { themeToggle.checked = (theme === 'dark'); } };
         const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         applyTheme(savedTheme);
 
-        if (themeToggle) {
-            themeToggle.addEventListener('change', () => {
-                const newTheme = themeToggle.checked ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-                applyTheme(newTheme);
-            });
-        }
+        if (themeToggle) { themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); }); }
 
-        const updateDateTime = () => {
-            if (datetimeElement) {
-                const now = new Date();
-                datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}<br>${now.toLocaleTimeString('en-US')}`;
-            }
-        };
+        const updateDateTime = () => { if (datetimeElement) { const now = new Date(); datetimeElement.innerHTML = `${now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}<br>${now.toLocaleTimeString('en-US')}`; } };
         
-        // Initial calls and intervals
-        updateDateTime(); 
-        setInterval(updateDateTime, 1000);
-        updateLiveSchedule(); 
-        setInterval(updateLiveSchedule, 5000);
+        updateDateTime(); setInterval(updateDateTime, 1000);
+        updateLiveSchedule(); setInterval(updateLiveSchedule, 5000);
     });
     </script>
 </body>
