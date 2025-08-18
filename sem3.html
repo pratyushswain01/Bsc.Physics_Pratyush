@@ -12,10 +12,9 @@
         :root {
             --bg-color: #f8f9fa; --card-bg: #ffffff; --primary-accent: #0d6efd; --text-primary: #212529; --text-secondary: #6c757d; --border-color: #dee2e6; --shadow-color: rgba(0, 0, 0, 0.05); --header-bg: rgba(255, 255, 255, 0.85); --runner-bg: linear-gradient(45deg, #0d6efd, #0759d3); --back-btn-bg: #e9ecef; --back-btn-color: #495057; --divine-bg: linear-gradient(90deg, #FFC371, #FF5F6D); --divine-text: #ffffff; --divine-shadow: rgba(0,0,0,0.2);
             --primary-accent-hover: #0b5ed7;
-            --minor-card-inner-bg: #f1f3f5;
             --announcement-bg: linear-gradient(90deg, #4c66ff, #7f3fff);
-            --live-accent: #28a745; --live-accent-bg: rgba(40, 167, 69, 0.1);
-            --next-accent: #6f42c1; --next-accent-bg: rgba(111, 66, 193, 0.1);
+            --live-accent: #28a745;
+            --next-accent: #6f42c1;
             --issue-card-bg: linear-gradient(135deg, #fef2f2, #f3f4f6);
             --issue-btn-bg: #ef4444;
             --issue-btn-hover-bg: #dc2626;
@@ -25,10 +24,9 @@
         body.dark-mode {
             --bg-color: #121212; --card-bg: #1e1e1e; --primary-accent: #3b82f6; --text-primary: #e5e7eb; --text-secondary: #9ca3af; --border-color: #374151; --shadow-color: rgba(0, 0, 0, 0.2); --header-bg: rgba(30, 30, 30, 0.85); --runner-bg: linear-gradient(45deg, #1f2937, #111827); --back-btn-bg: #374151; --back-btn-color: #e5e7eb; --divine-bg: linear-gradient(90deg, #2c1e0b, #4b1a1f); --divine-text: #FFD700; --divine-shadow: rgba(255,215,0,0.2);
             --primary-accent-hover: #2563eb;
-            --minor-card-inner-bg: #2a2a2e;
             --announcement-bg: linear-gradient(90deg, #4f46e5, #7c3aed);
-            --live-accent: #4ade80; --live-accent-bg: rgba(74, 222, 128, 0.1);
-            --next-accent: #a78bfa; --next-accent-bg: rgba(167, 139, 250, 0.1);
+            --live-accent: #4ade80;
+            --next-accent: #a78bfa;
             --issue-card-bg: linear-gradient(135deg, #2a2a2e, #1e1e1e);
             --issue-btn-bg: #f87171;
             --issue-btn-hover-bg: #ef4444;
@@ -66,7 +64,6 @@
         .runner-text .separator { margin: 0 2em; } @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         
         /* --- ALL OTHER COMPONENT STYLES --- */
-        .live-schedule-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 30px var(--shadow-color); display: flex; flex-direction: column; gap: 1.5rem; animation: fadeIn 0.5s ease-out; } @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } } .schedule-card-header { text-align: center; } .schedule-card-header h2 { font-size: 1.6em; margin: 0 0 0.25rem 0; color: var(--text-primary); } .schedule-card-header p { font-size: 1em; color: var(--text-secondary); margin: 0; } .schedule-status { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; } .status-box { background-color: var(--minor-card-inner-bg); border-radius: 10px; padding: 1rem; border: 1px solid var(--border-color); } .status-box-title { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9em; margin-bottom: 0.75rem; color: var(--text-secondary); text-transform: uppercase; } .live-now .status-box-title { color: var(--live-accent); } .up-next .status-box-title { color: var(--next-accent); } .live-tag { font-weight: 700; font-size: 0.8em; animation: pulse 1.5s infinite; } @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } } .status-content .subject { font-size: 1.3em; font-weight: 600; color: var(--text-primary); margin: 0; } .status-content .time, .status-content .details { font-size: 0.95em; color: var(--text-secondary); } .status-content .idle-message { font-style: italic; color: var(--text-secondary); } .progress-bar-container { margin-top: 1rem; } .progress-bar { width: 100%; height: 6px; background-color: var(--border-color); border-radius: 3px; overflow: hidden; } .progress-bar-fill { height: 100%; background-color: var(--live-accent); width: 0; transition: width 1s linear; } .schedule-card-footer { margin-top: 0.5rem; text-align: center; } @media(max-width: 768px) { .schedule-status { grid-template-columns: 1fr; } }
         .back-button { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background-color: var(--back-btn-bg); color: var(--back-btn-color); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 400; transition: all 0.2s ease; margin-bottom: 2rem; align-self: flex-start; } .back-button:hover { background-color: var(--primary-accent); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
         .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
         .course-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; box-shadow: 0 5px 15px var(--shadow-color); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; } .course-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px var(--shadow-color); }
@@ -85,12 +82,8 @@
         .close-pdf-btn:hover { color: var(--text-primary); }
         #pdf-iframe { flex-grow: 1; width: 100%; height: 100%; border: none; }
 
-        /* --- UPDATED: COMPACT ISSUE REPORTER CARD --- */
-        .issue-reporter-card {
-            background: var(--issue-card-bg); border: 1px solid var(--border-color); border-radius: 12px;
-            padding: 1.25rem 1.5rem; margin-bottom: 2rem; box-shadow: 0 8px 30px var(--shadow-color);
-            display: flex; align-items: center; gap: 1rem;
-        }
+        /* --- COMPACT ISSUE REPORTER CARD --- */
+        .issue-reporter-card { background: var(--issue-card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; box-shadow: 0 8px 30px var(--shadow-color); display: flex; align-items: center; gap: 1rem; }
         .issue-reporter-card .icon-container { color: var(--issue-icon-color); font-size: 1.8em; flex-shrink: 0; animation: blinker 2s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.3; } }
         .issue-reporter-card .text-container { flex-grow: 1; text-align: left; }
@@ -98,6 +91,33 @@
         .issue-reporter-card p { font-size: 0.9em; color: var(--text-secondary); margin: 0; }
         .btn-report { background-color: var(--issue-btn-bg); color: white; padding: 0.6rem 1.2rem; box-shadow: 0 4px 15px var(--issue-btn-shadow); flex-shrink: 0; }
         .btn-report:hover { background-color: var(--issue-btn-hover-bg); transform: scale(1.05) translateY(-1px); }
+        
+        /* --- NEW: COMPACT SCHEDULE BAR --- */
+        .schedule-bar {
+            background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 1rem 1.5rem; margin-bottom: 2rem; box-shadow: 0 8px 30px var(--shadow-color);
+            display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; animation: fadeIn 0.5s ease-out;
+        }
+        .schedule-bar-title { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: var(--text-primary); font-size: 1.1em; flex-shrink: 0; }
+        .schedule-bar-status { display: flex; align-items: center; gap: 1.25rem; flex-grow: 1; }
+        .status-item { font-size: 0.9em; color: var(--text-secondary); white-space: nowrap; }
+        .status-item .tag { font-weight: 700; margin-right: 0.5rem; }
+        .status-item.live .tag { color: var(--live-accent); animation: pulse 1.5s infinite; } @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        .status-item.next .tag { color: var(--next-accent); }
+        .status-item strong { color: var(--text-primary); }
+        .status-separator { width: 1px; height: 24px; background-color: var(--border-color); }
+        .btn-timetable { background-color: var(--primary-accent); color: white; padding: 0.5rem 1rem; font-size: 0.85em; margin-left: auto; flex-shrink: 0; }
+        .btn-timetable:hover { background-color: var(--primary-accent-hover); transform: scale(1.05); }
+
+        @media(max-width: 992px) {
+            .schedule-bar { flex-direction: column; align-items: stretch; }
+            .schedule-bar-status { justify-content: space-around; margin: 1rem 0; }
+            .btn-timetable { margin-left: 0; justify-content: center; }
+        }
+         @media(max-width: 480px) {
+            .schedule-bar-status { flex-direction: column; align-items: flex-start; gap: 0.5rem;}
+            .status-separator { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -121,23 +141,18 @@
         <a href="semester.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
 
         <div class="issue-reporter-card">
-            <div class="icon-container">
-                <i class="fas fa-bug"></i>
-            </div>
+            <div class="icon-container"><i class="fas fa-bug"></i></div>
             <div class="text-container">
                 <h2>Help Us Improve!</h2>
                 <p>Found an issue, a broken link, or have a suggestion? Please let us know.</p>
             </div>
-            <a href="issues.html" class="btn btn-report">
-                Report Issue
-            </a>
+            <a href="issues.html" class="btn btn-report">Report Issue</a>
         </div>
         
-        <div class="live-schedule-card">
-            <div class="schedule-card-header"><h2>Today's Schedule</h2><p>A quick glance at your day. Stay on track!</p></div>
-           
-            
-            <div class="schedule-card-footer"><a href="sem3class.html" class="btn btn-explore"><i class="fas fa-calendar-alt"></i> View Full Timetable</a></div>
+        <div class="schedule-bar">
+            <div class="schedule-bar-title"><i class="fas fa-clock"></i><span>Today's Schedule</span></div>
+       
+            <a href="sem3class.html" class="btn btn-timetable">Full Timetable <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="course-grid">
@@ -170,13 +185,41 @@
     // --- LIVE SCHEDULE CARD DATA AND LOGIC ---
     const timetableData = { 1: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 2: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Env. Education' }]}, 3: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 4: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-6' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Minor' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-7' }]}, 5: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Major-7' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}, 6: { classes: [{ type: 'class', start: '08:20', end: '09:30', subject: 'Major-5' },{ type: 'class', start: '09:30', end: '10:40', subject: 'Ethics' },{ type: 'break', start: '10:40', end: '10:50' },{ type: 'class', start: '10:50', end: '12:00', subject: 'Env. Education' },{ type: 'class', start: '12:00', end: '13:10', subject: 'Major-5' }]}};
 
+    // --- UPDATED: COMPACT SCHEDULE LOGIC ---
     const updateLiveSchedule = () => {
-        const now = new Date(); const today = now.getDay(); const liveNowContent = document.getElementById('live-now-content'); const upNextContent = document.getElementById('up-next-content');
-        if (!liveNowContent || !upNextContent) return;
-        const todaysSchedule = timetableData[today] ? timetableData[today].classes : []; let currentEvent = null, nextEvent = null;
-        for (const event of todaysSchedule) { const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.start.split(':')); const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.end.split(':')); if (now >= start && now < end) { currentEvent = { ...event, start: start, end: end }; } else if (now < start && !nextEvent) { nextEvent = { ...event, start: start, end: end }; }}
-        if(currentEvent) { const isBreak = currentEvent.type === 'break'; const subject = isBreak ? "Coffee Break" : currentEvent.subject; const icon = isBreak ? `<i class="fas fa-mug-hot"></i>` : `<i class="fas fa-book-open"></i>`; const timeElapsed = now.getTime() - currentEvent.start.getTime(); const duration = currentEvent.end.getTime() - currentEvent.start.getTime(); const progress = (timeElapsed / duration) * 100; liveNowContent.innerHTML = `<p class="subject">${icon} ${subject}</p><p class="time">${currentEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${currentEvent.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p><div class="progress-bar-container"><div class="progress-bar"><div class="progress-bar-fill" style="width: ${progress}%;"></div></div></div>`; } else { liveNowContent.innerHTML = `<p class="idle-message">You're free! No classes right now.</p>`; }
-        if(nextEvent) { const isBreak = nextEvent.type === 'break'; const subject = isBreak ? "Coffee Break" : nextEvent.subject; const icon = isBreak ? `<i class="fas fa-mug-hot"></i>` : `<i class="fas fa-book-open"></i>`; upNextContent.innerHTML = `<p class="subject">${icon} ${subject}</p><p class="details">Starts at ${nextEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>`; } else { upNextContent.innerHTML = `<p class="idle-message">All classes for today are done!</p>`; }
+        const now = new Date(); const today = now.getDay(); 
+        const liveNowCompact = document.getElementById('live-now-compact');
+        const upNextCompact = document.getElementById('up-next-compact');
+        if (!liveNowCompact || !upNextCompact) return;
+
+        const todaysSchedule = timetableData[today] ? timetableData[today].classes : []; 
+        let currentEvent = null, nextEvent = null;
+        
+        for (const event of todaysSchedule) { 
+            const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.start.split(':')); 
+            const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...event.end.split(':')); 
+            if (now >= start && now < end) { 
+                currentEvent = { ...event, start: start, end: end }; 
+            } else if (now < start && !nextEvent) { 
+                nextEvent = { ...event, start: start, end: end }; 
+            }
+        }
+        
+        if (currentEvent) {
+            const isBreak = currentEvent.type === 'break';
+            const subject = isBreak ? "Break" : currentEvent.subject;
+            liveNowCompact.innerHTML = `<span class="tag">LIVE</span> <strong>${subject}</strong> until ${currentEvent.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        } else {
+            liveNowCompact.innerHTML = `<span class="tag">LIVE</span> No class currently`;
+        }
+
+        if (nextEvent) {
+            const isBreak = nextEvent.type === 'break';
+            const subject = isBreak ? "Break" : nextEvent.subject;
+            upNextCompact.innerHTML = `<span class="tag">NEXT</span> <strong>${subject}</strong> at ${nextEvent.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+        } else {
+            upNextCompact.innerHTML = `<span class="tag">NEXT</span> No more classes today`;
+        }
     };
     
     // --- MAIN SCRIPT EXECUTION ---
